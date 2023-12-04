@@ -14,7 +14,7 @@ def get_data() -> Matrix:
     return Matrix(data=data)
 
 
-def main():
+def main() -> None:
     matrix = get_data()
     part_numbers = matrix.get_part_numbers()
     part_filter = lambda part_number: matrix.is_engine_part(part_number)

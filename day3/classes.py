@@ -12,7 +12,7 @@ class PartNumber:
     length: int
     value: int
 
-    def touching(self, col, row, row_size):
+    def touching(self, col, row, row_size) -> bool:
         """returns if a given coordinate is touching this PartNumber"""
         start_x = max(0, self.col - 1)
         end_x = min(self.end_index, row_size)
@@ -24,7 +24,7 @@ class PartNumber:
         return True
 
     @property
-    def end_index(self):
+    def end_index(self) -> int:
         return self.col + self.length
 
 
@@ -36,10 +36,10 @@ class Gear:
     part_numbers: list[PartNumber] = None
 
     @property
-    def gear_ratio(self):
+    def gear_ratio(self) -> int:
         """If we have exactly two parts, returns the gear ratio"""
         if self.part_numbers is None:
-            raise ValueError("self.words not initialized")
+            raise ValueError("self.part_numbers not initialized")
         if len(self.part_numbers) == 2:
             return self.part_numbers[0].value * self.part_numbers[1].value
         return 0  # or None..
@@ -72,8 +72,8 @@ class Matrix:
                 results.append(part_number)
         return results
 
-    def is_engine_part(self, part_number):
-        """return whether a word is an engine part by looking at its surroundings"""
+    def is_engine_part(self, part_number: PartNumber) -> bool:
+        """return whether a part_number is an engine part by looking at its surroundings"""
         start_x = max(0, part_number.col - 1)
         end_x = min(part_number.end_index + 1, self.row_size)
 
@@ -94,7 +94,7 @@ class Matrix:
 
         return False
 
-    def get_gears(self, part_numbers: list[PartNumber]):
+    def get_gears(self, part_numbers: list[PartNumber]) -> list[Gear]:
         """Retrieve gears from the matrix"""
         results = []
         for row, line in enumerate(self.data):
@@ -105,7 +105,9 @@ class Matrix:
                     results.append(gear)
         return results
 
-    def find_gear_parts(self, gear: Gear, part_numbers: list[PartNumber]):
+    def find_gear_parts(
+        self, gear: Gear, part_numbers: list[PartNumber]
+    ) -> list[PartNumber]:
         """Returns a list of part_numbers that are touching a given gear"""
         if gear.part_numbers is not None:
             return gear.part_numbers
