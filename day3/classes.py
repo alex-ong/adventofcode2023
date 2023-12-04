@@ -106,6 +106,7 @@ class Matrix:
         return results
 
     def find_gear_parts(self, gear: Gear, part_numbers: list[PartNumber]):
+        """Returns a list of part_numbers that are touching a given gear"""
         if gear.part_numbers is not None:
             return gear.part_numbers
         result = []
