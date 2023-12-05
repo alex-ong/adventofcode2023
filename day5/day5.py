@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
 
+INT_MAX = 4294967296
+
 
 @dataclass
 class Mapping:
@@ -9,6 +11,8 @@ class Mapping:
     src_end: int = field(init=False)
     dest_start: int
     size: int
+
+    injected: bool = field(default=False)
 
     def __post_init__(self):
         self.src_end = self.src_start + self.size
@@ -33,24 +37,36 @@ class Map:
         self.max_mapping = self.mappings[-1].src_start + self.mappings[-1].size
 
     def finalize_mappings(self, mappings: list[Mapping]):
-        """sorts the mappings"""
-        mappings.sort(key=lambda m: m.src_start)
-        return mappings
         """
+        sorts the mappings
+        Fills in any missing ranges
+        Homogenizes so min_mapping is 0, and max_mapping is INT_MAX
+        """
+        mappings.sort(key=lambda m: m.src_start)
+
         filled_in_mappings = []
         # fill in the mappings
         prev_mapping = mappings[0]
+
         for mapping in mappings[1:]:
-            start = prev_mapping.src_end + 1
+            start = prev_mapping.src_end
             end = mapping.src_start
             if start < end:
-                mapping = Mapping(start, start, end - start)
-                filled_in_mappings.append(mapping)
+                injected_mapping = Mapping(start, start, end - start, True)
+                filled_in_mappings.append(injected_mapping)
             prev_mapping = mapping
         mappings.extend(filled_in_mappings)
         mappings.sort(key=lambda m: m.src_start)
+
+        # inject start and end mappings:
+        if mappings[0].src_start != 0:
+            injected_mapping = Mapping(0, 0, mappings[0].src_start, True)
+            mappings.insert(0, injected_mapping)
+        if mappings[-1].src_end != INT_MAX:
+            start = mappings[-1].src_end
+            injected_mapping = Mapping(start, start, INT_MAX - start, True)
+            mappings.append(injected_mapping)
         return mappings
-        """
 
     def get_mapping(self, value: int):
         for mapping in self.mappings:
@@ -110,11 +126,9 @@ def grab_inputs():
 
 
 def get_location(seed, maps: list[Map]):
-    print("Evalulating", seed)
     result = seed
     for map in maps:
         result = map.get_mapping(result)
-        print(map.name, result)
     return result
 
 
@@ -123,6 +137,8 @@ def main():
     locations = [get_location(seed, maps) for seed in seeds]
     locations.sort()
     print(locations[0])
+    for map in maps:
+        print(map.name, map.min_mapping, map.max_mapping)
 
 
 if __name__ == "__main__":
