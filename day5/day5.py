@@ -8,18 +8,26 @@ INT_MAX = 4294967296
 
 
 @dataclass
+class MappingRange:
+    start: int
+    end: int
+
+
+@dataclass
 class Mapping:
     """Simple range based mapping"""
 
     src_start: int
     src_end: int = field(init=False)
     dest_start: int
+    dest_end: int = field(init=False, repr=False)
     size: int
 
     injected: bool = field(default=False)
 
     def __post_init__(self):
         self.src_end = self.src_start + self.size
+        self.dest_end = self.dest_start + self.size
 
     def check_mapping(self, value: int):
         """Comparitor function to check if a value is within our range"""
@@ -33,8 +41,24 @@ class Mapping:
         """Return None if value not in mapping"""
         if self.src_start <= value < self.src_end:
             return value - self.src_start + self.dest_start
-        print(self.src_start, value, self.src_end)
+
         raise ValueError("item not within mapping range")
+
+    def get_mappings(self, start, end) -> tuple[MappingRange, int]:
+        """
+        Returns the chunk from start to end, followed by the remainder
+        """
+        left = start - self.src_start + self.dest_start
+        right_uncapped = end - self.src_start + self.dest_start
+
+        if right_uncapped < self.dest_end:
+            remaining = 0
+        else:
+            remaining = right_uncapped - self.dest_end
+
+        right_capped = min(right_uncapped, self.dest_end)
+
+        return MappingRange(left, right_capped), remaining
 
 
 class Map:
@@ -43,11 +67,16 @@ class Map:
     you can just use this class to search for a mapping
     """
 
-    def __init__(self, name, mappings):
-        self.name: str = name
+    name: str
+    mappings: list[Mapping]
+    min_mapping: int
+    max_mapping: int
+
+    def __init__(self, name: str, mappings):
+        self.name = name
         self.mappings = self.finalize_mappings(mappings)
         self.min_mapping = self.mappings[0].src_start
-        self.max_mapping = self.mappings[-1].src_start + self.mappings[-1].size
+        self.max_mapping = self.mappings[-1].src_end
 
     def finalize_mappings(self, mappings: list[Mapping]):
         """
@@ -87,10 +116,36 @@ class Map:
         mapping = self.mappings[mapping_idx]
         return mapping.get_mapping(value)
 
-    def get_mapping_range(self, start_range: int, end_range: int):
+    def get_mapping_ranges(self, src_mapping_ranges: list[MappingRange]):
+        result = []
+        for src_mapping_range in src_mapping_ranges:
+            mappings = self.get_mapping_range(src_mapping_range)
+            result.extend(mappings)
+        return result
+
+    def get_mapping_range(self, src_mapping_range: MappingRange) -> list[MappingRange]:
         """given a range like 100-200, returns a
         list of lists describing the new mapped range"""
-        pass
+        # make a quick copy first
+        src_start, src_end = src_mapping_range.start, src_mapping_range.end
+
+        mapping_start_idx = bisect_left(
+            self.mappings, src_start, key=lambda m: m.src_end
+        )
+
+        result: list[MappingRange] = []
+        mapping_start: Mapping = self.mappings[mapping_start_idx]
+        mapping_range, remaining = mapping_start.get_mappings(src_start, src_end)
+        result.append(mapping_range)
+
+        while remaining != 0:
+            src_start = src_end - remaining
+            mapping_start_idx += 1
+            mapping_start = self.mappings[mapping_start_idx]
+            mapping_range, remaining = mapping_start.get_mappings(src_start, src_end)
+            result.append(mapping_range)
+
+        return result
 
     def __str__(self):
         result = str(self.name) + "\n"
@@ -145,13 +200,34 @@ def get_location(seed, maps: list[Map]):
     return result
 
 
+def get_location_ranges(seed_ranges: list[MappingRange], maps: list[Map]):
+    result = seed_ranges[:]
+    for map in maps:
+        result = map.get_mapping_ranges(result)
+    return result
+
+
+def seed_to_mapping_ranges(data):
+    pairs = list(zip(data[::2], data[1::2]))
+    result = []
+    for pair in pairs:
+        start, size = pair
+        mapping_range = MappingRange(start, start + size)
+        result.append(mapping_range)
+    return result
+
+
 def main():
     seeds, maps = grab_inputs()
+    # q1
     locations = [get_location(seed, maps) for seed in seeds]
     locations.sort()
     print(locations[0])
-    for map in maps:
-        print(map.name, map.min_mapping, map.max_mapping)
+
+    # q2
+    start_ranges = seed_to_mapping_ranges(seeds)
+    end_locations = get_location_ranges(start_ranges, maps)
+    print(min(location.start for location in end_locations))
 
 
 if __name__ == "__main__":
