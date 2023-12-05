@@ -9,11 +9,13 @@ INT_MAX = 4294967296
 
 @dataclass
 class MappingRange:
+    """Simple class for start/end range"""
+
     start: int
     end: int
 
 
-@dataclass
+@dataclass(order=True)
 class Mapping:
     """Simple range based mapping"""
 
@@ -29,39 +31,31 @@ class Mapping:
         self.src_end = self.src_start + self.size
         self.dest_end = self.dest_start + self.size
 
-    def check_mapping(self, value: int):
-        """Comparitor function to check if a value is within our range"""
-        if value < self.src_start:
-            return -1
-        if value >= self.src_end:
-            return 1
-        return 0
+    def get_mapping(self, src_value: int):
+        """Converts from src_value to destination"""
+        if self.src_start <= src_value < self.src_end:
+            return src_value - self.src_start + self.dest_start
 
-    def get_mapping(self, value: int):
-        """Return None if value not in mapping"""
-        if self.src_start <= value < self.src_end:
-            return value - self.src_start + self.dest_start
-
-        raise ValueError("item not within mapping range")
+        raise ValueError("Item not within mapping range")
 
     def get_mappings(self, start, end) -> tuple[MappingRange, int]:
         """
         Returns the chunk from start to end, followed by the remainder
         """
-        left = start - self.src_start + self.dest_start
-        right_uncapped = end - self.src_start + self.dest_start
+        dest_start = start - self.src_start + self.dest_start
+        dest_end_uncapped = end - self.src_start + self.dest_start
 
-        if right_uncapped < self.dest_end:
+        if dest_end_uncapped < self.dest_end:
             remaining = 0
         else:
-            remaining = right_uncapped - self.dest_end
+            remaining = dest_end_uncapped - self.dest_end
 
-        right_capped = min(right_uncapped, self.dest_end)
+        dest_end_capped = min(dest_end_uncapped, self.dest_end)
 
-        return MappingRange(left, right_capped), remaining
+        return MappingRange(dest_start, dest_end_capped), remaining
 
 
-class Map:
+class NamedMap:
     """
     a named map with a list of mappings
     you can just use this class to search for a mapping
@@ -69,27 +63,31 @@ class Map:
 
     name: str
     mappings: list[Mapping]
-    min_mapping: int
-    max_mapping: int
 
-    def __init__(self, name: str, mappings):
+    def __init__(self, name: str):
+        """
+        This one is a bit weird; the client should add mappings
+        after construction, then call finalize_mappings
+        This is to keep the file parsing code simpler.
+        """
         self.name = name
-        self.mappings = self.finalize_mappings(mappings)
-        self.min_mapping = self.mappings[0].src_start
-        self.max_mapping = self.mappings[-1].src_end
+        self.mappings = []
 
-    def finalize_mappings(self, mappings: list[Mapping]):
-        """
-        sorts the mappings
-        Fills in any missing ranges
-        Homogenizes so min_mapping is 0, and max_mapping is INT_MAX
-        """
-        mappings.sort(key=lambda m: m.src_start)
+    def add_mapping(self, mapping: Mapping):
+        """Adds a mapping to our list"""
+        self.mappings.append(mapping)
 
+    def finalize_mappings(self):
+        """
+        * Sorts the mappings
+        * Fills in any missing ranges
+        * Homogenizes so min_mapping is 0, and max_mapping is INT_MAX
+        """
+        mappings = self.mappings
+        mappings.sort()
+        # Find gaps in the mappings and fill them in
         filled_in_mappings = []
-        # fill in the mappings
         prev_mapping = mappings[0]
-
         for mapping in mappings[1:]:
             start = prev_mapping.src_end
             end = mapping.src_start
@@ -97,10 +95,15 @@ class Map:
                 injected_mapping = Mapping(start, start, end - start, True)
                 filled_in_mappings.append(injected_mapping)
             prev_mapping = mapping
-        mappings.extend(filled_in_mappings)
-        mappings.sort(key=lambda m: m.src_start)
 
-        # inject start and end mappings:
+        # inject our mappings. We add them to the end, then sort
+        mappings.extend(filled_in_mappings)
+        mappings.sort()
+
+        self.mappings = self.extend_mapping_range(mappings)
+
+    def extend_mapping_range(self, mappings: list[Mapping]):
+        """Ensure that mappings go from 0 -> INT_MAX"""
         if mappings[0].src_start != 0:
             injected_mapping = Mapping(0, 0, mappings[0].src_start, True)
             mappings.insert(0, injected_mapping)
@@ -117,6 +120,7 @@ class Map:
         return mapping.get_mapping(value)
 
     def get_mapping_ranges(self, src_mapping_ranges: list[MappingRange]):
+        """Given a list of mapping ranges, returns a new list of mapping ranges"""
         result = []
         for src_mapping_range in src_mapping_ranges:
             mappings = self.get_mapping_range(src_mapping_range)
@@ -124,26 +128,26 @@ class Map:
         return result
 
     def get_mapping_range(self, src_mapping_range: MappingRange) -> list[MappingRange]:
-        """given a range like 100-200, returns a
-        list of lists describing the new mapped range"""
+        """
+        Given a range like 100-200, returns a
+        list of lists describing the new mapped range
+        """
         # make a quick copy first
         src_start, src_end = src_mapping_range.start, src_mapping_range.end
+        result: list[MappingRange] = []
 
+        # find out where the start is
         mapping_start_idx = bisect_left(
             self.mappings, src_start, key=lambda m: m.src_end
         )
-
-        result: list[MappingRange] = []
-        mapping_start: Mapping = self.mappings[mapping_start_idx]
-        mapping_range, remaining = mapping_start.get_mappings(src_start, src_end)
-        result.append(mapping_range)
+        remaining = src_end - src_start
 
         while remaining != 0:
-            src_start = src_end - remaining
-            mapping_start_idx += 1
             mapping_start = self.mappings[mapping_start_idx]
             mapping_range, remaining = mapping_start.get_mappings(src_start, src_end)
             result.append(mapping_range)
+            src_start = src_end - remaining  # move src_start upwards over time
+            mapping_start_idx += 1  # no need to re-bisect. just go next
 
         return result
 
@@ -157,33 +161,27 @@ def process_file(file):
     """processes mappings from file"""
     seeds = None
     maps = []
-    current_map_name = None
-    current_mappings = []
+    named_map = None
 
     for line in file:
         line = line.strip()
-        if line.startswith("seeds"):
+        if line.startswith("seeds"):  # grab the seeds
             seeds = line.split(":")[1].split()
             seeds = [int(seed) for seed in seeds]
-        elif line.endswith("map:"):
-            current_map_name = line.split()
+        elif line.endswith("map:"):  # start a map segment
             current_map_name = line.split(" map:")[0]
-            current_mappings = []
-        elif len(line) == 0:
-            if current_map_name is not None and len(current_mappings) > 0:
-                map = Map(name=current_map_name, mappings=current_mappings)
-                maps.append(map)
-                current_map_name = None
-        else:
+            named_map = NamedMap(current_map_name)
+            maps.append(named_map)
+        elif len(line.strip()) != 0:  # add a mapping to our named_map
             numbers = [int(item) for item in line.split()]
             dest, src, size = numbers
             mapping = Mapping(src_start=src, dest_start=dest, size=size)
-            current_mappings.append(mapping)
+            named_map.add_mapping(mapping)
 
-    # there is no newline at end of file, so add the last mapping
-    if current_map_name is not None and len(current_mappings) > 0:
-        map = Map(name=current_map_name, mappings=current_mappings)
-        maps.append(map)
+    # finish setup/optimization
+    for named_map in maps:
+        named_map.finalize_mappings()
+
     return seeds, maps
 
 
@@ -193,21 +191,27 @@ def grab_inputs():
         return process_file(file)
 
 
-def get_location(seed, maps: list[Map]):
+def get_location(seed: int, maps: list[NamedMap]):
+    """given a seed, returns the final location"""
     result = seed
-    for map in maps:
-        result = map.get_mapping(result)
+    for named_map in maps:
+        result = named_map.get_mapping(result)
     return result
 
 
-def get_location_ranges(seed_ranges: list[MappingRange], maps: list[Map]):
+def get_location_ranges(seed_ranges: list[MappingRange], maps: list[NamedMap]):
+    """Given a list of MappingRange, returns a list of MappingRange's for the final location"""
     result = seed_ranges[:]
-    for map in maps:
-        result = map.get_mapping_ranges(result)
+    for named_map in maps:
+        result = named_map.get_mapping_ranges(result)
     return result
 
 
 def seed_to_mapping_ranges(data):
+    """
+    converts from list of seeds to list of MappingRanges.
+    They are in the format [start, size]
+    """
     pairs = list(zip(data[::2], data[1::2]))
     result = []
     for pair in pairs:
@@ -218,6 +222,7 @@ def seed_to_mapping_ranges(data):
 
 
 def main():
+    """main function, solve all the problems"""
     seeds, maps = grab_inputs()
     # q1
     locations = [get_location(seed, maps) for seed in seeds]
