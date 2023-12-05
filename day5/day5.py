@@ -1,4 +1,8 @@
+"""
+Day5 solution
+"""
 from dataclasses import dataclass, field
+from bisect import bisect_left
 
 INT_MAX = 4294967296
 
@@ -17,11 +21,20 @@ class Mapping:
     def __post_init__(self):
         self.src_end = self.src_start + self.size
 
+    def check_mapping(self, value: int):
+        """Comparitor function to check if a value is within our range"""
+        if value < self.src_start:
+            return -1
+        if value >= self.src_end:
+            return 1
+        return 0
+
     def get_mapping(self, value: int):
         """Return None if value not in mapping"""
-        if self.src_start <= value <= self.src_end:
+        if self.src_start <= value < self.src_end:
             return value - self.src_start + self.dest_start
-        return None
+        print(self.src_start, value, self.src_end)
+        raise ValueError("item not within mapping range")
 
 
 class Map:
@@ -69,15 +82,15 @@ class Map:
         return mappings
 
     def get_mapping(self, value: int):
-        for mapping in self.mappings:
-            result = mapping.get_mapping(value)
-            if result is not None:
-                return result
-        return value
+        """Uses binary search to grab the correct mapping, then apply it to one value"""
+        mapping_idx = bisect_left(self.mappings, value, key=lambda m: m.src_end)
+        mapping = self.mappings[mapping_idx]
+        return mapping.get_mapping(value)
 
     def get_mapping_range(self, start_range: int, end_range: int):
         """given a range like 100-200, returns a
         list of lists describing the new mapped range"""
+        pass
 
     def __str__(self):
         result = str(self.name) + "\n"
