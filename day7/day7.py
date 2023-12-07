@@ -74,12 +74,12 @@ def parse_lines(cls):
 
 def calculate_hands(cls):
     """generates class `cls` then calculates points"""
-    hands = parse_lines(cls)
-    hands.sort()
-    total = 0
+    hands = sorted(parse_lines(cls))
+
+    score = 0
     for rank, hand in enumerate(hands):
-        total += (rank + 1) * hand.bet
-    print(total)
+        score += (rank + 1) * hand.bet
+    print(score)
 
 
 def main():
