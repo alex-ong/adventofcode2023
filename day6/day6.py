@@ -76,20 +76,13 @@ def calculate_race(race: Race):
 
 def calculate_constant_time(race: Race):
     """TL;DR Quadratic formula"""
-    sqrt_part = math.sqrt((race.time * race.time) - 4 * race.record_distance)
-    x_top_pos = race.time + sqrt_part
-    x_top_neg = race.time - sqrt_part
-    x_pos, x_neg = x_top_pos / 2, x_top_neg / 2
+    x_top = race.time - math.sqrt((race.time * race.time) - 4 * race.record_distance)
+    x_neg = x_top / 2
 
-    # this might always be start = x_neg, and end == x_start
-    # but i am bad math yknow
-    start = min(x_pos, x_neg)
-    end = max(x_pos, x_neg)
+    # start is always x_neg j, end is always race.time - start
+    start = math.ceil(x_neg)
+    end = math.floor(race.time - start)
 
-    # we need to ceil start, coz its a float, and anything lower does not "intercept"
-    # on the correct side. Reverse logic for end
-    start = math.ceil(start)
-    end = math.floor(end)
     # add one because hypothetically if end == start, then you'd get 0 which is wrong.
     # typical fencepost :)
     return end - start + 1
@@ -102,8 +95,8 @@ def main():
     # q1 Dataclasses, brute force lmao
     permutations = 1
     for race in races:
-        strats = calculate_constant_time(race)
-        permutations *= len(strats)
+        num_strats = calculate_constant_time(race)
+        permutations *= num_strats
     print(permutations)
 
     # q2 Quadratic formula; constant time.
