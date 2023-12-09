@@ -1,6 +1,7 @@
 """day8 solution"""
 from collections import defaultdict
 from dataclasses import dataclass, field
+import math
 import itertools
 
 
@@ -52,15 +53,15 @@ class Cycle:
     """find a cycle"""
 
     start_location: Location
-    location_steps: list[LocationStep]
-    cycle_start: LocationStep
+    location_steps: list[LocationStep]  # all the steps, including non-looping
+    cycle_start: LocationStep  # the step that loops
 
-    cycle_start_index: int = field(init=False)
+    cycle_start_index: int = field(init=False)  # index of cycle_start
     end_zs: list[int] = field(init=False)
 
     @property
     def cycle_length(self):
-        """return the cycle length"""
+        """return length of the repeating part"""
         return len(self.location_steps) - self.cycle_start_index
 
     def __post_init__(self):
@@ -77,8 +78,10 @@ class Cycle:
 
         # 2nd half of array is from cycle_start_index -> end
         index -= len(self.location_steps)
-        index += self.cycle_start_index
         index %= self.cycle_length
+        index += self.cycle_start_index
+        if index >= len(self.location_steps):
+            raise ValueError("you fucked up")
         return self.location_steps[index]
 
 
@@ -139,9 +142,30 @@ def follow_directions_multi(directions: Directions, world_map: WorldMap) -> int:
     cycles = [find_cycle(node, world_map, directions) for node in nodes]
 
     for cycle in cycles:
-        print(cycle.start_location, len(cycle.location_steps))
+        print(
+            cycle.start_location,
+            cycle.cycle_start_index,
+            len(cycle.location_steps),
+            cycle.cycle_length,
+            cycle.end_zs,
+        )
 
-    return 0
+    # each cycle only has one z in it.
+    # Also, each path is
+    # [beginning][loop------z--endloop]
+    # endloop.size == beginning.size
+
+    # That means it can be simplified by finding the lcm
+
+    lcm = math.lcm(*[cycle.cycle_length for cycle in cycles])
+    print(lcm)  # 13,663,968,099,527
+
+    index = cycles[0].end_zs[0]
+    index = lcm
+    for cycle in cycles:
+        print(cycle.get_location(index))
+
+    return lcm
 
 
 def find_cycle(location: Location, world_map: WorldMap, directions: Directions):
