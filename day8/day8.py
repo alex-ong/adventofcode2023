@@ -1,5 +1,6 @@
 """day8 solution"""
-from dataclasses import dataclass
+from collections import defaultdict
+from dataclasses import dataclass, field
 import itertools
 
 
@@ -15,6 +16,16 @@ class Location:
     right: str
 
 
+@dataclass
+class LocationStep:
+    """
+    Location + how many steps to get here
+    """
+
+    location: Location
+    steps: int
+
+
 class WorldMap:
     """world map class"""
 
@@ -26,15 +37,6 @@ class WorldMap:
         self.mappings[location.name] = location
 
 
-class Cycle:
-    """find a cycle"""
-
-    start_location: str
-    start_offset: int
-    cycle_length: int
-    z_locations: list[int]
-
-
 @dataclass
 class Directions:
     """Simple directions string"""
@@ -43,6 +45,38 @@ class Directions:
 
     def get_step(self, index):
         return self.steps[index % len(self.steps)]
+
+
+@dataclass
+class Cycle:
+    """find a cycle"""
+
+    start_location: Location
+    location_steps: list[LocationStep]
+    cycle_start: LocationStep
+
+    cycle_start_index: int = field(init=False)
+    end_zs: list[int] = field(init=False)
+
+    def __post_init__(self):
+        self.cycle_start_index = self.location_steps.index(self.cycle_start)
+        end_zs: list[int] = []
+        for location_step in self.location_steps:
+            if location_step.location.name.endswith("Z"):
+                end_zs.append(location_step.steps)
+        self.end_zs = end_zs
+
+
+class LocationStepsLookup:
+    def __init__(self):
+        self.lookup = defaultdict(list)
+
+    def add(self, location_step: LocationStep):
+        self.lookup[location_step.location.name].append(location_step)
+
+    def contains(self, location_step: LocationStep):
+        my_list = self.lookup[location_step.location.name]
+        return location_step in my_list
 
 
 def read_input():
@@ -80,12 +114,57 @@ def follow_directions(directions: Directions, world_map: WorldMap) -> int:
     return -1
 
 
+def follow_directions_multi(directions: Directions, world_map: WorldMap) -> int:
+    """Follow all mappings ending in A until all of them are ZZZ"""
+    mappings = world_map.mappings
+    nodes: list[Location] = [
+        location for location in mappings.values() if location.name.endswith("A")
+    ]
+
+    cycle1 = find_cycle(nodes[0], world_map, directions)
+
+    print(len(cycle1.location_steps))
+    print(cycle1.cycle_start_index)
+    print(cycle1.end_zs)
+    return 0
+
+
+def find_cycle(location: Location, world_map: WorldMap, directions: Directions):
+    start_location = location
+    nodes: list[LocationStep] = []
+    step_count = 0
+    mappings = world_map.mappings
+
+    node = LocationStep(location, step_count)
+    location_steps_lookup = LocationStepsLookup()
+
+    while True:
+        nodes.append(node)
+        location_steps_lookup.add(node)
+
+        direction = directions.steps[step_count]
+        if direction == "L":
+            location = mappings[location.left]
+        else:
+            location = mappings[location.right]
+
+        node = LocationStep(location, step_count + 1)
+        if location_steps_lookup.contains(node):
+            break
+
+        step_count += 1
+        step_count %= len(directions.steps)
+
+    return Cycle(start_location, nodes, node)
+
+
 def main():
     """main function, solve the things"""
     # q1
     directions, world_map = read_input()
     nodes_visited: int = follow_directions(directions, world_map)
     print(nodes_visited)
+    follow_directions_multi(directions, world_map)
 
 
 if __name__ == "__main__":
