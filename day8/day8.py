@@ -58,13 +58,28 @@ class Cycle:
     cycle_start_index: int = field(init=False)
     end_zs: list[int] = field(init=False)
 
+    @property
+    def cycle_length(self):
+        """return the cycle length"""
+        return len(self.location_steps) - self.cycle_start_index
+
     def __post_init__(self):
         self.cycle_start_index = self.location_steps.index(self.cycle_start)
         end_zs: list[int] = []
-        for location_step in self.location_steps:
+        for index, location_step in enumerate(self.location_steps):
             if location_step.location.name.endswith("Z"):
-                end_zs.append(location_step.steps)
+                end_zs.append(index)
         self.end_zs = end_zs
+
+    def get_location(self, index):
+        if index < len(self.location_steps):
+            return self.location_steps[index]
+
+        # 2nd half of array is from cycle_start_index -> end
+        index -= len(self.location_steps)
+        index += self.cycle_start_index
+        index %= self.cycle_length
+        return self.location_steps[index]
 
 
 class LocationStepsLookup:
@@ -121,11 +136,11 @@ def follow_directions_multi(directions: Directions, world_map: WorldMap) -> int:
         location for location in mappings.values() if location.name.endswith("A")
     ]
 
-    cycle1 = find_cycle(nodes[0], world_map, directions)
+    cycles = [find_cycle(node, world_map, directions) for node in nodes]
 
-    print(len(cycle1.location_steps))
-    print(cycle1.cycle_start_index)
-    print(cycle1.end_zs)
+    for cycle in cycles:
+        print(cycle.start_location, len(cycle.location_steps))
+
     return 0
 
 
