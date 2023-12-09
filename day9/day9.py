@@ -65,12 +65,8 @@ def interpolate(values):
     Converts 1 2 3 4
            to 1 1 1
     """
-    result = []
-    left = values[0]
-    for value in values[1:]:
-        right = value
-        result.append(right - left)
-        left = right
+    result = [values[i + 1] - values[i] for i in range(len(values) - 1)]
+
     return result
 
 
