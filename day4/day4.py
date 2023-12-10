@@ -2,8 +2,6 @@
 Day 4 solution
 """
 
-from dataclasses import dataclass
-from collections.abc import Mapping
 
 
 def split_numbers(string):
@@ -13,7 +11,7 @@ def split_numbers(string):
     """
     string = string.strip()
 
-    return set([int(number) for number in string.split()])
+    return {int(number) for number in string.split()}
 
 
 class Card:

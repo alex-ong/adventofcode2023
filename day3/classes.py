@@ -33,7 +33,7 @@ class Gear:
     col: int
     row: int
 
-    part_numbers: list[PartNumber] = None
+    part_numbers: list[PartNumber] | None = None
 
     @property
     def gear_ratio(self) -> int:
@@ -72,25 +72,32 @@ class Matrix:
                 results.append(part_number)
         return results
 
+    def is_engine_part_row(self, row):
+        """Returns if there is an engine part in this row"""
+        return any(char not in NON_PART for char in row)
+
     def is_engine_part(self, part_number: PartNumber) -> bool:
         """return whether a part_number is an engine part by looking at its surroundings"""
         start_x = max(0, part_number.col - 1)
         end_x = min(part_number.end_index + 1, self.row_size)
 
-        if part_number.row >= 1:  # row above
-            for char in self.data[part_number.row - 1][start_x:end_x]:
-                if char not in NON_PART:
-                    return True
-        if part_number.row < self.row_count - 1:  # row below
-            for char in self.data[part_number.row + 1][start_x:end_x]:
-                if char not in NON_PART:
-                    return True
-        if part_number.col >= 1:  # left one
-            if self.data[part_number.row][part_number.col - 1] not in NON_PART:
-                return True
-        if part_number.end_index < self.row_size - 1:  # right one
-            if self.data[part_number.row][part_number.end_index] not in NON_PART:
-                return True
+        if part_number.row >= 1 and self.is_engine_part_row(  # row above
+            self.data[part_number.row - 1][start_x:end_x]
+        ):
+            return True
+        if (  # row below
+            part_number.row < self.row_count - 1
+            and self.is_engine_part_row(self.data[part_number.row + 1][start_x:end_x])
+        ):
+            return True
+
+        # left one
+        if self.data[part_number.row][start_x] not in NON_PART:
+            return True
+
+        # right one
+        if self.data[part_number.row][end_x - 1] not in NON_PART:
+            return True
 
         return False
 

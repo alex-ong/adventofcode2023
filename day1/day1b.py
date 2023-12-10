@@ -1,4 +1,3 @@
-import os
 
 class IndexValue:
     index = 0

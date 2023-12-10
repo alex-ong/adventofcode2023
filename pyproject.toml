@@ -1,2 +1,6 @@
 [tool.mypy]
 python_version = '3.11'
+
+[tool.ruff]
+extend-select = ["C4", "C90", "SIM", "TCH"]
+ignore = ["SIM108"]

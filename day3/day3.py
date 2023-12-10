@@ -1,9 +1,8 @@
 """
 Day 3 implementation
 """
-import re
 
-from classes import Gear, Matrix, PartNumber
+from classes import Gear, Matrix
 
 
 def get_data() -> Matrix:
@@ -17,7 +16,8 @@ def get_data() -> Matrix:
 def main() -> None:
     matrix = get_data()
     part_numbers = matrix.get_part_numbers()
-    part_filter = lambda part_number: matrix.is_engine_part(part_number)
+    def part_filter(part_number):
+        return matrix.is_engine_part(part_number)
     part_numbers = list(filter(part_filter, part_numbers))
 
     # q1

@@ -113,7 +113,7 @@ def follow_directions(directions: Directions, world_map: WorldMap) -> int:
     for step in itertools.cycle(directions.steps):
         if step == "L":
             node = mappings[node.left]
-        else:  # step == "R":
+        else:
             node = mappings[node.right]
         nodes_visited += 1
         if node.name == "ZZZ":
