@@ -1,5 +1,4 @@
 """day8 solution"""
-from collections import defaultdict
 from dataclasses import dataclass, field
 import math
 import itertools
@@ -25,6 +24,9 @@ class LocationStep:
 
     location: Location
     steps: int
+
+    def __hash__(self):
+        return hash(self.location.name + str(self.steps))
 
 
 class WorldMap:
@@ -83,18 +85,6 @@ class Cycle:
         if index >= len(self.location_steps):
             raise ValueError("you fucked up")
         return self.location_steps[index]
-
-
-class LocationStepsLookup:
-    def __init__(self):
-        self.lookup = defaultdict(list)
-
-    def add(self, location_step: LocationStep):
-        self.lookup[location_step.location.name].append(location_step)
-
-    def contains(self, location_step: LocationStep):
-        my_list = self.lookup[location_step.location.name]
-        return location_step in my_list
 
 
 def read_input():
@@ -175,7 +165,7 @@ def find_cycle(location: Location, world_map: WorldMap, directions: Directions):
     mappings = world_map.mappings
 
     node = LocationStep(location, step_count)
-    location_steps_lookup = LocationStepsLookup()
+    location_steps_lookup = set()
 
     while True:
         nodes.append(node)
@@ -188,7 +178,7 @@ def find_cycle(location: Location, world_map: WorldMap, directions: Directions):
             location = mappings[location.right]
 
         node = LocationStep(location, step_count + 1)
-        if location_steps_lookup.contains(node):
+        if node in location_steps_lookup:
             break
 
         step_count += 1
