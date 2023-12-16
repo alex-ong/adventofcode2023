@@ -56,9 +56,9 @@ class World:
         """Return number of columns"""
         return len(self.data[0])
 
-    def solve(self) -> SolvedWorld:
+    def solve(self, start_laser=LaserInstance(0, 0, Direction.EAST)) -> SolvedWorld:
         solved_world = SolvedWorld(self.num_rows, self.num_cols)
-        active_lasers = [LaserInstance(0, 0, Direction.EAST)]
+        active_lasers = [start_laser]
         while len(active_lasers) > 0:
             laser = active_lasers.pop(0)
             if self.is_oob(laser):
@@ -94,13 +94,30 @@ def get_input() -> World:
     return world
 
 
+def solve_task(task: LaserInstance, world: World):
+    """Calculates number of energized tiles"""
+    return world.solve(task).num_energized()
+
+
 def main():
     """main function"""
     world = get_input()
 
+    # part 1
     solved_world = world.solve()
-    print(solved_world)
     print(solved_world.num_energized())
+
+    # part 2: brute force coz our impl is already cached/backtracked
+    tasks = []
+    for col in range(world.num_cols):
+        tasks.append(LaserInstance(0, col, Direction.SOUTH))
+        tasks.append(LaserInstance(world.num_rows - 1, col, Direction.NORTH))
+
+    for row in range(world.num_rows):
+        tasks.append(LaserInstance(row, 0, Direction.EAST))
+        tasks.append(LaserInstance(row, world.num_cols - 1, Direction.WEST))
+
+    print(max(solve_task(task, world) for task in tasks))
 
 
 if __name__ == "__main__":
