@@ -63,19 +63,19 @@ class SpringLine:
         if state[0] == "#":
             if len(state.broken_springs) == 0:
                 return self.set_and_return(state, 0)
-            broken = state.broken_springs[0]
+
             # commit to the state or die trying
+            broken = state.broken_springs[0]
             items = state[:broken]
-            if len(items) < broken:
-                return self.set_and_return(state, 0)
-            if items.count(".") > 0:
-                return self.set_and_return(state, 0)
-            # check right hand side now...
 
-            if state[broken] == "#":
+            if len(items) < broken:  # at end of array and not enough elements
                 return self.set_and_return(state, 0)
+            if items.count(".") > 0:  # only accept # and ?
+                return self.set_and_return(state, 0)
+            if state[broken] == "#":  # check right hand side, needs to be ? or .
+                return self.set_and_return(state, 0)
+
             state = State(state[broken + 1 :], state.broken_springs[1:])
-
             return self.set_and_return(state, self.calculate_recursive(state))
         if state[0] == "?":
             hash_state = State("#" + state.items[1:], state.broken_springs[:])
