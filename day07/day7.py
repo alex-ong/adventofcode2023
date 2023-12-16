@@ -23,7 +23,7 @@ class Hand:
 
     def calculate_oak(self):
         """Figure out card sets"""
-        card_sets = defaultdict(int)
+        card_sets: dict[str, int] = defaultdict(int)
         for card in self.cards:
             card_sets[card] += 1
         return sorted(card_sets.values(), reverse=True)
@@ -50,7 +50,7 @@ class HandPart2(Hand):
         jokers will be added to the biggest card set
         """
 
-        card_sets = defaultdict(int)
+        card_sets: dict[str, int] = defaultdict(int)
         for card in self.cards:
             card_sets[card] += 1
 

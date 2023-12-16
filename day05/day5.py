@@ -161,7 +161,7 @@ def process_file(file):
     """processes mappings from file"""
     seeds = None
     maps = []
-    named_map = None
+    named_map: NamedMap
 
     for line in file:
         line = line.strip()
