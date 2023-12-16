@@ -45,7 +45,7 @@ class World:
         print("\n".join(str(row) for row in self.data))
 
     def print_correct(self):
-        """Pirnt with north facing up"""
+        """Print with north facing up"""
         world = self.correct_side()
         world.print_map()
         print(f"last action:{self.left_is}")
@@ -80,7 +80,10 @@ def naive_score(world_rows):
 
 
 def simulate_row(row):
-    """simulates a row; returns its value and the new row"""
+    """
+    simulates a row; returns its value and the new row
+    Assume's that we are moving boulders to the left
+    """
     square_indices = [-1] + [i for i, x in enumerate(row) if x == "#"] + [len(row)]
     pairs = zip(square_indices, square_indices[1:])
     row_score = 0
