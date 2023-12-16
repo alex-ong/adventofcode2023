@@ -1,12 +1,5 @@
+"""day12 solution"""
 from dataclasses import dataclass, field
-from enum import Enum
-from typing import Dict
-
-
-class Check(Enum):
-    CONTINUE = 0
-    SUCCESS = 1
-    FAIL = 2
 
 
 @dataclass
@@ -43,7 +36,7 @@ class SpringLine:
 
     items: str
     broken_springs: list[int]
-    big_cache: Dict[State, int] = field(init=False, repr=False, default_factory=dict)
+    big_cache: dict[State, int] = field(init=False, repr=False, default_factory=dict)
 
     def unfold(self) -> "SpringLine":
         """makes it bigger"""
