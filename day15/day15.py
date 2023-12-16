@@ -65,11 +65,11 @@ class Box:
                 return
         self.contents.append(lens)
 
-    def remove_lens(self, lens: Lens):
+    def remove_lens(self, lens_name):
         """if a lens with a matching name is inside, remove it"""
         to_remove = None
         for existing_lens in self.contents:
-            if existing_lens.name == lens.name:
+            if existing_lens.name == lens_name:
                 to_remove = existing_lens
                 break
         if to_remove is not None:
@@ -79,6 +79,7 @@ class Box:
         return f"Box {self.id}: " + " ".join(str(lens) for lens in self.contents)
 
     def calculate_power(self):
+        """Calculates power of the box by summing powers of the lenses"""
         result = 0
         for slot_number, lens in enumerate(self.contents):
             box_power = 1 + self.id
@@ -91,7 +92,6 @@ class Box:
 
 def parse_step_pt2(raw_step: str):
     """Handles as step in part 2"""
-    print(raw_step)
     if len(splits := raw_step.split("=")) == 2:
         box = get_string_hash(splits[0])
         strength = int(splits[1].strip())
@@ -103,30 +103,24 @@ def parse_step_pt2(raw_step: str):
     raise ValueError(raw_step)
 
 
-def print_boxes(boxes: list[Box]):
-    for box in boxes:
-        if len(box.contents) > 0:
-            print(box)
-
-
 def process_steps_pt2(steps: list[Step]):
+    """Process a list of steps"""
     boxes: list[Box] = [Box(i) for i in range(256)]
-    lenses: dict[str, Lens] = {}
+
     for step in steps:
         if step.process == AddRemove.Remove:
-            if step.lens_name in lenses:
-                lens = lenses[step.lens_name]
-                boxes[step.box].remove_lens(lens)
+            boxes[step.box].remove_lens(step.lens_name)
         else:
             if step.focal_length is None:
                 raise ValueError("focal length should not be None")
             lens = Lens(step.lens_name, step.focal_length)
             boxes[step.box].add_lens(lens)
-            lenses[lens.name] = lens
+
     return sum(box.calculate_power() for box in boxes)
 
 
 def main():
+    """main function"""
     chars = get_input()
     raw_steps = chars.split(",")
     # q1
@@ -134,7 +128,6 @@ def main():
 
     # q2
     steps = [parse_step_pt2(raw_step) for raw_step in raw_steps]
-    print("\n".join(str(step) for step in steps))
     print(process_steps_pt2(steps))
 
 
