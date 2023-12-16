@@ -1,5 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
+from typing import Dict
 
 
 class Check(Enum):
@@ -10,47 +11,39 @@ class Check(Enum):
 
 @dataclass
 class State:
-    items: list[str]
-    broken_remaining: int
-    current_index: int = 0
+    items: str
+    broken_springs: list[int]
 
-    def __getitem__(self, index):
-        if isinstance(index, slice):
-            return self.items[index.start : index.stop : index.step]
-        if index < 0:
-            return "."
+    def valid(self):
+        """
+        returns true IFF we are completed without errors
+        """
+        if len(self.items) == 0 and len(self.broken_springs) == 0:
+            return 1
+        return 0
+
+    def __getitem__(self, index_or_slice) -> str:
+        # slice access
+        if isinstance(index_or_slice, slice):
+            _slice = index_or_slice
+            return self.items[_slice.start : _slice.stop : _slice.step]
+        # index access
+        index = index_or_slice
         if index >= len(self.items):
             return "."
-        return self.items[index]
+        return self.items[index_or_slice]
 
-    def __len__(self):
-        return len(self.items)
-
-    def count(self, character="?"):
-        """Returns count of given character"""
-        return self.items.count(character)
-
-
-class HashState(State):
-    def __init__(self, prev_state: State, index: int):
-        self.items = prev_state.items[:index] + "#" + prev_state.items[index + 1 :]
-        self.broken_remaining = prev_state.broken_remaining - 1
-        self.current_index = index
-
-
-class DotState(State):
-    def __init__(self, prev_state: State, index: int):
-        self.items = prev_state.items[:index] + "." + prev_state.items[index + 1 :]
-        self.broken_remaining = prev_state.broken_remaining
-        self.current_index = index
+    def __hash__(self):
+        return hash(str(self.items) + ":" + str(self.broken_springs))
 
 
 @dataclass
 class SpringLine:
     """springline class"""
 
-    items: list[str]
+    items: str
     broken_springs: list[int]
+    big_cache: Dict[State, int] = field(init=False, repr=False, default_factory=dict)
 
     def unfold(self) -> "SpringLine":
         """makes it bigger"""
@@ -58,80 +51,48 @@ class SpringLine:
 
     def calculate(self):
         """brute force with backtracking lets go..."""
-        first_state = State(
-            self.items[:], sum(self.broken_springs) - self.items.count("#")
-        )
-        states = [first_state]
-        result = 0
-        while len(states) > 0:
-            state = states.pop(0)
+        first_state = State(self.items[:], self.broken_springs[:])
+        return self.calculate_recursive(first_state)
 
-            check: Check = self.verify(state)
-            if check == Check.FAIL:
-                continue
-            if check == Check.SUCCESS:
-                result += 1
-                continue
-            self.calculate_state(states, state)
-        return result
+    def set_and_return(self, state, value):
+        """sets and returns in one line"""
+        self.big_cache[state] = value
+        return value
 
-    def calculate_state(self, states: list[State], state: State):
-        """
-        calculates a single state,
-        adding to our list if we need to expand
-        """
+    def calculate_recursive(self, state: State):
+        if state in self.big_cache:
+            return self.big_cache[state]
+        if len(state.items) == 0:
+            return self.set_and_return(state, state.valid())
+        if state[0] == ".":
+            dot_state = State(state.items[1:], state.broken_springs[:])
+            return self.set_and_return(state, self.calculate_recursive(dot_state))
+        if state[0] == "#":
+            if len(state.broken_springs) == 0:
+                return self.set_and_return(state, 0)
+            broken = state.broken_springs[0]
+            # commit to the state or die trying
+            items = state[:broken]
+            if len(items) < broken:
+                return self.set_and_return(state, 0)
+            if items.count(".") > 0:
+                return self.set_and_return(state, 0)
+            # check right hand side now...
 
-        try:  # find first ?
-            index = state.items.index("?", state.current_index)
-        except ValueError:
-            return  # no questionmarks left. good work
+            if state[broken] == "#":
+                return self.set_and_return(state, 0)
+            state = State(state[broken + 1 :], state.broken_springs[1:])
 
-        # turn the ? into both a `#`` and a `.`
-        if state.count("?") < state.broken_remaining:
-            return  # can't fill enough #'s so exit
+            return self.set_and_return(state, self.calculate_recursive(state))
+        if state[0] == "?":
+            hash_state = State("#" + state.items[1:], state.broken_springs[:])
+            dot_state = State("." + state.items[1:], state.broken_springs[:])
 
-        if state.broken_remaining > 0:
-            state_hash = HashState(
-                state,
-                index,
-            )
-            states.append(state_hash)
+            result = self.calculate_recursive(hash_state)
+            result += self.calculate_recursive(dot_state)
+            return self.set_and_return(state, result)
 
-        state_dot = DotState(state, index)
-        states.append(state_dot)
-
-    def verify(self, state: State) -> Check:
-        all_broken = self.broken_springs
-        index = 0
-        broken_index = 0
-
-        while index < len(state):
-            item = state[index]
-            if item == "#":
-                if broken_index >= len(all_broken):
-                    return Check.FAIL
-                broken = all_broken[broken_index]
-                consecutive = state[index : index + broken]
-                if any(x == "." for x in consecutive):
-                    return Check.FAIL
-                if len(consecutive) != broken:  # consecutive constructor can be small
-                    return Check.FAIL
-                if state[index - 1] == "#" or state[index + broken] == "#":
-                    return Check.FAIL
-                index += broken
-                broken_index += 1
-            elif item == "?":
-                return Check.CONTINUE
-            else:
-                index += 1
-
-        if broken_index != len(all_broken):
-            if state.items.count("?") == 0:
-                return Check.FAIL
-            return Check.CONTINUE
-        if state.count("?") == 0:
-            return Check.SUCCESS
-        return Check.CONTINUE
+        return self.set_and_return(state, 0)
 
 
 def get_input() -> list[SpringLine]:
@@ -146,16 +107,19 @@ def get_input() -> list[SpringLine]:
     return result
 
 
+def calculate_sum(spring_lines):
+    """calculates every spring line and then adds the totals"""
+    return sum(spring_line.calculate() for spring_line in spring_lines)
+
+
 def main():
     """main function"""
     spring_lines = get_input()
     # q1
-    print(sum(line.calculate() for line in spring_lines))
-
-    big_spring_lines = [spring_line.unfold() for spring_line in spring_lines]
-    print(spring_lines[0], big_spring_lines[0])
-    for spring_line in big_spring_lines:
-        print(spring_line.calculate())
+    print(calculate_sum(spring_lines))
+    # q2
+    spring_lines_big = [spring_line.unfold() for spring_line in spring_lines]
+    print(calculate_sum(spring_lines_big))
 
 
 if __name__ == "__main__":
