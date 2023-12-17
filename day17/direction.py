@@ -12,7 +12,7 @@ class Direction(IntEnum):
     SOUTH = 2
     WEST = 3
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self == Direction.NORTH:
             return "^"
         elif self == Direction.EAST:
@@ -27,7 +27,7 @@ class Direction(IntEnum):
         int_value = int(self)
         return Direction((int_value + 2) % len(Direction))
 
-    def offset(self, row, col) -> tuple[int, int]:
+    def offset(self, row: int, col: int) -> tuple[int, int]:
         if self == Direction.NORTH:
             return (row - 1, col)
         if self == Direction.EAST:
@@ -38,7 +38,7 @@ class Direction(IntEnum):
             return (row, col - 1)
         raise ValueError("direction not suppported", self)
 
-    def offset_list(self, row: int, col: int, size=4) -> list[tuple[int, int]]:
+    def offset_list(self, row: int, col: int, size: int = 4) -> list[tuple[int, int]]:
         offsets = range(1, size + 1)
         if self == Direction.NORTH:
             return [(row - i, col) for i in offsets]
