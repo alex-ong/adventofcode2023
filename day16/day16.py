@@ -3,8 +3,7 @@ day16 solution
 """
 
 
-import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from cells import Cell
 from direction import Direction
@@ -48,15 +47,12 @@ class SolvedWorld:
 class World:
     data: list[list[Cell]]
 
-    @property
-    def num_rows(self) -> int:
-        """return number of rows"""
-        return len(self.data)
+    num_rows: int = field(init=False, repr=False)
+    num_cols: int = field(init=False, repr=False)
 
-    @property
-    def num_cols(self) -> int:
-        """Return number of columns"""
-        return len(self.data[0])
+    def __post_init__(self):
+        self.num_rows = len(self.data)
+        self.num_cols = len(self.data[0])
 
     def solve(self, start_laser=LaserInstance(0, 0, Direction.EAST)) -> SolvedWorld:
         solved_world = SolvedWorld(self.num_rows, self.num_cols)
@@ -120,9 +116,7 @@ def main():
         tasks.append(LaserInstance(row, 0, Direction.EAST))
         tasks.append(LaserInstance(row, world.num_cols - 1, Direction.WEST))
 
-    start = time.time()
     print(max(solve_task(task, world) for task in tasks))
-    print(f"time: {time.time() - start}")
 
 
 if __name__ == "__main__":
