@@ -1,7 +1,7 @@
 """day7 solution"""
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import ClassVar
+from typing import Any, ClassVar, Self
 
 
 @dataclass
@@ -15,20 +15,20 @@ class Hand:
     of_a_kind: list[int] = field(init=False)
     CARD_MAPPING: ClassVar[str] = "23456789TJQKA"
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """convert cards to ints"""
         self.cards_inted = [self.CARD_MAPPING.index(card) for card in self.cards]
         self.bet = int(self.bet)
         self.of_a_kind = self.calculate_oak()
 
-    def calculate_oak(self):
+    def calculate_oak(self) -> list[int]:
         """Figure out card sets"""
         card_sets: dict[str, int] = defaultdict(int)
         for card in self.cards:
             card_sets[card] += 1
         return sorted(card_sets.values(), reverse=True)
 
-    def __lt__(self, other):
+    def __lt__(self, other: Self) -> Any:
         """Less than comparator function"""
         # compare our sets
         for ours, theirs in zip(self.of_a_kind, other.of_a_kind):
@@ -44,7 +44,7 @@ class HandPart2(Hand):
     CARD_MAPPING = "J23456789TQKA"  # new card ordering
 
     # override
-    def calculate_oak(self):
+    def calculate_oak(self) -> list[int]:
         """
         Figure out card sets;
         jokers will be added to the biggest card set
@@ -63,7 +63,7 @@ class HandPart2(Hand):
         return of_a_kind
 
 
-def parse_lines(cls):
+def parse_lines(cls: type) -> list[Hand]:
     """open input file and parse into hand structures"""
 
     with open("input.txt", "r", encoding="utf8") as file:
@@ -72,7 +72,7 @@ def parse_lines(cls):
     return results
 
 
-def calculate_hands(cls):
+def calculate_hands(cls: type) -> None:
     """generates class `cls` then calculates points"""
     hands = sorted(parse_lines(cls))
 
@@ -82,7 +82,7 @@ def calculate_hands(cls):
     print(score)
 
 
-def main():
+def main() -> None:
     """main func"""
     # Q1
     calculate_hands(Hand)
