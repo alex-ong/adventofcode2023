@@ -2,7 +2,12 @@
 Day 3 implementation
 """
 
+from typing import TYPE_CHECKING
+
 from classes import Gear, Matrix
+
+if TYPE_CHECKING:
+    from classes import PartNumber
 
 
 def get_data() -> Matrix:
@@ -16,8 +21,10 @@ def get_data() -> Matrix:
 def main() -> None:
     matrix = get_data()
     part_numbers = matrix.get_part_numbers()
-    def part_filter(part_number):
+
+    def part_filter(part_number: "PartNumber") -> bool:
         return matrix.is_engine_part(part_number)
+
     part_numbers = list(filter(part_filter, part_numbers))
 
     # q1

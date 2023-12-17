@@ -12,7 +12,7 @@ class PartNumber:
     length: int
     value: int
 
-    def touching(self, col, row, row_size) -> bool:
+    def touching(self, col: int, row: int, row_size: int) -> bool:
         """returns if a given coordinate is touching this PartNumber"""
         start_x = max(0, self.col - 1)
         end_x = min(self.end_index, row_size)
@@ -72,7 +72,7 @@ class Matrix:
                 results.append(part_number)
         return results
 
-    def is_engine_part_row(self, row):
+    def is_engine_part_row(self, row: str) -> bool:
         """Returns if there is an engine part in this row"""
         return any(char not in NON_PART for char in row)
 
@@ -81,8 +81,11 @@ class Matrix:
         start_x = max(0, part_number.col - 1)
         end_x = min(part_number.end_index + 1, self.row_size)
 
-        if part_number.row >= 1 and self.is_engine_part_row(  # row above
-            self.data[part_number.row - 1][start_x:end_x]
+        if (
+            part_number.row >= 1
+            and self.is_engine_part_row(  # row above
+                self.data[part_number.row - 1][start_x:end_x]
+            )
         ):
             return True
         if (  # row below
