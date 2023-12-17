@@ -1,5 +1,6 @@
 """day11 solution"""
 from dataclasses import dataclass, field
+from typing import Iterator
 
 
 @dataclass
@@ -51,14 +52,21 @@ class Universe:
     contents: list[list[Point]]
     expansion_rate: int = 2
 
-    def __getitem__(self, row_index) -> list[Point]:
+    rows: int = field(repr=False, init=False)
+    cols: int = field(repr=False, init=False)
+
+    def __post_init__(self) -> None:
+        self.rows = len(self.contents)
+        self.cols = len(self.contents[0])
+
+    def __getitem__(self, row_index: int) -> list[Point]:
         """
         we can just use universe[row]
         instead of universe.contents[row]
         """
         return self.contents[row_index]
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[list[Point]]:
         """
         we can just use `for row in universe`
         instead of `for row in universe.contents`
@@ -66,18 +74,8 @@ class Universe:
         for row in self.contents:
             yield row
 
-    @property
-    def rows(self):
-        return len(self.contents)
-
-    @property
-    def cols(self):
-        return len(self.contents[0])
-
-    def expand_contents(self):
+    def expand_contents(self) -> None:
         """expands the contents of the universe"""
-        # expand rows
-
         for row in self.contents:
             if is_empty(row):
                 for item in row:
@@ -91,7 +89,7 @@ class Universe:
                     item.is_expanded = True
             col_index += 1
 
-    def grab_galaxies(self):
+    def grab_galaxies(self) -> list[Galaxy]:
         """grabs all galaxies"""
         results = []
         galaxy_id = 0
@@ -102,11 +100,11 @@ class Universe:
                     galaxy_id += 1
         return results
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "\n".join("".join(str(col) for col in row) for row in self.contents)
 
 
-def is_empty(items: list[Point]):
+def is_empty(items: list[Point]) -> bool:
     """returns True if all the content is "." """
     has_content = any(x.item == "#" for x in items)
     return not has_content
@@ -133,7 +131,7 @@ def get_total_distance(galaxies: list[Galaxy], universe: Universe) -> int:
     return result
 
 
-def main():
+def main() -> None:
     """main function, runs q1 and q2"""
     universe: Universe = parse_input()
     universe.expand_contents()
