@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 
-def get_input():
+def get_input() -> str:
     with open("input.txt") as file:
         return file.read()
 
@@ -42,10 +42,10 @@ class Lens:
     name: str
     focal_length: int
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(str(self.name) + ":" + str(self.focal_length))
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"[{self.name} {self.focal_length}]"
 
 
@@ -54,7 +54,7 @@ class Box:
     id: int = 0
     contents: list[Lens] = field(default_factory=list)
 
-    def add_lens(self, lens: Lens):
+    def add_lens(self, lens: Lens) -> None:
         """
         If a lens name already exists, swap its power;
         otherwise just add it
@@ -65,7 +65,7 @@ class Box:
                 return
         self.contents.append(lens)
 
-    def remove_lens(self, lens_name):
+    def remove_lens(self, lens_name: str) -> None:
         """if a lens with a matching name is inside, remove it"""
         to_remove = None
         for existing_lens in self.contents:
@@ -75,10 +75,10 @@ class Box:
         if to_remove is not None:
             self.contents.remove(to_remove)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Box {self.id}: " + " ".join(str(lens) for lens in self.contents)
 
-    def calculate_power(self):
+    def calculate_power(self) -> int:
         """Calculates power of the box by summing powers of the lenses"""
         result = 0
         for slot_number, lens in enumerate(self.contents):
@@ -90,7 +90,7 @@ class Box:
         return result
 
 
-def parse_step_pt2(raw_step: str):
+def parse_step_pt2(raw_step: str) -> Step:
     """Handles as step in part 2"""
     if len(splits := raw_step.split("=")) == 2:
         box = get_string_hash(splits[0])
@@ -103,7 +103,7 @@ def parse_step_pt2(raw_step: str):
     raise ValueError(raw_step)
 
 
-def process_steps_pt2(steps: list[Step]):
+def process_steps_pt2(steps: list[Step]) -> int:
     """Process a list of steps"""
     boxes: list[Box] = [Box(i) for i in range(256)]
 
@@ -119,7 +119,7 @@ def process_steps_pt2(steps: list[Step]):
     return sum(box.calculate_power() for box in boxes)
 
 
-def main():
+def main() -> None:
     """main function"""
     chars = get_input()
     raw_steps = chars.split(",")
