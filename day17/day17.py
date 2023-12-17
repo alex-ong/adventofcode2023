@@ -1,6 +1,7 @@
 """day17 solution"""
 from dataclasses import dataclass, field
 from queue import PriorityQueue
+from typing import Optional
 
 from direction import ALL_DIRECTIONS, Direction
 
@@ -13,7 +14,7 @@ class Step:
     direction: Direction
     consecutive_steps: int
 
-    src_step: "Step" | None = field(repr=False)
+    src_step: Optional["Step"] = field(repr=False)
 
     def __hash__(self):
         items = [
@@ -104,24 +105,11 @@ class World:
         step: Step = Step(0, 0, 0, Direction.NORTH, 0, None)
         steps_to_explore: PriorityQueue[Step] = PriorityQueue()
         steps_to_explore.put(step)
-        current_solution = None
+
         while not steps_to_explore.empty():
             step = steps_to_explore.get()
-
-            if (
-                current_solution is not None
-                and step.total_cost > current_solution.total_cost
-            ):
-                return current_solution
-
             if step.row == self.num_rows - 1 and step.col == self.num_cols - 1:
-                if current_solution is None:
-                    current_solution = step
-                    continue
-                if step.total_cost < current_solution.total_cost:
-                    current_solution = step
-                    continue
-
+                return step  # result!
             if not solution_cache.add_solution(step):
                 continue
 
