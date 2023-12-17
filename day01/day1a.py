@@ -1,7 +1,7 @@
 """day1a solution"""
 
 
-def main():
+def main() -> None:
     with open("test.txt", "r", encoding="utf8") as file:
         total = 0
         for line in file:

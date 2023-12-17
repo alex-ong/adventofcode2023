@@ -1,25 +1,26 @@
+"""day1b solution"""
 
+
+from dataclasses import dataclass
+
+
+@dataclass
 class IndexValue:
-    index = 0
-    value = "1"
+    """index to value mapping"""
 
-    
-    def __init__(self, index, value):
-        self.index = index
-        self.value = value
-        
-    def __str__(self):
+    index: int = 0
+    value: str = "1"
+
+    def __str__(self) -> str:
         return f"(i:{self.index}, v:{self.value})"
-        
 
+
+@dataclass
 class WordNumber:
-    word = "one"
-    number = "1"
-    
-    def __init__(self, word, number):
-        self.word = word
-        self.number = number
-        
+    word: str = "one"
+    number: str = "1"
+
+
 mappings = [
     WordNumber("one", "1"),
     WordNumber("two", "2"),
@@ -32,26 +33,33 @@ mappings = [
     WordNumber("nine", "9"),
 ]
 
-    
-with open("test.txt", 'r', encoding="utf8") as file:
-    total = 0
-    for line in file:
-        index_to_chars = {}
-        for index, char in enumerate(line):
-            if char.isnumeric():
-                index_to_chars[index] = char
-            
-            for mapping in mappings:
-                substring = line[index:index+len(mapping.word)]
-                if substring == mapping.word:
-                    index_to_chars[index] = mapping.number
-                    
-        print(index_to_chars, line)
-        first_index = min(index_to_chars.keys())
-        last_index = max(index_to_chars.keys())
-        
-        number = int(index_to_chars[first_index] + index_to_chars[last_index])
-        total += number
-        
-        
-    print(total)
+
+def process_line(line: str) -> int:
+    index_to_chars = {}
+    for index, char in enumerate(line):
+        if char.isnumeric():
+            index_to_chars[index] = char
+
+        for mapping in mappings:
+            substring = line[index : index + len(mapping.word)]
+            if substring == mapping.word:
+                index_to_chars[index] = mapping.number
+
+    print(index_to_chars, line)
+    first_index = min(index_to_chars.keys())
+    last_index = max(index_to_chars.keys())
+
+    return int(index_to_chars[first_index] + index_to_chars[last_index])
+
+
+def main() -> None:
+    with open("input.txt", "r", encoding="utf8") as file:
+        total = 0
+        for line in file:
+            total += process_line(line)
+
+        print(total)
+
+
+if __name__ == "__main__":
+    main()
