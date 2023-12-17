@@ -1,4 +1,15 @@
 {
     "editor.formatOnSave": true,
     "files.eol": "\n",
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+        "source.organizeImports": true
+    }
 }

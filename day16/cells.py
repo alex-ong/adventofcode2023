@@ -2,6 +2,7 @@
 Cell classes
 """
 from abc import ABC, abstractmethod
+
 from direction import Direction
 from laser import LaserInstance
 

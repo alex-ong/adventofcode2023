@@ -1,4 +1,6 @@
-"""Direction class"""
+"""
+Direction class
+"""
 from enum import IntEnum
 
 
