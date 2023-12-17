@@ -9,7 +9,7 @@
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "editor.codeActionsOnSave": {
-        "source.fixAll": true,
-        "source.organizeImports": true
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
     }
 }
