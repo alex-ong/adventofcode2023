@@ -1,6 +1,7 @@
 """day13 solution"""
 
 from dataclasses import dataclass
+from typing import Optional
 
 
 def distance(left: str, right: str) -> int:
@@ -12,15 +13,15 @@ def distance(left: str, right: str) -> int:
 class Maze:
     tiles: list[str]
 
-    def solve(self, distance=0):
+    def solve(self, distance: int = 0) -> int:
         row_reflect = self.reflect_rows(distance)
         col_reflect = self.reflect_cols(distance)
         return self.score(row_reflect, col_reflect)
 
-    def reflect_rows(self, distance):
+    def reflect_rows(self, distance: int) -> Optional[int]:
         return self.check_reflection(self.tiles, distance)
 
-    def reflect_cols(self, distance):
+    def reflect_cols(self, distance: int) -> Optional[int]:
         """checks reflection of cols by flipping rows/cols"""
         cols: list[list[str]] = [[] for _ in range(len(self.tiles[0]))]
         for row in self.tiles:
@@ -30,7 +31,7 @@ class Maze:
         cols_strs = ["".join(str(col)) for col in cols]
         return self.check_reflection(cols_strs, distance)
 
-    def check_reflection(self, data: list[str], target_dist: int):
+    def check_reflection(self, data: list[str], target_dist: int) -> Optional[int]:
         """Checks a reflection on rows or cols"""
         for index in range(len(data)):
             if index == 0:
@@ -46,7 +47,7 @@ class Maze:
 
         return None
 
-    def score(self, row_reflect, col_reflect) -> int:
+    def score(self, row_reflect: Optional[int], col_reflect: Optional[int]) -> int:
         """returns score for q1"""
         if col_reflect is not None:
             return col_reflect
@@ -72,7 +73,7 @@ def read_input() -> list[Maze]:
     return mazes
 
 
-def main():
+def main() -> None:
     mazes: list[Maze] = read_input()
 
     # q1
