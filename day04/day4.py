@@ -3,8 +3,7 @@ Day 4 solution
 """
 
 
-
-def split_numbers(string):
+def split_numbers(string: str) -> set[int]:
     """
     Splits a list of string'ed numbers into a set
     E.g: ` 39 40 41 42 ` -> set(39,40,41,42)
@@ -19,7 +18,7 @@ class Card:
     winners: set[int]
     have: set[int]
 
-    def __init__(self, input_string):
+    def __init__(self, input_string: str):
         line = input_string.strip()
         card_id_str, numbers_str = line.split(":")
         winners_str, have_str = numbers_str.split("|")
@@ -28,7 +27,7 @@ class Card:
         self.winners = split_numbers(winners_str)
         self.have = split_numbers(have_str)
 
-    def get_points(self):
+    def get_points(self) -> int:
         """Returns how many points the card is worth"""
         matches = self.get_matches()
 
@@ -39,7 +38,8 @@ class Card:
 
         return points
 
-    def get_matches(self):
+    def get_matches(self) -> int:
+        """returns how many winners intersect with what we have"""
         intersection = self.winners.intersection(self.have)
         return len(intersection)
 
@@ -47,12 +47,14 @@ class Card:
 class Inventory:
     # mapping of card to how many more cards it makes
     memoized: dict[int, int]
+    all_cards: list[Card]
 
     def __init__(self, all_cards: list[Card]):
         self.all_cards = all_cards
         self.memoized = self.calculate_mappings()
 
-    def calculate_mappings(self):
+    def calculate_mappings(self) -> dict[int, int]:
+        """returns map of card_id -> cards owned"""
         mappings = {}
         reversed_cards = self.all_cards[::-1]
         for card in reversed_cards:
@@ -64,7 +66,7 @@ class Inventory:
                 mappings[card.id] = 1 + total
         return mappings
 
-    def total_cards(self):
+    def total_cards(self) -> int:
         return sum(self.memoized.values())
 
 
@@ -75,7 +77,7 @@ def grab_data(filename: str) -> list[Card]:
     return result
 
 
-def main():
+def main() -> None:
     cards: list[Card] = grab_data("input.txt")
     # Q1
     total_points = sum(card.get_points() for card in cards)
