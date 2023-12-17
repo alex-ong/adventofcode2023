@@ -15,17 +15,17 @@ class Direction(IntEnum):
     def __str__(self):
         return self.name
 
-    def opposite(self):
+    def opposite(self) -> "Direction":
         int_value = int(self)
-        return (int_value + 2) % len(Direction)
+        return Direction((int_value + 2) % len(Direction))
 
-    def offset(self, row, col):
+    def offset(self, row, col) -> tuple[int, int]:
         if self == Direction.NORTH:
-            return row - 1, col
+            return (row - 1, col)
         if self == Direction.EAST:
-            return row, col + 1
+            return (row, col + 1)
         if self == Direction.SOUTH:
-            return row + 1, col
+            return (row + 1, col)
         if self == Direction.WEST:
-            return row, col - 1
+            return (row, col - 1)
         raise ValueError("direction not suppported", self)

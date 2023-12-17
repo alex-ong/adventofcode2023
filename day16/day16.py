@@ -17,7 +17,7 @@ class SolvedWorld:
     def __init__(self, num_rows, num_cols):
         self.data = [[[] for _ in range(num_cols)] for _ in range(num_rows)]
 
-    def already_solved(self, laser: LaserInstance):
+    def already_solved(self, laser: LaserInstance) -> bool:
         """returns true if laser already calculated"""
         solutions = self.data[laser.row][laser.col]
         if laser in solutions:
@@ -36,9 +36,9 @@ class SolvedWorld:
             row_strs.append(row_str)
         return "\n".join(row_strs)
 
-    def num_energized(self):
+    def num_energized(self) -> int:
         """Return number of energized cells"""
-        result = 0
+        result: int = 0
         for row in self.data:
             result += sum(1 if len(col) >= 1 else 0 for col in row)
         return result
