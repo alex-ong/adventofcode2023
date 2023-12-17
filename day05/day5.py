@@ -1,8 +1,9 @@
 """
 Day5 solution
 """
-from dataclasses import dataclass, field
 from bisect import bisect_left
+from dataclasses import dataclass, field
+from io import TextIOWrapper
 
 INT_MAX = 4294967296
 
@@ -27,18 +28,18 @@ class Mapping:
 
     injected: bool = field(default=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.src_end = self.src_start + self.size
         self.dest_end = self.dest_start + self.size
 
-    def get_mapping(self, src_value: int):
+    def get_mapping(self, src_value: int) -> int:
         """Converts from src_value to destination"""
         if self.src_start <= src_value < self.src_end:
             return src_value - self.src_start + self.dest_start
 
         raise ValueError("Item not within mapping range")
 
-    def get_mappings(self, start, end) -> tuple[MappingRange, int]:
+    def get_mappings(self, start: int, end: int) -> tuple[MappingRange, int]:
         """
         Returns the chunk from start to end, followed by the remainder
         """
@@ -73,11 +74,11 @@ class NamedMap:
         self.name = name
         self.mappings = []
 
-    def add_mapping(self, mapping: Mapping):
+    def add_mapping(self, mapping: Mapping) -> None:
         """Adds a mapping to our list"""
         self.mappings.append(mapping)
 
-    def finalize_mappings(self):
+    def finalize_mappings(self) -> None:
         """
         * Sorts the mappings
         * Fills in any missing ranges
@@ -102,7 +103,7 @@ class NamedMap:
 
         self.mappings = self.extend_mapping_range(mappings)
 
-    def extend_mapping_range(self, mappings: list[Mapping]):
+    def extend_mapping_range(self, mappings: list[Mapping]) -> list[Mapping]:
         """Ensure that mappings go from 0 -> INT_MAX"""
         if mappings[0].src_start != 0:
             injected_mapping = Mapping(0, 0, mappings[0].src_start, True)
@@ -113,13 +114,15 @@ class NamedMap:
             mappings.append(injected_mapping)
         return mappings
 
-    def get_mapping(self, value: int):
+    def get_mapping(self, value: int) -> int:
         """Uses binary search to grab the correct mapping, then apply it to one value"""
         mapping_idx = bisect_left(self.mappings, value, key=lambda m: m.src_end)
         mapping = self.mappings[mapping_idx]
         return mapping.get_mapping(value)
 
-    def get_mapping_ranges(self, src_mapping_ranges: list[MappingRange]):
+    def get_mapping_ranges(
+        self, src_mapping_ranges: list[MappingRange]
+    ) -> list[MappingRange]:
         """Given a list of mapping ranges, returns a new list of mapping ranges"""
         result = []
         for src_mapping_range in src_mapping_ranges:
@@ -151,23 +154,23 @@ class NamedMap:
 
         return result
 
-    def __str__(self):
+    def __str__(self) -> str:
         result = str(self.name) + "\n"
         result += "\n".join(str(mapping) for mapping in self.mappings)
         return result
 
 
-def process_file(file):
+def process_file(file: TextIOWrapper) -> tuple[list[int], list[NamedMap]]:
     """processes mappings from file"""
-    seeds = None
-    maps = []
+    seeds: list[int]
+    maps: list[NamedMap] = []
     named_map: NamedMap
 
     for line in file:
         line = line.strip()
         if line.startswith("seeds"):  # grab the seeds
-            seeds = line.split(":")[1].split()
-            seeds = [int(seed) for seed in seeds]
+            seeds_str = line.split(":")[1].split()
+            seeds = [int(seed) for seed in seeds_str]
         elif line.endswith("map:"):  # start a map segment
             current_map_name = line.split(" map:")[0]
             named_map = NamedMap(current_map_name)
@@ -185,13 +188,13 @@ def process_file(file):
     return seeds, maps
 
 
-def grab_inputs():
+def grab_inputs() -> tuple[list[int], list[NamedMap]]:
     """parses the source file"""
     with open("input.txt", "r", encoding="utf8") as file:
         return process_file(file)
 
 
-def get_location(seed: int, maps: list[NamedMap]):
+def get_location(seed: int, maps: list[NamedMap]) -> int:
     """given a seed, returns the final location"""
     result = seed
     for named_map in maps:
@@ -199,7 +202,9 @@ def get_location(seed: int, maps: list[NamedMap]):
     return result
 
 
-def get_location_ranges(seed_ranges: list[MappingRange], maps: list[NamedMap]):
+def get_location_ranges(
+    seed_ranges: list[MappingRange], maps: list[NamedMap]
+) -> list[MappingRange]:
     """Given a list of MappingRange, returns a list of MappingRange's for the final location"""
     result = seed_ranges[:]
     for named_map in maps:
@@ -207,13 +212,13 @@ def get_location_ranges(seed_ranges: list[MappingRange], maps: list[NamedMap]):
     return result
 
 
-def seed_to_mapping_ranges(data):
+def seed_to_mapping_ranges(data: list[int]) -> list[MappingRange]:
     """
     converts from list of seeds to list of MappingRanges.
     They are in the format [start, size]
     """
     pairs = list(zip(data[::2], data[1::2]))
-    result = []
+    result: list[MappingRange] = []
     for pair in pairs:
         start, size = pair
         mapping_range = MappingRange(start, start + size)
@@ -221,7 +226,7 @@ def seed_to_mapping_ranges(data):
     return result
 
 
-def main():
+def main() -> None:
     """main function, solve all the problems"""
     seeds, maps = grab_inputs()
     # q1
