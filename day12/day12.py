@@ -7,7 +7,7 @@ class State:
     items: str
     broken_springs: list[int]
 
-    def valid(self):
+    def valid(self) -> int:
         """
         returns true IFF we are completed without errors
         """
@@ -15,18 +15,18 @@ class State:
             return 1
         return 0
 
-    def __getitem__(self, index_or_slice) -> str:
+    def __getitem__(self, index_or_slice: slice | int) -> str:
         # slice access
         if isinstance(index_or_slice, slice):
             _slice = index_or_slice
             return self.items[_slice.start : _slice.stop : _slice.step]
         # index access
-        index = index_or_slice
+        index: int = index_or_slice
         if index >= len(self.items):
             return "."
-        return self.items[index_or_slice]
+        return self.items[index]
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(str(self.items) + ":" + str(self.broken_springs))
 
 
@@ -42,17 +42,17 @@ class SpringLine:
         """makes it bigger"""
         return SpringLine("?".join([self.items] * 5), self.broken_springs * 5)
 
-    def calculate(self):
+    def calculate(self) -> int:
         """brute force with backtracking lets go..."""
         first_state = State(self.items[:], self.broken_springs[:])
         return self.calculate_recursive(first_state)
 
-    def set_and_return(self, state, value):
+    def set_and_return(self, state: State, value: int) -> int:
         """sets and returns in one line"""
         self.big_cache[state] = value
         return value
 
-    def calculate_recursive(self, state: State):
+    def calculate_recursive(self, state: State) -> int:
         if state in self.big_cache:
             return self.big_cache[state]
         if len(state.items) == 0:
@@ -100,12 +100,12 @@ def get_input() -> list[SpringLine]:
     return result
 
 
-def calculate_sum(spring_lines):
+def calculate_sum(spring_lines: list[SpringLine]) -> int:
     """calculates every spring line and then adds the totals"""
     return sum(spring_line.calculate() for spring_line in spring_lines)
 
 
-def main():
+def main() -> None:
     """main function"""
     spring_lines = get_input()
     # q1
