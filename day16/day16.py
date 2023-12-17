@@ -7,28 +7,28 @@ from dataclasses import dataclass, field
 
 from cells import Cell
 from direction import Direction
-from laser import LaserInstance
+from laser import Laser
 
 
 class SolvedWorld:
-    data: list[list[list[LaserInstance]]]
+    data: list[list[list[Laser]]]
 
-    def __init__(self, num_rows, num_cols):
+    def __init__(self, num_rows: int, num_cols: int):
         self.data = [[[] for _ in range(num_cols)] for _ in range(num_rows)]
 
-    def already_solved(self, laser: LaserInstance) -> bool:
+    def already_solved(self, laser: Laser) -> bool:
         """returns true if laser already calculated"""
         solutions = self.data[laser.row][laser.col]
         if laser in solutions:
             return True
         return False
 
-    def add_laser(self, laser: LaserInstance):
+    def add_laser(self, laser: Laser) -> None:
         """adds laser to cell"""
         solutions = self.data[laser.row][laser.col]
         solutions.append(laser)
 
-    def __str__(self):
+    def __str__(self) -> str:
         row_strs = []
         for row in self.data:
             row_str = "".join(str(len(col)) for col in row)
@@ -50,11 +50,11 @@ class World:
     num_rows: int = field(init=False, repr=False)
     num_cols: int = field(init=False, repr=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.num_rows = len(self.data)
         self.num_cols = len(self.data[0])
 
-    def solve(self, start_laser=LaserInstance(0, 0, Direction.EAST)) -> SolvedWorld:
+    def solve(self, start_laser: Laser) -> SolvedWorld:
         solved_world = SolvedWorld(self.num_rows, self.num_cols)
         active_lasers = [start_laser]
         while len(active_lasers) > 0:
@@ -70,7 +70,7 @@ class World:
             active_lasers.extend(next_lasers)
         return solved_world
 
-    def is_oob(self, laser):
+    def is_oob(self, laser: Laser) -> bool:
         """true if laser is out of bounds"""
         return (
             laser.row < 0
@@ -92,29 +92,30 @@ def get_input() -> World:
     return world
 
 
-def solve_task(task: LaserInstance, world: World):
+def solve_task(task: Laser, world: World) -> int:
     """Calculates number of energized tiles"""
     return world.solve(task).num_energized()
 
 
-def main():
+def main() -> None:
     """main function"""
 
     world = get_input()
 
     # part 1
-    solved_world = world.solve()
+    laser = Laser(0, 0, Direction.EAST)
+    solved_world = world.solve(laser)
     print(solved_world.num_energized())
 
     # part 2: brute force coz our impl is already cached/backtracked
     tasks = []
     for col in range(world.num_cols):
-        tasks.append(LaserInstance(0, col, Direction.SOUTH))
-        tasks.append(LaserInstance(world.num_rows - 1, col, Direction.NORTH))
+        tasks.append(Laser(0, col, Direction.SOUTH))
+        tasks.append(Laser(world.num_rows - 1, col, Direction.NORTH))
 
     for row in range(world.num_rows):
-        tasks.append(LaserInstance(row, 0, Direction.EAST))
-        tasks.append(LaserInstance(row, world.num_cols - 1, Direction.WEST))
+        tasks.append(Laser(row, 0, Direction.EAST))
+        tasks.append(Laser(row, world.num_cols - 1, Direction.WEST))
 
     print(max(solve_task(task, world) for task in tasks))
 

@@ -12,14 +12,14 @@ class Direction(IntEnum):
     SOUTH = 2
     WEST = 3
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     def opposite(self) -> "Direction":
         int_value = int(self)
         return Direction((int_value + 2) % len(Direction))
 
-    def offset(self, row, col) -> tuple[int, int]:
+    def offset(self, row: int, col: int) -> tuple[int, int]:
         if self == Direction.NORTH:
             return (row - 1, col)
         if self == Direction.EAST:
