@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
 
 
 @dataclass
@@ -18,15 +18,15 @@ class RaceStrat:
     run_time: int
 
     @property
-    def distance(self):
+    def distance(self) -> int:
         return self.run_time * self.speed
 
     @property
-    def speed(self):
+    def speed(self) -> int:
         return self.charge_time
 
 
-def read_inputs():
+def read_inputs() -> list[Race]:
     """disgusting but short i guess"""
     with open("input.txt", "r", encoding="utf8") as file:
         times = [int(item) for item in file.readline().split()[1:]]
@@ -35,9 +35,9 @@ def read_inputs():
         return items
 
 
-def calculate_race(race: Race):
+def calculate_race(race: Race) -> list[RaceStrat]:
     """naive calcuation of a race"""
-    results = []
+    results: list[RaceStrat] = []
     for i in range(race.time):
         charge_time = i
         run_time = race.time - i
@@ -74,7 +74,7 @@ def calculate_race(race: Race):
 """
 
 
-def calculate_constant_time(race: Race):
+def calculate_constant_time(race: Race) -> int:
     """TL;DR Quadratic formula"""
     x_top = race.time - math.sqrt((race.time * race.time) - 4 * race.record_distance)
     x_neg = x_top / 2
@@ -88,7 +88,7 @@ def calculate_constant_time(race: Race):
     return end - start + 1
 
 
-def main():
+def main() -> None:
     """Solves Day 6"""
     races = read_inputs()
 
