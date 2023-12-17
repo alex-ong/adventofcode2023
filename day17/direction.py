@@ -38,5 +38,17 @@ class Direction(IntEnum):
             return (row, col - 1)
         raise ValueError("direction not suppported", self)
 
+    def offset_list(self, row: int, col: int, size=4) -> list[tuple[int, int]]:
+        offsets = range(1, size + 1)
+        if self == Direction.NORTH:
+            return [(row - i, col) for i in offsets]
+        if self == Direction.EAST:
+            return [((row, col + i)) for i in offsets]
+        if self == Direction.SOUTH:
+            return [(row + i, col) for i in offsets]
+        if self == Direction.WEST:
+            return [(row, col - i) for i in offsets]
+        raise ValueError("direction not suppported", self)
+
 
 ALL_DIRECTIONS = list(Direction)
