@@ -1,7 +1,7 @@
 """day8 solution"""
-from dataclasses import dataclass, field
-import math
 import itertools
+import math
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -25,17 +25,19 @@ class LocationStep:
     location: Location
     steps: int
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.location.name + str(self.steps))
 
 
 class WorldMap:
     """world map class"""
 
-    def __init__(self):
+    mappings: dict[str, Location]
+
+    def __init__(self) -> None:
         self.mappings = {}
 
-    def add_location(self, location: Location):
+    def add_location(self, location: Location) -> None:
         """add location to our mappings"""
         self.mappings[location.name] = location
 
@@ -46,7 +48,7 @@ class Directions:
 
     steps: str
 
-    def get_step(self, index):
+    def get_step(self, index: int) -> str:
         return self.steps[index % len(self.steps)]
 
 
@@ -62,11 +64,11 @@ class Cycle:
     end_zs: list[int] = field(init=False)
 
     @property
-    def cycle_length(self):
+    def cycle_length(self) -> int:
         """return length of the repeating part"""
         return len(self.location_steps) - self.cycle_start_index
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.cycle_start_index = self.location_steps.index(self.cycle_start)
         end_zs: list[int] = []
         for index, location_step in enumerate(self.location_steps):
@@ -74,7 +76,7 @@ class Cycle:
                 end_zs.append(index)
         self.end_zs = end_zs
 
-    def get_location(self, index):
+    def get_location(self, index: int) -> LocationStep:
         if index < len(self.location_steps):
             return self.location_steps[index]
 
@@ -87,7 +89,7 @@ class Cycle:
         return self.location_steps[index]
 
 
-def read_input():
+def read_input() -> tuple[Directions, WorldMap]:
     """reads input into directions/world_map"""
     with open("input.txt", "r", encoding="utf8") as file:
         directions = Directions(file.readline().strip())
@@ -158,7 +160,9 @@ def follow_directions_multi(directions: Directions, world_map: WorldMap) -> int:
     return lcm
 
 
-def find_cycle(location: Location, world_map: WorldMap, directions: Directions):
+def find_cycle(
+    location: Location, world_map: WorldMap, directions: Directions
+) -> Cycle:
     start_location = location
     nodes: list[LocationStep] = []
     step_count = 0
@@ -187,7 +191,7 @@ def find_cycle(location: Location, world_map: WorldMap, directions: Directions):
     return Cycle(start_location, nodes, node)
 
 
-def main():
+def main() -> None:
     """main function, solve the things"""
     # q1
     directions, world_map = read_input()
