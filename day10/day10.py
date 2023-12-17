@@ -1,9 +1,11 @@
 """day10"""
 
 from dataclasses import dataclass, field
-from enum import Enum
 from typing import ClassVar
 
+from direction import Direction
+from pipebounds import PipeBounds
+from position import Position
 
 PIPE_FONT = {
     "|": ["│", "║", "|", "X"],
@@ -18,35 +20,6 @@ PIPE_FONT = {
 
 
 FONT = 1
-
-
-class Direction(Enum):
-    NORTH = 1
-    SOUTH = 2
-    EAST = 3
-    WEST = 4
-    NORTH_EAST = 5
-    NORTH_WEST = 6
-    SOUTH_EAST = 7
-    SOUTH_WEST = 8
-
-    def opposite(self):
-        if self == Direction.NORTH:
-            return Direction.SOUTH
-        if self == Direction.SOUTH:
-            return Direction.NORTH
-        if self == Direction.EAST:
-            return Direction.WEST
-        if self == Direction.WEST:
-            return Direction.EAST
-        raise RuntimeError("invalid direction")
-
-
-class PipeBounds(Enum):
-    INSIDE = 0
-    OUTSIDE = 1
-    UNKNOWN = 2
-    PIPE = 3
 
 
 @dataclass
@@ -69,12 +42,12 @@ class Pipe:
         "F": [Direction.SOUTH, Direction.EAST],
     }
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.is_start = self.character == "S"
         if self.is_loop:
             self.pipe_bounds = PipeBounds.PIPE
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.is_start:
             return "S"
         if self.is_loop:
@@ -85,14 +58,16 @@ class Pipe:
             return "."
         return " "
 
-    def next_direction(self, prev_direction: Direction | None = None):
+    def next_direction(self, prev_direction: Direction | None = None) -> Direction:
         """Determine next direction based on where we came from"""
         mapping = self.PIPE_DIRECTION[self.character]
         if prev_direction == mapping[0]:
             return mapping[1]
         return mapping[0]
 
-    def next_position(self, prev_direction: Direction | None):
+    def next_position(
+        self, prev_direction: Direction | None
+    ) -> tuple[Direction, Position]:
         """
         calculate the next position. Return
         where we came from if we move to next tile, and the new position
@@ -101,53 +76,23 @@ class Pipe:
         return next_direction.opposite(), self.position.next_position(next_direction)
 
     @property
-    def position(self):
+    def position(self) -> Position:
         return Position(self.row, self.col)
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(f"{self.row},{self.col}")
-
-
-@dataclass
-class Position:
-    row: int
-    col: int
-
-    def next_position(self, direction: Direction):
-        """Determine next position based on direction"""
-        if direction == Direction.EAST:
-            return Position(self.row, self.col + 1)
-        elif direction == Direction.NORTH:
-            return Position(self.row - 1, self.col)
-        elif direction == Direction.WEST:
-            return Position(self.row, self.col - 1)
-        elif direction == Direction.SOUTH:
-            return Position(self.row + 1, self.col)
-        elif direction == Direction.NORTH_EAST:
-            return Position(self.row - 1, self.col + 1)
-        elif direction == Direction.NORTH_WEST:
-            return Position(self.row - 1, self.col - 1)
-        elif direction == Direction.SOUTH_WEST:
-            return Position(self.row + 1, self.col - 1)
-        elif direction == Direction.SOUTH_EAST:
-            return Position(self.row + 1, self.col + 1)
-        raise ValueError(f"invalid direction {direction}")
-
-    def __hash__(self):
-        return hash(f"{self.row}:{self.col}")
 
 
 @dataclass
 class PipeMap:
     pipes: list[list[Pipe]]
 
-    @property
-    def width(self):
-        return len(self.pipes[0])
+    width: int = field(init=False, repr=False)
+    height: int = field(init=False, repr=False)
 
-    @property
-    def height(self):
-        return len(self.pipes)
+    def __post_init__(self) -> None:
+        self.width = len(self.pipes[0])
+        self.height = len(self.pipes)
 
     def get_pipe(self, position: Position) -> Pipe:
         """returns a pipe given its position"""
@@ -158,7 +103,7 @@ class PipeMap:
             return self.get_pipe(position)
         return None
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "\n".join("".join(str(pipe) for pipe in line) for line in self.pipes)
 
 
@@ -167,7 +112,7 @@ def process_input_line(row: int, line: str) -> list[Pipe]:
     return [Pipe(row, col, char) for col, char in enumerate(line.strip())]
 
 
-def read_input():
+def read_input() -> PipeMap:
     """read the map"""
     with open("input.txt", "r", encoding="utf8") as file:
         pipes = [process_input_line(row, line) for row, line in enumerate(file)]
@@ -187,8 +132,10 @@ def find_s(pipe_map: PipeMap) -> Position:
     raise RuntimeError("No S pipe found!")
 
 
-def calculate_s(start: Position, pipe_map: PipeMap):
-    """Guaranteed that there will be two pipes going into us"""
+def calculate_s(start: Position, pipe_map: PipeMap) -> str:
+    """
+    calculate what the "S" character is as a pipe
+    Guaranteed that there will be two pipes going into us"""
     connecting = []
     pipe_directions = [Direction.NORTH, Direction.WEST, Direction.EAST, Direction.SOUTH]
 
@@ -205,10 +152,11 @@ def calculate_s(start: Position, pipe_map: PipeMap):
     for character, pipe_directions in Pipe.PIPE_DIRECTION.items():
         if set(connecting) == set(pipe_directions):
             return character
-    return None
+
+    raise ValueError("No mapping found for `s` pipe")
 
 
-def find_cycles(pipe_map: PipeMap):
+def find_cycles(pipe_map: PipeMap) -> list[Pipe]:
     # first find S, and re-assign it
     s_position: Position = find_s(pipe_map)
     s_char: str = calculate_s(s_position, pipe_map)
@@ -227,7 +175,7 @@ def find_cycles(pipe_map: PipeMap):
     return pipe_path
 
 
-def flood_fill(pipe_map: PipeMap):
+def flood_fill(pipe_map: PipeMap) -> int:
     """
     flood fills a pipemap from one starting tile
     returns how many tiles were filled
@@ -263,7 +211,7 @@ def process_big_input_line(row: int, line: str) -> list[Pipe]:
     ]
 
 
-def expand_map(pipe_map: PipeMap):
+def expand_map(pipe_map: PipeMap) -> PipeMap:
     """expands each pipe into a 3x3 tile"""
     big_map = []
 
@@ -286,7 +234,7 @@ def expand_map(pipe_map: PipeMap):
     return pipe_map
 
 
-def reduce_map(big_map: PipeMap, small_map: PipeMap):
+def reduce_map(big_map: PipeMap, small_map: PipeMap) -> PipeMap:
     """converts from fat map back down to small map"""
     rows = []
     for row_idx in range(small_map.height):
@@ -309,7 +257,7 @@ def reduce_map(big_map: PipeMap, small_map: PipeMap):
     return PipeMap(rows)
 
 
-def expand_pipe(character: str, is_loop: bool):
+def expand_pipe(character: str, is_loop: bool) -> tuple[str, str, str]:
     # expands a pipe character to big boi 3x3
     # fmt: off
     if not is_loop:
@@ -321,12 +269,12 @@ def expand_pipe(character: str, is_loop: bool):
         return (" | ",
                 " | ",
                 " | ")
-    
+
     if character == "-":
         return ("   ", 
                 "---", 
                 "   ")
-    
+
     if character == "L":
         return (" | ", 
                 " L-", 
@@ -339,16 +287,16 @@ def expand_pipe(character: str, is_loop: bool):
         return ("   ", 
                 "-7 ", 
                 " | ")
-    
+
     if character == "F":
         return ("   ", 
                 " F-", 
                 " | ")
-
+    raise ValueError("unknown character {character}")
     # fmt: on
 
 
-def main():
+def main() -> None:
     pipe_map = read_input()
     # q1
     pipe_path = find_cycles(pipe_map)
