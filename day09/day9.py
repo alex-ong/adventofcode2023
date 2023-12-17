@@ -1,20 +1,25 @@
 """day9 solution"""
 
 from dataclasses import dataclass
+from typing import Callable
 
 
 @dataclass
 class ValueArray:
     sub_arrays: list[list[int]]
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Creates sub arrays"""
-        current = self.sub_arrays[0]
+        current: list[int] = self.sub_arrays[0]
         while set(current) != {0}:
             current = interpolate(current)
             self.sub_arrays.append(current)
 
-    def generic_extrapolate(self, add_to_array, calc_value):
+    def generic_extrapolate(
+        self,
+        add_to_array: Callable[[list[int], int], None],
+        calc_value: Callable[[list[int], list[int]], int],
+    ) -> None:
         """generic extrapolation"""
         for i in range(-1, -len(self.sub_arrays) - 1, -1):
             array: list[int] = self.sub_arrays[i]
@@ -25,30 +30,30 @@ class ValueArray:
                 new_value = calc_value(array, array_below)
                 add_to_array(array, new_value)
 
-    def extrapolate_right(self):
+    def extrapolate_right(self) -> None:
         """extrapolates to the right"""
 
-        def add_to_array(array, value):
+        def add_to_array(array: list[int], value: int) -> None:
             array.append(value)
 
-        def calculate_value(array, array_below):
+        def calculate_value(array: list[int], array_below: list[int]) -> int:
             return array[-1] + array_below[-1]
 
         self.generic_extrapolate(add_to_array, calculate_value)
 
-    def extrapolate_left(self):
+    def extrapolate_left(self) -> None:
         """extrapolates to the left"""
 
-        def add_to_array(array, value):
+        def add_to_array(array: list[int], value: int) -> None:
             array.insert(0, value)
 
-        def calculate_value(array, array_below):
+        def calculate_value(array: list[int], array_below: list[int]) -> int:
             return array[0] - array_below[0]
 
         self.generic_extrapolate(add_to_array, calculate_value)
 
 
-def get_input():
+def get_input() -> list[ValueArray]:
     """turns inputs into nice ValueArrays"""
     result = []
     with open("input.txt", "r", encoding="utf8") as file:
@@ -58,7 +63,7 @@ def get_input():
     return result
 
 
-def interpolate(values):
+def interpolate(values: list[int]) -> list[int]:
     """
     Converts 3 3 3 3
            to 0 0 0
@@ -70,7 +75,7 @@ def interpolate(values):
     return result
 
 
-def main():
+def main() -> None:
     """main function"""
     inputs = get_input()
 
