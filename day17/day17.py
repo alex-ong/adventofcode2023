@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from queue import PriorityQueue
 from typing import Optional
 
+from colorama import Back
 from direction import ALL_DIRECTIONS, Direction
 
 
@@ -188,7 +189,7 @@ def solve_and_print(world: WorldPart1):
 
     step = result
     while step is not None:
-        world_string[step.row][step.col] = str(step.direction)
+        world_string[step.row][step.col] = Back.GREEN + str(step.direction) + Back.BLACK
         print(step.row, step.col, step.total_cost)
         step = step.src_step
 
