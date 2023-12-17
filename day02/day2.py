@@ -12,16 +12,16 @@ class Draw:
     green: int = 0
     blue: int = 0
 
-    def __init__(self, string):
+    def __init__(self, string: str):
         """string: `1 blue, 4 green, 5 red`"""
         self.parse_colors_count(string)
 
-    def parse_color_count(self, string):
+    def parse_color_count(self, string: str) -> tuple[int, Color]:
         """string: `1 blue`"""
         num, color = string.split(" ")
         return int(num), Color(color)
 
-    def parse_colors_count(self, string):
+    def parse_colors_count(self, string: str) -> None:
         """string: `1 blue, 4 green, 5 red`"""
         for color_count in string.split(","):
             color_count = color_count.strip()
@@ -40,7 +40,7 @@ class Game:
     green: int = 0
     blue: int = 0
 
-    def __init__(self, string):
+    def __init__(self, string: str):
         game_id_str, draw_str = string.split(":")
         self.id = int(game_id_str.replace("Game ", ""))
         self.draws = self.parse_draws(draw_str)
@@ -48,7 +48,7 @@ class Game:
         self.green = max(draw.green for draw in self.draws)
         self.blue = max(draw.blue for draw in self.draws)
 
-    def parse_draws(self, string):
+    def parse_draws(self, string: str) -> list[Draw]:
         """string: `1 blue; 4 green, 5 blue; 11 red, 3 blue`"""
         result = []
         for draw_str in string.split(";"):
@@ -57,19 +57,19 @@ class Game:
             result.append(draw)
         return result
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Game {self.id}: {self.red},{self.green},{self.blue}"
 
-    def power_level(self):
+    def power_level(self) -> int:
         return self.red * self.green * self.blue
 
 
-def game_filter(game: Game):
+def game_filter(game: Game) -> bool:
     """Returns true if the game satisfies the constraints of Question 1"""
     return game.red <= 12 and game.green <= 13 and game.blue <= 14
 
 
-def main():
+def main() -> None:
     """Parses data into data structures, then prints out answer to q1 and q2"""
     with open("day2.txt", "r", encoding="utf8") as file:
         games = []
