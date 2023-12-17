@@ -1,25 +1,9 @@
 """day14 solution"""
 
 from dataclasses import dataclass
-from enum import IntEnum, Enum
 from typing import Any
 
-
-class Direction(IntEnum):
-    North = 0
-    West = 1
-    South = 2
-    East = 3
-
-    __str__ = Enum.__str__
-
-    def rotate_ccw(self):
-        int_value = int(self)
-        return Direction((int_value - 1 + len(Direction)) % len(Direction))
-
-    def rotate_cw(self):
-        int_value = int(self)
-        return Direction((int_value + 1) % len(Direction))
+from direction import Direction
 
 
 @dataclass
@@ -37,20 +21,20 @@ class World:
         rotated = list(zip(*self.data))[::-1]
         return World(rotated, self.left_is.rotate_ccw())
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(str(self.data) + ":" + str(self.left_is))
 
-    def print_map(self):
+    def print_map(self) -> None:
         """prints the map nicely"""
         print("\n".join(str(row) for row in self.data))
 
-    def print_correct(self):
+    def print_correct(self) -> None:
         """Print with north facing up"""
         world = self.correct_side()
         world.print_map()
         print(f"last action:{self.left_is}")
 
-    def get_score(self):
+    def get_score(self) -> int:
         world = self.correct_side()
         return naive_score(world.data)
 
@@ -69,7 +53,7 @@ class World:
         raise ValueError(f"Unsupported Direction: {world.left_is}")
 
 
-def naive_score(world_rows):
+def naive_score(world_rows: list[str]) -> int:
     """returns score assuming west is pointing left"""
     num_rows = len(world_rows)
     score = 0
@@ -79,7 +63,7 @@ def naive_score(world_rows):
     return score
 
 
-def simulate_row(row):
+def simulate_row(row: list[str]) -> tuple[list[str], int]:
     """
     simulates a row; returns its value and the new row
     Assume's that we are moving boulders to the left
@@ -93,7 +77,7 @@ def simulate_row(row):
         o_count = sub_array.count("O")
         start_score = len(row) - (start + 1)
         end_score = len(row) - start - o_count
-        sub_array_score = (start_score + end_score) / 2 * o_count
+        sub_array_score = int((start_score + end_score) / 2 * o_count)
         row_score += sub_array_score
         new_row += "O" * o_count
         new_row += "." * (end - start - o_count - 1)
@@ -103,7 +87,7 @@ def simulate_row(row):
     return list(new_row), row_score
 
 
-def simulate_world(world_rows):
+def simulate_world(world_rows: list[list[str]]) -> list[list[str]]:
     """simulates world by rolling to the left."""
     result = []
     for world_row in world_rows:
@@ -111,7 +95,7 @@ def simulate_world(world_rows):
     return result
 
 
-def get_input():
+def get_input() -> World:
     """grabs input, rotated so that left is north"""
     with open("input.txt") as file:
         world = list(file)
@@ -119,7 +103,7 @@ def get_input():
     return World(world)
 
 
-def question2(world: World):
+def question2(world: World) -> int:
     cache: dict[World, int] = {}
     cycle_results: list[World] = []
     for cycle in range(10000):
@@ -155,10 +139,13 @@ def question2(world: World):
     final_target = 1000000000
     target = (final_target - cycle_start - 1) % cycle_length
     result = cycle_results[cycle_start + target]
+
+    if result.score is None:
+        raise ValueError("No score found!")
     return result.score
 
 
-def main():
+def main() -> None:
     world = get_input()
     world = world.rotate_world_ccw()
 
