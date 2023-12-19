@@ -49,16 +49,22 @@ def generate_offsets(
 
 class Matrix:
     contents: list[list[Tile]]
+
+    min_pos: Position
+    max_pos: Position
+
     num_rows: int
     num_cols: int
 
     wall_tiles = 0
     dug_tiles = 0
 
-    def __init__(self, num_rows: int, num_cols: int) -> None:
-        self.contents = [[Tile() for col in range(num_cols)] for row in range(num_rows)]
-        self.num_rows = num_rows
-        self.num_cols = num_cols
+    def __init__(self, min_pos: Position, max_pos: Position) -> None:
+        self.num_rows = max_pos.row - min_pos.row + 1
+        self.num_cols = max_pos.col - min_pos.col + 1
+        self.contents = [
+            [Tile() for _ in range(self.num_cols)] for _ in range(self.num_rows)
+        ]
 
     def process_command(self, miner_pos: Position, command: Command) -> Position:
         """Process command, returning miner's new position"""
@@ -78,7 +84,7 @@ class Matrix:
 
         # list of nodes to explore
         to_process: Queue[Position] = Queue()
-        to_process.put(Position(1, 1))
+        to_process.put(Position(self.num_rows // 2, self.num_cols // 2))
 
         while not to_process.empty():
             position: Position = to_process.get()
@@ -108,19 +114,22 @@ class Matrix:
         return "\n".join("".join(str(tile) for tile in row) for row in self.contents)
 
 
-def get_dimensions(commands: list[Command]) -> Position:
+def get_matrix_range(commands: list[Command]) -> tuple[Position, Position]:
     position = Position()
     max_row, max_col = 0, 0
+    min_row, min_col = 0, 0
     for command in commands:
         position = generate_offsets(position, command.direction, command.steps)[-1]
+        min_row = min(position.row, min_row)
+        min_col = min(position.col, min_col)
         max_row = max(position.row, max_row)
         max_col = max(position.col, max_col)
-    return Position(max_row, max_col)
+    return Position(min_row, min_col), Position(max_row, max_col)
 
 
 def get_input() -> list[Command]:
     commands = []
-    with open("input-small.txt", encoding="utf-8") as file:
+    with open("input.txt", encoding="utf-8") as file:
         for line in file:
             direction, steps, color = line.strip().split()
             instruction = Command(Direction(direction), int(steps), color[2:-1])
@@ -131,14 +140,16 @@ def get_input() -> list[Command]:
 def main() -> None:
     commands: list[Command] = get_input()
 
-    dimensions: Position = get_dimensions(commands)
-    matrix: Matrix = Matrix(dimensions.row + 1, dimensions.col + 1)
-    position = Position()
+    min_pos, max_pos = get_matrix_range(commands)
+
+    matrix: Matrix = Matrix(min_pos, max_pos)
+    position: Position = Position(-min_pos.row, -min_pos.col)
     for command in commands:
         position = matrix.process_command(position, command)
 
     print(matrix)
     matrix.dig_out()
+    print("\n" * 10)
     print(matrix)
     print(f"Dug: {matrix.dug_tiles}")
     print(f"Wall: {matrix.wall_tiles}")
