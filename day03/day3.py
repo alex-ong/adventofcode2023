@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 def get_data() -> Matrix:
     """Convert text file to matrix"""
-    with open("data.txt", "r", encoding="utf8") as file:
+    with open("input.txt", "r", encoding="utf8") as file:
         data = file.readlines()
         data = [line.strip() for line in data]
     return Matrix(data=data)
