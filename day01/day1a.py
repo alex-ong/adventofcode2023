@@ -2,7 +2,7 @@
 
 
 def main() -> None:
-    with open("test.txt", "r", encoding="utf8") as file:
+    with open("input.txt", "r", encoding="utf8") as file:
         total = 0
         for line in file:
             first: str | None = None

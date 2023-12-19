@@ -116,6 +116,7 @@ def read_input() -> PipeMap:
     """read the map"""
     with open("input.txt", "r", encoding="utf8") as file:
         pipes = [process_input_line(row, line) for row, line in enumerate(file)]
+
         pipe_map = PipeMap(pipes)
     return pipe_map
 
@@ -192,7 +193,7 @@ def flood_fill(pipe_map: PipeMap) -> int:
             continue
 
         # mark the position as outside
-        pipe: Pipe | None = pipe_map.get_pipe(position)
+        pipe: Pipe | None = pipe_map.get_pipe_safe(position)
         if pipe is not None and not pipe.is_loop:
             pipe.pipe_bounds = PipeBounds.OUTSIDE
             num_outside += 1
