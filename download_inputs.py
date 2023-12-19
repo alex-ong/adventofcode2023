@@ -1,17 +1,21 @@
 import os
 import time
 
+import dotenv
 import requests
 
 BASE_URL = "https://adventofcode.com/2023/day/{}/input"
 
 
 def main() -> None:
-    print("Enter session (https://adventofcode.com/2023/day/1/input)")
-    print("then F12, networking, refresh, cookies:")
-    session = input()
-    if session.startswith("session="):
-        session = session[len("session=") :]
+    dotenv.load_dotenv()
+    session = os.environ.get("SESSION", None)
+    if session is None:
+        print("Enter session (https://adventofcode.com/2023/day/1/input)")
+        print("then F12, networking, refresh, cookies:")
+        session = input()
+        if session.startswith("session="):
+            session = session[len("session=") :]
     print("using session:", session)
 
     # grab last day
