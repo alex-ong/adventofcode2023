@@ -11,7 +11,11 @@ repos:
         args: 
         - "--check-untyped-defs"
         - "--strict"
-        additional_dependencies: [types-colorama==0.4.15.12]
+        additional_dependencies: 
+          [
+        types-colorama==0.4.15.12,
+        types-requests==2.31.0.10
+          ]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
