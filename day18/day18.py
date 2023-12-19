@@ -2,6 +2,9 @@
 
 from dataclasses import dataclass
 from enum import StrEnum
+from queue import Queue
+
+from tile import EdgeTile, HoleTile, Tile
 
 
 @dataclass
@@ -21,31 +24,6 @@ class Direction(StrEnum):
 
     def __str__(self) -> str:
         return self.name
-
-
-@dataclass
-class Tile:
-    contents: str = "."
-
-    def __str__(self) -> str:
-        return "."
-
-
-@dataclass(kw_only=True)
-class EdgeTile(Tile):
-    contents: str = "#"
-    color: str
-
-    # 38 -> 48 for background
-    TEXT_WHITE = "\033[38;2;255;255;255m"
-
-    def text_color(self, r: int, g: int, b: int) -> str:
-        return f"\033[38;2;{r};{g};{b}m"
-
-    def __str__(self) -> str:
-        r, g, b = [int(self.color[i * 2 : i * 2 + 2], 16) for i in range(3)]
-
-        return f"{self.text_color(r,g,b)}{self.contents}{self.TEXT_WHITE}"
 
 
 @dataclass
@@ -74,6 +52,9 @@ class Matrix:
     num_rows: int
     num_cols: int
 
+    wall_tiles = 0
+    dug_tiles = 0
+
     def __init__(self, num_rows: int, num_cols: int) -> None:
         self.contents = [[Tile() for col in range(num_cols)] for row in range(num_rows)]
         self.num_rows = num_rows
@@ -82,10 +63,46 @@ class Matrix:
     def process_command(self, miner_pos: Position, command: Command) -> Position:
         """Process command, returning miner's new position"""
         offsets = generate_offsets(miner_pos, command.direction, command.steps)
-
+        self.wall_tiles += len(offsets)
         for offset in offsets:
             self.contents[offset.row][offset.col] = EdgeTile(color=command.color)
         return offsets[-1]
+
+    def dig_out(self) -> None:
+        # digs out the non-perimeter tiles, returning how many were "dug out"
+
+        # cache for what's been visited
+        visited: list[list[bool]] = [
+            [False for _ in range(self.num_cols)] for _ in range(self.num_rows)
+        ]
+
+        # list of nodes to explore
+        to_process: Queue[Position] = Queue()
+        to_process.put(Position(1, 1))
+
+        while not to_process.empty():
+            position: Position = to_process.get()
+            if self.is_oob(position):
+                continue
+            if visited[position.row][position.col]:
+                continue
+            if self.contents[position.row][position.col].contents != ".":
+                continue
+            self.contents[position.row][position.col] = HoleTile()
+            visited[position.row][position.col] = True
+            self.dug_tiles += 1
+
+            for direction in Direction:
+                to_process.put(generate_offsets(position, direction, 1)[0])
+
+    def is_oob(self, position: Position) -> bool:
+        """True if position out of bounds"""
+        return (
+            position.row < 0
+            or position.row >= self.num_rows
+            or position.col < 0
+            or position.col >= self.num_cols
+        )
 
     def __str__(self) -> str:
         return "\n".join("".join(str(tile) for tile in row) for row in self.contents)
@@ -121,6 +138,11 @@ def main() -> None:
         position = matrix.process_command(position, command)
 
     print(matrix)
+    matrix.dig_out()
+    print(matrix)
+    print(f"Dug: {matrix.dug_tiles}")
+    print(f"Wall: {matrix.wall_tiles}")
+    print(f"Total: {matrix.dug_tiles + matrix.wall_tiles}")
 
 
 if __name__ == "__main__":
