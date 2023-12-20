@@ -48,12 +48,21 @@ def part1(module_map: dict[str, BaseModule]) -> None:
 
 def part2(module_map: dict[str, BaseModule]) -> None:
     modules: list[BaseModule] = list(module_map.values())
-    dot = graphviz.Digraph("Pulse Propagation", format="png")
-    for module in modules:
-        module.add_to_graph(dot)
     os.makedirs("vis", exist_ok=True)
-    dot.render(directory="vis")
-    simulate(module_map)
+
+    for i in range(1024):
+        graph_attr = {"labelloc": "t", "label": str(i)}
+        dot = graphviz.Digraph(f"Push {i}", format="png", graph_attr=graph_attr)
+        for module in modules:
+            module.add_to_graph(dot)
+
+        dot.render(directory="vis")
+        simulate(module_map)
+
+    # delete the gv stuff
+    for item in os.listdir("vis"):
+        if item.endswith(".gv"):
+            os.remove(os.path.join("vis", item))
 
 
 def main() -> None:

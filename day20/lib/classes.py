@@ -71,8 +71,12 @@ class FlipFlopModule(BaseModule):
         return [PulseTarget(self.state, self.name, target) for target in self.outputs]
 
     def add_to_graph(self, dot: Digraph) -> None:
-        dot.node(self.name)
-        dot.attr()
+        attrs = {"shape": "box", "style": "filled"}
+        if self.state == Pulse.LOW:
+            attrs["fillcolor"] = "#FF0000"
+        else:
+            attrs["fillcolor"] = "#0000FF"
+        dot.node(self.name, **attrs)
         super().add_to_graph(dot)
 
 
