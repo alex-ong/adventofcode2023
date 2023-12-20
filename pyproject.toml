@@ -1,6 +1,10 @@
 [tool.mypy]
 python_version = '3.11'
 
+[[tool.mypy.overrides]]
+module = 'graphviz'
+ignore_missing_imports = true
+
 [tool.ruff]
 extend-select = ["C4", "C90", "SIM", "TCH"]
 ignore = ["SIM108"]

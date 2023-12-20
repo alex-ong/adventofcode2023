@@ -1,5 +1,7 @@
+import os
 from queue import Queue
 
+import graphviz
 from lib.classes import BaseModule, Pulse, PulseTarget
 from lib.parsers_20 import finalize_modules, get_modules
 
@@ -15,13 +17,14 @@ def simulate(modules: dict[str, BaseModule]) -> tuple[int, int]:
     pulses.put(PulseTarget(Pulse.LOW, "button", "broadcaster"))
     low = 0
     high = 0
+
     while not pulses.empty():
         pulse_target: PulseTarget = pulses.get()
         if pulse_target.pulse == Pulse.LOW:
             low += 1
         else:
             high += 1
-        print(pulse_target)
+
         module: BaseModule = modules[pulse_target.target]
         results: list[PulseTarget] = module.handle_pulse(
             pulse_target.src, pulse_target.pulse
@@ -31,22 +34,38 @@ def simulate(modules: dict[str, BaseModule]) -> tuple[int, int]:
     return low, high
 
 
-def main() -> None:
-    modules = get_modules(FILE)
-    modules = finalize_modules(modules)
-    print("module listing:")
-    for module in modules:
-        print(module)
-    module_map = {module.name: module for module in modules}
-
+def part1(module_map: dict[str, BaseModule]) -> None:
     low_total = 0
     high_total = 0
     for _ in range(1000):
         low, high = simulate(module_map)
         low_total += low
         high_total += high
+
     print(low_total, high_total)
     print(low_total * high_total)
+
+
+def part2(module_map: dict[str, BaseModule]) -> None:
+    modules: list[BaseModule] = list(module_map.values())
+    dot = graphviz.Digraph("Pulse Propagation", format="png")
+    for module in modules:
+        module.add_to_graph(dot)
+    os.makedirs("vis", exist_ok=True)
+    dot.render(directory="vis")
+    simulate(module_map)
+
+
+def main() -> None:
+    modules = get_modules(FILE)
+    modules = finalize_modules(modules)
+    module_map = {module.name: module for module in modules}
+
+    # q1
+    part1(module_map)
+
+    # q2
+    part2(module_map)
 
 
 if __name__ == "__main__":
