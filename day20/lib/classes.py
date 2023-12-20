@@ -41,6 +41,11 @@ class BaseModule(ABC):
 
 @dataclass
 class FlipFlopModule(BaseModule):
+    """
+    If we receive HIGH, we are a sink (do nothing)
+    If we receive LOW, flip our current value and send it to everyone
+    """
+
     state: Pulse = Pulse.LOW
 
     def handle_pulse(self, input: str, pulse: Pulse) -> list[PulseTarget]:
@@ -55,6 +60,11 @@ class FlipFlopModule(BaseModule):
 
 @dataclass
 class ConjunctionModule(BaseModule):
+    """
+    Keeps track of all inputs.
+    Changes internal state, then sends high/low based on internal state
+    """
+
     inputs: dict[str, Pulse] = field(init=False)
 
     def set_inputs(self, inputs: list[str]) -> None:
@@ -71,5 +81,15 @@ class ConjunctionModule(BaseModule):
 
 @dataclass
 class BroadcastModule(BaseModule):
+    """Broadcasts to all outputs"""
+
     def handle_pulse(self, input: str, pulse: Pulse) -> list[PulseTarget]:
         return [PulseTarget(pulse, self.name, target) for target in self.outputs]
+
+
+@dataclass
+class SinkModule(BaseModule):
+    """Sink module, gets something but sents it no where else"""
+
+    def handle_pulse(self, input: str, pulse: Pulse) -> list[PulseTarget]:
+        return []

@@ -1,7 +1,7 @@
 from queue import Queue
 
 from lib.classes import BaseModule, Pulse, PulseTarget
-from lib.parsers_20 import get_modules, set_inputs
+from lib.parsers_20 import finalize_modules, get_modules
 
 FILE_A = "input-a.txt"
 FILE_B = "input-b.txt"
@@ -27,7 +27,7 @@ def simulate(modules: dict[str, BaseModule]) -> None:
 
 def main() -> None:
     modules = get_modules(FILE)
-    set_inputs(modules)
+    modules = finalize_modules(modules)
     print("module listing:")
     for module in modules:
         print(module)
