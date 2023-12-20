@@ -102,8 +102,14 @@ class ConjunctionModule(BaseModule):
         return [PulseTarget(Pulse.HIGH, self.name, target) for target in self.outputs]
 
     def add_to_graph(self, dot: Digraph) -> None:
-        dot.node(self.name)
+        count = self.current_count()
+        length = len(list(self.inputs.values()))
+        label = f"{self.name} {count}/{length}"
+        dot.node(self.name, label=label)
         super().add_to_graph(dot)
+
+    def current_count(self) -> int:
+        return list(self.inputs.values()).count(Pulse.HIGH)
 
 
 @dataclass

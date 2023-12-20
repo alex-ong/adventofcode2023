@@ -1,8 +1,9 @@
+import math
 import os
 from queue import Queue
 
 import graphviz
-from lib.classes import BaseModule, Pulse, PulseTarget
+from lib.classes import BaseModule, ConjunctionModule, Pulse, PulseTarget
 from lib.parsers_20 import finalize_modules, get_modules
 
 FILE_A = "input-a.txt"
@@ -46,23 +47,43 @@ def part1(module_map: dict[str, BaseModule]) -> None:
     print(low_total * high_total)
 
 
+def get_final_gates(module_map: dict[str, BaseModule]) -> list[ConjunctionModule]:
+    """Should return vd, tp, pt, bk"""
+    result: list[ConjunctionModule] = []
+    for module in module_map.values():
+        if isinstance(module, ConjunctionModule) and len(module.inputs) >= 8:
+            result.append(module)
+    print([module.name for module in result])
+    return result
+
+
 def part2(module_map: dict[str, BaseModule]) -> None:
     modules: list[BaseModule] = list(module_map.values())
     os.makedirs("vis", exist_ok=True)
+    final_gates: list[ConjunctionModule] = get_final_gates(module_map)
+    loop_lengths: dict[str, int] = {}
+    for i in range(10000):
+        for gate in final_gates:
+            if gate.current_count() == 0 and gate.name not in loop_lengths:
+                loop_lengths[gate.name] = i
+                graph_attr = {"labelloc": "t", "label": str(i)}
+                dot = graphviz.Digraph(f"Push {i}", format="png", graph_attr=graph_attr)
+                for module in modules:
+                    module.add_to_graph(dot)
+                dot.render(directory="vis")
 
-    for i in range(1024):
-        graph_attr = {"labelloc": "t", "label": str(i)}
-        dot = graphviz.Digraph(f"Push {i}", format="png", graph_attr=graph_attr)
-        for module in modules:
-            module.add_to_graph(dot)
-
-        dot.render(directory="vis")
+        # we should calculate "true" looping by observing everything in the
+        # chain is false. this is a quick dirty hack.
+        if i == 3000:
+            print(loop_lengths)
+            loop_lengths = {}
         simulate(module_map)
 
     # delete the gv stuff
     for item in os.listdir("vis"):
         if item.endswith(".gv"):
             os.remove(os.path.join("vis", item))
+    print(math.lcm(*list(loop_lengths.values())))
 
 
 def main() -> None:
@@ -71,9 +92,10 @@ def main() -> None:
     module_map = {module.name: module for module in modules}
 
     # q1
-    part1(module_map)
+    # part1(module_map)
 
     # q2
+    # MAKE SURE TO COMMENT OUT q1 for q2 to work!
     part2(module_map)
 
 
