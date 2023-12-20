@@ -7,15 +7,20 @@ FILE_A = "input-a.txt"
 FILE_B = "input-b.txt"
 FILE_PROD = "input.txt"
 
-FILE = FILE_B
+FILE = FILE_PROD
 
 
-def simulate(modules: dict[str, BaseModule]) -> None:
+def simulate(modules: dict[str, BaseModule]) -> tuple[int, int]:
     pulses: Queue[PulseTarget] = Queue()
     pulses.put(PulseTarget(Pulse.LOW, "button", "broadcaster"))
-
+    low = 0
+    high = 0
     while not pulses.empty():
         pulse_target: PulseTarget = pulses.get()
+        if pulse_target.pulse == Pulse.LOW:
+            low += 1
+        else:
+            high += 1
         print(pulse_target)
         module: BaseModule = modules[pulse_target.target]
         results: list[PulseTarget] = module.handle_pulse(
@@ -23,6 +28,7 @@ def simulate(modules: dict[str, BaseModule]) -> None:
         )
         for result in results:
             pulses.put(result)
+    return low, high
 
 
 def main() -> None:
@@ -33,14 +39,14 @@ def main() -> None:
         print(module)
     module_map = {module.name: module for module in modules}
 
-    count = 0
-    while True:
-        print(f"simulating... {count}")
-        simulate(module_map)
-        should_continue = input()
-        if should_continue.startswith("n"):
-            return
-        count += 1
+    low_total = 0
+    high_total = 0
+    for _ in range(1000):
+        low, high = simulate(module_map)
+        low_total += low
+        high_total += high
+    print(low_total, high_total)
+    print(low_total * high_total)
 
 
 if __name__ == "__main__":
