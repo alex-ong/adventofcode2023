@@ -1,3 +1,4 @@
+import itertools
 from dataclasses import dataclass, field
 from enum import Flag
 
@@ -37,6 +38,9 @@ class BaseModule:
     num_low: int = 0
     num_high: int = 0
 
+    def arrow_color(self) -> str:
+        return "#000000"
+
     def handle_pulse(self, input: str, pulse: Pulse) -> list[PulseTarget]:
         if pulse == Pulse.LOW:
             self.num_low += 1
@@ -46,9 +50,10 @@ class BaseModule:
 
     def add_to_graph(self, dot: Digraph) -> None:
         """adds edges only to the graph. inheritors need to handle their repr"""
+        attrs = {"color": self.arrow_color()}
 
         for output in self.outputs:
-            dot.edge(self.name, output)
+            dot.edge(self.name, output, **attrs)
 
     def is_default_state(self) -> bool:
         return True
@@ -94,6 +99,9 @@ class ConjunctionModule(BaseModule):
     """
 
     inputs: dict[str, Pulse] = field(init=False, repr=False)
+
+    def arrow_color(self) -> str:
+        return "#FF0000"
 
     def set_inputs(self, inputs: list[str]) -> None:
         self.inputs = {input_name: Pulse.LOW for input_name in inputs}
@@ -145,3 +153,40 @@ class SinkModule(BaseModule):
     def add_to_graph(self, dot: Digraph) -> None:
         dot.node(self.name)
         super().add_to_graph(dot)
+
+
+@dataclass
+class ModuleGroups:
+    head: BroadcastModule
+    loops: list[list[BaseModule]]
+    loop_tails: list[ConjunctionModule]
+    penultimate: ConjunctionModule
+    sink: SinkModule
+    all_nodes: list[BaseModule] = field(init=False)
+
+    def __post_init__(self) -> None:
+        all_nodes: list[BaseModule] = []
+        all_nodes.append(self.head)
+        all_nodes.extend(list(itertools.chain(*self.loops)))
+        all_nodes.extend(self.loop_tails)
+        all_nodes.append(self.penultimate)
+        all_nodes.append(self.sink)
+        self.all_nodes = all_nodes
+
+
+@dataclass
+class LoopCounter:
+    target_loop_count: int = field(repr=False)
+    loop_lengths: dict[str, int] = field(default_factory=dict)
+
+    @property
+    def num_results(self) -> int:
+        return len(self.loop_lengths)
+
+    @property
+    def finished(self) -> bool:
+        return self.num_results == self.target_loop_count
+
+    def add_result(self, loop_name: str, value: int) -> None:
+        if loop_name not in self.loop_lengths:
+            self.loop_lengths[loop_name] = value

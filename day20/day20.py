@@ -1,14 +1,21 @@
 import math
 import os
+from multiprocessing import Pool
 from queue import Queue
+from typing import Type, TypeVar, cast
 
 import graphviz
+import tqdm
 from lib.classes import (
     BaseModule,
+    BroadcastModule,
     ConjunctionModule,
     FlipFlopModule,
+    LoopCounter,
+    ModuleGroups,
     Pulse,
     PulseTarget,
+    SinkModule,
 )
 from lib.parsers_20 import finalize_modules, get_modules
 
@@ -63,7 +70,7 @@ def get_final_gates(module_map: dict[str, BaseModule]) -> list[ConjunctionModule
     return result
 
 
-def get_switch_paths(
+def get_loop_paths(
     start_switch: str, module_map: dict[str, BaseModule]
 ) -> list[BaseModule]:
     """given a start path, returns the longest path until we hit a conjunction module
@@ -93,45 +100,120 @@ def path_is_start_state(modules: list[BaseModule]) -> bool:
     return all(module.is_default_state() for module in modules)
 
 
-def graph_modules(modules: list[BaseModule], index: int) -> None:
+T = TypeVar("T", bound=BaseModule)
+
+
+def get_typed_module(
+    module_map: dict[str, BaseModule], key: str, module_type: Type[T]
+) -> T:
+    return cast(T, module_map[key])
+
+
+def get_module_groups(module_map: dict[str, BaseModule]) -> ModuleGroups:
+    """Splits the modules into their respective pipelines"""
+    broadcaster = get_typed_module(module_map, "broadcaster", BroadcastModule)
+
+    loop_paths = [
+        get_loop_paths(node_name, module_map) for node_name in broadcaster.outputs
+    ]
+    loop_tails: list[ConjunctionModule] = []
+    for loop_path in loop_paths:
+        last_node = loop_path[-1]
+        for node_name in last_node.outputs:
+            node = module_map[node_name]
+            if isinstance(node, ConjunctionModule):
+                loop_tails.append(node)
+                break
+    last_join_name = loop_tails[0].outputs[0]
+    last_conjunction = get_typed_module(module_map, last_join_name, ConjunctionModule)
+    sink = get_typed_module(module_map, "rx", SinkModule)
+
+    return ModuleGroups(broadcaster, loop_paths, loop_tails, last_conjunction, sink)
+
+
+def graph_modules(module_groups: ModuleGroups, index: int) -> graphviz.Digraph:
     """Graphs the modules"""
-    graph_attr = {"labelloc": "t", "label": str(index)}
-    dot = graphviz.Digraph(f"Push {index}", format="png", graph_attr=graph_attr)
-    for module in modules:
-        module.add_to_graph(dot)
-    dot.render(directory="vis")
+
+    index_str = str(index).zfill(4)
+    graph_attr = {"labelloc": "t", "label": index_str}
+    dot = graphviz.Digraph(f"Push {index_str}", format="png", graph_attr=graph_attr)
+
+    # broadcaster
+    with dot.subgraph(graph_attr={"rank": "source"}) as s:
+        s.node(module_groups.head.name)
+
+    # loop nodes
+    for index in range(max(len(loop) for loop in module_groups.loops)):
+        with dot.subgraph(graph_attr={"rank": "same"}) as s:
+            s.attr(rank="same")
+            for loop_path in module_groups.loops:
+                if index < len(loop_path) - 1:
+                    node = loop_path[index]
+                    s.node(node.name)
+
+    # loop tails
+    with dot.subgraph(graph_attr={"rank": "same"}) as s:
+        for node in module_groups.loop_tails:
+            s.node(node.name)
+    # penultimate
+    with dot.subgraph(graph_attr={"rank": "same"}) as s:
+        s.node(module_groups.penultimate.name)
+
+    with dot.subgraph(graph_attr={"rank": "sink"}) as s:
+        s.node(module_groups.sink.name)
+
+    # now that we've done ranks, just add all of them with their arrows.
+    for node in module_groups.all_nodes:
+        node.add_to_graph(dot)
+
+    return dot
 
 
 def part2(module_map: dict[str, BaseModule]) -> None:
     """We find out the loop length for each of the 4~ paths"""
-    modules: list[BaseModule] = list(module_map.values())
+    module_groups: ModuleGroups = get_module_groups(module_map)
     os.makedirs("vis", exist_ok=True)
-    loops = module_map["broadcaster"].outputs
-
-    switch_paths = [get_switch_paths(loop, module_map) for loop in loops]
-    loop_lengths: dict[str, int] = {}
 
     # graph modules in initial state
-    graph_modules(modules, 0)
+    dots: list[graphviz.Graph] = []
+    dot: graphviz.Graph = graph_modules(module_groups, 0)
     simulation_counter = 0
-
+    loop_counter: LoopCounter = LoopCounter(len(module_groups.loops))
     # run simulation, screenshotting everytime one of the paths "loops"
-    while len(loop_lengths) < len(switch_paths):
+    while not loop_counter.finished:
         simulate(module_map)
         simulation_counter += 1
-        for switch_path in switch_paths:
-            if path_is_start_state(switch_path):
-                loop_end_name = switch_path[-1].name
-                loop_lengths[loop_end_name] = simulation_counter
-                graph_modules(modules, simulation_counter)
-    print(loop_lengths)
+        for loop_path in module_groups.loops:
+            if path_is_start_state(loop_path):
+                loop_end_name = loop_path[-1].name
+                loop_counter.add_result(loop_end_name, simulation_counter)
+        dot = graph_modules(module_groups, simulation_counter)
+        dots.append(dot)
+
+    print(loop_counter)
+    print(math.lcm(*list(loop_counter.loop_lengths.values())))
+
+    output_files(dots)
 
     # Cleanup *.gv files
     for item in os.listdir("vis"):
         if item.endswith(".gv"):
             os.remove(os.path.join("vis", item))
 
-    print(math.lcm(*list(loop_lengths.values())))
+
+def output_graph(dot: graphviz.Graph) -> None:
+    """Saves a dot to file"""
+    dot.render(directory="vis")
+
+
+def output_files(dots: list[graphviz.Graph]) -> None:
+    """Saves a list of dots to file"""
+
+    with Pool() as pool:
+        for _ in tqdm.tqdm(pool.imap_unordered(output_graph, dots), total=len(dots)):
+            pass
+
+    print("all done!")
 
 
 def main() -> None:
