@@ -31,9 +31,9 @@ class PositionDist(Position):
         return a copy with given args changed
         Distance will +1 if not supplied
         """
-        row = row or self.row
-        col = col or self.col
-        distance = distance or self.distance + 1
+        row = row if row is not None else self.row
+        col = col if col is not None else self.col
+        distance = distance if distance is not None else self.distance + 1
         return PositionDist(row, col, distance=distance)
 
 
@@ -120,3 +120,22 @@ class DistanceMaze:
         for row in self.grid:
             result += sum(1 if item % 2 == 0 else 0 for item in row)
         return result
+
+    def overlay(self, maze: Maze) -> str:
+        new_strings: list[str] = []
+        base_str: str = str(self)
+
+        for row, line in enumerate(base_str.split("\n")):
+            other_str = maze.grid[row]
+            my_str = ""
+            for col, value in enumerate(line):
+                if value == "_":
+                    my_str += other_str[col]
+                # elif value in "02468":
+                #    my_str += value
+                # else:
+                #    my_str += "."
+                else:
+                    my_str += value
+            new_strings.append(my_str)
+        return "\n".join(new_strings)

@@ -25,10 +25,12 @@ def solve(start_pos: Position, maze: Maze) -> int:
     distances = DistanceMaze(maze.num_rows, maze.num_cols)
     print("")
     print(distances)
+
     while True:
         pos: PositionDist = nodes.get()
-        if pos.distance >= 13:
+        if pos.distance >= 7:
             break
+        print(pos)
         # expand
         distance = distances[pos]
         maze_node = maze[pos]
@@ -41,13 +43,16 @@ def solve(start_pos: Position, maze: Maze) -> int:
             continue
         # undiscovered!
         distances[pos] = pos.distance
-        nodes.put(pos.replace(row=pos.row + 1))  # south
-        nodes.put(pos.replace(row=pos.row - 1))  # north
-        nodes.put(pos.replace(col=pos.col + 1))  # east
-        nodes.put(pos.replace(col=pos.col - 1))  # west
 
-    print()
-    print(distances)
+        south = pos.replace(row=pos.row + 1)
+        north = pos.replace(row=pos.row - 1)
+        east = pos.replace(col=pos.col + 1)
+        west = pos.replace(col=pos.col - 1)
+
+        for direction in [north, south, east, west]:
+            nodes.put(direction)
+
+    print(distances.overlay(maze))
     print(distances.calc_steps())
     return 0
 
