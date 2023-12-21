@@ -50,6 +50,9 @@ class BaseModule:
         for output in self.outputs:
             dot.edge(self.name, output)
 
+    def is_default_state(self) -> bool:
+        return True
+
 
 @dataclass
 class FlipFlopModule(BaseModule):
@@ -78,6 +81,9 @@ class FlipFlopModule(BaseModule):
             attrs["fillcolor"] = "#0000FF"
         dot.node(self.name, **attrs)
         super().add_to_graph(dot)
+
+    def is_default_state(self) -> bool:
+        return self.state == Pulse.LOW
 
 
 @dataclass
@@ -110,6 +116,9 @@ class ConjunctionModule(BaseModule):
 
     def current_count(self) -> int:
         return list(self.inputs.values()).count(Pulse.HIGH)
+
+    def is_default_state(self) -> bool:
+        return self.current_count() == 0
 
 
 @dataclass

@@ -3,7 +3,13 @@ import os
 from queue import Queue
 
 import graphviz
-from lib.classes import BaseModule, ConjunctionModule, Pulse, PulseTarget
+from lib.classes import (
+    BaseModule,
+    ConjunctionModule,
+    FlipFlopModule,
+    Pulse,
+    PulseTarget,
+)
 from lib.parsers_20 import finalize_modules, get_modules
 
 FILE_A = "input-a.txt"
@@ -57,32 +63,74 @@ def get_final_gates(module_map: dict[str, BaseModule]) -> list[ConjunctionModule
     return result
 
 
+def get_switch_paths(
+    start_switch: str, module_map: dict[str, BaseModule]
+) -> list[BaseModule]:
+    """given a start path, returns the longest path until we hit a conjunction module
+    "" it should be n FlipFlops and then a single conjunction"""
+    path: list[BaseModule] = []
+    current_module: BaseModule = module_map[start_switch]
+    while isinstance(current_module, FlipFlopModule):
+        path.append(current_module)
+
+        if len(current_module.outputs) == 1:
+            current_module = module_map[current_module.outputs[0]]
+        else:
+            # return flipflop in outputs
+            flipflops = (
+                output
+                for output in current_module.outputs
+                if isinstance(module_map[output], FlipFlopModule)
+            )
+            current_module = module_map[next(flipflops)]
+
+    path.append(current_module)  # should be a ConjunctionModule
+    return path
+
+
+def path_is_start_state(modules: list[BaseModule]) -> bool:
+    """For every module in the path, make sure its in its "default" state"""
+    return all(module.is_default_state() for module in modules)
+
+
+def graph_modules(modules: list[BaseModule], index: int) -> None:
+    """Graphs the modules"""
+    graph_attr = {"labelloc": "t", "label": str(index)}
+    dot = graphviz.Digraph(f"Push {index}", format="png", graph_attr=graph_attr)
+    for module in modules:
+        module.add_to_graph(dot)
+    dot.render(directory="vis")
+
+
 def part2(module_map: dict[str, BaseModule]) -> None:
+    """We find out the loop length for each of the 4~ paths"""
     modules: list[BaseModule] = list(module_map.values())
     os.makedirs("vis", exist_ok=True)
-    final_gates: list[ConjunctionModule] = get_final_gates(module_map)
+    loops = module_map["broadcaster"].outputs
+
+    switch_paths = [get_switch_paths(loop, module_map) for loop in loops]
     loop_lengths: dict[str, int] = {}
-    for i in range(10000):
-        for gate in final_gates:
-            if gate.current_count() == 0 and gate.name not in loop_lengths:
-                loop_lengths[gate.name] = i
-                graph_attr = {"labelloc": "t", "label": str(i)}
-                dot = graphviz.Digraph(f"Push {i}", format="png", graph_attr=graph_attr)
-                for module in modules:
-                    module.add_to_graph(dot)
-                dot.render(directory="vis")
 
-        # we should calculate "true" looping by observing everything in the
-        # chain is false. this is a quick dirty hack.
-        if i == 3000:
-            print(loop_lengths)
-            loop_lengths = {}
+    # graph modules in initial state
+    graph_modules(modules, 0)
+    simulation_counter = 0
+
+    # run simulation, screenshotting everytime one of the paths "loops"
+    while len(loop_lengths) < len(switch_paths):
         simulate(module_map)
+        simulation_counter += 1
+        for switch_path in switch_paths:
+            if path_is_start_state(switch_path):
+                loop_end_name = switch_path[-1].name
+                loop_lengths[loop_end_name] = simulation_counter
+                graph_modules(modules, simulation_counter)
+    print(loop_lengths)
 
-    # delete the gv stuff
+    # Cleanup *.gv files
     for item in os.listdir("vis"):
         if item.endswith(".gv"):
             os.remove(os.path.join("vis", item))
+
     print(math.lcm(*list(loop_lengths.values())))
 
 
