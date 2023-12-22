@@ -2,7 +2,7 @@ import random
 from typing import Any
 
 import vpython
-from lib.classes import BoxData, Vector3
+from lib.classes import BoxData, Matrix, Vector3
 from lib.parsers_22 import get_boxes
 
 
@@ -13,7 +13,6 @@ def construct_box(box_data: BoxData, color: vpython.vector) -> vpython.box:
         height=box_data.height,
         width=box_data.width,
         color=color,
-        make_trail=True,
     )
 
 
@@ -24,10 +23,10 @@ def random_color() -> vpython.vector:
 
 class Visualization:
     boxes: list[BoxData]
+    matrix: Matrix
 
     def __init__(self) -> None:
         self.boxes = get_boxes()
-
         self.init_vis()
         vpython.scene.bind("keydown", self.on_key_input)
 
@@ -44,11 +43,18 @@ class Visualization:
         character = evt.key
         if character == "shift":
             return
-        print(character)
 
     def start(self) -> None:
+        self.matrix = Matrix()
+        self.boxes.sort(key=lambda x: x.z_val)
+
         while True:
             vpython.rate(30)
+            for box in self.boxes:
+                while self.matrix.can_fall_down(box):
+                    box.fall()
+                    vpython.rate(10)
+                self.matrix.register_box(box)
 
 
 def main() -> None:
