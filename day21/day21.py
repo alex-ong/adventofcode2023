@@ -7,6 +7,8 @@ from lib.classes import (
     BaseDistanceMaze,
     DistanceMaze,
     DistanceMazes,
+    GiantNodeParser,
+    GiantNodeType,
     Maze,
     Position,
     PositionDist,
@@ -22,27 +24,22 @@ from lib.parsers_21 import parse_maze
 FILE_SMALL = "input-small.txt"
 FILE_MAIN = "input.txt"
 FILE_CLEANER = "input-cleaner.txt"
-FILE = FILE_MAIN
-STEPS = 64
+FILE = FILE_CLEANER
 
 
-def solve(start_pos: Position, maze: Maze, big: bool = False) -> int:
-    print(start_pos)
-    print(maze)
+GIGA_TARGET = 26_501_365  # even parity
 
+
+def mini_solve(
+    start_pos: Position, maze: Maze, steps: int, distances: BaseDistanceMaze
+) -> BaseDistanceMaze:
+    """given a basedistanceMaze, runs `steps` steps then returns the maze"""
     nodes: Queue[PositionDist] = Queue()
     nodes.put(PositionDist(start_pos.row, start_pos.col, distance=0))
-    distances: BaseDistanceMaze
-    if big:
-        distances = DistanceMaze(maze.num_rows, maze.num_cols)
-    else:
-        distances = DistanceMazes(maze.num_rows, maze.num_cols)
 
-    print("before:")
-    print(distances.overlay(maze))
-    while True:
+    while not nodes.empty():
         pos: PositionDist = nodes.get()
-        if pos.distance >= STEPS + 1:
+        if pos.distance >= steps + 1:
             break
         # expand
         distance: Optional[int] = distances[pos]
@@ -64,15 +61,70 @@ def solve(start_pos: Position, maze: Maze, big: bool = False) -> int:
 
         for direction in [north, south, east, west]:
             nodes.put(direction)
-    print("after")
+    return distances
+
+
+# FILE_MAIN is 131 x 131.
+# This means  we need 130 steps(?) to hit the corners,
+# and 131 to get to next centre
+def solve(
+    start_pos: Position, maze: Maze, steps: int, unlimited_map: bool = False
+) -> int:
+    distances: BaseDistanceMaze
+    if unlimited_map:
+        distances = DistanceMazes(maze.num_rows, maze.num_cols)
+
+        board_size = maze.num_rows
+
+        steps_remaining = steps % board_size
+        if steps_remaining != board_size // 2:
+            raise ValueError(
+                "big mode only supported for steps_remaining == maze_rows//2"
+            )
+        boards_to_edge = steps // board_size
+        print("boards_to_edge", boards_to_edge)
+
+        if boards_to_edge % 2 == 0:
+            sim_steps = board_size * 2 + steps_remaining
+        else:
+            sim_steps = board_size * 3 + steps_remaining
+        sim_steps = steps
+    else:  # small
+        distances = DistanceMaze(maze.num_rows, maze.num_cols)
+        sim_steps = steps
+
+    distances = mini_solve(start_pos, maze, sim_steps, distances)
+
+    if not unlimited_map:
+        print("after")
+        print(distances.overlay(maze))
+        return distances.calc_steps(sim_steps % 2)
+
+    # big
     print(distances.overlay(maze))
-    print(distances.calc_steps())
-    return 0
+    print("brute force", distances.calc_steps(sim_steps % 2))
+    if not isinstance(distances, DistanceMazes):
+        raise ValueError("ya done goof here")
+    giant_parser = GiantNodeParser(distances, boards_to_edge)
+    remainder = steps % 2
+    result = 0
+    for node_type in GiantNodeType:
+        node = giant_parser.get_node(node_type)
+        node_steps = node.calc_steps(remainder)
+        node_count = giant_parser.get_node_count(node_type, remainder)
+        node_type_steps = node_steps * node_count
+        result += node_type_steps
+
+    return result
 
 
 def main() -> None:
     start_pos, maze = parse_maze(FILE)
-    solve(start_pos, maze)
+    # part1
+    # print(solve(start_pos, maze, 64))
+
+    # part2
+    print(solve(start_pos, maze, 25 + 2, True))
 
 
 if __name__ == "__main__":

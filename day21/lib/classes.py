@@ -4,7 +4,10 @@
 from abc import ABC
 from collections import defaultdict
 from dataclasses import dataclass
+from enum import Enum
 from typing import Optional
+
+from colorama import Back
 
 
 @dataclass
@@ -80,7 +83,10 @@ class BaseDistanceMaze(ABC):
     def overlay(self, maze: Maze) -> str:
         return ""
 
-    def calc_steps(self) -> int:
+    def calc_steps(self, remainder: int) -> int:
+        """
+        calc steps, matching remainder == 1 or remainder == 0
+        when modulo'ing by 2"""
         return 0
 
     def __setitem__(self, position: Position, value: int) -> None:
@@ -136,30 +142,46 @@ class DistanceMaze(BaseDistanceMaze):
             return "_"
         return str(value)[-1]
 
-    def calc_steps(self) -> int:
+    def calc_steps(self, remainder: int) -> int:
+        def is_valid(val: int) -> bool:
+            return val % 2 == remainder and val >= 0
+
         result = 0
         for row in self.grid:
-            result += sum(1 if item % 2 == 0 else 0 for item in row)
+            result += sum(1 if is_valid(item) else 0 for item in row)
         return result
 
     def overlay(self, maze: Maze) -> str:
         new_strings: list[str] = []
         base_str: str = str(self)
-
+        is_complete = self.is_complete()
         for row, line in enumerate(base_str.split("\n")):
             other_str = maze.grid[row]
             my_str = ""
             for col, value in enumerate(line):
-                if value == "_":
+                if is_complete and self.centre_cell(row, col):
+                    if value in "02468":
+                        my_str += Back.GREEN + value + Back.BLACK
+                    else:
+                        my_str += Back.RED + value + Back.BLACK
+                elif value == "_":
                     my_str += other_str[col]
-                # elif value in "02468":
-                #    my_str += value
-                # else:
-                #    my_str += "."
                 else:
                     my_str += value
+
             new_strings.append(my_str)
         return "\n".join(new_strings)
+
+    def centre_cell(self, row: int, col: int) -> bool:
+        return row == self.num_rows // 2 and col == self.num_cols // 2
+
+    def is_complete(self) -> bool:
+        return (
+            self.grid[0][0] != -1
+            and self.grid[0][-1] != -1
+            and self.grid[-1][0] != -1
+            and self.grid[-1][-1] != -1
+        )
 
 
 class DistanceMazes(BaseDistanceMaze):
@@ -173,7 +195,12 @@ class DistanceMazes(BaseDistanceMaze):
         self.cols_per_maze = num_cols
         self.grid = defaultdict(lambda: DistanceMaze(num_rows, num_cols))
 
+    def get_big_grid(self, position: Position) -> DistanceMaze:
+        """Big grid coordinate"""
+        return self.grid[position]
+
     def __getitem__(self, position: Position) -> int:
+        """global coordinate 0 .. infinity"""
         big_pos, sub_pos = self.get_split_pos(position)
 
         result = self.grid[big_pos][sub_pos]
@@ -221,3 +248,122 @@ class DistanceMazes(BaseDistanceMaze):
             result += row_lines
             result += "\n\n"
         return result
+
+    def calc_steps(self, remainder: int) -> int:
+        result = 0
+        for sub_grid in self.grid.values():
+            result += sub_grid.calc_steps(remainder)
+        return result
+
+
+class GiantNodeType(Enum):
+    # turn each "maze" into a node type.
+    # assume parity == EVEN
+    # e.g. 9 x 9 maze matrix
+    # mazes_center_to_bottom == 9 //2 == 4
+    # BIG -> mazes_center_to_bottom - 1 == 3
+    # SMALL -> mazes_center_to_bottom == 4
+    # FULL_EVEN -> (mazes_center_to_bottom-1) ^2 == 9
+    # FULL_ODD -> mazes_center_to_bottom^2 == 16
+
+    FULL_EVEN = 0  # same as start tile
+    FULL_ODD = 1  # 1 away from start tile
+    NORTH_TIP = 2
+    NORTH_EAST_BIG = 3
+    NORTH_EAST_SMALL = 4
+    EAST_TIP = 5
+    SOUTH_EAST_BIG = 6
+    SOUTH_EAST_SMALL = 7
+    SOUTH_TIP = 8
+    SOUTH_WEST_BIG = 9
+    SOUTH_WEST_SMALL = 10
+    WEST_TIP = 11
+    NORTH_WEST_BIG = 12
+    NORTH_WEST_SMALL = 13
+
+
+class GiantNodeParser:
+    distance_mazes: DistanceMazes
+    full_edge_dist: int
+    edge_dist: int
+
+    def __init__(self, distance_mazes: DistanceMazes, nodes_to_edge: int) -> None:
+        """
+        e.g. 5x5, with steps == 10+2
+        nodes_to_edge == 2
+        5x5, steps == 15+2
+        nodes_to_edge == 3
+        """
+        if nodes_to_edge < 3:
+            raise ValueError("this shit only works with at least 3 bignodes!")
+        self.distance_mazes = distance_mazes
+        self.full_edge_dist = nodes_to_edge  # edge dist of mega map
+        self.edge_dist = max(pos.row for pos in distance_mazes.grid)
+        print("nodes_to_edge", nodes_to_edge)
+        print("calculated_nodes_to_edge", self.edge_dist)
+
+    def get_node(self, node_type: GiantNodeType) -> DistanceMaze:  # noqa: C901
+        if node_type == GiantNodeType.FULL_EVEN:
+            return self.distance_mazes.get_big_grid(Position(0, 0))
+        elif node_type == GiantNodeType.FULL_ODD:
+            return self.distance_mazes.get_big_grid(Position(0, 1))
+        elif node_type == GiantNodeType.NORTH_TIP:
+            return self.distance_mazes.get_big_grid(Position(-self.edge_dist, 0))
+        elif node_type == GiantNodeType.NORTH_EAST_BIG:
+            return self.distance_mazes.get_big_grid(Position(-self.edge_dist + 1, 1))
+        elif node_type == GiantNodeType.NORTH_EAST_SMALL:
+            return self.distance_mazes.get_big_grid(Position(-self.edge_dist, 1))
+        elif node_type == GiantNodeType.EAST_TIP:
+            return self.distance_mazes.get_big_grid(Position(0, self.edge_dist))
+        elif node_type == GiantNodeType.SOUTH_EAST_BIG:
+            return self.distance_mazes.get_big_grid(Position(1, self.edge_dist - 1))
+        elif node_type == GiantNodeType.SOUTH_EAST_SMALL:
+            return self.distance_mazes.get_big_grid(Position(1, self.edge_dist))
+        elif node_type == GiantNodeType.SOUTH_TIP:
+            return self.distance_mazes.get_big_grid(Position(self.edge_dist, 0))
+        elif node_type == GiantNodeType.SOUTH_WEST_BIG:
+            return self.distance_mazes.get_big_grid(Position(self.edge_dist - 1, -1))
+        elif node_type == GiantNodeType.SOUTH_WEST_SMALL:
+            return self.distance_mazes.get_big_grid(Position(self.edge_dist, -1))
+        elif node_type == GiantNodeType.WEST_TIP:
+            return self.distance_mazes.get_big_grid(Position(0, -self.edge_dist))
+        elif node_type == GiantNodeType.NORTH_WEST_BIG:
+            return self.distance_mazes.get_big_grid(Position(-1, -self.edge_dist + 1))
+        elif node_type == GiantNodeType.NORTH_WEST_SMALL:
+            return self.distance_mazes.get_big_grid(Position(-1, -self.edge_dist))
+        raise ValueError(f"Unknown node_type: {node_type}")
+
+    def get_node_count(self, node_type: GiantNodeType, remainder: int) -> int:
+        # even parity means that the very center (start tile) is an end step
+        if node_type == GiantNodeType.FULL_EVEN:
+            if remainder == 0:
+                return (self.full_edge_dist - 1) * (self.full_edge_dist - 1)
+            else:  # odd_parity
+                return self.full_edge_dist * self.full_edge_dist
+        elif node_type == GiantNodeType.FULL_ODD:
+            if remainder == 0:
+                return self.full_edge_dist * self.full_edge_dist
+            else:  # odd_parity
+                return (self.full_edge_dist - 1) * (self.full_edge_dist - 1)
+        elif node_type in [
+            GiantNodeType.NORTH_TIP,
+            GiantNodeType.EAST_TIP,
+            GiantNodeType.WEST_TIP,
+            GiantNodeType.SOUTH_TIP,
+        ]:
+            return 1
+        elif node_type in [
+            GiantNodeType.NORTH_EAST_BIG,
+            GiantNodeType.NORTH_WEST_BIG,
+            GiantNodeType.SOUTH_EAST_BIG,
+            GiantNodeType.SOUTH_WEST_BIG,
+        ]:
+            return self.full_edge_dist - 1
+        elif node_type in [
+            GiantNodeType.NORTH_EAST_SMALL,
+            GiantNodeType.NORTH_WEST_SMALL,
+            GiantNodeType.SOUTH_EAST_SMALL,
+            GiantNodeType.SOUTH_WEST_SMALL,
+        ]:
+            return self.full_edge_dist
+        raise ValueError(f"Unknown node type: {node_type}")
