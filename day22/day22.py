@@ -24,10 +24,14 @@ def random_color() -> vpython.vector:
 class Visualization:
     boxes: list[BoxData]
     matrix: Matrix
+    started: bool
 
     def __init__(self) -> None:
         self.boxes = get_boxes()
+        self.boxes.sort(key=lambda x: x.z_val_bot)
+        self.matrix = Matrix()
         self.init_vis()
+        self.started = False
         vpython.scene.bind("keydown", self.on_key_input)
 
     def init_vis(self) -> None:
@@ -36,30 +40,47 @@ class Visualization:
             color = random_color()
             vbox = construct_box(box, color)
             box.set_vbox(vbox)
-        ground = BoxData(Vector3(0, 0, 0), Vector3(10, 10, 0))
+        ground = BoxData("ground", Vector3(0, 0, 0), Vector3(10, 10, 0))
         construct_box(ground, random_color())
 
     def on_key_input(self, evt: Any) -> None:
         character = evt.key
         if character == "shift":
             return
+        print(character)
+        if character in ["\n", "enter", "return"]:
+            self.start()
 
     def start(self) -> None:
-        self.matrix = Matrix()
-        self.boxes.sort(key=lambda x: x.z_val)
+        if self.started:
+            return
 
-        while True:
-            vpython.rate(30)
-            for box in self.boxes:
-                while self.matrix.can_fall_down(box):
-                    box.fall()
-                    vpython.rate(10)
-                self.matrix.register_box(box)
+        for box in self.boxes:
+            vpython.rate(165)
+            while self.matrix.can_fall_down(box):
+                box.fall()
+
+            self.matrix.register_box(box)
+            supports = self.matrix.get_supports(box)
+            box.set_supports(supports)
+
+        self.started = False
+        print(self.calculate_part1())
+        self.calculate_part2()
+
+    def calculate_part1(self) -> int:
+        return sum(1 if self.matrix.can_fly_up(item) else 0 for item in self.boxes)
+
+    def calculate_part2(self) -> None:
+        pass
 
 
 def main() -> None:
     vis = Visualization()
-    vis.start()
+    while True:
+        vpython.rate(165)  # we control sleeping
+        while vis.started:  # hand over vpython.sleep to vis
+            pass
 
 
 if __name__ == "__main__":
