@@ -5,6 +5,9 @@ import vpython
 from lib.classes import BoxData, Matrix, Vector3
 from lib.parsers_22 import get_boxes
 
+INPUT = "input.txt"
+INPUT_SMALL = "input-small.txt"
+
 
 def construct_box(box_data: BoxData, color: vpython.vector) -> vpython.box:
     return vpython.box(
@@ -27,7 +30,7 @@ class Visualization:
     started: bool
 
     def __init__(self) -> None:
-        self.boxes = get_boxes()
+        self.boxes = get_boxes(INPUT)
         self.boxes.sort(key=lambda x: x.z_val_bot)
         self.matrix = Matrix()
         self.init_vis()
@@ -56,7 +59,7 @@ class Visualization:
             return
 
         for box in self.boxes:
-            vpython.rate(165)
+            # vpython.rate(165)
             while self.matrix.can_fall_down(box):
                 box.fall()
 
@@ -78,13 +81,14 @@ class Visualization:
         return sum(1 if self.matrix.can_fly_up(item) else 0 for item in self.boxes)
 
     def calculate_part2(self) -> int:
-        """this one's easy, thank god for dp"""
-        # boxes = sorted(self.boxes, key=lambda box: box.z_val_top)
-        return 0
+        return sum(box.recursive_fall({box}) for box in self.boxes)
 
 
 def main() -> None:
     vis = Visualization()
+
+    vis.start()  # auto start, comment out and use enter to start
+
     while True:
         vpython.rate(165)  # we control sleeping
         while vis.started:  # hand over vpython.sleep to vis

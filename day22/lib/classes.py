@@ -13,7 +13,7 @@ class Vector3:
 
 @dataclass
 class BoxData:
-    box_label: str
+    name: str
     start_pos: Vector3
     end_pos: Vector3
     vbox: vpython.box = field(init=False, repr=False, hash=False)
@@ -21,6 +21,7 @@ class BoxData:
         default_factory=set, hash=False
     )  # list of blocks we support
     hats: set["BoxData"] = field(default_factory=set, hash=False)
+    total_hats: set["BoxData"] = field(default_factory=set, hash=False)
 
     @property
     def vpos(self) -> vpython.vector:
@@ -69,6 +70,31 @@ class BoxData:
 
     def __hash__(self) -> int:
         return hash(f"{self.start_pos} | {self.end_pos}")
+
+    def recursive_fall(self, already_falling: set["BoxData"]) -> int:
+        to_process: list[BoxData] = []  # items that will fall if this brick is removed
+        result = 0
+        for hat in self.hats:
+            # if parent is already falling, we handled this case already
+            if hat in already_falling:
+                continue
+
+            # if all our supports for this hat are falling,
+            # then this hat is falling
+            supported = any(support not in already_falling for support in hat.supports)
+
+            # if no children support this parent
+            if not supported:
+                result += 1
+                already_falling.add(hat)
+                to_process.append(hat)
+
+        # for each parent that falls
+        for node in to_process:
+            # recursively call chain_remove on this parent
+            result += node.recursive_fall(already_falling)
+
+        return result
 
 
 class Matrix:

@@ -6,9 +6,9 @@ def parse_vector(string: str) -> Vector3:
     return Vector3(int(x), int(y), int(z))
 
 
-def get_boxes() -> list[BoxData]:
+def get_boxes(path: str) -> list[BoxData]:
     boxes: list[BoxData] = []
-    with open("input.txt", encoding="utf8") as file:
+    with open(path, encoding="utf8") as file:
         for index, line in enumerate(file):
             line = line.strip()
             if len(line) == 0:
