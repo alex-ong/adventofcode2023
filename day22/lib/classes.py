@@ -74,17 +74,10 @@ class BoxData:
     def recursive_fall(self, already_falling: set["BoxData"]) -> int:
         to_process: list[BoxData] = []  # items that will fall if this brick is removed
         result = 0
-        for hat in self.hats:
-            # if parent is already falling, we handled this case already
-            if hat in already_falling:
-                continue
-
-            # if all our supports for this hat are falling,
-            # then this hat is falling
-            supported = any(support not in already_falling for support in hat.supports)
-
+        for hat in self.hats.difference(already_falling):
+            remaining_supports = hat.supports.difference(already_falling)
             # if no children support this parent
-            if not supported:
+            if len(remaining_supports) == 0:
                 result += 1
                 already_falling.add(hat)
                 to_process.append(hat)
