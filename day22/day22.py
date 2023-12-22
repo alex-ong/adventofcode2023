@@ -64,15 +64,23 @@ class Visualization:
             supports = self.matrix.get_supports(box)
             box.set_supports(supports)
 
+        # have to do this after all boxes dropped
+        for box in self.boxes:
+            hats = self.matrix.get_hats(box)
+            box.set_hats(hats)
+
         self.started = False
+
         print(self.calculate_part1())
-        self.calculate_part2()
+        print(self.calculate_part2())
 
     def calculate_part1(self) -> int:
         return sum(1 if self.matrix.can_fly_up(item) else 0 for item in self.boxes)
 
-    def calculate_part2(self) -> None:
-        pass
+    def calculate_part2(self) -> int:
+        """this one's easy, thank god for dp"""
+        # boxes = sorted(self.boxes, key=lambda box: box.z_val_top)
+        return 0
 
 
 def main() -> None:

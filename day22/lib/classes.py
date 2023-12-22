@@ -20,6 +20,7 @@ class BoxData:
     supports: set["BoxData"] = field(
         default_factory=set, hash=False
     )  # list of blocks we support
+    hats: set["BoxData"] = field(default_factory=set, hash=False)
 
     @property
     def vpos(self) -> vpython.vector:
@@ -60,7 +61,11 @@ class BoxData:
         self.vbox.pos.y -= 1
 
     def set_supports(self, supports: set["BoxData"]) -> None:
+        """blocks under us"""
         self.supports = supports
+
+    def set_hats(self, hats: set["BoxData"]) -> None:
+        self.hats = hats
 
     def __hash__(self) -> int:
         return hash(f"{self.start_pos} | {self.end_pos}")
@@ -113,15 +118,19 @@ class Matrix:
                     supports.add(value)
         return supports
 
-    def can_fly_up(self, box: BoxData) -> bool:
-        """Check cells above our block. If they're clear we can fly up"""
-        supporting: set[BoxData] = set()  # list of items we're supporting
+    def get_hats(self, box: BoxData) -> set[BoxData]:
+        # return which boxes are resting on this box.
+        hats: set[BoxData] = set()  # list of items we're supporting
         for x in range(box.start_pos.x, box.end_pos.x + 1):
             for y in range(box.start_pos.y, box.end_pos.y + 1):
                 value = self.layers[box.z_val_top + 1][x][y]
                 if value is not None:
-                    supporting.add(value)
+                    hats.add(value)
+        return hats
+
+    def can_fly_up(self, box: BoxData) -> bool:
+        """Check cells above our block. If they're clear we can fly up"""
 
         # all our "hats" need to have > 1 supports
-        hats = list(supporting)
+        hats = list(box.hats)
         return all(len(hat.supports) > 1 for hat in hats)
