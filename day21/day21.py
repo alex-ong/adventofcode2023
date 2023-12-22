@@ -1,8 +1,16 @@
 """day21 solution"""
 
 from queue import Queue
+from typing import Optional
 
-from lib.classes import DistanceMaze, Maze, Position, PositionDist
+from lib.classes import (
+    BaseDistanceMaze,
+    DistanceMaze,
+    DistanceMazes,
+    Maze,
+    Position,
+    PositionDist,
+)
 from lib.parsers_21 import parse_maze
 
 # first calculate minimum distance for every tile
@@ -13,27 +21,32 @@ from lib.parsers_21 import parse_maze
 
 FILE_SMALL = "input-small.txt"
 FILE_MAIN = "input.txt"
-FILE = FILE_SMALL
+FILE_CLEANER = "input-cleaner.txt"
+FILE = FILE_MAIN
+STEPS = 64
 
 
-def solve(start_pos: Position, maze: Maze) -> int:
+def solve(start_pos: Position, maze: Maze, big: bool = False) -> int:
     print(start_pos)
     print(maze)
 
     nodes: Queue[PositionDist] = Queue()
     nodes.put(PositionDist(start_pos.row, start_pos.col, distance=0))
-    distances = DistanceMaze(maze.num_rows, maze.num_cols)
-    print("")
-    print(distances)
+    distances: BaseDistanceMaze
+    if big:
+        distances = DistanceMaze(maze.num_rows, maze.num_cols)
+    else:
+        distances = DistanceMazes(maze.num_rows, maze.num_cols)
 
+    print("before:")
+    print(distances.overlay(maze))
     while True:
         pos: PositionDist = nodes.get()
-        if pos.distance >= 7:
+        if pos.distance >= STEPS + 1:
             break
-        print(pos)
         # expand
-        distance = distances[pos]
-        maze_node = maze[pos]
+        distance: Optional[int] = distances[pos]
+        maze_node: Optional[str] = maze[pos]
 
         if distance is None:  # oob
             continue
@@ -51,7 +64,7 @@ def solve(start_pos: Position, maze: Maze) -> int:
 
         for direction in [north, south, east, west]:
             nodes.put(direction)
-
+    print("after")
     print(distances.overlay(maze))
     print(distances.calc_steps())
     return 0
