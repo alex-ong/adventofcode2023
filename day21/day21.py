@@ -24,7 +24,7 @@ from lib.parsers_21 import parse_maze
 FILE_SMALL = "input-small.txt"
 FILE_MAIN = "input.txt"
 FILE_CLEANER = "input-cleaner.txt"
-FILE = FILE_CLEANER
+FILE = FILE_MAIN
 
 
 GIGA_TARGET = 26_501_365  # even parity
@@ -88,7 +88,7 @@ def solve(
             sim_steps = board_size * 2 + steps_remaining
         else:
             sim_steps = board_size * 3 + steps_remaining
-        sim_steps = steps
+        # sim_steps = steps #uncomment to brute force
     else:  # small
         distances = DistanceMaze(maze.num_rows, maze.num_cols)
         sim_steps = steps
@@ -96,12 +96,11 @@ def solve(
     distances = mini_solve(start_pos, maze, sim_steps, distances)
 
     if not unlimited_map:
-        print("after")
         print(distances.overlay(maze))
         return distances.calc_steps(sim_steps % 2)
 
     # big
-    print(distances.overlay(maze))
+
     print("brute force", distances.calc_steps(sim_steps % 2))
     if not isinstance(distances, DistanceMazes):
         raise ValueError("ya done goof here")
@@ -111,8 +110,9 @@ def solve(
     for node_type in GiantNodeType:
         node = giant_parser.get_node(node_type)
         node_steps = node.calc_steps(remainder)
-        node_count = giant_parser.get_node_count(node_type, remainder)
+        node_count = giant_parser.get_node_count(node_type)
         node_type_steps = node_steps * node_count
+        print(f"{node_type.name}, count: {node_count}, steps: {node_steps}")
         result += node_type_steps
 
     return result
@@ -121,10 +121,10 @@ def solve(
 def main() -> None:
     start_pos, maze = parse_maze(FILE)
     # part1
-    # print(solve(start_pos, maze, 64))
+    print(solve(start_pos, maze, 64))
 
     # part2
-    print(solve(start_pos, maze, 25 + 2, True))
+    print(solve(start_pos, maze, GIGA_TARGET, True))
 
 
 if __name__ == "__main__":

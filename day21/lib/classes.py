@@ -333,8 +333,8 @@ class GiantNodeParser:
             return self.distance_mazes.get_big_grid(Position(-1, -self.edge_dist))
         raise ValueError(f"Unknown node_type: {node_type}")
 
-    def get_node_count(self, node_type: GiantNodeType, remainder: int) -> int:
-        # even parity means that the very center (start tile) is an end step
+    def get_node_count(self, node_type: GiantNodeType) -> int:
+        remainder = self.full_edge_dist % 2
         if node_type == GiantNodeType.FULL_EVEN:
             if remainder == 0:
                 return (self.full_edge_dist - 1) * (self.full_edge_dist - 1)
