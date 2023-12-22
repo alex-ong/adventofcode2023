@@ -18,6 +18,7 @@ repos:
             types-tqdm==4.66.0.5,
             python-dotenv==1.0.0,
             graphviz==0.20.1,
+            vpython==7.6.3,
           ]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
