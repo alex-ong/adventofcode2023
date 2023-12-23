@@ -1,5 +1,8 @@
 from enum import StrEnum
 
+INPUT = "day02/input.txt"
+INPUT_SMALL = "day02/input-small.txt"
+
 
 class Color(StrEnum):
     RED = "red"
@@ -63,25 +66,44 @@ class Game:
     def power_level(self) -> int:
         return self.red * self.green * self.blue
 
+    def __repr__(self) -> str:
+        return str(self)
+
 
 def game_filter(game: Game) -> bool:
     """Returns true if the game satisfies the constraints of Question 1"""
     return game.red <= 12 and game.green <= 13 and game.blue <= 14
 
 
-def main() -> None:
-    """Parses data into data structures, then prints out answer to q1 and q2"""
-    with open("day02/input.txt", "r", encoding="utf8") as file:
-        games = []
+def get_games(input_file: str) -> list[Game]:
+    with open(input_file, "r", encoding="utf8") as file:
+        games: list[Game] = []
         for line in file:
             game = Game(line)
             games.append(game)
+    return games
+
+
+def part1(games: list[Game]) -> int:
+    """Solves part 1"""
+    filtered_games = filter(game_filter, games)
+    return sum(game.id for game in filtered_games)
+
+
+def part2(games: list[Game]) -> int:
+    """Solves part2"""
+    return sum(game.power_level() for game in games)
+
+
+def main() -> None:
+    """Parses data into data structures, then prints out answer to q1 and q2"""
+    games = get_games(INPUT)
 
     # Q1:
-    filtered_games = filter(game_filter, games)
-    print(sum(game.id for game in filtered_games))
+    print(part1(games))
+
     # Q2:
-    print(sum(game.power_level() for game in games))
+    print(part2(games))
 
 
 if __name__ == "__main__":
