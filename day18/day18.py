@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from queue import Queue
 
-from tile import EdgeTile, HoleTile, Tile
+from day18.lib.tile import EdgeTile, HoleTile, Tile
 
 
 @dataclass

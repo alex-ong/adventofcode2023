@@ -3,7 +3,7 @@
 from queue import Queue
 from typing import Optional
 
-from lib.classes import (
+from day21.lib.classes import (
     BaseDistanceMaze,
     DistanceMaze,
     DistanceMazes,
@@ -13,7 +13,7 @@ from lib.classes import (
     Position,
     PositionDist,
 )
-from lib.parsers_21 import parse_maze
+from day21.lib.parsers import parse_maze
 
 # first calculate minimum distance for every tile
 # everything that is even, is a winner for 64

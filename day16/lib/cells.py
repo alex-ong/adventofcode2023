@@ -3,8 +3,8 @@ Cell classes
 """
 from abc import ABC, abstractmethod
 
-from direction import Direction
-from laser import Laser
+from day16.lib.direction import Direction
+from day16.lib.laser import Laser
 
 
 class Cell(ABC):

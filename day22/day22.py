@@ -2,8 +2,9 @@ import random
 from typing import Any
 
 import vpython
-from lib.classes import BoxData, Matrix, Vector3
-from lib.parsers_22 import get_boxes
+
+from day22.lib.classes import BoxData, Matrix, Vector3
+from day22.lib.parsers import get_boxes
 
 INPUT = "input.txt"
 INPUT_SMALL = "input-small.txt"

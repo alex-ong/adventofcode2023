@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from direction import Direction
+from day10.lib.direction import Direction
 
 
 @dataclass

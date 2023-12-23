@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import Any
 
-from direction import Direction
+from day14.lib.direction import Direction
 
 
 @dataclass

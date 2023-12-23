@@ -1,4 +1,5 @@
-from .classes import Comparator, Component, Condition, Part, Rule, Workflow
+"""parsers"""
+from day19.lib.classes import Comparator, Component, Condition, Part, Rule, Workflow
 
 
 def parse_part_string(part_string: str) -> Part:

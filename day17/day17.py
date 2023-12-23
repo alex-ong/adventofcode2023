@@ -4,7 +4,8 @@ from queue import PriorityQueue
 from typing import Optional
 
 from colorama import Back
-from direction import ALL_DIRECTIONS, Direction
+
+from day17.lib.direction import ALL_DIRECTIONS, Direction
 
 
 @dataclass(order=True)

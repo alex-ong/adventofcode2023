@@ -4,10 +4,10 @@ Day 3 implementation
 
 from typing import TYPE_CHECKING
 
-from classes import Gear, Matrix
+from day03.classes import Gear, Matrix
 
 if TYPE_CHECKING:
-    from classes import PartNumber
+    from day03.classes import PartNumber
 
 
 def get_data() -> Matrix:

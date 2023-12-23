@@ -6,7 +6,8 @@ from typing import Type, TypeVar, cast
 
 import graphviz
 import tqdm
-from lib.classes import (
+
+from day20.lib.classes import (
     BaseModule,
     BroadcastModule,
     ConjunctionModule,
@@ -17,11 +18,11 @@ from lib.classes import (
     PulseTarget,
     SinkModule,
 )
-from lib.parsers_20 import finalize_modules, get_modules
+from day20.lib.parsers import finalize_modules, get_modules
 
-FILE_A = "input-a.txt"
-FILE_B = "input-b.txt"
-FILE_PROD = "input.txt"
+FILE_A = "day21/input-a.txt"
+FILE_B = "day21/input-b.txt"
+FILE_PROD = "day21/input.txt"
 
 FILE = FILE_PROD
 

@@ -3,9 +3,9 @@
 from dataclasses import dataclass, field
 from typing import ClassVar
 
-from direction import Direction
-from pipebounds import PipeBounds
-from position import Position
+from day10.lib.direction import Direction
+from day10.lib.pipebounds import PipeBounds
+from day10.lib.position import Position
 
 PIPE_FONT = {
     "|": ["│", "║", "|", "X"],

@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from lib.classes import (
+from day20.lib.classes import (
     BaseModule,
     BroadcastModule,
     ConjunctionModule,

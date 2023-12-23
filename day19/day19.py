@@ -1,7 +1,7 @@
 from queue import Queue
 
-from lib.classes import Part, PartRange, PartRangeDest, Workflow
-from lib.parsers import parse_part_string, parse_workflow_string
+from day19.lib.classes import Part, PartRange, PartRangeDest, Workflow
+from day19.lib.parsers import parse_part_string, parse_workflow_string
 
 """
 parsing classes section

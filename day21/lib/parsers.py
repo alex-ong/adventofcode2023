@@ -1,4 +1,4 @@
-from lib.classes import Maze, Position
+from day21.lib.classes import Maze, Position
 
 
 def parse_maze(filename: str) -> tuple[Position, Maze]:

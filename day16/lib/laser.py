@@ -1,7 +1,7 @@
 """laser instance class"""
 from dataclasses import dataclass
 
-from direction import Direction
+from day16.lib.direction import Direction
 
 
 @dataclass

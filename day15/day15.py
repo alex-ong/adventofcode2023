@@ -3,7 +3,7 @@ from enum import Enum
 
 
 def get_input() -> str:
-    with open("input.txt") as file:
+    with open("day15/input.txt") as file:
         return file.read()
 
 

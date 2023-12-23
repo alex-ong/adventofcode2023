@@ -1,4 +1,4 @@
-from lib.classes import BoxData, Vector3
+from day22.lib.classes import BoxData, Vector3
 
 
 def parse_vector(string: str) -> Vector3:
