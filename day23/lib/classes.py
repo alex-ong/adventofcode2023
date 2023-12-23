@@ -10,14 +10,28 @@ class Position:
     def copy_modify(
         self, row: Optional[int] = None, col: Optional[int] = None
     ) -> "Position":
+        """Copies us and offsets by the given offset"""
         if row is None:
             row = self.row
+        else:
+            row = self.row + row
         if col is None:
             col = self.col
+        else:
+            col = self.col + col
         return Position(row, col)
 
     def __str__(self) -> str:
         return f"{self.row}, {self.col}"
+
+    def expand(self) -> list["Position"]:
+        """Expand in 4 cardinal directions"""
+        return [
+            self.copy_modify(row=-1),
+            self.copy_modify(row=+1),
+            self.copy_modify(col=-1),
+            self.copy_modify(col=+1),
+        ]
 
 
 class Path:
@@ -45,6 +59,18 @@ class Path:
         if len(self.route) == 0:
             raise ValueError("Don't call last when i'm empty 4head")
         return self.route[-1]
+
+    def overlay(self, maze: "Maze") -> str:
+        base_str = str(maze)
+
+        char_array: list[list[str]] = [list(line) for line in base_str.split("\n")]
+        for node in self.route:
+            char_array[node.row][node.col] = "O"
+        return "\n".join("".join(char for char in row) for row in char_array)
+
+    def __len__(self) -> int:
+        """length of path. Has to be -1 because problem is like that"""
+        return len(self.route) - 1
 
 
 class Maze:
