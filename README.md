@@ -1,4 +1,6 @@
-![lint](https://github.com/alex-ong/adventofcode2023/actions/workflows/lint.yml/badge.svg)
+[![lint](https://github.com/alex-ong/adventofcode2023/actions/workflows/lint.yml/badge.svg)](https://github.com/alex-ong/adventofcode2023/actions/workflows/lint.yml)
+
+[![test](https://github.com/alex-ong/adventofcode2023/actions/workflows/test.yml/badge.svg)](https://github.com/alex-ong/adventofcode2023/actions/workflows/test.yml)
 
 Advent of Code 2023
 ===
