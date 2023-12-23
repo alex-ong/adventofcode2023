@@ -18,10 +18,10 @@ class BoxData:
     end_pos: Vector3
     vbox: vpython.box = field(init=False, repr=False, hash=False)
     supports: set["BoxData"] = field(
-        default_factory=set, hash=False
+        default_factory=set, hash=False, repr=False
     )  # list of blocks we support
-    hats: set["BoxData"] = field(default_factory=set, hash=False)
-    total_hats: set["BoxData"] = field(default_factory=set, hash=False)
+    hats: set["BoxData"] = field(default_factory=set, hash=False, repr=False)
+    total_hats: set["BoxData"] = field(default_factory=set, hash=False, repr=False)
 
     @property
     def vpos(self) -> vpython.vector:
@@ -61,6 +61,14 @@ class BoxData:
         # vbox y == boxdata z
         self.vbox.pos.y -= 1
 
+    def select(self) -> None:
+        self.vbox.pos.x += 30
+        self.vbox.pos.z -= 30
+
+    def unselect(self) -> None:
+        self.vbox.pos.x -= 30
+        self.vbox.pos.z += 30
+
     def set_supports(self, supports: set["BoxData"]) -> None:
         """blocks under us"""
         self.supports = supports
@@ -71,21 +79,22 @@ class BoxData:
     def __hash__(self) -> int:
         return hash(f"{self.start_pos} | {self.end_pos}")
 
-    def recursive_fall(self, already_falling: set["BoxData"]) -> int:
+    def recursive_fall(self, already_falling: set["BoxData"]) -> set["BoxData"]:
+        """returns all boxes above us that fall if we fall"""
         to_process: list[BoxData] = []  # items that will fall if this brick is removed
-        result = 0
+        result: set["BoxData"] = set()
         for hat in self.hats.difference(already_falling):
             remaining_supports = hat.supports.difference(already_falling)
             # if no children support this parent
             if len(remaining_supports) == 0:
-                result += 1
+                result.add(hat)
                 already_falling.add(hat)
                 to_process.append(hat)
 
         # for each parent that falls
         for node in to_process:
             # recursively call chain_remove on this parent
-            result += node.recursive_fall(already_falling)
+            result.update(node.recursive_fall(already_falling))
 
         return result
 
