@@ -1,4 +1,4 @@
-from day23.lib.classes import Maze, Path, Solver, Solver1
+from day23.lib.classes import BasePath, Maze, Solver, Solver1
 from day23.lib.classes2 import Solver2
 from day23.lib.parsers import get_maze
 
@@ -17,14 +17,14 @@ def part2(maze: Maze) -> int:
 
 
 def run_solver(solver: Solver) -> int:
-    paths: list[Path] = solver.solve()
+    paths: list[BasePath] = solver.solve()
     path_lengths = [len(path) for path in paths]
     path_lengths.sort(reverse=True)
     return path_lengths[0]
 
 
 def main() -> None:
-    maze: Maze = get_maze(INPUT_SMALL)
+    maze: Maze = get_maze(INPUT)
 
     # print(part1(maze))
     print(part2(maze))

@@ -1,18 +1,18 @@
 """part 2 solution"""
+import time
 from dataclasses import dataclass, field
 from queue import Queue
 
 import colorama
 
-from day23.lib.classes import Maze, Path, Position, Solver
+from day23.lib.classes import BasePath, Maze, Path, Position, Solver
 
 
-# first simplify graph to "nodes", then brute force that.
-@dataclass
+@dataclass(eq=True)
 class Node:
-    name: int
-    position: Position
-    edges: list["Edge"] = field(default_factory=list)
+    name: int = field(compare=True)
+    position: Position = field(compare=False)
+    edges: list["Edge"] = field(default_factory=list, repr=False, compare=False)
 
     def __str__(self) -> str:
         return f"{self.name}: ({self.position}) {[str(edge) for edge in self.edges]}"
@@ -29,6 +29,45 @@ class Edge:
 
     def __str__(self) -> str:
         return f"{self.node1}->{self.node2}, {len(self.path)}"
+
+    def __len__(self) -> int:
+        return len(self.path)
+
+
+# Same thing as path but with nodes kappa
+class NodePath(BasePath):
+    path: list[int]
+    node_ids: set[int]
+    path_length: int
+
+    def __init__(self) -> None:
+        self.path = []
+        self.node_ids = set()
+        self.path_length = 0
+
+    def can_add(self, node_id: int) -> bool:
+        return node_id not in self.node_ids
+
+    def copy(self) -> "NodePath":
+        result = NodePath()
+        result.path = self.path[:]
+        result.node_ids = self.node_ids.copy()
+        result.path_length = self.path_length
+        return result
+
+    def add(self, node_id: int, cost: int = 0) -> None:
+        self.path.append(node_id)
+        self.node_ids.add(node_id)
+        self.path_length += cost
+
+    def last(self) -> int:
+        return self.path[-1]
+
+    def __str__(self) -> str:
+        return f"{self.path_length}, {self.node_ids}"
+
+    def __len__(self) -> int:
+        return self.path_length
 
 
 class Solver2(Solver):
@@ -67,9 +106,7 @@ class Solver2(Solver):
 
         nodes.append(Node(name, end))
         for node in nodes:
-            self.maze[node.position] = (
-                colorama.Back.GREEN + str(node.name) + colorama.Back.BLACK
-            )
+            self.maze[node.position] = colorama.Back.GREEN + "X" + colorama.Back.BLACK
         return {node.position: node for node in nodes}
 
     def fill_node(self, start_node: Node, nodes: dict[Position, Node]) -> None:
@@ -123,13 +160,52 @@ class Solver2(Solver):
 
             return result
 
-    def solve(self) -> list[Path]:
+    def expand_node_path(
+        self, node_path: NodePath, nodes: list[Node]
+    ) -> list[NodePath]:
+        last_node: Node = nodes[node_path.last()]
+        result = []
+        for edge in last_node.edges:
+            target_node_id: int = edge.node2
+            if node_path.can_add(target_node_id):
+                to_add = node_path.copy()
+                to_add.add(target_node_id, len(edge.path))
+                result.append(to_add)
+        return result
+
+    def build_nodes(self) -> list[Node]:
         nodes: dict[Position, Node] = self.get_nodes()
         print(self.maze)
         for node in nodes.values():
             self.fill_node(node, nodes)
 
-        for node in nodes.values():
-            print(node)
+        return list(nodes.values())
 
-        return []
+    def solve(self) -> list[BasePath]:
+        nodes: list[Node] = self.build_nodes()
+        first_path = NodePath()
+        first_path.add(0)
+        paths: Queue[NodePath] = Queue()
+        paths.put(first_path)
+        print("\n".join(str(node) for node in nodes))
+        last = time.time()
+        results: list[BasePath] = []
+        count = 0
+        while not paths.empty():
+            path: NodePath = paths.get()
+            node_id: int = path.last()
+            if node_id == nodes[-1].name:  # end node
+                # reached an edge
+                count += 1
+                results.append(path)
+                if count % 10000 == 0:
+                    print(paths.qsize(), path, time.time() - last)
+                    last = time.time()
+                continue
+            expansions = self.expand_node_path(path, nodes)
+            for path in expansions:
+                paths.put(path)
+
+        results.sort(key=lambda x: len(x), reverse=True)
+
+        return results
