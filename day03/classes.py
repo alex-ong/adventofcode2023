@@ -126,3 +126,7 @@ class Matrix:
             if part_number.touching(gear.col, gear.row, self.row_size):
                 result.append(part_number)
         return result
+
+    def filter_engine_parts(self, part_numbers: list[PartNumber]) -> list[PartNumber]:
+        """Return the legit part numbers"""
+        return list(filter(self.is_engine_part, part_numbers))
