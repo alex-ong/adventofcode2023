@@ -35,12 +35,7 @@ class Position:
         ]
 
 
-class BasePath:
-    def __len__(self) -> int:
-        raise NotImplementedError()
-
-
-class Path(BasePath):
+class Path:
     route: list[Position]
     nodes: set[Position]
 
@@ -123,12 +118,7 @@ class Maze:
         )
 
 
-class Solver:
-    def solve(self) -> list[BasePath]:
-        return []
-
-
-class Solver1(Solver):
+class Solver1:
     maze: Maze
     handle_hills: bool
 
@@ -136,13 +126,13 @@ class Solver1(Solver):
         self.maze = maze
         self.handle_hills = handle_hills
 
-    def solve(self) -> list[BasePath]:
+    def solve(self) -> list[Path]:
         paths: Queue[Path] = Queue()
         first_path = Path()
         first_path.add(Position(0, 1))
         paths.put(first_path)
         # bfs all paths simultaneously
-        results: list[BasePath] = []
+        results: list[Path] = []
         count = 1
         while not paths.empty():
             path = paths.get()
@@ -154,8 +144,6 @@ class Solver1(Solver):
             for expansion in expansions:
                 paths.put(expansion)
             count += 1
-            if count % 1000 == 0:
-                print(count)
 
         return results
 
