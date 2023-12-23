@@ -1,4 +1,4 @@
-from day02.day2 import INPUT_SMALL, Game, game_filter, get_games, part1, part2
+from day02.day2 import INPUT_SMALL, Draw, Game, game_filter, get_games, part1, part2
 
 
 def get_game1() -> Game:
@@ -9,8 +9,17 @@ def get_game2() -> Game:
     return Game("Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue")
 
 
+def test_draw() -> None:
+    """Test draws"""
+    draw1: Draw = Draw("3 blue, 4 red")
+    draw2: Draw = Draw("4 blue, 3 green")
+
+    assert [draw1.red, draw1.green, draw1.blue] == [4, 0, 3]
+    assert [draw2.red, draw2.green, draw2.blue] == [0, 3, 4]
+
+
 def test_game() -> None:
-    # constructor:
+    """Test games"""
     game1: Game = get_game1()
     game2: Game = get_game2()
 
