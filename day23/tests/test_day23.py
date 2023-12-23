@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
-from day23.day23 import INPUT_SMALL, Solver, part1
+from day23.day23 import INPUT_SMALL, part1
+from day23.lib.classes import Solver1
 from day23.lib.parsers import get_maze
 
 if TYPE_CHECKING:
@@ -10,7 +11,7 @@ if TYPE_CHECKING:
 def test_solver() -> None:
     maze: Maze = get_maze(INPUT_SMALL)
 
-    solver = Solver(maze)
+    solver = Solver1(maze)
     paths: list[Path] = solver.solve()
 
     path_lengths = [len(path) for path in paths]
