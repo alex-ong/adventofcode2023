@@ -39,42 +39,6 @@ class Edge:
         return len(self.path)
 
 
-# Same thing as path but with nodes kappa
-class NodePath:
-    path: list[int]
-    node_ids: set[int]
-    path_length: int
-
-    def __init__(self) -> None:
-        self.path = []
-        self.node_ids = set()
-        self.path_length = 0
-
-    def can_add(self, node_id: int) -> bool:
-        return node_id not in self.node_ids
-
-    def copy(self) -> "NodePath":
-        result = NodePath()
-        result.path = self.path[:]
-        result.node_ids = self.node_ids.copy()
-        result.path_length = self.path_length
-        return result
-
-    def add(self, node_id: int, cost: int = 0) -> None:
-        self.path.append(node_id)
-        self.node_ids.add(node_id)
-        self.path_length += cost
-
-    def last(self) -> int:
-        return self.path[-1]
-
-    def __str__(self) -> str:
-        return f"{self.path_length}, {self.node_ids}"
-
-    def __len__(self) -> int:
-        return self.path_length
-
-
 class Solver2:
     maze: Maze
 
