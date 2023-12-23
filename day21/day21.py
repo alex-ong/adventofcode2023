@@ -21,9 +21,9 @@ from day21.lib.parsers import parse_maze
 # calculate if there is a cycle that lands on itself in an odd number of steps
 # same for every tile i guess. DP weird champ
 
-FILE_SMALL = "input-small.txt"
-FILE_MAIN = "input.txt"
-FILE_CLEANER = "input-cleaner.txt"
+FILE_SMALL = "day21/input-small.txt"
+FILE_MAIN = "day21/input.txt"
+FILE_CLEANER = "day21/input-cleaner.txt"
 FILE = FILE_MAIN
 
 

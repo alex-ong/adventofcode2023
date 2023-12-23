@@ -66,7 +66,7 @@ class HandPart2(Hand):
 def parse_lines(cls: type) -> list[Hand]:
     """open input file and parse into hand structures"""
 
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day07/input.txt", "r", encoding="utf8") as file:
         # wow super cool list comprehension thingo i'm so cool
         results = [cls(*line.split()) for line in file]
     return results

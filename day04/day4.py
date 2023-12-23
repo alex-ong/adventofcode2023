@@ -78,7 +78,7 @@ def grab_data(filename: str) -> list[Card]:
 
 
 def main() -> None:
-    cards: list[Card] = grab_data("input.txt")
+    cards: list[Card] = grab_data("day04/input.txt")
     # Q1
     total_points = sum(card.get_points() for card in cards)
     print(total_points)

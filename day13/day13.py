@@ -58,7 +58,7 @@ class Maze:
 
 def read_input() -> list[Maze]:
     mazes: list[Maze] = []
-    with open("input.txt") as file:
+    with open("day13/input.txt") as file:
         lines: list[str] = []
         for line in file:
             if line.strip() == "":

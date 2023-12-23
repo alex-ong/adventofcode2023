@@ -91,7 +91,7 @@ class SpringLine:
 def get_input() -> list[SpringLine]:
     """returns list of SpringLines from input file"""
     result = []
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day12/input.txt", "r", encoding="utf8") as file:
         for line in file:
             items, broken_csv = line.split()
             int_springs = [int(item) for item in broken_csv.split(",")]

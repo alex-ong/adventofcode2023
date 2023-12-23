@@ -190,7 +190,7 @@ def process_file(file: TextIOWrapper) -> tuple[list[int], list[NamedMap]]:
 
 def grab_inputs() -> tuple[list[int], list[NamedMap]]:
     """parses the source file"""
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day05/input.txt", "r", encoding="utf8") as file:
         return process_file(file)
 
 

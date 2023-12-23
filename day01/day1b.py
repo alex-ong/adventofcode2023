@@ -53,7 +53,7 @@ def process_line(line: str) -> int:
 
 
 def main() -> None:
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day01/input.txt", "r", encoding="utf8") as file:
         total = 0
         for line in file:
             total += process_line(line)

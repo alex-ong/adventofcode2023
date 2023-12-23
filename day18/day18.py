@@ -129,7 +129,7 @@ def get_matrix_range(commands: list[Command]) -> tuple[Position, Position]:
 
 def get_input() -> list[Command]:
     commands = []
-    with open("input.txt", encoding="utf-8") as file:
+    with open("day18/input.txt", encoding="utf-8") as file:
         for line in file:
             direction, steps, color = line.strip().split()
             instruction = Command(Direction(direction), int(steps), color[2:-1])

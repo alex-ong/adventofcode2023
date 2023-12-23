@@ -27,7 +27,7 @@ class Command:
 
 def get_input() -> list[Command]:
     commands = []
-    with open("input.txt", encoding="utf-8") as file:
+    with open("day18/input.txt", encoding="utf-8") as file:
         for line in file:
             hexcode = line.strip().split()[2]
             instruction = Command(hexcode[2:-1])

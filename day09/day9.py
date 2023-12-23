@@ -56,7 +56,7 @@ class ValueArray:
 def get_input() -> list[ValueArray]:
     """turns inputs into nice ValueArrays"""
     result = []
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day09/input.txt", "r", encoding="utf8") as file:
         for line in file:
             values = ValueArray([[int(item) for item in line.split()]])
             result.append(values)

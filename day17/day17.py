@@ -187,7 +187,7 @@ class WorldPart2(WorldPart1):
 
 def get_input() -> list[list[int]]:
     """Convert input into world dataclass"""
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day17/input.txt", "r", encoding="utf8") as file:
         data: list[list[int]] = []
         for line in file:
             data.append([int(char) for char in line.strip()])

@@ -28,7 +28,7 @@ class RaceStrat:
 
 def read_inputs() -> list[Race]:
     """disgusting but short i guess"""
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day06/input.txt", "r", encoding="utf8") as file:
         times = [int(item) for item in file.readline().split()[1:]]
         distance = [int(item) for item in file.readline().split()[1:]]
         items = [Race(times[i], distance[i]) for i in range(len(times))]

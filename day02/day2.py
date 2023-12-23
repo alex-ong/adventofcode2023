@@ -71,7 +71,7 @@ def game_filter(game: Game) -> bool:
 
 def main() -> None:
     """Parses data into data structures, then prints out answer to q1 and q2"""
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day02/input.txt", "r", encoding="utf8") as file:
         games = []
         for line in file:
             game = Game(line)

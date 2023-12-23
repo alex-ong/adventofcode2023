@@ -91,7 +91,7 @@ class Cycle:
 
 def read_input() -> tuple[Directions, WorldMap]:
     """reads input into directions/world_map"""
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day08/input.txt", "r", encoding="utf8") as file:
         directions = Directions(file.readline().strip())
         world_map = WorldMap()
         for line in file:

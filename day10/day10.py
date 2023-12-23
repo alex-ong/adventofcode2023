@@ -114,7 +114,7 @@ def process_input_line(row: int, line: str) -> list[Pipe]:
 
 def read_input() -> PipeMap:
     """read the map"""
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day10/input.txt", "r", encoding="utf8") as file:
         pipes = [process_input_line(row, line) for row, line in enumerate(file)]
 
         pipe_map = PipeMap(pipes)

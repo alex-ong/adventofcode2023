@@ -82,7 +82,7 @@ class World:
 
 def get_input() -> World:
     """Read input file"""
-    with open("input.txt") as file:
+    with open("day16/input.txt") as file:
         all_cells: list[list[Cell]] = []
         for line in file:
             line = line.strip()

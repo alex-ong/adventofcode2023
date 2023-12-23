@@ -112,7 +112,7 @@ def is_empty(items: list[Point]) -> bool:
 
 def parse_input() -> Universe:
     """parse input file and return a universe"""
-    with open("input.txt", "r", encoding="utf8") as file:
+    with open("day11/input.txt", "r", encoding="utf8") as file:
         rows = []
         for row, line in enumerate(file):
             line = line.strip()

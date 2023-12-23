@@ -6,7 +6,7 @@ import vpython
 from day22.lib.classes import BoxData, Matrix, Vector3
 from day22.lib.parsers import get_boxes
 
-INPUT = "input.txt"
+INPUT = "day22/input.txt"
 INPUT_SMALL = "input-small.txt"
 
 

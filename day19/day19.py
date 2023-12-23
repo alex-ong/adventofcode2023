@@ -11,7 +11,7 @@ parsing classes section
 def get_input() -> tuple[list[Workflow], list[Part]]:
     workflows: list[Workflow] = []
     parts: list[Part] = []
-    with open("input.txt", encoding="utf8") as file:
+    with open("day19/input.txt", encoding="utf8") as file:
         for line in file:
             if len(line.strip()) == 0:
                 break
