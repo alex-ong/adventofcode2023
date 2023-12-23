@@ -16,6 +16,36 @@ class Position:
             col = self.col
         return Position(row, col)
 
+    def __str__(self) -> str:
+        return f"{self.row}, {self.col}"
+
+
+class Path:
+    route: list[Position]
+    nodes: set[Position]
+
+    def __init__(self) -> None:
+        self.route = []
+        self.nodes = set()
+
+    def can_add(self, position: Position) -> bool:
+        return position not in self.nodes
+
+    def add(self, position: Position) -> None:
+        self.route.append(position)
+        self.nodes.add(position)
+
+    def copy(self) -> "Path":
+        result = Path()
+        result.route = self.route[:]
+        result.nodes = set(result.route)
+        return result
+
+    def last(self) -> Position:
+        if len(self.route) == 0:
+            raise ValueError("Don't call last when i'm empty 4head")
+        return self.route[-1]
+
 
 class Maze:
     grid: list[str]  # 2d array of chars
