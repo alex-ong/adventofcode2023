@@ -1,3 +1,5 @@
+![lint](https://github.com/alex-ong/adventofcode2023/actions/workflows/lint.yml/badge.svg)
+
 Advent of Code 2023
 ===
 
