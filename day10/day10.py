@@ -311,11 +311,11 @@ def main() -> None:
     big_map: PipeMap = expand_map(pipe_map)
 
     # you can use this to view it lol.
-    with open("big_unfilled.txt", "w", encoding="utf8") as file:
+    with open("day10/big_unfilled.txt", "w", encoding="utf8") as file:
         file.write(str(big_map))
 
     flood_fill(big_map)
-    with open("big_filled.txt", "w", encoding="utf8") as file:
+    with open("day10/big_filled.txt", "w", encoding="utf8") as file:
         file.write(str(big_map))
 
     small_map: PipeMap = reduce_map(big_map, pipe_map)

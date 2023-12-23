@@ -20,11 +20,12 @@ from day20.lib.classes import (
 )
 from day20.lib.parsers import finalize_modules, get_modules
 
-FILE_A = "day21/input-a.txt"
-FILE_B = "day21/input-b.txt"
-FILE_PROD = "day21/input.txt"
+FILE_A = "day20/input-a.txt"
+FILE_B = "day20/input-b.txt"
+FILE_PROD = "day20/input.txt"
 
 FILE = FILE_PROD
+VIS_FOLDER = "day20/vis"
 
 
 def simulate(modules: dict[str, BaseModule]) -> tuple[int, int]:
@@ -173,7 +174,7 @@ def graph_modules(module_groups: ModuleGroups, index: int) -> graphviz.Digraph:
 def part2(module_map: dict[str, BaseModule]) -> None:
     """We find out the loop length for each of the 4~ paths"""
     module_groups: ModuleGroups = get_module_groups(module_map)
-    os.makedirs("vis", exist_ok=True)
+    os.makedirs(VIS_FOLDER, exist_ok=True)
 
     # graph modules in initial state
     dots: list[graphviz.Graph] = []
@@ -199,12 +200,12 @@ def part2(module_map: dict[str, BaseModule]) -> None:
     # Cleanup *.gv files
     for item in os.listdir("vis"):
         if item.endswith(".gv"):
-            os.remove(os.path.join("vis", item))
+            os.remove(os.path.join(VIS_FOLDER, item))
 
 
 def output_graph(dot: graphviz.Graph) -> None:
     """Saves a dot to file"""
-    dot.render(directory="vis")
+    dot.render(directory=VIS_FOLDER)
 
 
 def output_files(dots: list[graphviz.Graph]) -> None:
