@@ -72,7 +72,8 @@ class Matrix:
                 results.append(part_number)
         return results
 
-    def is_engine_part_row(self, row: str) -> bool:
+    @staticmethod
+    def is_engine_part_row(row: str) -> bool:
         """Returns if there is an engine part in this row"""
         return any(char not in NON_PART for char in row)
 

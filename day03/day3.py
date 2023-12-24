@@ -3,18 +3,11 @@ Day 3 implementation
 """
 
 
-from day03.classes import Gear, Matrix, PartNumber
+from day03.lib.classes import Gear, Matrix, PartNumber
+from day03.lib.parsers import get_matrix
 
 INPUT = "day03/input.txt"
 INPUT_SMALL = "day03/input-small.txt"
-
-
-def get_data(path: str) -> Matrix:
-    """Convert text file to matrix"""
-    with open(path, "r", encoding="utf8") as file:
-        data = file.readlines()
-        data = [line.strip() for line in data]
-    return Matrix(data=data)
 
 
 def part1(part_numbers: list[PartNumber]) -> int:
@@ -27,7 +20,7 @@ def part2(part_numbers: list[PartNumber], matrix: Matrix) -> int:
 
 
 def main() -> None:
-    matrix: Matrix = get_data(INPUT)
+    matrix: Matrix = get_matrix(INPUT)
     part_numbers: list["PartNumber"] = matrix.get_part_numbers()
     part_numbers = matrix.filter_engine_parts(part_numbers)
 

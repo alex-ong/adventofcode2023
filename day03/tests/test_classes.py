@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 
-from day03.classes import PartNumber
+from day03.day3 import INPUT_SMALL
+from day03.lib.classes import Gear, Matrix, PartNumber
+from day03.lib.parsers import get_matrix
 
 
 @dataclass
@@ -33,3 +35,37 @@ def test_part_number() -> None:
     ]
     for test in tests:
         assert part_number.touching(test.col, test.row, test.row_size) == test.result
+
+
+def test_matrix() -> None:
+    matrix: Matrix = get_matrix(INPUT_SMALL)
+    part_numbers: list["PartNumber"] = matrix.get_part_numbers()
+    assert (matrix.row_count, matrix.row_size) == (10, 10)
+    assert len(part_numbers) == 10
+    part_numbers = matrix.filter_engine_parts(part_numbers)
+    assert len(part_numbers) == 8
+
+    assert not Matrix.is_engine_part_row("123.24.56")
+    assert Matrix.is_engine_part_row("123.#24.56")
+    assert Matrix.is_engine_part_row("123.*24.56")
+
+    gears: list[Gear] = matrix.get_gears(part_numbers)
+
+    assert len(gears) == 3
+
+
+def test_gear() -> None:
+    # 69...
+    # ..*78
+    # 54...
+    part_number1 = PartNumber(0, 0, 2, 69)
+    part_number2 = PartNumber(3, 1, 2, 78)
+    part_number3 = PartNumber(0, 2, 2, 54)
+
+    gear1 = Gear(1, 2, [part_number1])
+    gear2 = Gear(1, 2, [part_number1, part_number2])
+    gear3 = Gear(1, 2, [part_number1, part_number2, part_number3])
+
+    assert gear1.gear_ratio == 0
+    assert gear2.gear_ratio == 69 * 78
+    assert gear3.gear_ratio == 0
