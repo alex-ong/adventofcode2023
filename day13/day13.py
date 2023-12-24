@@ -3,6 +3,9 @@
 from dataclasses import dataclass
 from typing import Optional
 
+INPUT = "day13/input.txt"
+INPUT_SMALL = "day13/input-small.txt"
+
 
 def distance(left: str, right: str) -> int:
     """returns edit distance of two strings"""
@@ -56,9 +59,9 @@ class Maze:
         raise ValueError("expected a mirror!")
 
 
-def read_input() -> list[Maze]:
+def read_input(path: str) -> list[Maze]:
     mazes: list[Maze] = []
-    with open("day13/input.txt") as file:
+    with open(path) as file:
         lines: list[str] = []
         for line in file:
             if line.strip() == "":
@@ -74,7 +77,7 @@ def read_input() -> list[Maze]:
 
 
 def main() -> None:
-    mazes: list[Maze] = read_input()
+    mazes: list[Maze] = read_input(INPUT)
 
     # q1
     print(sum(maze.solve(0) for maze in mazes))
