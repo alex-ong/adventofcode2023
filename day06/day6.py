@@ -1,6 +1,9 @@
 import math
 from dataclasses import dataclass
 
+INPUT_SMALL = "day06/input-small.txt"
+INPUT = "day06/input.txt"
+
 
 @dataclass
 class Race:
@@ -26,16 +29,16 @@ class RaceStrat:
         return self.charge_time
 
 
-def read_inputs() -> list[Race]:
+def read_inputs(path: str) -> list[Race]:
     """disgusting but short i guess"""
-    with open("day06/input.txt", "r", encoding="utf8") as file:
+    with open(path, "r", encoding="utf8") as file:
         times = [int(item) for item in file.readline().split()[1:]]
         distance = [int(item) for item in file.readline().split()[1:]]
         items = [Race(times[i], distance[i]) for i in range(len(times))]
         return items
 
 
-def calculate_race(race: Race) -> list[RaceStrat]:
+def calculate_race(race: Race) -> int:
     """naive calcuation of a race"""
     results: list[RaceStrat] = []
     for i in range(race.time):
@@ -45,7 +48,7 @@ def calculate_race(race: Race) -> list[RaceStrat]:
         if race_strat.distance > race.record_distance:
             results.append(race_strat)
 
-    return results
+    return len(results)
 
 
 """
@@ -88,23 +91,35 @@ def calculate_constant_time(race: Race) -> int:
     return end - start + 1
 
 
-def main() -> None:
-    """Solves Day 6"""
-    races = read_inputs()
-
-    # q1 Dataclasses, brute force lmao
+def part1(races: list[Race]) -> int:
     permutations = 1
     for race in races:
-        num_strats = calculate_constant_time(race)
+        num_strats = calculate_race(race)
         permutations *= num_strats
-    print(permutations)
+    return permutations
 
-    # q2 Quadratic formula; constant time.
+
+def part2(race: Race) -> int:
+    return calculate_constant_time(race)
+
+
+def get_giga_race(races: list[Race]) -> Race:
     giga_time = int("".join([str(race.time) for race in races]))
     giga_distance = int("".join([str(race.record_distance) for race in races]))
     giga_race = Race(giga_time, giga_distance)
-    result = calculate_constant_time(giga_race)
-    print(result)
+    return giga_race
+
+
+def main() -> None:
+    """Solves Day 6"""
+    races = read_inputs(INPUT)
+
+    # q1 Dataclasses, brute force lmao
+    print(part1(races))
+
+    # q2 Quadratic formula; constant time.
+    giga_race = get_giga_race(races)
+    print(part2(giga_race))
 
 
 if __name__ == "__main__":
