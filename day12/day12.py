@@ -1,6 +1,9 @@
 """day12 solution"""
 from dataclasses import dataclass, field
 
+INPUT = "day12/input.txt"
+INPUT_SMALL = "day12/input-small.txt"
+
 
 @dataclass
 class State:
@@ -95,10 +98,10 @@ class SpringLine:
         return self.set_and_return(state, 0)
 
 
-def get_input() -> list[SpringLine]:
+def get_input(path: str) -> list[SpringLine]:
     """returns list of SpringLines from input file"""
     result = []
-    with open("day12/input.txt", "r", encoding="utf8") as file:
+    with open(path, "r", encoding="utf8") as file:
         for line in file:
             items, broken_csv = line.split()
             int_springs = [int(item) for item in broken_csv.split(",")]
@@ -114,7 +117,7 @@ def calculate_sum(spring_lines: list[SpringLine]) -> int:
 
 def main() -> None:
     """main function"""
-    spring_lines = get_input()
+    spring_lines = get_input(INPUT)
     # q1
     print(calculate_sum(spring_lines))
     # q2
