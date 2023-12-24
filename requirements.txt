@@ -10,3 +10,4 @@ types-colorama==0.4.15.12
 types-requests==2.31.0.10
 tqdm==4.66.1
 vpython==7.6.3
+z3-solver==4.12.4.0

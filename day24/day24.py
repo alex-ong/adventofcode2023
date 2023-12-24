@@ -1,6 +1,8 @@
 """day24 solution"""
 from typing import Optional
 
+import z3
+
 from day24.lib.classes import Hailstone, Vector2
 from day24.lib.parsers import parse_input
 
@@ -10,9 +12,9 @@ INPUT_SMALL = ("day24/input-small.txt", Vector2(7, 27))
 
 def get_intersection_2d(left: Hailstone, right: Hailstone) -> Optional[Vector2]:
     pos1 = left.position.xy
-    dir1 = left.trajectory.xy
+    dir1 = left.velocity.xy
     pos2 = right.position.xy
-    dir2 = right.trajectory.xy
+    dir2 = right.velocity.xy
 
     determinant = (dir1.x * dir2.y) - (dir1.y * dir2.x)
 
@@ -52,12 +54,49 @@ def part1(hailstones: list[Hailstone], valid_range: Vector2) -> int:
     return result
 
 
+def part2(hailstones: list[Hailstone]) -> int:
+    x, y, z = z3.Reals("x y z")
+    vx, vy, vz = z3.Reals("vx vy vz")
+
+    solver = z3.Solver()
+
+    for index, hail in enumerate(hailstones[:3]):
+        pos = hail.position
+        vel = hail.velocity
+
+        t = z3.Real(f"t{index}")
+        solver.add(t >= 0)
+        solver.add(x + vx * t == pos.x + vel.x * t)
+        solver.add(y + vy * t == pos.y + vel.y * t)
+        solver.add(z + vz * t == pos.z + vel.z * t)
+
+    print(solver.check())
+
+    model = solver.model()
+
+    rx, ry, rz = (
+        model.eval(x).as_long(),
+        model.eval(y).as_long(),
+        model.eval(z).as_long(),
+    )
+
+    if not isinstance(rx, int):
+        raise ValueError("rx is non-int!")
+    if not isinstance(ry, int):
+        raise ValueError("ry is non-int!")
+    if not isinstance(rz, int):
+        raise ValueError("rz is non-int!")
+    return rx + ry + rz
+
+
 def main() -> None:
     input_data, valid_range = INPUT
 
     hailstones: list[Hailstone] = parse_input(input_data)
     print(len(hailstones))
     print(part1(hailstones, valid_range))
+
+    print(part2(hailstones))
 
 
 if __name__ == "__main__":

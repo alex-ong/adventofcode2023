@@ -21,7 +21,7 @@ def test_parser() -> None:
 
     assert len(hailstones) == 5
     assert hailstones[0].position == Vector3(19, 13, 30)
-    assert hailstones[0].trajectory == Vector3(-2, 1, -2)
+    assert hailstones[0].velocity == Vector3(-2, 1, -2)
 
     assert hailstones[-1].position == Vector3(20, 19, 15)
-    assert hailstones[-1].trajectory == Vector3(1, -5, -3)
+    assert hailstones[-1].velocity == Vector3(1, -5, -3)

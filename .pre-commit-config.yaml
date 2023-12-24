@@ -21,6 +21,7 @@ repos:
             python-dotenv==1.0.0,
             graphviz==0.20.1,
             vpython==7.6.3,
+            z3-solver==4.12.4.0,
           ]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0

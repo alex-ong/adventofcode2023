@@ -21,4 +21,4 @@ class Vector2:
 @dataclass(frozen=True)
 class Hailstone:
     position: Vector3
-    trajectory: Vector3
+    velocity: Vector3
