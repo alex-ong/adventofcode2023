@@ -1,3 +1,4 @@
+from copy import deepcopy
 from dataclasses import dataclass
 from queue import Queue
 from typing import Optional
@@ -78,6 +79,14 @@ class Path:
         """length of path. Has to be -1 because problem is like that"""
         return len(self.route) - 1
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Path):
+            return False
+        return self.route == other.route
+
+    def __hash__(self) -> int:
+        return hash(",".join(str(item) for item in self.route))
+
 
 class Maze:
     grid: list[list[str]]  # 2d array of chars
@@ -116,6 +125,21 @@ class Maze:
             or position.col < 0
             or position.col >= self.num_cols
         )
+
+    def copy(self) -> "Maze":
+        result = Maze(deepcopy(self.grid))
+        return result
+
+    def get_cell_branches(self, position: Position) -> int:
+        """returns how many branches come out of this tile"""
+        result = 0
+        if self[position] != ".":
+            return 0
+        for direction in position.expand():
+            tile = self[direction]
+            if tile is not None and tile != "#":
+                result += 1
+        return result
 
 
 class Solver1:
@@ -179,19 +203,28 @@ class Solver1:
                 and expansion_tile != "#"
             ):
                 valid_expansions.append(expansion)
+        return generate_paths(path, valid_expansions)
 
-        if len(valid_expansions) == 0:
-            return []
-        elif len(valid_expansions) == 1:
-            path.add(valid_expansions[0])
-            return [path]
-        else:
-            result = []
-            for expansion in valid_expansions[1:]:
-                new_path = path.copy()
-                new_path.add(expansion)
-                result.append(new_path)
-            path.add(valid_expansions[0])
-            result.append(path)
 
-            return result
+def generate_paths(path: Path, expansions: list[Position]) -> list[Path]:
+    """
+    Given a path and valid expansions, (optionally) copies the path.
+    Returns a list of new paths. If there is only one expansion, modifies it
+    in-place
+    """
+
+    if len(expansions) == 0:
+        return []
+    elif len(expansions) == 1:
+        path.add(expansions[0])
+        return [path]
+    else:
+        result = []
+        for expansion in expansions[1:]:
+            new_path = path.copy()
+            new_path.add(expansion)
+            result.append(new_path)
+        path.add(expansions[0])
+        result.append(path)
+
+        return result

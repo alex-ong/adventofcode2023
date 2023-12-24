@@ -9,6 +9,7 @@ from typing import Any
 
 import colorama
 
+from day23.lib import classes
 from day23.lib.classes import Maze, Path, Position
 
 colorama.init(convert=True)
@@ -45,45 +46,47 @@ class Edge:
 
 
 class Solver2:
-    maze: Maze
+    input_maze: Maze
 
     def __init__(self, maze: Maze) -> None:
-        self.maze = maze
+        self.input_maze = maze
 
-    def get_cell_branches(self, position: Position) -> int:
-        result = 0
-        if self.maze[position] != ".":
-            return 0
-        for direction in position.expand():
-            tile = self.maze[direction]
-            if tile is not None and tile != "#":
-                result += 1
-        return result
-
-    def get_nodes(self) -> dict[Position, Node]:
+    @staticmethod
+    def get_nodes(maze: Maze) -> dict[Position, Node]:
+        """
+        Gets does and marks them on the given maze
+        Note that the maze is modified in-place!
+        Nodes are *not* populated with edges
+        """
         nodes: list[Node] = []
 
         start = Position(0, 1)
         nodes.append(Node(0, start))
         name = 1
-        for row in range(self.maze.num_rows):
-            for col in range(self.maze.num_cols):
+        for row in range(maze.num_rows):
+            for col in range(maze.num_cols):
                 pos = Position(row, col)
-                if self.get_cell_branches(pos) > 2:
+                if maze.get_cell_branches(pos) > 2:
                     node = Node(name, pos)
                     name += 1
                     nodes.append(node)
 
         # add start and end coz they are dumb
-
-        end = Position(self.maze.num_rows - 1, self.maze.num_cols - 2)
-
+        end = Position(maze.num_rows - 1, maze.num_cols - 2)
         nodes.append(Node(name, end))
+
         for node in nodes:
-            self.maze[node.position] = colorama.Back.GREEN + "X" + colorama.Back.BLACK
+            maze[node.position] = colorama.Back.GREEN + "X" + colorama.Back.BLACK
         return {node.position: node for node in nodes}
 
-    def fill_node(self, start_node: Node, nodes: dict[Position, Node]) -> None:
+    @staticmethod
+    def calculate_edges(
+        start_node: Node, nodes: dict[Position, Node], maze: Maze
+    ) -> None:
+        """
+        Given a start Node and maze, modifies the maze inplace, filling it in with #
+        Modifies the node and its connecting nodes by adding Edges
+        """
         first_path = Path()
         first_path.add(start_node.position)
         paths: Queue[Path] = Queue()
@@ -98,17 +101,19 @@ class Solver2:
                 end_node = nodes[pos]
                 end_node.edges.append(edge.flip())
                 continue
-            expansions = self.expand_path(path)
+            expansions = Solver2.expand_path(path, maze)
             for path in expansions:
                 paths.put(path)
 
-    def expand_path(self, path: Path) -> list[Path]:
+    @staticmethod
+    def expand_path(path: Path, maze: Maze) -> list[Path]:
+        """Expands a path, nuking that section of the maze using #"""
         current_pos: Position = path.last()
         expansions = current_pos.expand()
 
         valid_expansions = []
         for expansion in expansions:
-            expansion_tile = self.maze[expansion]
+            expansion_tile = maze[expansion]
             if (
                 path.can_add(expansion)
                 and expansion_tile is not None
@@ -116,29 +121,16 @@ class Solver2:
             ):
                 valid_expansions.append(expansion)
                 if expansion_tile == ".":
-                    self.maze[expansion] = "#"
-
-        if len(valid_expansions) == 0:
-            return []
-        elif len(valid_expansions) == 1:
-            path.add(valid_expansions[0])
-            return [path]
-        else:
-            result = []
-            for expansion in valid_expansions[1:]:
-                new_path = path.copy()
-                new_path.add(expansion)
-                result.append(new_path)
-            path.add(valid_expansions[0])
-            result.append(path)
-
-            return result
+                    maze[expansion] = "#"
+        return classes.generate_paths(path, valid_expansions)
 
     def build_nodes(self) -> list[Node]:
-        nodes: dict[Position, Node] = self.get_nodes()
-        print(self.maze)
+        # make backup of maze
+        maze_copy = self.input_maze.copy()
+        nodes: dict[Position, Node] = self.get_nodes(maze_copy)
+        print(maze_copy)
         for node in nodes.values():
-            self.fill_node(node, nodes)
+            self.calculate_edges(node, nodes, maze_copy)
 
         return list(nodes.values())
 
@@ -149,12 +141,12 @@ class Solver2:
         start = time.time()
         cpu_count = os.cpu_count() or 2
         levels = int(math.log(cpu_count, 2))
-        result = solve3(nodes, 0, len(nodes) - 1, 0, set(), levels)
-        print(time.time() - start)
+        result = solve2(nodes, 0, len(nodes) - 1, 0, set(), levels)
+        print(f"Executed in: {time.time() - start}")
         return result
 
 
-def solve3(
+def solve2(
     nodes: list[Node],
     current: int,
     destination: int,
@@ -162,21 +154,21 @@ def solve3(
     seen: set[int],
     forks_remaining: int,
 ) -> int:
+    """Solves a dfs by creating forking into multiprocessing"""
     if current == destination:
         return distance
 
     best = 0
     seen.add(current)
 
-    # Check if the current process is the main process
-
+    # run the code in this thread
     if forks_remaining == 0 or len(nodes[current].edges) == 1:
         for edge in nodes[current].edges:
             neighbor, weight = edge.node2, edge.length
             if neighbor in seen:
                 continue
 
-            result = solve3(
+            result = solve2(
                 nodes,
                 neighbor,
                 destination,
@@ -186,23 +178,23 @@ def solve3(
             )
             best = max(best, result)
     else:  # Use multiprocessing.Pool for parallel execution
-        with Pool(len(nodes[current].edges)) as pool:
-            tasks = []
-            for edge in nodes[current].edges:
-                neighbor, weight = edge.node2, edge.length
-                if neighbor in seen:
-                    continue
-                tasks.append(
-                    [
-                        nodes,
-                        neighbor,
-                        destination,
-                        distance + weight,
-                        seen.copy(),
-                        forks_remaining - 1,
-                    ]
-                )
-            for result in pool.map(solve3_helper, tasks):
+        tasks = []
+        for edge in nodes[current].edges:
+            neighbor, weight = edge.node2, edge.length
+            if neighbor in seen:
+                continue
+            tasks.append(
+                [
+                    nodes,
+                    neighbor,
+                    destination,
+                    distance + weight,
+                    seen,
+                    forks_remaining - 1,
+                ]
+            )
+        with Pool(len(tasks)) as pool:
+            for result in pool.map(solve2_helper, tasks):
                 best = max(best, result)
 
     seen.remove(current)
@@ -210,6 +202,6 @@ def solve3(
     return best
 
 
-# ThreadPoolExecutor doesnt have starmap so we use a helper
-def solve3_helper(args: list[Any]) -> int:
-    return solve3(*args)
+def solve2_helper(args: list[Any]) -> int:
+    """ThreadPoolExecutor doesnt have starmap so we use a helper"""
+    return solve2(*args)
