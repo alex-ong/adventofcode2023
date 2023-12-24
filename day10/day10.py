@@ -1,110 +1,16 @@
 """day10"""
 
-from dataclasses import dataclass, field
-from typing import ClassVar
 
 from day10.lib.direction import Direction
 from day10.lib.pipebounds import PipeBounds
+from day10.lib.pipes import Pipe, PipeMap
 from day10.lib.position import Position
 
-PIPE_FONT = {
-    "|": ["│", "║", "|", "X"],
-    "-": ["─", "═", "-", "X"],
-    "L": ["└", "╚", "L", "X"],
-    "J": ["┘", "╝", "J", "X"],
-    "7": ["┐", "╗", "7", "X"],
-    "F": ["┌", "╔", "F", "X"],
-    ".": [".", ".", ".", "X"],
-    "S": ["S", "S", "S", "S"],  # S is an "L" piece. manually done forehead
-}
-
-
-FONT = 1
-
-
-@dataclass
-class Pipe:
-    row: int
-    col: int
-    character: str
-
-    is_start: bool = field(init=False)
-    font: int = FONT
-    is_loop: bool = False
-    pipe_bounds: PipeBounds = PipeBounds.UNKNOWN
-
-    PIPE_DIRECTION: ClassVar[dict[str, list[Direction]]] = {
-        "|": [Direction.NORTH, Direction.SOUTH],
-        "-": [Direction.WEST, Direction.EAST],
-        "L": [Direction.NORTH, Direction.EAST],
-        "J": [Direction.NORTH, Direction.WEST],
-        "7": [Direction.WEST, Direction.SOUTH],
-        "F": [Direction.SOUTH, Direction.EAST],
-    }
-
-    def __post_init__(self) -> None:
-        self.is_start = self.character == "S"
-        if self.is_loop:
-            self.pipe_bounds = PipeBounds.PIPE
-
-    def __str__(self) -> str:
-        if self.is_start:
-            return "S"
-        if self.is_loop:
-            return PIPE_FONT[self.character][FONT]
-        if self.pipe_bounds == PipeBounds.INSIDE:
-            return "*"
-        if self.pipe_bounds == PipeBounds.OUTSIDE:
-            return "."
-        return " "
-
-    def next_direction(self, prev_direction: Direction | None = None) -> Direction:
-        """Determine next direction based on where we came from"""
-        mapping = self.PIPE_DIRECTION[self.character]
-        if prev_direction == mapping[0]:
-            return mapping[1]
-        return mapping[0]
-
-    def next_position(
-        self, prev_direction: Direction | None
-    ) -> tuple[Direction, Position]:
-        """
-        calculate the next position. Return
-        where we came from if we move to next tile, and the new position
-        """
-        next_direction = self.next_direction(prev_direction)
-        return next_direction.opposite(), self.position.next_position(next_direction)
-
-    @property
-    def position(self) -> Position:
-        return Position(self.row, self.col)
-
-    def __hash__(self) -> int:
-        return hash(f"{self.row},{self.col}")
-
-
-@dataclass
-class PipeMap:
-    pipes: list[list[Pipe]]
-
-    width: int = field(init=False, repr=False)
-    height: int = field(init=False, repr=False)
-
-    def __post_init__(self) -> None:
-        self.width = len(self.pipes[0])
-        self.height = len(self.pipes)
-
-    def get_pipe(self, position: Position) -> Pipe:
-        """returns a pipe given its position"""
-        return self.pipes[position.row][position.col]
-
-    def get_pipe_safe(self, position: Position) -> Pipe | None:
-        if 0 <= position.row < self.height and 0 <= position.col < self.width:
-            return self.get_pipe(position)
-        return None
-
-    def __str__(self) -> str:
-        return "\n".join("".join(str(pipe) for pipe in line) for line in self.pipes)
+INPUT = "day10/input.txt"
+INPUT_A = "day10/input-a.txt"
+INPUT_B = "day10/input-b.txt"
+INPUT_C = "day10/input-c.txt"
+INPUT_D = "day10/input-d.txt"
 
 
 def process_input_line(row: int, line: str) -> list[Pipe]:
@@ -112,11 +18,10 @@ def process_input_line(row: int, line: str) -> list[Pipe]:
     return [Pipe(row, col, char) for col, char in enumerate(line.strip())]
 
 
-def read_input() -> PipeMap:
+def read_input(path: str) -> PipeMap:
     """read the map"""
-    with open("day10/input.txt", "r", encoding="utf8") as file:
+    with open(path, "r", encoding="utf8") as file:
         pipes = [process_input_line(row, line) for row, line in enumerate(file)]
-
         pipe_map = PipeMap(pipes)
     return pipe_map
 
@@ -136,7 +41,8 @@ def find_s(pipe_map: PipeMap) -> Position:
 def calculate_s(start: Position, pipe_map: PipeMap) -> str:
     """
     calculate what the "S" character is as a pipe
-    Guaranteed that there will be two pipes going into us"""
+    Guaranteed that there will be two pipes going into us
+    """
     connecting = []
     pipe_directions = [Direction.NORTH, Direction.WEST, Direction.EAST, Direction.SOUTH]
 
@@ -297,19 +203,14 @@ def expand_pipe(character: str, is_loop: bool) -> tuple[str, str, str]:
     # fmt: on
 
 
-def main() -> None:
-    pipe_map = read_input()
-    # q1
+def part1(pipe_map: PipeMap) -> int:
     pipe_path = find_cycles(pipe_map)
-    print(len(pipe_path) / 2)
-    print(pipe_map)
+    return len(pipe_path) // 2
 
-    # q2. Flood fill the outside, then subtract length of loop.
-    # this one is easy because there is only one contiguous outside region
-    # outside = flood_fill(pipe_map)
 
+def part2(pipe_map: PipeMap) -> int:
+    find_cycles(pipe_map)
     big_map: PipeMap = expand_map(pipe_map)
-
     # you can use this to view it lol.
     with open("day10/big_unfilled.txt", "w", encoding="utf8") as file:
         file.write(str(big_map))
@@ -319,14 +220,22 @@ def main() -> None:
         file.write(str(big_map))
 
     small_map: PipeMap = reduce_map(big_map, pipe_map)
+
     pipes = small_map.pipes
     total_unknown = 0
     for row in pipes:
         total_unknown += sum(
             1 if col.pipe_bounds == PipeBounds.UNKNOWN else 0 for col in row
         )
-    print(total_unknown)
-    # extra: mark all the insides as inside:
+    return total_unknown
+
+
+def main() -> None:
+    pipe_map = read_input(INPUT)
+    # q1
+    print(part1(pipe_map))
+    # q2. Flood fill the outside, then subtract length of loop.
+    print(part2(pipe_map))
 
 
 if __name__ == "__main__":
