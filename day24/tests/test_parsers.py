@@ -16,7 +16,8 @@ def test_vector3() -> None:
 
 
 def test_parser() -> None:
-    hailstones: list[Hailstone] = parse_input(INPUT_SMALL)
+    file_path, _ = INPUT_SMALL
+    hailstones: list[Hailstone] = parse_input(file_path)
 
     assert len(hailstones) == 5
     assert hailstones[0].position == Vector3(19, 13, 30)
