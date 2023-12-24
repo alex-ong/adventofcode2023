@@ -53,6 +53,13 @@ class SpringLine:
         return value
 
     def calculate_recursive(self, state: State) -> int:
+        """
+        Recursive with memoization
+        1. memoized
+        2. state.empty -> return if we are valid
+        3. state[0] == "." chop it and continue
+        4. state[0] == "#". get next number, and "enforce" it, chopping things. If anything is wrong, fail
+        """
         if state in self.big_cache:
             return self.big_cache[state]
         if len(state.items) == 0:
