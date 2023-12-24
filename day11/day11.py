@@ -2,6 +2,9 @@
 from dataclasses import dataclass, field
 from typing import Iterator
 
+INPUT = "day11/input.txt"
+INPUT_SMALL = "day11/input-small.txt"
+
 
 @dataclass
 class Galaxy:
@@ -52,12 +55,12 @@ class Universe:
     contents: list[list[Point]]
     expansion_rate: int = 2
 
-    rows: int = field(repr=False, init=False)
-    cols: int = field(repr=False, init=False)
+    num_rows: int = field(repr=False, init=False)
+    num_cols: int = field(repr=False, init=False)
 
     def __post_init__(self) -> None:
-        self.rows = len(self.contents)
-        self.cols = len(self.contents[0])
+        self.num_rows = len(self.contents)
+        self.num_cols = len(self.contents[0])
 
     def __getitem__(self, row_index: int) -> list[Point]:
         """
@@ -110,9 +113,9 @@ def is_empty(items: list[Point]) -> bool:
     return not has_content
 
 
-def parse_input() -> Universe:
+def parse_input(path: str) -> Universe:
     """parse input file and return a universe"""
-    with open("day11/input.txt", "r", encoding="utf8") as file:
+    with open(path, "r", encoding="utf8") as file:
         rows = []
         for row, line in enumerate(file):
             line = line.strip()
@@ -133,7 +136,7 @@ def get_total_distance(galaxies: list[Galaxy], universe: Universe) -> int:
 
 def main() -> None:
     """main function, runs q1 and q2"""
-    universe: Universe = parse_input()
+    universe: Universe = parse_input(INPUT)
     universe.expand_contents()
     galaxies = universe.grab_galaxies()
 
