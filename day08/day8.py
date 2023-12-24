@@ -3,6 +3,11 @@ import itertools
 import math
 from dataclasses import dataclass, field
 
+INPUT = "day08/input.txt"
+INPUT_A = "day08/input-a.txt"
+INPUT_B = "day08/input-b.txt"
+INPUT_C = "day08/input-c.txt"
+
 
 @dataclass
 class Location:
@@ -89,9 +94,9 @@ class Cycle:
         return self.location_steps[index]
 
 
-def read_input() -> tuple[Directions, WorldMap]:
+def read_input(path: str) -> tuple[Directions, WorldMap]:
     """reads input into directions/world_map"""
-    with open("day08/input.txt", "r", encoding="utf8") as file:
+    with open(path, "r", encoding="utf8") as file:
         directions = Directions(file.readline().strip())
         world_map = WorldMap()
         for line in file:
@@ -124,12 +129,18 @@ def follow_directions(directions: Directions, world_map: WorldMap) -> int:
     return -1
 
 
+def get_location_as(world_map: WorldMap) -> list[Location]:
+    """Returns locations with an A at the end"""
+    return [
+        location
+        for location in world_map.mappings.values()
+        if location.name.endswith("A")
+    ]
+
+
 def follow_directions_multi(directions: Directions, world_map: WorldMap) -> int:
     """Follow all mappings ending in A until all of them are ZZZ"""
-    mappings = world_map.mappings
-    nodes: list[Location] = [
-        location for location in mappings.values() if location.name.endswith("A")
-    ]
+    nodes: list[Location] = get_location_as(world_map)
 
     cycles = [find_cycle(node, world_map, directions) for node in nodes]
 
@@ -194,9 +205,10 @@ def find_cycle(
 def main() -> None:
     """main function, solve the things"""
     # q1
-    directions, world_map = read_input()
+    directions, world_map = read_input(INPUT)
     nodes_visited: int = follow_directions(directions, world_map)
     print(nodes_visited)
+    # q2
     follow_directions_multi(directions, world_map)
 
 
