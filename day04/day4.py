@@ -2,6 +2,9 @@
 Day 4 solution
 """
 
+INPUT = "day04/input.txt"
+INPUT_SMALL = "day04/input-small.txt"
+
 
 def split_numbers(string: str) -> set[int]:
     """
@@ -78,7 +81,7 @@ def grab_data(filename: str) -> list[Card]:
 
 
 def main() -> None:
-    cards: list[Card] = grab_data("day04/input.txt")
+    cards: list[Card] = grab_data(INPUT)
     # Q1
     total_points = sum(card.get_points() for card in cards)
     print(total_points)
