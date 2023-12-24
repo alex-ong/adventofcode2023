@@ -3,6 +3,9 @@
 from dataclasses import dataclass
 from typing import Callable
 
+INPUT = "day09/input.txt"
+INPUT_SMALL = "day09/input-small.txt"
+
 
 @dataclass
 class ValueArray:
@@ -53,10 +56,10 @@ class ValueArray:
         self.generic_extrapolate(add_to_array, calculate_value)
 
 
-def get_input() -> list[ValueArray]:
+def get_input(path: str) -> list[ValueArray]:
     """turns inputs into nice ValueArrays"""
     result = []
-    with open("day09/input.txt", "r", encoding="utf8") as file:
+    with open(path, "r", encoding="utf8") as file:
         for line in file:
             values = ValueArray([[int(item) for item in line.split()]])
             result.append(values)
@@ -75,20 +78,28 @@ def interpolate(values: list[int]) -> list[int]:
     return result
 
 
-def main() -> None:
-    """main function"""
-    inputs = get_input()
-
-    # q1
+def part1(inputs: list[ValueArray]) -> int:
     for input in inputs:
         input.extrapolate_right()
+    return sum(input.sub_arrays[0][-1] for input in inputs)
 
-    print(sum(input.sub_arrays[0][-1] for input in inputs))
-    # q2
+
+def part2(inputs: list[ValueArray]) -> int:
     for input in inputs:
         input.extrapolate_left()
 
-    print(sum(input.sub_arrays[0][0] for input in inputs))
+    return sum(input.sub_arrays[0][0] for input in inputs)
+
+
+def main() -> None:
+    """main function"""
+    inputs = get_input(INPUT)
+
+    # q1
+    print(part1(inputs))
+
+    # q2
+    print(part2(inputs))
 
 
 if __name__ == "__main__":
