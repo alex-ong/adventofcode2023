@@ -1,10 +1,15 @@
 """day7 solution"""
 from collections import defaultdict
 from dataclasses import dataclass, field
+from functools import total_ordering
 from typing import Any, ClassVar, Self
 
+INPUT = "day07/input.txt"
+INPUT_SMALL = "day07/input-small.txt"
 
-@dataclass
+
+@total_ordering
+@dataclass(eq=False)
 class Hand:
     """Simple hand class, uses cards_inted and of_a_kind for sorting"""
 
@@ -19,9 +24,9 @@ class Hand:
         """convert cards to ints"""
         self.cards_inted = [self.CARD_MAPPING.index(card) for card in self.cards]
         self.bet = int(self.bet)
-        self.of_a_kind = self.calculate_oak()
+        self.of_a_kind = self.calculate_of_a_kind()
 
-    def calculate_oak(self) -> list[int]:
+    def calculate_of_a_kind(self) -> list[int]:
         """Figure out card sets"""
         card_sets: dict[str, int] = defaultdict(int)
         for card in self.cards:
@@ -30,12 +35,19 @@ class Hand:
 
     def __lt__(self, other: Self) -> Any:
         """Less than comparator function"""
+        if not isinstance(other, Hand):
+            raise ValueError("using __lt__ on non identical class")
         # compare our sets
         for ours, theirs in zip(self.of_a_kind, other.of_a_kind):
             if ours != theirs:
                 return ours < theirs
         # compare our individual cards
         return self.cards_inted < other.cards_inted  # int lists easy to compare
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Hand):
+            raise ValueError("using __lt__ on non identical class")
+        return self.cards_inted == other.cards_inted
 
 
 class HandPart2(Hand):
@@ -44,7 +56,7 @@ class HandPart2(Hand):
     CARD_MAPPING = "J23456789TQKA"  # new card ordering
 
     # override
-    def calculate_oak(self) -> list[int]:
+    def calculate_of_a_kind(self) -> list[int]:
         """
         Figure out card sets;
         jokers will be added to the biggest card set
@@ -63,32 +75,32 @@ class HandPart2(Hand):
         return of_a_kind
 
 
-def parse_lines(cls: type) -> list[Hand]:
+def parse_lines(cls: type, path: str) -> list[Hand]:
     """open input file and parse into hand structures"""
 
-    with open("day07/input.txt", "r", encoding="utf8") as file:
+    with open(path, "r", encoding="utf8") as file:
         # wow super cool list comprehension thingo i'm so cool
         results = [cls(*line.split()) for line in file]
     return results
 
 
-def calculate_hands(cls: type) -> None:
+def calculate_hands(cls: type, input_path: str) -> int:
     """generates class `cls` then calculates points"""
-    hands = sorted(parse_lines(cls))
+    hands = sorted(parse_lines(cls, input_path))
 
     score = 0
     for rank, hand in enumerate(hands):
         score += (rank + 1) * hand.bet
-    print(score)
+    return score
 
 
 def main() -> None:
     """main func"""
     # Q1
-    calculate_hands(Hand)
+    print(calculate_hands(Hand, INPUT))
 
     # Q2
-    calculate_hands(HandPart2)
+    print(calculate_hands(HandPart2, INPUT))
 
 
 if __name__ == "__main__":
