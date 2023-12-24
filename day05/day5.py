@@ -41,18 +41,25 @@ def seed_to_mapping_ranges(data: list[int]) -> list[MappingRange]:
     return result
 
 
+def part1(seeds: list[int], maps: list[NamedMap]) -> int:
+    locations = [get_location(seed, maps) for seed in seeds]
+    locations.sort()
+    return locations[0]
+
+
+def part2(seeds: list[int], maps: list[NamedMap]) -> int:
+    start_ranges = seed_to_mapping_ranges(seeds)
+    end_locations = get_location_ranges(start_ranges, maps)
+    return min(location.start for location in end_locations)
+
+
 def main() -> None:
     """main function, solve all the problems"""
     seeds, maps = grab_inputs(INPUT)
     # q1
-    locations = [get_location(seed, maps) for seed in seeds]
-    locations.sort()
-    print(locations[0])
-
+    print(part1(seeds, maps))
     # q2
-    start_ranges = seed_to_mapping_ranges(seeds)
-    end_locations = get_location_ranges(start_ranges, maps)
-    print(min(location.start for location in end_locations))
+    print(part2(seeds, maps))
 
 
 if __name__ == "__main__":

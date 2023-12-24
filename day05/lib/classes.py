@@ -22,7 +22,7 @@ class Mapping:
     dest_end: int = field(init=False, repr=False)
     size: int
 
-    injected: bool = field(default=False)
+    injected: bool = False
 
     def __post_init__(self) -> None:
         self.src_end = self.src_start + self.size
@@ -33,7 +33,7 @@ class Mapping:
         if self.src_start <= src_value < self.src_end:
             return src_value - self.src_start + self.dest_start
 
-        raise ValueError("Item not within mapping range")
+        raise ValueError(f"Item not within mapping range {src_value, self}")
 
     def get_mappings(self, start: int, end: int) -> tuple[MappingRange, int]:
         """
@@ -108,11 +108,12 @@ class NamedMap:
             start = mappings[-1].src_end
             injected_mapping = Mapping(start, start, INT_MAX - start, True)
             mappings.append(injected_mapping)
+
         return mappings
 
     def get_mapping(self, value: int) -> int:
         """Uses binary search to grab the correct mapping, then apply it to one value"""
-        mapping_idx = bisect_left(self.mappings, value, key=lambda m: m.src_end)
+        mapping_idx = bisect_left(self.mappings, value, key=lambda m: m.src_end - 1)
         mapping = self.mappings[mapping_idx]
         return mapping.get_mapping(value)
 
