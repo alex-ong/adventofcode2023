@@ -6,6 +6,7 @@ import networkx as nx
 
 INPUT_SMALL = "day25/input-small.txt"
 INPUT = "day25/input.txt"
+SHOW_GRAPH = False
 
 
 @dataclass
@@ -38,7 +39,7 @@ def show_graph(graph: nx.Graph) -> None:
     plt.show()
 
 
-def graph_nodes(connections: list[Connection]) -> int:
+def solve_nodes(connections: list[Connection]) -> int:
     """Graphs the modules"""
     G = nx.Graph()
 
@@ -51,8 +52,8 @@ def graph_nodes(connections: list[Connection]) -> int:
                 G.add_node(node_name)
             if node_name != connection.src:
                 G.add_edge(connection.src, node_name)
-
-    show_graph(G)
+    if SHOW_GRAPH:
+        show_graph(G)
     cut_value, partition = nx.stoer_wagner(G)
     print(f"num_cuts: {cut_value}")
     return len(partition[0]) * len(partition[1])
@@ -60,7 +61,7 @@ def graph_nodes(connections: list[Connection]) -> int:
 
 def main() -> None:
     conns = get_data(INPUT)
-    result = graph_nodes(conns)
+    result = solve_nodes(conns)
     print(result)
 
 
