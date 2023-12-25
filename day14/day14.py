@@ -98,9 +98,9 @@ def simulate_world(world_rows: list[list[str]]) -> list[list[str]]:
 def get_input() -> World:
     """grabs input, rotated so that left is north"""
     with open("day14/input.txt") as file:
-        world = list(file)
+        lines = [line.strip() for line in file]
 
-    return World(world)
+    return World(lines)
 
 
 def question2(world: World) -> int:
