@@ -177,7 +177,7 @@ class Rule:
         return None, fail
 
 
-@dataclass
+@dataclass(eq=True)
 class Workflow:
     name: str
     rules: list[Rule]

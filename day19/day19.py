@@ -6,12 +6,14 @@ from day19.lib.parsers import parse_part_string, parse_workflow_string
 """
 parsing classes section
 """
+INPUT = "day19/input.txt"
+INPUT_SMALL = "day19/input-small.txt"
 
 
-def get_input() -> tuple[list[Workflow], list[Part]]:
+def get_input(path: str) -> tuple[list[Workflow], list[Part]]:
     workflows: list[Workflow] = []
     parts: list[Part] = []
-    with open("day19/input.txt", encoding="utf8") as file:
+    with open(path, encoding="utf8") as file:
         for line in file:
             if len(line.strip()) == 0:
                 break
@@ -24,20 +26,20 @@ def get_input() -> tuple[list[Workflow], list[Part]]:
     return (workflows, parts)
 
 
-def process_part(workflows: dict[str, Workflow], part: Part) -> bool:
+def process_part(workflows: dict[str, Workflow], part: Part) -> int:
     # ends are `A` and R
     # start is `in`
     workflow = workflows["in"]
     while True:
         workflow_name = workflow.process_part(part)
         if workflow_name == "A":
-            return True
+            return part.rating
         if workflow_name == "R":
-            return False
+            return 0
         workflow = workflows[workflow_name]
 
 
-def solve_part2(workflows: dict[str, Workflow]) -> None:
+def solve_part2(workflows: dict[str, Workflow]) -> int:
     min_xmas = Part(1, 1, 1, 1)
     max_xmas = Part(4001, 4001, 4001, 4001)
     part_range = PartRange(min_xmas, max_xmas)
@@ -57,23 +59,27 @@ def solve_part2(workflows: dict[str, Workflow]) -> None:
                 result += item.part_range.size()
             elif item.destination != "R":
                 to_process.put(item)
-    print(result)
+    return result
+
+
+def part1(workflows: list[Workflow], parts: list[Part]) -> int:
+    workflows_mapping: dict[str, Workflow] = {wf.name: wf for wf in workflows}
+    total = sum(process_part(workflows_mapping, part) for part in parts)
+
+    return total
+
+
+def part2(workflows: list[Workflow]) -> int:
+    workflows_mapping: dict[str, Workflow] = {wf.name: wf for wf in workflows}
+    return solve_part2(workflows_mapping)
 
 
 def main() -> None:
     # combined
-    workflows, parts = get_input()
-    workflows_mapping: dict[str, Workflow] = {wf.name: wf for wf in workflows}
+    workflows, parts = get_input(INPUT)
 
-    # part 1
-    total = 0
-    for part in parts:
-        if process_part(workflows_mapping, part):
-            total += part.rating
-    print(total)
-
-    # part 2
-    solve_part2(workflows_mapping)
+    print(part1(workflows, parts))
+    print(part2(workflows))
 
 
 if __name__ == "__main__":
