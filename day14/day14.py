@@ -5,6 +5,9 @@ from typing import Any
 
 from day14.lib.direction import Direction
 
+INPUT_SMALL = "day14/input-small.txt"
+INPUT = "day14/input.txt"
+
 
 @dataclass
 class World:
@@ -24,9 +27,12 @@ class World:
     def __hash__(self) -> int:
         return hash(str(self.data) + ":" + str(self.left_is))
 
+    def to_string(self) -> str:
+        return "\n".join(str(row) for row in self.data)
+
     def print_map(self) -> None:
         """prints the map nicely"""
-        print("\n".join(str(row) for row in self.data))
+        print(self.to_string())
 
     def print_correct(self) -> None:
         """Print with north facing up"""
@@ -95,17 +101,29 @@ def simulate_world(world_rows: list[list[str]]) -> list[list[str]]:
     return result
 
 
-def get_input() -> World:
+def get_input(path: str) -> World:
     """grabs input, rotated so that left is north"""
-    with open("day14/input.txt") as file:
+    with open(path) as file:
         lines = [line.strip() for line in file]
 
     return World(lines)
 
 
+def question1(world: World) -> int:
+    while world.left_is != Direction.North:
+        world = world.rotate_world_ccw()
+    return sum(simulate_row(row)[1] for row in world.data)
+
+
 def question2(world: World) -> int:
     cache: dict[World, int] = {}
     cycle_results: list[World] = []
+
+    # starting state: left_is north
+    while world.left_is != Direction.North:
+        world = world.rotate_world_ccw()
+    world.data = simulate_world(world.data)
+
     for cycle in range(10000):
         # left_is: north
         world = world.rotate_world_cw()
@@ -146,16 +164,9 @@ def question2(world: World) -> int:
 
 
 def main() -> None:
-    world = get_input()
+    world = get_input(INPUT)
 
-    world = world.rotate_world_ccw()
-
-    # world is rotated 90 degrees,
-    # so we just need to sum rows instead of cols
-    # q1:
-    print(sum(simulate_row(row)[1] for row in world.data))
-
-    world.data = simulate_world(world.data)
+    print(question1(world))
     print(question2(world))
 
 
