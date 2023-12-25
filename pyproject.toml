@@ -2,7 +2,14 @@
 python_version = '3.11'
 
 [[tool.mypy.overrides]]
-module = ['graphviz', 'vpython', 'z3']
+module = [
+    'graphviz',
+    'vpython',
+    'z3',
+    'networkx',
+    'matplotlib.pyplot',
+    'matplotlib',
+]
 ignore_missing_imports = true
 
 [tool.ruff]
