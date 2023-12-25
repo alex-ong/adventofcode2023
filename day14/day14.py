@@ -15,11 +15,11 @@ class World:
 
     def rotate_world_cw(self) -> "World":
         rotated = list(zip(*self.data[::-1]))
-        return World(rotated, self.left_is.rotate_cw())
+        return World(rotated, self.left_is.next_direction_ccw())
 
     def rotate_world_ccw(self) -> "World":
         rotated = list(zip(*self.data))[::-1]
-        return World(rotated, self.left_is.rotate_ccw())
+        return World(rotated, self.left_is.next_direction_cw())
 
     def __hash__(self) -> int:
         return hash(str(self.data) + ":" + str(self.left_is))
@@ -147,6 +147,7 @@ def question2(world: World) -> int:
 
 def main() -> None:
     world = get_input()
+
     world = world.rotate_world_ccw()
 
     # world is rotated 90 degrees,
