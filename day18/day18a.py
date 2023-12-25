@@ -6,6 +6,9 @@ from queue import Queue
 
 from day18.lib.tile import EdgeTile, HoleTile, Tile
 
+INPUT = "day18/input.txt"
+INPUT_SMALL = "day18/input-small.txt"
+
 
 @dataclass
 class Position:
@@ -127,9 +130,9 @@ def get_matrix_range(commands: list[Command]) -> tuple[Position, Position]:
     return Position(min_row, min_col), Position(max_row, max_col)
 
 
-def get_input() -> list[Command]:
+def get_input(path: str) -> list[Command]:
     commands = []
-    with open("day18/input.txt", encoding="utf-8") as file:
+    with open(path, encoding="utf-8") as file:
         for line in file:
             direction, steps, color = line.strip().split()
             instruction = Command(Direction(direction), int(steps), color[2:-1])
@@ -137,9 +140,7 @@ def get_input() -> list[Command]:
     return commands
 
 
-def main() -> None:
-    commands: list[Command] = get_input()
-
+def get_solution(commands: list[Command]) -> int:
     min_pos, max_pos = get_matrix_range(commands)
 
     matrix: Matrix = Matrix(min_pos, max_pos)
@@ -154,6 +155,12 @@ def main() -> None:
     print(f"Dug: {matrix.dug_tiles}")
     print(f"Wall: {matrix.wall_tiles}")
     print(f"Total: {matrix.dug_tiles + matrix.wall_tiles}")
+    return matrix.dug_tiles + matrix.wall_tiles
+
+
+def main() -> None:
+    commands: list[Command] = get_input(INPUT)
+    get_solution(commands)
 
 
 if __name__ == "__main__":

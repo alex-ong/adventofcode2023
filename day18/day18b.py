@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 from enum import IntEnum
 
+INPUT = "day18/input.txt"
+INPUT_SMALL = "day18/input-small.txt"
+
 
 @dataclass
 class Position:
@@ -25,9 +28,9 @@ class Command:
         self.direction = Direction(int(hexcode[-1]))
 
 
-def get_input() -> list[Command]:
+def get_input(path: str) -> list[Command]:
     commands = []
-    with open("day18/input.txt", encoding="utf-8") as file:
+    with open(path, encoding="utf-8") as file:
         for line in file:
             hexcode = line.strip().split()[2]
             instruction = Command(hexcode[2:-1])
@@ -63,9 +66,7 @@ def calculate_area(positions: list[Position], perimeter: int) -> int:
     return area + (perimeter // 2) + 1
 
 
-def main() -> None:
-    commands: list[Command] = get_input()
-
+def get_solution(commands: list[Command]) -> int:
     positions: list[Position] = []
     position = Position()
 
@@ -75,7 +76,13 @@ def main() -> None:
 
     perimeter = sum(command.steps for command in commands)
 
-    print(calculate_area(positions, perimeter))
+    return calculate_area(positions, perimeter)
+
+
+def main() -> None:
+    commands: list[Command] = get_input(INPUT)
+
+    print(get_solution(commands))
 
 
 if __name__ == "__main__":
