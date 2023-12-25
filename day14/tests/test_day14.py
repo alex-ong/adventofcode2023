@@ -31,4 +31,44 @@ def test_simulate_row() -> None:
 def test_rotate_world() -> None:
     world: World = get_input(INPUT_ARROW)
 
+    assert world.left_is == Direction.West
+
+    ARROW_WEST = [
+        (".", ".", ".", ".", ".", "."),
+        (".", ".", ".", ".", ".", "."),
+        (".", ".", "#", ".", ".", "."),
+        (".", "#", "#", ".", ".", "."),
+        ("#", "#", "#", "#", "#", "#"),
+        (".", "#", "#", ".", ".", "."),
+        (".", ".", "#", ".", ".", "."),
+        (".", ".", ".", ".", ".", "."),
+        (".", ".", ".", ".", ".", "."),
+    ]
+    assert world.rotate_world_ccw().data == ARROW_WEST
     assert world.rotate_world_ccw().left_is == Direction.North
+
+    ARROW_SOUTH = [
+        (".", ".", ".", ".", "#", ".", ".", ".", "."),
+        (".", ".", ".", ".", "#", ".", ".", ".", "."),
+        (".", ".", ".", ".", "#", ".", ".", ".", "."),
+        (".", ".", "#", "#", "#", "#", "#", ".", "."),
+        (".", ".", ".", "#", "#", "#", ".", ".", "."),
+        (".", ".", ".", ".", "#", ".", ".", ".", "."),
+    ]
+    assert world.rotate_world_cw().rotate_world_cw().data == ARROW_SOUTH
+    assert world.rotate_world_cw().rotate_world_cw().left_is == Direction.East
+
+    ARROW_EAST = [
+        (".", ".", ".", ".", ".", "."),
+        (".", ".", ".", ".", ".", "."),
+        (".", ".", ".", "#", ".", "."),
+        (".", ".", ".", "#", "#", "."),
+        ("#", "#", "#", "#", "#", "#"),
+        (".", ".", ".", "#", "#", "."),
+        (".", ".", ".", "#", ".", "."),
+        (".", ".", ".", ".", ".", "."),
+        (".", ".", ".", ".", ".", "."),
+    ]
+
+    assert world.rotate_world_cw().data == ARROW_EAST
+    assert world.rotate_world_cw().left_is == Direction.South
