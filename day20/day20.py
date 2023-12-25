@@ -18,7 +18,7 @@ from day20.lib.classes import (
     PulseTarget,
     SinkModule,
 )
-from day20.lib.parsers import finalize_modules, get_modules
+from day20.lib.parsers import get_modules
 
 FILE_A = "day20/input-a.txt"
 FILE_B = "day20/input-b.txt"
@@ -26,6 +26,7 @@ FILE_PROD = "day20/input.txt"
 
 FILE = FILE_PROD
 VIS_FOLDER = "day20/vis"
+EXPORT_GRAPHS = False
 
 
 def simulate(modules: dict[str, BaseModule]) -> tuple[int, int]:
@@ -48,18 +49,6 @@ def simulate(modules: dict[str, BaseModule]) -> tuple[int, int]:
         for result in results:
             pulses.put(result)
     return low, high
-
-
-def part1(module_map: dict[str, BaseModule]) -> None:
-    low_total = 0
-    high_total = 0
-    for _ in range(1000):
-        low, high = simulate(module_map)
-        low_total += low
-        high_total += high
-
-    print(low_total, high_total)
-    print(low_total * high_total)
 
 
 def get_final_gates(module_map: dict[str, BaseModule]) -> list[ConjunctionModule]:
@@ -171,14 +160,17 @@ def graph_modules(module_groups: ModuleGroups, index: int) -> graphviz.Digraph:
     return dot
 
 
-def part2(module_map: dict[str, BaseModule]) -> None:
+def part2(
+    modules: list[BaseModule], export_graphs: bool = False
+) -> tuple[int, list[graphviz.Graph]]:
     """We find out the loop length for each of the 4~ paths"""
+    module_map = {module.name: module for module in modules}
     module_groups: ModuleGroups = get_module_groups(module_map)
-    os.makedirs(VIS_FOLDER, exist_ok=True)
 
     # graph modules in initial state
     dots: list[graphviz.Graph] = []
-    dot: graphviz.Graph = graph_modules(module_groups, 0)
+    dot: graphviz.Graph
+
     simulation_counter = 0
     loop_counter: LoopCounter = LoopCounter(len(module_groups.loops))
     # run simulation, screenshotting everytime one of the paths "loops"
@@ -189,18 +181,26 @@ def part2(module_map: dict[str, BaseModule]) -> None:
             if path_is_start_state(loop_path):
                 loop_end_name = loop_path[-1].name
                 loop_counter.add_result(loop_end_name, simulation_counter)
-        dot = graph_modules(module_groups, simulation_counter)
-        dots.append(dot)
+        if export_graphs:
+            dot = graph_modules(module_groups, simulation_counter)
+            dots.append(dot)
 
     print(loop_counter)
-    print(math.lcm(*list(loop_counter.loop_lengths.values())))
+    result = math.lcm(*list(loop_counter.loop_lengths.values()))
+    return result, dots
 
-    output_files(dots)
 
-    # Cleanup *.gv files
-    for item in os.listdir("vis"):
-        if item.endswith(".gv"):
-            os.remove(os.path.join(VIS_FOLDER, item))
+def part1(modules: list[BaseModule]) -> int:
+    module_map = {module.name: module for module in modules}
+    low_total = 0
+    high_total = 0
+    for _ in range(1000):
+        low, high = simulate(module_map)
+        low_total += low
+        high_total += high
+
+    print(low_total, high_total)
+    return low_total * high_total
 
 
 def output_graph(dot: graphviz.Graph) -> None:
@@ -210,25 +210,31 @@ def output_graph(dot: graphviz.Graph) -> None:
 
 def output_files(dots: list[graphviz.Graph]) -> None:
     """Saves a list of dots to file"""
-
+    if len(dots) == 0:
+        return
+    os.makedirs(VIS_FOLDER, exist_ok=True)
     with Pool() as pool:
         for _ in tqdm.tqdm(pool.imap_unordered(output_graph, dots), total=len(dots)):
             pass
 
-    print("all done!")
+    # Cleanup *.gv files
+    for item in os.listdir(VIS_FOLDER):
+        if item.endswith(".gv"):
+            os.remove(os.path.join(VIS_FOLDER, item))
 
 
 def main() -> None:
     modules = get_modules(FILE)
-    modules = finalize_modules(modules)
-    module_map = {module.name: module for module in modules}
-
     # q1
-    # part1(module_map)
+    print(part1(modules))
 
     # q2
-    # MAKE SURE TO COMMENT OUT q1 for q2 to work!
-    part2(module_map)
+    # Reload because part1 ruins stuff
+
+    modules = get_modules(FILE)
+    result, dots = part2(modules)
+    print(result)
+    output_files(dots)
 
 
 if __name__ == "__main__":

@@ -34,6 +34,7 @@ def get_modules(filename: str) -> list[BaseModule]:
             module: BaseModule = parse_line(line)
             modules.append(module)
 
+    modules = finalize_modules(modules)
     return modules
 
 
