@@ -80,14 +80,21 @@ def grab_data(filename: str) -> list[Card]:
     return result
 
 
+def part1(cards: list[Card]) -> int:
+    return sum(card.get_points() for card in cards)
+
+
+def part2(cards: list[Card]) -> int:
+    inventory: Inventory = Inventory(cards)
+    return inventory.total_cards()
+
+
 def main() -> None:
     cards: list[Card] = grab_data(INPUT)
     # Q1
-    total_points = sum(card.get_points() for card in cards)
-    print(total_points)
+    print(part1(cards))
     # Q2
-    inventory = Inventory(cards)
-    print(inventory.total_cards())
+    print(part2(cards))
 
 
 if __name__ == "__main__":
