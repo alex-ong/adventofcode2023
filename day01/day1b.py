@@ -3,6 +3,9 @@
 
 from dataclasses import dataclass
 
+INPUT = "day01/input.txt"
+INPUT_SMALL = "day01/input-small2.txt"
+
 
 @dataclass
 class IndexValue:
@@ -52,13 +55,16 @@ def process_line(line: str) -> int:
     return int(index_to_chars[first_index] + index_to_chars[last_index])
 
 
-def main() -> None:
-    with open("day01/input.txt", "r", encoding="utf8") as file:
-        total = 0
-        for line in file:
-            total += process_line(line)
+def get_input(input_file: str) -> list[str]:
+    with open(input_file, "r", encoding="utf8") as file:
+        return list(file)
 
-        print(total)
+
+def main(input_file: str = INPUT) -> int:
+    lines = get_input(input_file)
+    total = sum(process_line(line) for line in lines)
+    print(total)
+    return total
 
 
 if __name__ == "__main__":

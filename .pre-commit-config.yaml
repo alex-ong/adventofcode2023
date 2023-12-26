@@ -6,10 +6,12 @@ repos:
     rev: v0.1.8
     hooks:
       - id: ruff
+        stages: [commit, manual]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.8.0 # Use the sha / tag you want to point at
     hooks:
       - id: mypy
+        stages: [commit, manual]
         args: 
         - "--check-untyped-defs"
         - "--strict"
@@ -19,6 +21,7 @@ repos:
             types-requests==2.31.0.10,
             types-tqdm==4.66.0.5,
             python-dotenv==1.0.0,
+            pytest==7.4.3,
             graphviz==0.20.1,
             vpython==7.6.3,
             z3-solver==4.12.4.0,
@@ -27,13 +30,14 @@ repos:
     rev: v4.5.0
     hooks:
       - id: mixed-line-ending
+        stages: [commit, manual]
         args:
           - "--fix=lf"
   - repo: local
     hooks: 
       - id: pytest-check
         name: pytest-check
-        stages: [pre-push]
+        stages: [pre-push, manual]
         types: [python]
         entry: pytest -v --color=yes
         language: system
@@ -41,7 +45,7 @@ repos:
         pass_filenames: false
       - id: coverage-check # technically runs pytest again. oh well
         name: coverage-check
-        stages: [pre-push]
+        stages: [pre-push, manual]
         types: [python]
         entry: coverage run
         language: system

@@ -3,6 +3,9 @@
 
 from typing import Optional
 
+INPUT = "day01/input.txt"
+INPUT_SMALL = "day01/input-small.txt"
+
 
 def get_first_last(line: str) -> tuple[str, str]:
     first: Optional[str] = None
@@ -18,14 +21,19 @@ def get_first_last(line: str) -> tuple[str, str]:
     return (first, last)
 
 
-def main() -> None:
-    with open("day01/input.txt", "r", encoding="utf8") as file:
-        total = 0
-        for line in file:
-            first, last = get_first_last(line)
-            data = int(first + last)
-            total += data
-        print(total)
+def get_input(input_file: str) -> list[str]:
+    with open(input_file, "r", encoding="utf8") as file:
+        return list(file)
+
+
+def main(input_file: str = INPUT) -> int:
+    lines = get_input(input_file)
+    total = 0
+    for line in lines:
+        first, last = get_first_last(line)
+        data = int(first + last)
+        total += data
+    return total
 
 
 if __name__ == "__main__":
