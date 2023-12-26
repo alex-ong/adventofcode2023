@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+import pytest
+
 from day03.day3 import INPUT_SMALL
 from day03.lib.classes import Gear, Matrix, PartNumber
 from day03.lib.parsers import get_matrix
@@ -53,6 +55,9 @@ def test_matrix() -> None:
 
     assert len(gears) == 3
 
+    matrix2: Matrix = Matrix(["*755."])
+    assert matrix2.is_engine_part(PartNumber(1, 0, 3, 755))
+
 
 def test_gear() -> None:
     # 69...
@@ -69,3 +74,8 @@ def test_gear() -> None:
     assert gear1.gear_ratio == 0
     assert gear2.gear_ratio == 69 * 78
     assert gear3.gear_ratio == 0
+
+    gear_not_init = Gear(1, 1)
+
+    with pytest.raises(ValueError):
+        gear_not_init.gear_ratio

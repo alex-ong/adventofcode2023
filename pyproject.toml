@@ -33,7 +33,7 @@ relative_files = true
 
 
 [tool.coverage.report]
-exclude_lines = ["if __name__ == .__main__.:", "def main"]
+exclude_lines = ["if __name__ == .__main__.:", "def main", "if TYPE_CHECKING:"]
 omit = ["download_inputs.py", "maker.py"]
 precision = 2
 skip_covered = true

@@ -120,8 +120,6 @@ class Matrix:
         self, gear: Gear, part_numbers: list[PartNumber]
     ) -> list[PartNumber]:
         """Returns a list of part_numbers that are touching a given gear"""
-        if gear.part_numbers is not None:
-            return gear.part_numbers
         result = []
         for part_number in part_numbers:
             if part_number.touching(gear.col, gear.row, self.row_size):
