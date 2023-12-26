@@ -24,3 +24,14 @@ section-order = [
     "first-party",
     "local-folder",
 ]
+
+[tool.coverage.run]
+branch = true
+command_line = '-m pytest'
+source = ['.']
+relative_files = true
+
+[tool.coverage.report]
+precision = 2
+skip_covered = true
+fail_under = 0

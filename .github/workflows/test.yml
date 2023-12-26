@@ -1,17 +1,26 @@
-name: test
+name: test_and_coverage
 
 on:
+  pull_request:
   push:
     branches:
-      - main  # Change this to your main branch name if it's different
+      - main
 
 jobs:
   pre-commit:
+    name: Run tests & display coverage
     runs-on: ubuntu-latest
-
+    permissions:
+    # Gives the action the necessary permissions for publishing new
+    # comments in pull requests.
+    pull-requests: write
+    # Gives the action the necessary permissions for pushing data to the
+    # python-coverage-comment-action branch, and for editing existing
+    # comments (to avoid publishing multiple comments in the same PR)
+    contents: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -23,3 +32,7 @@ jobs:
           pip install -r requirements.txt
       - name: Run pre-commit on all files
         run: pre-commit run --hook-stage pre-push
+      - name: Coverage comment
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ github.token }}

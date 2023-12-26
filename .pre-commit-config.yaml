@@ -35,7 +35,15 @@ repos:
         name: pytest-check
         stages: [pre-push]
         types: [python]
-        entry: pytest -v
+        entry: pytest -v --color=yes
+        language: system
+        always_run: true
+        pass_filenames: false
+      - id: coverage-check # technically runs pytest again. oh well
+        name: coverage-check
+        stages: [pre-push]
+        types: [python]
+        entry: coverage run
         language: system
         always_run: true
         pass_filenames: false

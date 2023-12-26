@@ -1,6 +1,7 @@
 name: lint
 
 on:
+  pull_request:
   push:
     branches:
       - main  # Change this to your main branch name if it's different
