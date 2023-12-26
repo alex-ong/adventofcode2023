@@ -1,7 +1,8 @@
 [![lint](https://github.com/alex-ong/adventofcode2023/actions/workflows/lint.yml/badge.svg)](https://github.com/alex-ong/adventofcode2023/actions/workflows/lint.yml)
 [![test](https://github.com/alex-ong/adventofcode2023/actions/workflows/test.yml/badge.svg)](https://github.com/alex-ong/adventofcode2023/actions/workflows/test.yml)
-
+[![coverage](https://raw.githubusercontent.com/alex-ong/adventofcode2023/python-coverage-comment-action-data/badge.svg)](https://htmlpreview.github.io/?https://github.com/alex-ong/adventofcode2023/blob/python-coverage-comment-action-data/htmlcov/index.html)
 Advent of Code 2023
+
 ===
 
 Website: https://adventofcode.com/2023

@@ -1,4 +1,4 @@
-name: test_and_coverage
+name: test
 
 on:
   pull_request:
