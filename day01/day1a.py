@@ -26,14 +26,18 @@ def get_input(input_file: str) -> list[str]:
         return list(file)
 
 
-def main(input_file: str = INPUT) -> int:
-    lines = get_input(input_file)
+def part1(lines: list[str]) -> int:
     total = 0
     for line in lines:
         first, last = get_first_last(line)
         data = int(first + last)
         total += data
     return total
+
+
+def main() -> None:
+    lines = get_input(INPUT)
+    print(part1(lines))
 
 
 if __name__ == "__main__":

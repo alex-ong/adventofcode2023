@@ -31,8 +31,10 @@ command_line = '-m pytest'
 source = ['.']
 relative_files = true
 
+
 [tool.coverage.report]
-exclude_lines = ["if __name__ == .__main__.:"]
+exclude_lines = ["if __name__ == .__main__.:", "def main"]
+omit = ["download_inputs.py", "maker.py"]
 precision = 2
 skip_covered = true
 fail_under = 0

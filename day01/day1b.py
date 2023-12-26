@@ -24,7 +24,7 @@ class WordNumber:
     number: str = "1"
 
 
-mappings = [
+MAPPINGS: list[WordNumber] = [
     WordNumber("one", "1"),
     WordNumber("two", "2"),
     WordNumber("three", "3"),
@@ -43,7 +43,7 @@ def process_line(line: str) -> int:
         if char.isnumeric():
             index_to_chars[index] = char
 
-        for mapping in mappings:
+        for mapping in MAPPINGS:
             substring = line[index : index + len(mapping.word)]
             if substring == mapping.word:
                 index_to_chars[index] = mapping.number
@@ -60,11 +60,14 @@ def get_input(input_file: str) -> list[str]:
         return list(file)
 
 
-def main(input_file: str = INPUT) -> int:
-    lines = get_input(input_file)
+def part2(lines: list[str]) -> int:
     total = sum(process_line(line) for line in lines)
-    print(total)
     return total
+
+
+def main() -> None:
+    lines = get_input(INPUT)
+    print(part2(lines))
 
 
 if __name__ == "__main__":

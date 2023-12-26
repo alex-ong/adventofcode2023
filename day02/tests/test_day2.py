@@ -13,9 +13,11 @@ def test_draw() -> None:
     """Test draws"""
     draw1: Draw = Draw("3 blue, 4 red")
     draw2: Draw = Draw("4 blue, 3 green")
+    draw3: Draw = Draw("4 blue, 3 green, 1 red")
 
     assert [draw1.red, draw1.green, draw1.blue] == [4, 0, 3]
     assert [draw2.red, draw2.green, draw2.blue] == [0, 3, 4]
+    assert [draw3.red, draw3.green, draw3.blue] == [1, 3, 4]
 
 
 def test_game() -> None:
@@ -32,6 +34,9 @@ def test_game() -> None:
     assert game2.red == 1
     assert game2.green == 3
     assert game2.blue == 4
+
+    assert str(game1) == "Game 1: 4,2,6"
+    assert str(game2) == "Game 2: 1,3,4"
 
 
 def test_part1() -> None:

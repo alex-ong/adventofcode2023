@@ -1,6 +1,6 @@
 import pytest
 
-from day01.day1a import INPUT_SMALL, get_first_last, get_input, main
+from day01.day1a import INPUT_SMALL, get_first_last, get_input, part1
 
 
 def test_get_first_last() -> None:
@@ -17,8 +17,9 @@ def test_get_first_last() -> None:
         get_first_last("")
 
 
-def test_main() -> None:
-    assert main(INPUT_SMALL) == 142
+def test_part1() -> None:
+    lines: list[str] = get_input(INPUT_SMALL)
+    assert part1(lines) == 142
 
 
 def test_get_input() -> None:

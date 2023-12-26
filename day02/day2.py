@@ -33,7 +33,7 @@ class Draw:
                 self.red = num
             elif color == Color.GREEN:
                 self.green = num
-            elif color == Color.BLUE:
+            else:  # color == Color.BLUE:
                 self.blue = num
 
 
@@ -65,9 +65,6 @@ class Game:
 
     def power_level(self) -> int:
         return self.red * self.green * self.blue
-
-    def __repr__(self) -> str:
-        return str(self)
 
 
 def game_filter(game: Game) -> bool:

@@ -1,4 +1,4 @@
-from day01.day1b import INPUT_SMALL, IndexValue, get_input, main, process_line
+from day01.day1b import INPUT_SMALL, IndexValue, get_input, part2, process_line
 
 
 def test_process_line() -> None:
@@ -23,5 +23,6 @@ def test_index_value() -> None:
     assert str(index_val) == ("(i:0, v:1)")
 
 
-def test_main() -> None:
-    assert main(INPUT_SMALL) == 281
+def test_part2() -> None:
+    lines: list[str] = get_input(INPUT_SMALL)
+    assert part2(lines) == 281
