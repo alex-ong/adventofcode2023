@@ -26,11 +26,11 @@ section-order = [
 ]
 
 [tool.coverage.run]
+concurrency = ["multiprocessing"]
 branch = true
 command_line = '-m pytest'
 source = ['.']
 relative_files = true
-
 
 [tool.coverage.report]
 exclude_lines = [

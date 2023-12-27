@@ -28,4 +28,4 @@ class Direction(IntEnum):
             return (row + 1, col)
         if self == Direction.WEST:
             return (row, col - 1)
-        raise ValueError("direction not suppported", self)
+        raise AssertionError("direction not suppported", self)

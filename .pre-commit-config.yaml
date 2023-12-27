@@ -51,3 +51,11 @@ repos:
         language: system
         always_run: true
         pass_filenames: false
+      - id: coverage-combine 
+        name: coverage-combine
+        stages: [pre-push, manual]
+        types: [python]
+        entry: coverage combine
+        language: system
+        always_run: true
+        pass_filenames: false
