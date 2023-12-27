@@ -21,7 +21,7 @@ class Direction(IntEnum):
             return "v"
         elif self == Direction.WEST:
             return "<"
-        raise ValueError("invalid value")
+        raise AssertionError("invalid value")
 
     def opposite(self) -> "Direction":
         int_value = int(self)
@@ -36,7 +36,7 @@ class Direction(IntEnum):
             return (row + 1, col)
         if self == Direction.WEST:
             return (row, col - 1)
-        raise ValueError("direction not suppported", self)
+        raise AssertionError("direction not suppported", self)
 
     def offset_list(self, row: int, col: int, size: int = 4) -> list[tuple[int, int]]:
         offsets = range(1, size + 1)
@@ -48,7 +48,7 @@ class Direction(IntEnum):
             return [(row + i, col) for i in offsets]
         if self == Direction.WEST:
             return [(row, col - i) for i in offsets]
-        raise ValueError("direction not suppported", self)
+        raise AssertionError("direction not suppported", self)
 
 
 ALL_DIRECTIONS = list(Direction)

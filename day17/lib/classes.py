@@ -46,16 +46,19 @@ class SolutionCache:
         ]
 
     def add_solution(self, step: Step) -> bool:
-        """adds solution to cache"""
+        """adds solution to cache returns whether an improvement was made"""
         tile_cache = self.cache[step.row][step.col]
         existing_item = tile_cache[step.direction, step.consecutive_steps]
         if existing_item is None:
             tile_cache[step.direction, step.consecutive_steps] = step
             return True
 
+        # due to the way that we run in BFS, we shouldn't be getting
+        # into this branch
         if step.total_cost < existing_item.total_cost:
-            tile_cache[step.direction, step.consecutive_steps] = step
-            return True
+            raise AssertionError("this shouldn't be possible")
+            # tile_cache[step.direction, step.consecutive_steps] = step
+            # return True
         return False
 
 
@@ -114,7 +117,7 @@ class WorldPart1:
                 if (new_step := self.create_step(step, direction)) is not None:
                     steps_to_explore.put(new_step)
 
-        raise ValueError("No solution found!")
+        raise AssertionError("No solution found!")
 
     def is_oob(self, row: int, col: int) -> bool:
         """true if laser is out of bounds"""
@@ -169,4 +172,4 @@ class WorldPart2(WorldPart1):
             for direction in ALL_DIRECTIONS:
                 if (new_step := self.create_step(step, direction)) is not None:
                     steps_to_explore.put(new_step)
-        raise ValueError("No solution found!")
+        raise AssertionError("No solution found!")
