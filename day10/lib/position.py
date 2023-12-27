@@ -18,15 +18,8 @@ class Position:
             return Position(self.row, self.col - 1)
         elif direction == Direction.SOUTH:
             return Position(self.row + 1, self.col)
-        elif direction == Direction.NORTH_EAST:
-            return Position(self.row - 1, self.col + 1)
-        elif direction == Direction.NORTH_WEST:
-            return Position(self.row - 1, self.col - 1)
-        elif direction == Direction.SOUTH_WEST:
-            return Position(self.row + 1, self.col - 1)
-        elif direction == Direction.SOUTH_EAST:
-            return Position(self.row + 1, self.col + 1)
-        raise ValueError(f"invalid direction {direction}")
+
+        raise AssertionError(f"invalid direction {direction}")
 
     def __hash__(self) -> int:
         return hash(f"{self.row}:{self.col}")

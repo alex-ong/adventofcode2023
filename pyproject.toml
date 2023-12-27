@@ -38,6 +38,7 @@ exclude_lines = [
     "def main",
     "if TYPE_CHECKING:",
     "raise AssertionError",
+    "# pragma: no cover",
 ]
 omit = ["download_inputs.py", "maker.py"]
 precision = 2

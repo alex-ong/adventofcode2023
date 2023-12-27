@@ -7,10 +7,6 @@ class Direction(Enum):
     SOUTH = 2
     EAST = 3
     WEST = 4
-    NORTH_EAST = 5
-    NORTH_WEST = 6
-    SOUTH_EAST = 7
-    SOUTH_WEST = 8
 
     def opposite(self) -> "Direction":
         if self == Direction.NORTH:
@@ -21,4 +17,4 @@ class Direction(Enum):
             return Direction.WEST
         if self == Direction.WEST:
             return Direction.EAST
-        raise RuntimeError("invalid direction")
+        raise AssertionError("invalid direction")

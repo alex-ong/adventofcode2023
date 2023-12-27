@@ -78,7 +78,7 @@ class Pipe:
     def position(self) -> Position:
         return Position(self.row, self.col)
 
-    def __hash__(self) -> int:
+    def __hash__(self) -> int:  # pragma: no cover
         return hash(f"{self.row},{self.col}")
 
 
@@ -95,11 +95,16 @@ class PipeMap:
 
     def get_pipe(self, position: Position) -> Pipe:
         """returns a pipe given its position"""
+        if not self.is_in_map(position):
+            raise ValueError(f"Position outside map {position}")
         return self.pipes[position.row][position.col]
 
+    def is_in_map(self, position: Position) -> bool:
+        return 0 <= position.row < self.height and 0 <= position.col < self.width
+
     def get_pipe_safe(self, position: Position) -> Pipe | None:
-        if 0 <= position.row < self.height and 0 <= position.col < self.width:
-            return self.get_pipe(position)
+        if self.is_in_map(position):
+            return self.pipes[position.row][position.col]
         return None
 
     def __str__(self) -> str:

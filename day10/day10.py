@@ -35,7 +35,8 @@ def find_s(pipe_map: PipeMap) -> Position:
             return Position(row_idx, col_idx)
         except StopIteration:
             continue
-    raise RuntimeError("No S pipe found!")
+
+    raise AssertionError("No S pipe found!")
 
 
 def calculate_s(start: Position, pipe_map: PipeMap) -> str:
@@ -48,19 +49,22 @@ def calculate_s(start: Position, pipe_map: PipeMap) -> str:
 
     for direction in pipe_directions:
         pos: Position = start.next_position(direction)
-        tile: Pipe | None = pipe_map.get_pipe(pos)
-        if tile is None:
-            raise RuntimeError("Expecting valid pipe")
+        tile: Pipe | None = pipe_map.get_pipe_safe(pos)
+        if tile is None:  # e.g. S is on an edge
+            continue
         opposite_direction = direction.opposite()
         if opposite_direction in Pipe.PIPE_DIRECTION[tile.character]:
             connecting.append(direction)
+
+    if len(connecting) == 0:
+        raise ValueError("S is not a a valid pipe")
 
     # should now have connecting == [NORTH, EAST]:
     for character, pipe_directions in Pipe.PIPE_DIRECTION.items():
         if set(connecting) == set(pipe_directions):
             return character
 
-    raise ValueError("No mapping found for `s` pipe")
+    raise AssertionError("No mapping found for `s` pipe")
 
 
 def find_cycles(pipe_map: PipeMap) -> list[Pipe]:
@@ -210,6 +214,10 @@ def part1(pipe_map: PipeMap) -> int:
 
 def part2(pipe_map: PipeMap) -> int:
     find_cycles(pipe_map)
+
+    # print our map before we mutate it
+    print(pipe_map)
+
     big_map: PipeMap = expand_map(pipe_map)
     # you can use this to view it lol.
     with open("day10/big_unfilled.txt", "w", encoding="utf8") as file:
@@ -227,6 +235,13 @@ def part2(pipe_map: PipeMap) -> int:
         total_unknown += sum(
             1 if col.pipe_bounds == PipeBounds.UNKNOWN else 0 for col in row
         )
+    # extra: show unknowns:
+    for row in pipes:
+        for col in row:
+            if col.pipe_bounds == PipeBounds.UNKNOWN:
+                col.pipe_bounds = PipeBounds.INSIDE
+    print(small_map)
+
     return total_unknown
 
 
