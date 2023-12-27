@@ -3,6 +3,7 @@ from day08.day8 import (
     INPUT_B,
     INPUT_C,
     Cycle,
+    Directions,
     Location,
     find_cycle,
     follow_directions,
@@ -43,3 +44,9 @@ def test_find_cycle() -> None:
     cycle_22A: Cycle = find_cycle(location_22A, world_map, directions)
     assert cycle_11A.cycle_length == 2
     assert cycle_22A.cycle_length == 6
+
+
+def test_directions() -> None:
+    directions: Directions = Directions("LRLRLLR")
+    assert directions.get_step(0) == "L"
+    assert directions.get_step(7) == "L"

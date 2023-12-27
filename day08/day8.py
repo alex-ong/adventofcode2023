@@ -2,6 +2,7 @@
 import itertools
 import math
 from dataclasses import dataclass, field
+from typing import Iterator
 
 INPUT = "day08/input.txt"
 INPUT_A = "day08/input-a.txt"
@@ -56,6 +57,10 @@ class Directions:
     def get_step(self, index: int) -> str:
         return self.steps[index % len(self.steps)]
 
+    def get_steps_iterator(self) -> Iterator[str]:
+        """Returns a iterator that loops through indefinitely."""
+        return itertools.cycle(self.steps)
+
 
 @dataclass
 class Cycle:
@@ -87,10 +92,9 @@ class Cycle:
 
         # 2nd half of array is from cycle_start_index -> end
         index -= len(self.location_steps)
-        index %= self.cycle_length
         index += self.cycle_start_index
-        if index >= len(self.location_steps):
-            raise ValueError("you fucked up")
+        index %= self.cycle_length
+
         return self.location_steps[index]
 
 
@@ -117,7 +121,7 @@ def follow_directions(directions: Directions, world_map: WorldMap) -> int:
     mappings = world_map.mappings
     node: Location = mappings["AAA"]
     nodes_visited = 0
-    for step in itertools.cycle(directions.steps):
+    for step in directions.get_steps_iterator():
         if step == "L":
             node = mappings[node.left]
         else:
@@ -126,7 +130,7 @@ def follow_directions(directions: Directions, world_map: WorldMap) -> int:
         if node.name == "ZZZ":
             return nodes_visited
 
-    return -1
+    raise AssertionError("Unreachable; iterator is infinite")
 
 
 def get_location_as(world_map: WorldMap) -> list[Location]:
