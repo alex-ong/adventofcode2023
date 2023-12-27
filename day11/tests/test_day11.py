@@ -27,3 +27,31 @@ def test_is_empty() -> None:
     assert not is_empty(universe.contents[0])
     assert not is_empty(universe.contents[1])
     assert not is_empty(universe.contents[2])
+
+
+def test_expansion() -> None:
+    universe: Universe = parse_input(INPUT_SMALL)
+    assert universe.num_rows == 10
+    assert universe.num_cols == 10
+    universe.expand_contents()
+
+    print(universe)
+
+    assert str(universe) == "\n".join(
+        [
+            "..@#.@..@.",
+            "..@..@.#@.",
+            "#.@..@..@.",
+            "@@@@@@@@@@",
+            "..@..@#.@.",
+            ".#@..@..@.",
+            "..@..@..@#",
+            "@@@@@@@@@@",
+            "..@..@.#@.",
+            "#.@.#@..@.",
+        ]
+    )
+
+    # test cool iterator stuff
+    for index, row in enumerate(universe):
+        assert universe[index] == row
