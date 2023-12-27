@@ -1,7 +1,7 @@
 """day14 solution"""
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Optional
 
 from day14.lib.direction import Direction
 
@@ -30,15 +30,10 @@ class World:
     def to_string(self) -> str:
         return "\n".join(str(row) for row in self.data)
 
-    def print_map(self) -> None:
-        """prints the map nicely"""
-        print(self.to_string())
-
-    def print_correct(self) -> None:
+    def as_orientiented_north(self) -> str:
         """Print with north facing up"""
         world = self.correct_side()
-        world.print_map()
-        print(f"last action:{self.left_is}")
+        return world.to_string()
 
     def get_score(self) -> int:
         world = self.correct_side()
@@ -56,7 +51,7 @@ class World:
             return world
         elif world.left_is == Direction.South:
             return world.rotate_world_ccw()
-        raise ValueError(f"Unsupported Direction: {world.left_is}")
+        raise AssertionError(f"Unsupported Direction: {world.left_is}")
 
 
 def naive_score(world_rows: list[str]) -> int:
@@ -124,32 +119,32 @@ def question2(world: World) -> int:
         world = world.rotate_world_ccw()
     world.data = simulate_world(world.data)
 
-    for cycle in range(10000):
-        # left_is: north
-        world = world.rotate_world_cw()
-        world.data = simulate_world(world.data)
+    cycle_index = 0
+    cycle_start: Optional[int] = None
+    cycle_end: Optional[int] = None
 
-        # left is: west
-        world = world.rotate_world_cw()
-        world.data = simulate_world(world.data)
+    while cycle_start is None and cycle_end is None:
+        for direction in [
+            Direction.North,  # left_is north
+            Direction.West,  # left_is west
+            Direction.South,  # left_is south
+            Direction.East,  # left_is east
+        ]:
+            if direction == Direction.East:  # calculate score *before*
+                if world in cache:
+                    cycle_start = cache[world]
+                    cycle_end = cycle_index
+                else:
+                    cache[world] = cycle_index
+                    cycle_results.append(world)
+            world = world.rotate_world_cw()
+            world.data = simulate_world(world.data)
+            world.score = world.get_score()
 
-        # left is: south
-        world = world.rotate_world_cw()
-        world.data = simulate_world(world.data)
-        world.score = world.get_score()
-        # world.print_correct()
-        print(cycle, world.score)
-        # east here
-        if world in cache:
-            cycle_start = cache[world]
-            cycle_end = cycle
-            break
-        cache[world] = cycle
-        cycle_results.append(world)
+        cycle_index += 1
 
-        # left is east
-        world = world.rotate_world_cw()
-        world.data = simulate_world(world.data)
+    if cycle_end is None or cycle_start is None:
+        raise AssertionError("cycle_end and cycle_end should not be None")
 
     cycle_length = cycle_end - cycle_start
     print(f"cycle length: {cycle_length}")
@@ -159,7 +154,8 @@ def question2(world: World) -> int:
     result = cycle_results[cycle_start + target]
 
     if result.score is None:
-        raise ValueError("No score found!")
+        raise AssertionError("No score found!")
+
     return result.score
 
 

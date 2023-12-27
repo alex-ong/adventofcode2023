@@ -72,3 +72,11 @@ def test_rotate_world() -> None:
 
     assert world.rotate_world_cw().data == ARROW_EAST
     assert world.rotate_world_cw().left_is == Direction.South
+
+    world1 = world.rotate_world_cw().rotate_world_ccw()
+    world2 = world.rotate_world_ccw()
+    world3 = world.rotate_world_cw()
+    world4 = world.rotate_world_cw().rotate_world_cw()
+    assert world1.as_orientiented_north() == world2.as_orientiented_north()
+    assert world3.as_orientiented_north() == world4.as_orientiented_north()
+    assert world4.as_orientiented_north() == world1.as_orientiented_north()
