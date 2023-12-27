@@ -7,6 +7,7 @@ from day05.lib.parsers import grab_inputs
 
 INPUT = "day05/input.txt"
 INPUT_SMALL = "day05/input-small.txt"
+INPUT_GAPS = "day05/input-gaps.txt"
 
 
 def get_location(seed: int, maps: list[NamedMap]) -> int:

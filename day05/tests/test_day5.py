@@ -1,7 +1,9 @@
 from typing import TYPE_CHECKING
 
-from day05.day5 import INPUT_SMALL, part1, part2, seed_to_mapping_ranges
-from day05.lib.classes import MappingRange
+import pytest
+
+from day05.day5 import INPUT_GAPS, INPUT_SMALL, part1, part2, seed_to_mapping_ranges
+from day05.lib.classes import Mapping, MappingRange
 from day05.lib.parsers import grab_inputs
 
 if TYPE_CHECKING:
@@ -20,6 +22,25 @@ def test_mapping() -> None:
 
     for index, map in enumerate(maps):
         assert map.get_mapping(results[index]) == results[index + 1]
+
+    # call mapping with integer outside its range
+    mapping: Mapping = maps[0].mappings[0]
+    with pytest.raises(ValueError):
+        mapping.get_mapping(mapping.src_end + 1)
+
+    seeds, maps = grab_inputs(INPUT_GAPS)
+
+    assert str(maps[0]) == "\n".join(
+        [
+            "seed-to-soil",
+            "Mapping(src_start=0, src_end=15, dest_start=0, size=15, injected=True)",
+            "Mapping(src_start=15, src_end=63, dest_start=15, size=48, injected=False)",
+            "Mapping(src_start=63, src_end=100, dest_start=63, size=37, injected=True)",
+            "Mapping(src_start=100, src_end=120, dest_start=100, size=20, injected=False)",
+            "Mapping(src_start=120, src_end=4294967290, dest_start=120, size=4294967170, injected=True)",
+            "Mapping(src_start=4294967290, src_end=4294967296, dest_start=4294967290, size=6, injected=False)",
+        ]
+    )
 
 
 def test_part1() -> None:
