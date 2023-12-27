@@ -13,16 +13,18 @@ INPUT_SMALL = "day19/input-small.txt"
 def get_input(path: str) -> tuple[list[Workflow], list[Part]]:
     workflows: list[Workflow] = []
     parts: list[Part] = []
+    parsing_parts: bool = False
     with open(path, encoding="utf8") as file:
         for line in file:
             if len(line.strip()) == 0:
-                break
-            workflow: Workflow = parse_workflow_string(line)
-            workflows.append(workflow)
-
-        for line in file:
-            part: Part = parse_part_string(line)
-            parts.append(part)
+                parsing_parts = True
+                continue
+            if not parsing_parts:
+                workflow: Workflow = parse_workflow_string(line)
+                workflows.append(workflow)
+            else:
+                part: Part = parse_part_string(line)
+                parts.append(part)
     return (workflows, parts)
 
 

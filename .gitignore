@@ -4,4 +4,4 @@ input.txt
 /day20/vis/
 
 /day10/big*.txt
-.coverage
+.coverage*

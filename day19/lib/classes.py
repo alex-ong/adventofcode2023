@@ -37,7 +37,7 @@ class Part:
             return self.a
         if component == Component.S:
             return self.s
-        raise ValueError(f"Unsupported component{component}")
+        raise AssertionError(f"Unsupported component{component}")
 
 
 class Component(StrEnum):
@@ -65,7 +65,7 @@ class PartRange:
     ) -> tuple[Optional["PartRange"], Optional["PartRange"]]:
         """
         Split a partrange in two, using a chosen component and splitvalue
-        in the case that our range falls on one wohle side, we return None.
+        in the case that our range falls on one whole side, we return None.
         E.g.
         range = 0-100; split == 200 -> return [(0-100), None]
         range = 100-200; split == 50 -> return [None, (100-200)]
@@ -128,14 +128,14 @@ class Condition:
         elif self.component == Component.S:
             part_val = part.s
         else:
-            raise ValueError(f"Unsupported component: {self.component}")
+            raise AssertionError(f"Unsupported component: {self.component}")
 
         if self.sign == Comparator.GreaterThan:
             return part_val > self.value
         elif self.sign == Comparator.LessThan:
             return part_val < self.value
         else:
-            raise ValueError(f"Unsupported comparator: {self.sign}")
+            raise AssertionError(f"Unsupported comparator: {self.sign}")
 
     def process_part_range(
         self, part_range: PartRange
@@ -146,7 +146,8 @@ class Condition:
             return (success, fail)
         if self.sign == Comparator.GreaterThan:
             fail, success = part_range.split(self.component, self.value + 1)
-        return (success, fail)
+            return (success, fail)
+        raise AssertionError(f"Unknown comparator: {self.sign}")
 
 
 @dataclass
@@ -168,12 +169,13 @@ class Rule:
     ) -> tuple[Optional[PartRangeDest], Optional[PartRange]]:
         success: Optional[PartRange]
         fail: Optional[PartRange]
-        if self.condition is None:
+        if self.condition is None:  # pass all
             success, fail = part_range, None
-        else:
+        else:  # split up range
             success, fail = self.condition.process_part_range(part_range)
         if success is not None:
             return (PartRangeDest(success, self.destination), fail)
+
         return None, fail
 
 
@@ -188,7 +190,7 @@ class Workflow:
             destination = rule.process_part(part)
             if destination is not None:
                 return destination
-        raise ValueError("uh oh, hit the end of worfkflow!")
+        raise AssertionError("uh oh, hit the end of workflow!")
 
     def process_part_range(self, part_range: PartRange) -> list[PartRangeDest]:
         """
@@ -198,11 +200,12 @@ class Workflow:
         results: list[PartRangeDest] = []
         remainder: Optional[PartRange] = part_range
 
-        for rule in self.rules:
-            if remainder is None:
-                break
+        index = 0
+        while remainder is not None:
+            rule = self.rules[index]
             success, remainder = rule.process_part_range(remainder)
             if success is not None:
                 results.append(success)
+            index += 1
 
         return results
