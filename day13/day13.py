@@ -56,7 +56,7 @@ class Maze:
             return col_reflect
         if row_reflect is not None:
             return 100 * row_reflect
-        raise ValueError("expected a mirror!")
+        raise AssertionError("expected a mirror!")
 
 
 def read_input(path: str) -> list[Maze]:
