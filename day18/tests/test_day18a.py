@@ -7,3 +7,5 @@ def test_day18a() -> None:
     assert commands[0].steps == 6 and commands[0].direction == Direction.Right
 
     assert get_solution(commands) == 62
+
+    assert str(Direction.Right) == "Right"

@@ -47,7 +47,7 @@ def process_command(command: Command, position: Position) -> Position:
         return Position(position.row, position.col - command.steps)
     if command.direction == Direction.Up:
         return Position(position.row - command.steps, position.col)
-    raise ValueError(f"unsupported directoin {command.direction}")
+    raise AssertionError(f"unsupported directoin {command.direction}")
 
 
 def calculate_area(positions: list[Position], perimeter: int) -> int:

@@ -22,7 +22,7 @@ class Direction(StrEnum):
     Left = "L"
     Right = "R"
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str:  # pragma: no cover
         return str(self)
 
     def __str__(self) -> str:
@@ -47,7 +47,7 @@ def generate_offsets(
         return [Position(position.row + i, position.col) for i in range(1, steps + 1)]
     if direction == Direction.Up:
         return [Position(position.row - i, position.col) for i in range(1, steps + 1)]
-    raise ValueError(f"Direction not supported{direction}")
+    raise AssertionError(f"Direction not supported{direction}")
 
 
 class Matrix:
@@ -92,7 +92,7 @@ class Matrix:
         while not to_process.empty():
             position: Position = to_process.get()
             if self.is_oob(position):
-                continue
+                raise AssertionError("pre-allocated matrix shouldn't cause OOB")
             if visited[position.row][position.col]:
                 continue
             if self.contents[position.row][position.col].contents != ".":
