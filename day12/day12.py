@@ -95,7 +95,7 @@ class SpringLine:
             result += self.calculate_recursive(dot_state)
             return self.set_and_return(state, result)
 
-        return self.set_and_return(state, 0)
+        raise AssertionError("First char not in `.#?` and list not empty")
 
 
 def get_input(path: str) -> list[SpringLine]:
