@@ -4,8 +4,6 @@
 
 | Name                   |    Stmts |     Miss |   Branch |   BrPart |      Cover |   Missing |
 |----------------------- | -------: | -------: | -------: | -------: | ---------: | --------: |
-| day15/day15.py         |       42 |        3 |       24 |        3 |     90.91% |18, 35, 47 |
-| day15/lib/classes.py   |       48 |        2 |       20 |        0 |     97.06% |    30, 33 |
 | day16/day16.py         |       29 |        3 |        4 |        0 |     90.91% | 21, 26-27 |
 | day16/lib/cells.py     |       73 |        3 |       34 |        3 |     94.39% |25, 28, 32, 86->exit, 102->exit |
 | day16/lib/direction.py |       21 |        1 |        8 |        1 |     93.10% |        31 |
@@ -29,9 +27,9 @@
 | day23/lib/classes.py   |      155 |       12 |       62 |        7 |     88.48% |67, 71-76, 84, 107, 115, 117, 190, 195 |
 | day24/day24.py         |       57 |       21 |       22 |        0 |     63.29% |     58-89 |
 | day25/day25.py         |       41 |        4 |       16 |        1 |     91.23% | 37-39, 56 |
-|              **TOTAL** | **4245** |  **760** | **1556** |   **39** | **80.28%** |           |
+|              **TOTAL** | **4243** |  **755** | **1550** |   **36** | **80.39%** |           |
 
-135 files skipped due to complete coverage.
+137 files skipped due to complete coverage.
 
 
 ## Setup coverage badge
