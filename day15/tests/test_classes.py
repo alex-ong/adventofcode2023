@@ -22,3 +22,12 @@ def test_box() -> None:
     box.add_lens(ot2 := Lens("ot", 7))
     assert box.contents == [ot2, ab, pc]
     assert box.contents[0].focal_length == 7
+
+    assert str(box) == "Box 3: [ot 7] [ab 5] [pc 6]"
+
+
+def test_lens() -> None:
+    lens: Lens = Lens("rn", 1)
+    assert lens.focal_length == 1
+    assert lens.name == "rn"
+    assert str(lens) == "[rn 1]"

@@ -26,7 +26,7 @@ class Lens:
     name: str
     focal_length: int
 
-    def __hash__(self) -> int:
+    def __hash__(self) -> int:  # pragma: no cover
         return hash(str(self.name) + ":" + str(self.focal_length))
 
     def __str__(self) -> str:
@@ -43,7 +43,7 @@ class Box:
         If a lens name already exists, swap its power;
         otherwise just add it
         """
-        print(self.contents)
+
         for existing_lens in self.contents:
             if lens.name == existing_lens.name:
                 existing_lens.focal_length = lens.focal_length

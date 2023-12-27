@@ -14,8 +14,6 @@ def get_input(path: str) -> list[str]:
 def get_string_hash(string: str) -> int:
     value: int = 0
     for char in string:
-        if char == "\n":
-            continue
         value += ord(char)
         value *= 17
         value %= 256
@@ -32,19 +30,19 @@ def parse_step_pt2(raw_step: str) -> Step:
         box = get_string_hash(splits[0])
         return Step(splits[0], box, AddRemove.Remove)
 
-    raise ValueError(raw_step)
+    raise AssertionError("Raw step does not contain `-` or `=`")
 
 
 def process_steps_pt2(steps: list[Step]) -> int:
     """Process a list of steps"""
     boxes: list[Box] = [Box(i) for i in range(256)]
-    print(boxes[0])
+
     for step in steps:
         if step.process == AddRemove.Remove:
             boxes[step.box].remove_lens(step.lens_name)
         else:
             if step.focal_length is None:
-                raise ValueError("focal length should not be None")
+                raise AssertionError("focal length should not be None")
             lens = Lens(step.lens_name, step.focal_length)
             boxes[step.box].add_lens(lens)
 
