@@ -2,15 +2,13 @@
 
 [Full report](https://htmlpreview.github.io/?https://github.com/alex-ong/adventofcode2023/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-| Name                  |    Stmts |     Miss |   Branch |   BrPart |      Cover |   Missing |
-|---------------------- | -------: | -------: | -------: | -------: | ---------: | --------: |
-| day23/lib/classes2.py |      125 |        1 |       54 |        0 |     99.44% |        45 |
-| day23/lib/classes.py  |      155 |       12 |       62 |        7 |     88.48% |67, 71-76, 84, 107, 115, 117, 190, 195 |
-| day24/day24.py        |       57 |       21 |       22 |        0 |     63.29% |     58-89 |
-| day25/day25.py        |       41 |        4 |       16 |        1 |     91.23% | 37-39, 56 |
-|             **TOTAL** | **4308** |   **38** | **1460** |    **8** | **98.96%** |           |
+| Name           |    Stmts |     Miss |   Branch |   BrPart |      Cover |   Missing |
+|--------------- | -------: | -------: | -------: | -------: | ---------: | --------: |
+| day24/day24.py |       57 |       21 |       22 |        0 |     63.29% |     58-89 |
+| day25/day25.py |       41 |        4 |       16 |        1 |     91.23% | 37-39, 56 |
+|      **TOTAL** | **4310** |   **25** | **1454** |    **1** | **99.41%** |           |
 
-166 files skipped due to complete coverage.
+168 files skipped due to complete coverage.
 
 
 ## Setup coverage badge
