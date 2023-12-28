@@ -2,12 +2,11 @@
 
 [Full report](https://htmlpreview.github.io/?https://github.com/alex-ong/adventofcode2023/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-| Name           |    Stmts |     Miss |   Branch |   BrPart |      Cover |   Missing |
-|--------------- | -------: | -------: | -------: | -------: | ---------: | --------: |
-| day25/day25.py |       41 |        4 |       16 |        1 |     91.23% | 37-39, 56 |
-|      **TOTAL** | **4311** |    **4** | **1448** |    **1** | **99.91%** |           |
+| Name      |    Stmts |     Miss |   Branch |   BrPart |       Cover |   Missing |
+|---------- | -------: | -------: | -------: | -------: | ----------: | --------: |
+| **TOTAL** | **4305** |    **0** | **1444** |    **0** | **100.00%** |           |
 
-169 files skipped due to complete coverage.
+170 files skipped due to complete coverage.
 
 
 ## Setup coverage badge
