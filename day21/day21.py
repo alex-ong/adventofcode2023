@@ -23,7 +23,6 @@ from day21.lib.parsers import parse_maze
 
 FILE_SMALL = "day21/input-small.txt"
 FILE_MAIN = "day21/input.txt"
-FILE_CLEANER = "day21/input-cleaner.txt"
 FILE = FILE_MAIN
 
 
@@ -37,10 +36,12 @@ def mini_solve(
     nodes: Queue[PositionDist] = Queue()
     nodes.put(PositionDist(start_pos.row, start_pos.col, distance=0))
 
-    while not nodes.empty():
+    distance_reached: bool = False
+    while not nodes.empty() and not distance_reached:
         pos: PositionDist = nodes.get()
         if pos.distance >= steps + 1:
-            break
+            distance_reached = True
+            continue
         # expand
         distance: Optional[int] = distances[pos]
         maze_node: Optional[str] = maze[pos]
@@ -99,11 +100,13 @@ def solve(
         print(distances.overlay(maze))
         return distances.calc_steps(sim_steps % 2)
 
-    # big
-
-    print("brute force", distances.calc_steps(sim_steps % 2))
+    # print("brute force", distances.calc_steps(sim_steps % 2))
     if not isinstance(distances, DistanceMazes):
-        raise ValueError("ya done goof here")
+        raise AssertionError("ya done goof here")
+
+    if maze.num_cols <= 5:
+        distances.overlay(maze)
+
     giant_parser = GiantNodeParser(distances, boards_to_edge)
     remainder = steps % 2
     result = 0

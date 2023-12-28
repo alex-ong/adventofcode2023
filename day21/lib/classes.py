@@ -1,7 +1,7 @@
 """classes"""
 
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass
 from enum import Enum
@@ -59,41 +59,35 @@ class Maze:
     def __str__(self) -> str:
         return "\n".join(row for row in self.grid)
 
-    def __getitem__(self, position: Position, wrap: bool = True) -> Optional[str]:
-        """Get item via position. Returns None if out of bounds"""
+    def __getitem__(self, position: Position) -> Optional[str]:
+        """Get item via position. Always wraps"""
         if not isinstance(position, Position):
-            raise ValueError(f"position is not a Position, {type(position)}")
-        if not wrap and self.is_oob(position):
-            return None
+            raise AssertionError(f"position is not a Position, {type(position)}")
+
         row = position.row % self.num_rows
         col = position.col % self.num_cols
         return self.grid[row][col]
 
-    def is_oob(self, position: Position) -> bool:
-        """true if position is out of bounds"""
-        return (
-            position.row < 0
-            or position.row >= self.num_rows
-            or position.col < 0
-            or position.col >= self.num_cols
-        )
-
 
 class BaseDistanceMaze(ABC):
+    @abstractmethod
     def overlay(self, maze: Maze) -> str:
-        return ""
+        raise AssertionError("Not implemented")
 
+    @abstractmethod
     def calc_steps(self, remainder: int) -> int:
         """
         calc steps, matching remainder == 1 or remainder == 0
-        when modulo'ing by 2"""
-        return 0
+        when modulo'ing by 2
+        """
 
+    @abstractmethod
     def __setitem__(self, position: Position, value: int) -> None:
-        raise NotImplementedError()
+        """Sets the 2d arrays value based on a position"""
 
+    @abstractmethod
     def __getitem__(self, position: Position) -> Optional[int]:
-        raise NotImplementedError()
+        """Get the integer distance based on position"""
 
 
 class DistanceMaze(BaseDistanceMaze):
@@ -110,7 +104,7 @@ class DistanceMaze(BaseDistanceMaze):
     def __setitem__(self, position: Position, value: int) -> None:
         """Sets item at given position. Silently fails if out of bounds"""
         if not isinstance(position, Position):
-            raise ValueError(f"position is not a Position, {type(position)}")
+            raise AssertionError(f"position is not a Position, {type(position)}")
         if self.is_oob(position):
             return
         self.grid[position.row][position.col] = value
@@ -118,7 +112,7 @@ class DistanceMaze(BaseDistanceMaze):
     def __getitem__(self, position: Position) -> Optional[int]:
         """Get item via position. Returns None if out of bounds"""
         if not isinstance(position, Position):
-            raise ValueError(f"position is not a Position, {type(position)}")
+            raise AssertionError(f"position is not a Position, {type(position)}")
         if self.is_oob(position):
             return None
         return self.grid[position.row][position.col]
@@ -205,12 +199,12 @@ class DistanceMazes(BaseDistanceMaze):
 
         result = self.grid[big_pos][sub_pos]
         if result is None:
-            raise ValueError("Unexpected result, None")
+            raise AssertionError("Unexpected result, None")
         return result
 
     def __setitem__(self, position: Position, value: int) -> None:
         if not isinstance(position, Position):
-            raise ValueError(f"position is not a Position, {type(position)}")
+            raise AssertionError(f"position is not a Position, {type(position)}")
         big_pos, sub_pos = self.get_split_pos(position)
         self.grid[big_pos][sub_pos] = value
 
@@ -230,7 +224,7 @@ class DistanceMazes(BaseDistanceMaze):
         cols = sorted([coord.col for coord in coords])
 
         if len(rows) == 0:
-            min_row, max_row, min_col, max_col = 0, 0, 0, 0
+            raise AssertionError("grid has no subgrids!")
         else:
             min_row, max_row = rows[0], rows[-1]
             min_col, max_col = cols[0], cols[-1]
@@ -250,9 +244,8 @@ class DistanceMazes(BaseDistanceMaze):
         return result
 
     def calc_steps(self, remainder: int) -> int:
-        result = 0
-        for sub_grid in self.grid.values():
-            result += sub_grid.calc_steps(remainder)
+        distance_mazes = self.grid.values()
+        result = sum(sub_grid.calc_steps(remainder) for sub_grid in distance_mazes)
         return result
 
 
@@ -331,7 +324,7 @@ class GiantNodeParser:
             return self.distance_mazes.get_big_grid(Position(-1, -self.edge_dist + 1))
         elif node_type == GiantNodeType.NORTH_WEST_SMALL:
             return self.distance_mazes.get_big_grid(Position(-1, -self.edge_dist))
-        raise ValueError(f"Unknown node_type: {node_type}")
+        raise AssertionError(f"Unknown node_type: {node_type}")
 
     def get_node_count(self, node_type: GiantNodeType) -> int:
         remainder = self.full_edge_dist % 2
@@ -366,4 +359,4 @@ class GiantNodeParser:
             GiantNodeType.SOUTH_WEST_SMALL,
         ]:
             return self.full_edge_dist
-        raise ValueError(f"Unknown node type: {node_type}")
+        raise AssertionError(f"Unknown node type: {node_type}")
