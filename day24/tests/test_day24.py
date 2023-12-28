@@ -1,4 +1,4 @@
-from day24.day24 import INPUT_SMALL, get_intersection_2d, part1, within_2d
+from day24.day24 import INPUT_SMALL, get_intersection_2d, part1, part2, within_2d
 from day24.lib.classes import Hailstone, Vector2, Vector3
 from day24.lib.parsers import parse_input
 
@@ -7,6 +7,12 @@ def test_part1() -> None:
     file_path, valid_range = INPUT_SMALL
     hailstones: list[Hailstone] = parse_input(file_path)
     assert part1(hailstones, valid_range) == 2
+
+
+def test_part2() -> None:
+    file_path, valid_range = INPUT_SMALL
+    hailstones: list[Hailstone] = parse_input(file_path)
+    assert part2(hailstones) == 47
 
 
 def test_get_intersection_2d() -> None:

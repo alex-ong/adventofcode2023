@@ -81,11 +81,11 @@ def part2(hailstones: list[Hailstone]) -> int:
     )
 
     if not isinstance(rx, int):
-        raise ValueError("rx is non-int!")
+        raise AssertionError("rx is non-int!")
     if not isinstance(ry, int):
-        raise ValueError("ry is non-int!")
+        raise AssertionError("ry is non-int!")
     if not isinstance(rz, int):
-        raise ValueError("rz is non-int!")
+        raise AssertionError("rz is non-int!")
     return rx + ry + rz
 
 
