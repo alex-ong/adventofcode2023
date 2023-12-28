@@ -32,7 +32,7 @@ def get_data(path: str) -> list[Connection]:
     return connections
 
 
-def show_graph(graph: nx.Graph) -> None:
+def show_graph(graph: nx.Graph) -> None:  # pragma: no cover
     """Draws a graph that you can see"""
     nx.draw(graph, with_labels=True)
     plt.draw()
@@ -52,7 +52,7 @@ def solve_nodes(connections: list[Connection]) -> int:
                 G.add_node(node_name)
             if node_name != connection.src:
                 G.add_edge(connection.src, node_name)
-    if SHOW_GRAPH:
+    if SHOW_GRAPH:  # pragma: no cover
         show_graph(G)
     cut_value, partition = nx.stoer_wagner(G)
     print(f"num_cuts: {cut_value}")
