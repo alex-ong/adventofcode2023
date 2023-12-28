@@ -39,10 +39,7 @@ class Edge:
         return Edge(self.node2, self.node1, self.path.flip())
 
     def __str__(self) -> str:
-        return f"{self.node1}->{self.node2}, {len(self.path)}"
-
-    def __len__(self) -> int:
-        return len(self.path)
+        return f"{self.node1}->{self.node2}, {self.length}"
 
 
 class Solver2:

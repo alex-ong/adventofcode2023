@@ -1,3 +1,5 @@
+import pytest
+
 from day23.day23 import INPUT_SMALL
 from day23.lib.classes import Maze, Path, Position, Solver1, generate_paths
 from day23.lib.parsers import get_maze
@@ -50,9 +52,21 @@ def test_solver1() -> None:
     for pos, tile, result in expands:
         assert set(solver.expand_hill(pos, tile)) == result
 
+    # solve part2 naively, to make sure the code works
+    maze = get_maze(INPUT_SMALL)
+    solver1b: Solver1 = Solver1(maze, handle_hills=False)
+    paths = solver1b.solve()
+    path_lengths = [len(path) for path in paths]
+    path_lengths.sort(reverse=True)
+    assert path_lengths[0] == 154
+
 
 def test_path() -> None:
     path = Path()
+
+    # assert that path.last() fails when calling on empty path
+    with pytest.raises(ValueError):
+        path.last()
     path.add(Position(0, 0))
     path.add(Position(0, 1))
     assert path.last() == Position(0, 1)

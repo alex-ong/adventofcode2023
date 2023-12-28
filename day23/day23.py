@@ -9,9 +9,9 @@ INPUT_SMALL = "day23/input-small.txt"
 def part1(maze: Maze) -> int:
     solver = Solver1(maze, True)
     paths: list[Path] = solver.solve()
-    path_lengths = [len(path) for path in paths]
-    path_lengths.sort(reverse=True)
-    return path_lengths[0]
+    paths.sort(key=lambda path: len(path), reverse=True)
+    print(paths[0].overlay(maze))
+    return len(paths[0])
 
 
 def part2(maze: Maze) -> int:

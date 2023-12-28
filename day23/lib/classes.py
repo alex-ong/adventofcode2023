@@ -1,7 +1,7 @@
 from copy import deepcopy
 from dataclasses import dataclass
 from queue import Queue
-from typing import Optional
+from typing import Any, Optional
 
 
 @dataclass(frozen=True, slots=True)
@@ -69,7 +69,6 @@ class Path:
 
     def overlay(self, maze: "Maze") -> str:
         base_str = str(maze)
-
         char_array: list[list[str]] = [list(line) for line in base_str.split("\n")]
         for node in self.route:
             char_array[node.row][node.col] = "O"
@@ -79,9 +78,9 @@ class Path:
         """length of path. Has to be -1 because problem is like that"""
         return len(self.route) - 1
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other: object) -> Any:
         if not isinstance(other, Path):
-            return False
+            raise AssertionError("eq only works on Path")
         return self.route == other.route
 
     def __hash__(self) -> int:
@@ -104,7 +103,7 @@ class Maze:
     def __getitem__(self, position: Position) -> Optional[str]:
         """Get item via position. Returns None if out of bounds"""
         if not isinstance(position, Position):
-            raise ValueError(f"position is not a Position, {type(position)}")
+            raise AssertionError(f"position is not a Position, {type(position)}")
         if self.is_oob(position):
             return None
         return self.grid[position.row][position.col]
@@ -112,9 +111,9 @@ class Maze:
     def __setitem__(self, position: Position, value: str) -> None:
         """Get item via position. Returns None if out of bounds"""
         if not isinstance(position, Position):
-            raise ValueError(f"position is not a Position, {type(position)}")
+            raise AssertionError(f"position is not a Position, {type(position)}")
         if self.is_oob(position):
-            raise ValueError("can't set outside our maze!")
+            raise AssertionError("can't set outside our maze!")
         self.grid[position.row][position.col] = value
 
     def is_oob(self, position: Position) -> bool:
@@ -187,7 +186,7 @@ class Solver1:
         current_pos: Position = path.last()
         current_tile: Optional[str] = self.maze[current_pos]
         if current_tile is None:
-            raise ValueError("there's no shot we got a tile outside the maze")
+            raise AssertionError("there's no shot we got a tile outside the maze")
         expansions: list[Position]
         if self.handle_hills:
             expansions = self.expand_hill(current_pos, current_tile)
