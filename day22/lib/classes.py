@@ -20,10 +20,14 @@ class BoxData:
         init=False, repr=False, hash=False, default=None
     )
     supports: set["BoxData"] = field(
-        default_factory=set, hash=False, repr=False
+        default_factory=set, hash=False, repr=False, init=False
     )  # list of blocks we support
-    hats: set["BoxData"] = field(default_factory=set, hash=False, repr=False)
-    total_hats: set["BoxData"] = field(default_factory=set, hash=False, repr=False)
+    hats: set["BoxData"] = field(
+        default_factory=set, hash=False, repr=False, init=False
+    )
+    total_hats: set["BoxData"] = field(
+        default_factory=set, hash=False, repr=False, init=False
+    )
 
     @property
     def vpos(self) -> vpython.vector:
@@ -44,9 +48,6 @@ class BoxData:
     def height(self) -> float:
         return float(self.end_pos.z - self.start_pos.z + 1)
 
-    def set_vbox(self, vbox: vpython.box) -> None:
-        self.vbox = vbox
-
     @property
     def z_val_bot(self) -> int:
         """return lowest z value (self.start_pos.z)"""
@@ -57,22 +58,32 @@ class BoxData:
         """return maximum z value(self.end_pos.z)"""
         return self.end_pos.z
 
+    ####################################
+    # Visualisation calls  (not ci'ed) #
+    ####################################
+    def set_vbox(self, vbox: vpython.box) -> None:  # pragma: no cover
+        self.vbox = vbox
+
     def fall(self) -> None:
         self.start_pos.z -= 1
         self.end_pos.z -= 1
         # vbox y == boxdata z
-        if self.vbox is not None:
+        if self.vbox is not None:  # pragma: no cover
             self.vbox.pos.y -= 1
 
     def select(self) -> None:
-        if self.vbox is not None:
+        if self.vbox is not None:  # pragma: no cover
             self.vbox.pos.x += 30
             self.vbox.pos.z -= 30
 
     def unselect(self) -> None:
-        if self.vbox is not None:
+        if self.vbox is not None:  # pragma: no cover
             self.vbox.pos.x -= 30
             self.vbox.pos.z += 30
+
+    ################################################
+    # Calculations; supports, hats, recursive fall #
+    ################################################
 
     def set_supports(self, supports: set["BoxData"]) -> None:
         """blocks under us"""
@@ -80,9 +91,6 @@ class BoxData:
 
     def set_hats(self, hats: set["BoxData"]) -> None:
         self.hats = hats
-
-    def __hash__(self) -> int:
-        return hash(f"{self.start_pos} | {self.end_pos}")
 
     def recursive_fall(self, already_falling: set["BoxData"]) -> set["BoxData"]:
         """returns all boxes above us that fall if we fall"""
@@ -102,6 +110,9 @@ class BoxData:
             result.update(node.recursive_fall(already_falling))
 
         return result
+
+    def __hash__(self) -> int:
+        return hash(f"{self.start_pos} | {self.end_pos}")
 
 
 class Matrix:
@@ -131,10 +142,7 @@ class Matrix:
             for x in range(box.start_pos.x, box.end_pos.x + 1):
                 for y in range(box.start_pos.y, box.end_pos.y + 1):
                     if self.layers[z][x][y] is not None:
-                        print("collision at:", (x, y, z))
-                        print(f"collision with: {self.layers[z][x][y]}")
-                        print(f"trying to insert: {box}")
-                        raise ValueError(":o verlap")
+                        raise AssertionError("Overlap should not occur")
 
                     self.layers[z][x][y] = box
 
