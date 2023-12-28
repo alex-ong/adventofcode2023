@@ -4,11 +4,10 @@
 
 | Name           |    Stmts |     Miss |   Branch |   BrPart |      Cover |   Missing |
 |--------------- | -------: | -------: | -------: | -------: | ---------: | --------: |
-| day24/day24.py |       57 |       21 |       22 |        0 |     63.29% |     58-89 |
 | day25/day25.py |       41 |        4 |       16 |        1 |     91.23% | 37-39, 56 |
-|      **TOTAL** | **4310** |   **25** | **1454** |    **1** | **99.41%** |           |
+|      **TOTAL** | **4311** |    **4** | **1448** |    **1** | **99.91%** |           |
 
-168 files skipped due to complete coverage.
+169 files skipped due to complete coverage.
 
 
 ## Setup coverage badge
