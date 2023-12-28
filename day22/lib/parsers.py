@@ -11,8 +11,6 @@ def get_boxes(path: str) -> list[BoxData]:
     with open(path, encoding="utf8") as file:
         for index, line in enumerate(file):
             line = line.strip()
-            if len(line) == 0:
-                break
             vec1, vec2 = line.split("~")
             from_vec = parse_vector(vec1)
             to_vec = parse_vector(vec2)

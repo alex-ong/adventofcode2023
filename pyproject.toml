@@ -39,8 +39,9 @@ exclude_lines = [
     "if TYPE_CHECKING:",
     "raise AssertionError",
     "# pragma: no cover",
+    "if self.animate:",
 ]
-omit = ["download_inputs.py", "maker.py"]
+omit = ["download_inputs.py", "maker.py", "day22/lib/vis.py"]
 precision = 2
 skip_covered = true
 fail_under = 0

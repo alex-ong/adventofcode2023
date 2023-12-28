@@ -16,7 +16,9 @@ class BoxData:
     name: str
     start_pos: Vector3
     end_pos: Vector3
-    vbox: vpython.box = field(init=False, repr=False, hash=False)
+    vbox: Optional[vpython.box] = field(
+        init=False, repr=False, hash=False, default=None
+    )
     supports: set["BoxData"] = field(
         default_factory=set, hash=False, repr=False
     )  # list of blocks we support
@@ -59,15 +61,18 @@ class BoxData:
         self.start_pos.z -= 1
         self.end_pos.z -= 1
         # vbox y == boxdata z
-        self.vbox.pos.y -= 1
+        if self.vbox is not None:
+            self.vbox.pos.y -= 1
 
     def select(self) -> None:
-        self.vbox.pos.x += 30
-        self.vbox.pos.z -= 30
+        if self.vbox is not None:
+            self.vbox.pos.x += 30
+            self.vbox.pos.z -= 30
 
     def unselect(self) -> None:
-        self.vbox.pos.x -= 30
-        self.vbox.pos.z += 30
+        if self.vbox is not None:
+            self.vbox.pos.x -= 30
+            self.vbox.pos.z += 30
 
     def set_supports(self, supports: set["BoxData"]) -> None:
         """blocks under us"""
