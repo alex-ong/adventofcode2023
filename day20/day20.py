@@ -1,11 +1,11 @@
 import math
 import os
-from multiprocessing import Pool
+import shutil
 from queue import Queue
 from typing import Type, TypeVar, cast
 
 import graphviz
-import tqdm
+from tqdm.contrib.concurrent import process_map
 
 from day20.lib.classes import (
     BaseModule,
@@ -22,6 +22,7 @@ from day20.lib.parsers import get_modules
 
 FILE_A = "day20/input-a.txt"
 FILE_B = "day20/input-b.txt"
+FILE_PT2 = "day20/input-test2.txt"
 FILE_PROD = "day20/input.txt"
 
 FILE = FILE_PROD
@@ -155,6 +156,18 @@ def graph_modules(module_groups: ModuleGroups, index: int) -> graphviz.Digraph:
     return dot
 
 
+def export_graph(
+    dots: list[graphviz.Graph],
+    module_groups: ModuleGroups,
+    simulation_counter: int,
+    export_graphs: bool,
+) -> None:
+    """export a graphviz datatype if graphing is enabled"""
+    if export_graphs:
+        dot = graph_modules(module_groups, simulation_counter)
+        dots.append(dot)
+
+
 def part2(
     modules: list[BaseModule], export_graphs: bool = False
 ) -> tuple[int, list[graphviz.Graph]]:
@@ -164,10 +177,12 @@ def part2(
 
     # graph modules in initial state
     dots: list[graphviz.Graph] = []
-    dot: graphviz.Graph
-
     simulation_counter = 0
     loop_counter: LoopCounter = LoopCounter(len(module_groups.loops))
+
+    # output our initial state:
+    export_graph(dots, module_groups, simulation_counter, export_graphs)
+
     # run simulation, screenshotting everytime one of the paths "loops"
     while not loop_counter.finished:
         simulate(module_map)
@@ -176,9 +191,7 @@ def part2(
             if path_is_start_state(loop_path):
                 loop_end_name = loop_path[-1].name
                 loop_counter.add_result(loop_end_name, simulation_counter)
-        if export_graphs:
-            dot = graph_modules(module_groups, simulation_counter)
-            dots.append(dot)
+        export_graph(dots, module_groups, simulation_counter, export_graphs)
 
     print(loop_counter)
     result = math.lcm(*list(loop_counter.loop_lengths.values()))
@@ -198,24 +211,30 @@ def part1(modules: list[BaseModule]) -> int:
     return low_total * high_total
 
 
-def output_graph(dot: graphviz.Graph) -> None:
+def output_graph(dot: graphviz.Graph, directory: str) -> None:
     """Saves a dot to file"""
-    dot.render(directory=VIS_FOLDER)
+    dot.render(directory=directory)
 
 
-def output_files(dots: list[graphviz.Graph]) -> None:
+def output_graph_wrapper(args: tuple[graphviz.Graph, str]) -> None:
+    """Since process_map doesnt support star_args, we gotta use this"""
+    dot, directory = args
+    output_graph(dot, directory)
+
+
+def output_files(dots: list[graphviz.Graph], directory: str) -> None:
     """Saves a list of dots to file"""
     if len(dots) == 0:
         return
-    os.makedirs(VIS_FOLDER, exist_ok=True)
-    with Pool() as pool:
-        for _ in tqdm.tqdm(pool.imap_unordered(output_graph, dots), total=len(dots)):
-            pass
+    shutil.rmtree(directory, ignore_errors=True)
+    os.makedirs(directory, exist_ok=True)
+    dot_dirs = [(dot, directory) for dot in dots]
+    process_map(output_graph_wrapper, dot_dirs, chunksize=4)  # type: ignore
 
     # Cleanup *.gv files
-    for item in os.listdir(VIS_FOLDER):
+    for item in os.listdir(directory):
         if item.endswith(".gv"):
-            os.remove(os.path.join(VIS_FOLDER, item))
+            os.remove(os.path.join(directory, item))
 
 
 def main() -> None:
@@ -227,9 +246,9 @@ def main() -> None:
     # Reload because part1 ruins stuff
 
     modules = get_modules(FILE)
-    result, dots = part2(modules)
+    result, dots = part2(modules, EXPORT_GRAPHS)
     print(result)
-    output_files(dots)
+    output_files(dots, VIS_FOLDER)
 
 
 if __name__ == "__main__":

@@ -22,15 +22,13 @@ def parse_line(line: str) -> BaseModule:
         return FlipFlopModule(module_name, destination_list)
     if module_type_name.startswith("&"):
         return ConjunctionModule(module_name, destination_list)
-    raise ValueError(f"Unparsable line: {line}")
+    raise AssertionError(f"Unparsable line: {line}")
 
 
 def get_modules(filename: str) -> list[BaseModule]:
     modules: list[BaseModule] = []
     with open(filename, encoding="utf8") as file:
         for line in file:
-            if len(line.strip()) == 0:
-                break
             module: BaseModule = parse_line(line)
             modules.append(module)
 

@@ -1,0 +1,26 @@
+broadcaster -> loop1a, loop2a, loop3a, loop4a
+%loop1a -> loop1_end, loop1b
+%loop1b -> loop1c
+%loop1c -> loop1d
+%loop1d -> loop1_end
+&loop1_end -> loop1a, loop1b, loop1c, loop1_tail
+&loop1_tail -> final_conj
+%loop2a -> loop2_end, loop2b
+%loop2b -> loop2c, loop2_end
+%loop2c -> loop2d
+%loop2d -> loop2_end
+&loop2_end -> loop2_tail, loop2a, loop2c
+&loop2_tail -> final_conj
+%loop3a -> loop3_end, loop3b
+%loop3b -> loop3_end, loop3c
+%loop3c -> loop3d
+%loop3d -> loop3_end
+&loop3_end -> loop3a, loop3_tail, loop3c
+&loop3_tail -> final_conj
+%loop4a -> loop4_end, loop4b
+%loop4b -> loop4_end, loop4c
+%loop4c -> loop4d, loop4_end
+%loop4d -> loop4_end
+&loop4_end -> loop4_tail, loop4a
+&loop4_tail -> final_conj
+&final_conj -> rx

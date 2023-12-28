@@ -10,9 +10,9 @@ class Pulse(Flag):
     HIGH = True
 
     def __str__(self) -> str:
-        if self.name is None:
-            raise ValueError("no valid value for this Pulse")
-        return self.name.lower()
+        if self.name is not None:
+            return self.name.lower()
+        raise AssertionError("no valid value for this Pulse")
 
 
 @dataclass
