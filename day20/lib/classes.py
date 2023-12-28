@@ -1,4 +1,5 @@
 import itertools
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Flag
 
@@ -28,15 +29,19 @@ class PulseTarget:
     target: str
 
     def __str__(self) -> str:
-        return f"{self.src} -{self.pulse}-> {self.target} "
+        return f"{self.src} -{self.pulse}-> {self.target}"
 
 
 @dataclass
-class BaseModule:
+class BaseModule(ABC):
     name: str
     outputs: list[str] = field(repr=False)
-    num_low: int = 0
-    num_high: int = 0
+    num_low: int = field(init=False, default=0)
+    num_high: int = field(init=False, default=0)
+
+    def __post_init__(self) -> None:
+        if self.__class__ == BaseModule:
+            raise AssertionError("Cannot instantiate abstract class")
 
     def arrow_color(self) -> str:
         return "#000000"
@@ -55,8 +60,9 @@ class BaseModule:
         for output in self.outputs:
             dot.edge(self.name, output, **attrs)
 
+    @abstractmethod
     def is_default_state(self) -> bool:
-        return True
+        raise AssertionError("Implement me")
 
 
 @dataclass
@@ -141,10 +147,13 @@ class BroadcastModule(BaseModule):
         dot.node(self.name)
         super().add_to_graph(dot)
 
+    def is_default_state(self) -> bool:
+        return True
+
 
 @dataclass
 class SinkModule(BaseModule):
-    """Sink module, gets something but sents it no where else"""
+    """Sink module, gets something but sends it no where else"""
 
     def handle_pulse(self, input: str, pulse: Pulse) -> list[PulseTarget]:
         super().handle_pulse(input, pulse)
@@ -153,6 +162,9 @@ class SinkModule(BaseModule):
     def add_to_graph(self, dot: Digraph) -> None:
         dot.node(self.name)
         super().add_to_graph(dot)
+
+    def is_default_state(self) -> bool:
+        return True
 
 
 @dataclass
@@ -177,7 +189,7 @@ class ModuleGroups:
 @dataclass
 class LoopCounter:
     target_loop_count: int = field(repr=False)
-    loop_lengths: dict[str, int] = field(default_factory=dict)
+    loop_lengths: dict[str, int] = field(default_factory=dict, init=False)
 
     @property
     def num_results(self) -> int:

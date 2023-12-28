@@ -2,7 +2,7 @@ import math
 import os
 import shutil
 from queue import Queue
-from typing import Type, TypeVar, cast
+from typing import Optional, Type, TypeVar, cast
 
 import graphviz
 from tqdm.contrib.concurrent import process_map
@@ -30,7 +30,13 @@ VIS_FOLDER = "day20/vis"
 EXPORT_GRAPHS = False
 
 
-def simulate(modules: dict[str, BaseModule]) -> tuple[int, int]:
+def simulate(
+    modules: dict[str, BaseModule], stored_pulses: Optional[list[PulseTarget]] = None
+) -> tuple[int, int]:
+    """
+    Simulate a list of modules.
+    If you pass in stored_pulses, we will append every pulse to it
+    """
     pulses: Queue[PulseTarget] = Queue()
     pulses.put(PulseTarget(Pulse.LOW, "button", "broadcaster"))
     low = 0
@@ -38,6 +44,8 @@ def simulate(modules: dict[str, BaseModule]) -> tuple[int, int]:
 
     while not pulses.empty():
         pulse_target: PulseTarget = pulses.get()
+        if stored_pulses is not None:
+            stored_pulses.append(pulse_target)
         if pulse_target.pulse == Pulse.LOW:
             low += 1
         else:
@@ -49,6 +57,7 @@ def simulate(modules: dict[str, BaseModule]) -> tuple[int, int]:
         )
         for result in results:
             pulses.put(result)
+
     return low, high
 
 
