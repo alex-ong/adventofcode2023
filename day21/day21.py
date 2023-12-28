@@ -69,12 +69,19 @@ def mini_solve(
 # This means  we need 130 steps(?) to hit the corners,
 # and 131 to get to next centre
 def solve(
-    start_pos: Position, maze: Maze, steps: int, unlimited_map: bool = False
+    start_pos: Position,
+    maze: Maze,
+    steps: int,
+    unlimited_map: bool = False,
+    smart_unlimited: bool = True,  # for > 3 boards wide, use smart algo
 ) -> int:
     distances: BaseDistanceMaze
     if unlimited_map:
         distances = DistanceMazes(maze.num_rows, maze.num_cols)
+    else:  # small
+        distances = DistanceMaze(maze.num_rows, maze.num_cols)
 
+    if smart_unlimited and unlimited_map:
         board_size = maze.num_rows
 
         steps_remaining = steps % board_size
@@ -89,14 +96,11 @@ def solve(
             sim_steps = board_size * 2 + steps_remaining
         else:
             sim_steps = board_size * 3 + steps_remaining
-        # sim_steps = steps #uncomment to brute force
-    else:  # small
-        distances = DistanceMaze(maze.num_rows, maze.num_cols)
+    else:
         sim_steps = steps
-
     distances = mini_solve(start_pos, maze, sim_steps, distances)
 
-    if not unlimited_map:
+    if not unlimited_map or (unlimited_map and not smart_unlimited):
         print(distances.overlay(maze))
         return distances.calc_steps(sim_steps % 2)
 
@@ -127,7 +131,7 @@ def main() -> None:
     print(solve(start_pos, maze, 64))
 
     # part2
-    print(solve(start_pos, maze, GIGA_TARGET, True))
+    print(solve(start_pos, maze, GIGA_TARGET, True, True))
 
 
 if __name__ == "__main__":

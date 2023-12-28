@@ -26,3 +26,5 @@ def test_day21() -> None:
 
     assert solve(start_pos, maze, int(maze.num_rows * 3.5), True) == 1521
     assert solve(start_pos, maze, int(maze.num_rows * 4.5), True) == 2500
+
+    assert solve(start_pos, maze, int(maze.num_rows * 3.5), True, False) == 1521
