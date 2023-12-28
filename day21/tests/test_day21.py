@@ -15,16 +15,17 @@ def test_day21() -> None:
 
     start_pos, maze = parse_maze(INPUT_5x5)
     with pytest.raises(ValueError):
-        solve(start_pos, maze, maze.num_rows, True)
+        solve(start_pos, maze, maze.num_rows, True, False)
 
     assert solve(start_pos, maze, int(maze.num_rows * 3.5), True) == 324
     assert solve(start_pos, maze, int(maze.num_rows * 4.5), True) == 529
 
     start_pos, maze = parse_maze(INPUT_11x11)
     with pytest.raises(ValueError):
-        solve(start_pos, maze, maze.num_rows, True)
+        solve(start_pos, maze, maze.num_rows, True, False)
 
     assert solve(start_pos, maze, int(maze.num_rows * 3.5), True) == 1521
     assert solve(start_pos, maze, int(maze.num_rows * 4.5), True) == 2500
 
-    assert solve(start_pos, maze, int(maze.num_rows * 3.5), True, False) == 1521
+    # assert that brute force matches smart algo
+    assert solve(start_pos, maze, int(maze.num_rows * 3.5), True, True) == 1521

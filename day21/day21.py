@@ -1,5 +1,6 @@
 """day21 solution"""
 
+from dataclasses import dataclass
 from queue import Queue
 from typing import Optional
 
@@ -65,6 +66,35 @@ def mini_solve(
     return distances
 
 
+@dataclass
+class SmartSteps:
+    boards_to_edge: int
+    steps: int
+
+
+def naive_solve(
+    start_pos: Position, maze: Maze, steps: int, distances: BaseDistanceMaze
+) -> int:
+    distances = mini_solve(start_pos, maze, steps, distances)
+    print(distances.overlay(maze))
+    return distances.calc_steps(steps % 2)
+
+
+def calculate_smart_steps(board_size: int, steps: int) -> SmartSteps:
+    """Given a board size and num steps, calculate how many steps we actually need"""
+    steps_remaining = steps % board_size
+    if steps_remaining != board_size // 2:
+        raise ValueError("big mode only supported for steps_remaining == maze_rows//2")
+    boards_to_edge = steps // board_size
+    print("boards_to_edge", boards_to_edge)
+
+    if boards_to_edge % 2 == 0:
+        sim_steps = board_size * 2 + steps_remaining
+    else:
+        sim_steps = board_size * 3 + steps_remaining
+    return SmartSteps(boards_to_edge, sim_steps)
+
+
 # FILE_MAIN is 131 x 131.
 # This means  we need 130 steps(?) to hit the corners,
 # and 131 to get to next centre
@@ -73,45 +103,28 @@ def solve(
     maze: Maze,
     steps: int,
     unlimited_map: bool = False,
-    smart_unlimited: bool = True,  # for > 3 boards wide, use smart algo
+    brute_force: bool = False,  # for > 3 boards wide, use smart algo
 ) -> int:
     distances: BaseDistanceMaze
+
     if unlimited_map:
         distances = DistanceMazes(maze.num_rows, maze.num_cols)
     else:  # small
         distances = DistanceMaze(maze.num_rows, maze.num_cols)
 
-    if smart_unlimited and unlimited_map:
-        board_size = maze.num_rows
+    # if we are small, or havent got smart_solve enabled, brute force it.
+    if not unlimited_map or (unlimited_map and brute_force):
+        return naive_solve(start_pos, maze, steps, distances)
 
-        steps_remaining = steps % board_size
-        if steps_remaining != board_size // 2:
-            raise ValueError(
-                "big mode only supported for steps_remaining == maze_rows//2"
-            )
-        boards_to_edge = steps // board_size
-        print("boards_to_edge", boards_to_edge)
-
-        if boards_to_edge % 2 == 0:
-            sim_steps = board_size * 2 + steps_remaining
-        else:
-            sim_steps = board_size * 3 + steps_remaining
-    else:
-        sim_steps = steps
-    distances = mini_solve(start_pos, maze, sim_steps, distances)
-
-    if not unlimited_map or (unlimited_map and not smart_unlimited):
-        print(distances.overlay(maze))
-        return distances.calc_steps(sim_steps % 2)
-
-    # print("brute force", distances.calc_steps(sim_steps % 2))
-    if not isinstance(distances, DistanceMazes):
-        raise AssertionError("ya done goof here")
+    smart_steps: SmartSteps = calculate_smart_steps(maze.num_rows, steps)
+    distances = mini_solve(start_pos, maze, smart_steps.steps, distances)
 
     if maze.num_cols <= 5:
         distances.overlay(maze)
 
-    giant_parser = GiantNodeParser(distances, boards_to_edge)
+    if not isinstance(distances, DistanceMazes):
+        raise AssertionError("ya done goof here")
+    giant_parser = GiantNodeParser(distances, smart_steps.boards_to_edge)
     remainder = steps % 2
     result = 0
     for node_type in GiantNodeType:
@@ -131,7 +144,7 @@ def main() -> None:
     print(solve(start_pos, maze, 64))
 
     # part2
-    print(solve(start_pos, maze, GIGA_TARGET, True, True))
+    print(solve(start_pos, maze, GIGA_TARGET, True, False))
 
 
 if __name__ == "__main__":
