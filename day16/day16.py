@@ -1,5 +1,4 @@
-"""day16 solution
-"""
+"""day16 solution."""
 
 
 import os
@@ -16,23 +15,25 @@ INPUT_SMALL = "day16/input-small.txt"
 
 
 def solve_task(task: Laser, world: World) -> int:
-    """Calculates number of energized tiles"""
+    """Calculates number of energized tiles."""
     return world.solve(task).num_energized()
 
 
 def solve_task_wrapper(args: tuple[Laser, World]) -> int:
-    """Wraps solve_task in multiprocessing, since it only takes one arg"""
+    """Wraps solve_task in multiprocessing, since it only takes one arg."""
     task, world = args
     return solve_task(task, world)
 
 
 def part1(world: World) -> int:
+    """Return number of energized tiles."""
     laser = Laser(0, 0, Direction.EAST)
     solved_world = world.solve(laser)
     return solved_world.num_energized()
 
 
 def part2(world: World) -> int:
+    """Calculate most energized tiles by firing laser from every entrypoint."""
     tasks = []
     # part 2: brute force coz our impl is already cached/backtracked
     # 1T -> 3.3s
@@ -54,7 +55,7 @@ def part2(world: World) -> int:
 
 
 def main() -> None:
-    """Main function"""
+    """Read input and run part1/part2."""
     world = get_input(INPUT)
 
     print(part1(world))

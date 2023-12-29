@@ -1,9 +1,10 @@
+"""Parsers for input file."""
 from day16.lib.cells import Cell
 from day16.lib.world import World
 
 
 def get_input(path: str) -> World:
-    """Read input file"""
+    """Read input file and return well formed :class:World."""
     with open(path) as file:
         all_cells: list[list[Cell]] = []
         for line in file:

@@ -1,3 +1,4 @@
+"""Test World class."""
 from typing import TYPE_CHECKING
 
 from day16.day16 import INPUT_SMALL
@@ -10,6 +11,7 @@ if TYPE_CHECKING:
 
 
 def test_world() -> None:
+    """Test ``World`` class."""
     world: World = get_input(INPUT_SMALL)
     start_laser: Laser = Laser(0, 0, Direction.EAST)
     solved_world: SolvedWorld = world.solve(start_laser)

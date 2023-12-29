@@ -1,3 +1,4 @@
+"""Tests for each cell."""
 from day16.lib.cells import (
     BackSlashCell,
     Cell,
@@ -16,79 +17,84 @@ SOUTH_LASER = Laser(6, 5, Direction.SOUTH)
 
 
 def test_dotcell() -> None:
+    """Test ``DotCell``."""
     laser: Laser = Laser(5, 5, Direction.NORTH)
     cell: Cell = DotCell()
     assert cell.next_lasers(laser) == [NORTH_LASER]
 
-    laser.direction = Direction.EAST
+    laser = Laser(5, 5, Direction.EAST)
     assert cell.next_lasers(laser) == [EAST_LASER]
 
-    laser.direction = Direction.WEST
+    laser = Laser(5, 5, Direction.WEST)
     assert cell.next_lasers(laser) == [WEST_LASER]
 
-    laser.direction = Direction.SOUTH
+    laser = Laser(5, 5, Direction.SOUTH)
     assert cell.next_lasers(laser) == [SOUTH_LASER]
 
 
 def test_dashcell() -> None:
+    """Test ``DashCell``."""
     laser: Laser = Laser(5, 5, Direction.NORTH)
     cell: Cell = DashCell()
 
     assert set(cell.next_lasers(laser)) == {WEST_LASER, EAST_LASER}
 
-    laser.direction = Direction.EAST
+    laser = Laser(5, 5, Direction.EAST)
     assert cell.next_lasers(laser) == [EAST_LASER]
 
-    laser.direction = Direction.WEST
+    laser = Laser(5, 5, Direction.WEST)
     assert cell.next_lasers(laser) == [WEST_LASER]
 
-    laser.direction = Direction.SOUTH
+    laser = Laser(5, 5, Direction.SOUTH)
     assert set(cell.next_lasers(laser)) == {WEST_LASER, EAST_LASER}
 
 
 def test_pipecell() -> None:
+    """Test ``PipeCell``."""
     laser: Laser = Laser(5, 5, Direction.NORTH)
     cell: Cell = PipeCell()
 
     assert cell.next_lasers(laser) == [NORTH_LASER]
 
-    laser.direction = Direction.EAST
+    laser = Laser(5, 5, Direction.EAST)
     assert set(cell.next_lasers(laser)) == {NORTH_LASER, SOUTH_LASER}
 
-    laser.direction = Direction.WEST
+    laser = Laser(5, 5, Direction.WEST)
     assert set(cell.next_lasers(laser)) == {NORTH_LASER, SOUTH_LASER}
 
-    laser.direction = Direction.SOUTH
+    laser = Laser(5, 5, Direction.SOUTH)
     assert cell.next_lasers(laser) == [SOUTH_LASER]
 
 
 def test_forwardslashcell() -> None:
+    """Test ``ForwardSlashCell``."""
     laser: Laser = Laser(5, 5, Direction.NORTH)
     cell: Cell = ForwardSlashCell()
 
     assert cell.next_lasers(laser) == [EAST_LASER]
 
-    laser.direction = Direction.EAST
+    laser = Laser(5, 5, Direction.EAST)
     assert cell.next_lasers(laser) == [NORTH_LASER]
 
-    laser.direction = Direction.WEST
+    laser = Laser(5, 5, Direction.WEST)
     assert cell.next_lasers(laser) == [SOUTH_LASER]
 
-    laser.direction = Direction.SOUTH
+    laser = Laser(5, 5, Direction.SOUTH)
     assert cell.next_lasers(laser) == [WEST_LASER]
 
 
 def test_backslashcell() -> None:
+    """Test ``BackSlashCell``."""
     laser: Laser = Laser(5, 5, Direction.NORTH)
     cell: Cell = BackSlashCell()
 
     assert cell.next_lasers(laser) == [WEST_LASER]
 
-    laser.direction = Direction.EAST
+    laser = Laser(5, 5, Direction.EAST)
     assert cell.next_lasers(laser) == [SOUTH_LASER]
 
-    laser.direction = Direction.WEST
+    laser = Laser(5, 5, Direction.WEST)
     assert cell.next_lasers(laser) == [NORTH_LASER]
 
-    laser.direction = Direction.SOUTH
+    laser = Laser(5, 5, Direction.SOUTH)
     assert cell.next_lasers(laser) == [EAST_LASER]

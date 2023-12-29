@@ -1,3 +1,4 @@
+"""Test day16 main functions."""
 from typing import TYPE_CHECKING
 
 from day16.day16 import INPUT_SMALL, part1, part2
@@ -8,10 +9,12 @@ if TYPE_CHECKING:
 
 
 def test_part1() -> None:
+    """Test part1."""
     world: World = get_input(INPUT_SMALL)
     assert part1(world) == 46
 
 
 def test_part2() -> None:
+    """Test part2."""
     world: World = get_input(INPUT_SMALL)
     assert part2(world) == 51
