@@ -1,5 +1,4 @@
-"""Cell classes
-"""
+"""Cell classes."""
 from abc import ABC, abstractmethod
 
 from day16.lib.direction import Direction
@@ -7,10 +6,13 @@ from day16.lib.laser import Laser
 
 
 class Cell(ABC):
+    """Abstract cell class."""
+
     contents: str
 
     @staticmethod
     def construct(contents: str) -> "Cell":
+        """Construct proper cell from given contents."""
         if contents == ".":
             return DotCell()
         elif contents == "|":
@@ -25,23 +27,32 @@ class Cell(ABC):
 
     @abstractmethod
     def next_lasers(self, laser: Laser) -> list[Laser]:
+        """Return next lasers given a laser entering this cell."""
         raise AssertionError("Not supported", laser)
 
 
 class DotCell(Cell):
+    """A dot cell."""
+
     def __init__(self) -> None:
+        """Sets our contents to ``.``."""
         self.contents = "."
 
     def next_lasers(self, laser: Laser) -> list[Laser]:
+        """Lasers pass directly through this tile."""
         row, col = laser.direction.offset(laser.row, laser.col)
         return [Laser(row, col, laser.direction)]
 
 
 class DashCell(Cell):
+    """A ``-`` cell."""
+
     def __init__(self) -> None:
+        """Sets our contents to ``-``."""
         self.contents = "-"
 
     def next_lasers(self, laser: Laser) -> list[Laser]:
+        """Lasers must end up going east/west after passing through this cell."""
         if laser.direction in [Direction.EAST, Direction.WEST]:
             row, col = laser.direction.offset(laser.row, laser.col)
             return [Laser(row, col, laser.direction)]
@@ -55,10 +66,14 @@ class DashCell(Cell):
 
 
 class PipeCell(Cell):
+    """A ``|`` cell."""
+
     def __init__(self) -> None:
+        """Sets our contents to ``|``."""
         self.contents = "|"
 
     def next_lasers(self, laser: Laser) -> list[Laser]:
+        """Lasers must end up going north/south after passing through this cell."""
         if laser.direction in [Direction.NORTH, Direction.SOUTH]:
             row, col = laser.direction.offset(laser.row, laser.col)
             return [Laser(row, col, laser.direction)]
@@ -72,10 +87,14 @@ class PipeCell(Cell):
 
 
 class ForwardSlashCell(Cell):
+    """A ``/`` cell."""
+
     def __init__(self) -> None:
+        """Sets our contents to ``/``."""
         self.contents = "/"
 
     def next_lasers(self, laser: Laser) -> list[Laser]:
+        """Lasers go diagonal mode."""
         row, col = laser.row, laser.col
         if laser.direction == Direction.EAST:
             return [Laser(row - 1, col, Direction.NORTH)]
@@ -89,10 +108,14 @@ class ForwardSlashCell(Cell):
 
 
 class BackSlashCell(Cell):
+    r"""A ``\`` cell."""
+
     def __init__(self) -> None:
+        r"""Sets our contents to ``\``."""
         self.contents = "\\"
 
     def next_lasers(self, laser: Laser) -> list[Laser]:
+        """Lasers go diagonal mode."""
         row, col = laser.row, laser.col
         if laser.direction == Direction.EAST:
             return [Laser(row + 1, col, Direction.SOUTH)]

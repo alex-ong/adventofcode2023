@@ -63,10 +63,10 @@ class World:
 
 
 def naive_score(world_rows: list[str]) -> int:
-    """Returns score assuming west is pointing left.
+    r"""Returns score assuming west is pointing left.
 
     For each row, a round boulder ``O``'s score is
-    ``num_rows`` minus its ``index``(higher weight to the left.)
+    ``num_rows`` minus its ``index`` (higher weight to the left.)
     """
     num_rows = len(world_rows)
     score = 0

@@ -23,6 +23,12 @@ extensions = [
     "sphinx.ext.viewcode",
 ]
 
+suppress_warnings = [
+    # This is here to prevent:
+    #  "WARNING: more than one target found for cross-reference"
+    "ref.python",
+]
+
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 

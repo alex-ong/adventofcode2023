@@ -93,7 +93,7 @@ def get_games(input_file: str) -> list[Game]:
         input_file (str): input file name
 
     Returns:
-        list[Game]: list of ``Game``s
+        list[Game]: list of Games
     """
     with open(input_file, "r", encoding="utf8") as file:
         games: list[Game] = []

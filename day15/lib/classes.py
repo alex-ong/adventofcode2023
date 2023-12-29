@@ -38,7 +38,7 @@ class Lens:
 
 @dataclass
 class Box:
-    """Box can contain a variety of ``Lens``es."""
+    r"""Box can contain a variety of ``Lens``\es."""
 
     id: int = 0
     contents: list[Lens] = field(default_factory=list)
