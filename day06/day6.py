@@ -1,3 +1,4 @@
+"""Day06 solution."""
 import math
 from dataclasses import dataclass
 
@@ -7,7 +8,7 @@ INPUT = "day06/input.txt"
 
 @dataclass
 class Race:
-    """Simple class representing a race and its record"""
+    """Simple class representing a race and its record."""
 
     time: int
     record_distance: int
@@ -15,22 +16,24 @@ class Race:
 
 @dataclass
 class RaceStrat:
-    """class representing a strategy (charge time + run_time)"""
+    """class representing a strategy (charge time + run_time)."""
 
     charge_time: int
     run_time: int
 
     @property
     def distance(self) -> int:
+        """Returns how far we moved."""
         return self.run_time * self.speed
 
     @property
     def speed(self) -> int:
+        """Return the speed after the charge time."""
         return self.charge_time
 
 
 def read_inputs(path: str) -> list[Race]:
-    """Disgusting but short i guess"""
+    """Disgusting but short i guess."""
     with open(path, "r", encoding="utf8") as file:
         times = [int(item) for item in file.readline().split()[1:]]
         distance = [int(item) for item in file.readline().split()[1:]]
@@ -39,7 +42,7 @@ def read_inputs(path: str) -> list[Race]:
 
 
 def calculate_race(race: Race) -> int:
-    """Naive calcuation of a race"""
+    """Naive calcuation of a race."""
     results: list[RaceStrat] = []
     for i in range(race.time):
         charge_time = i
@@ -78,7 +81,7 @@ def calculate_race(race: Race) -> int:
 
 
 def calculate_constant_time(race: Race) -> int:
-    """TL;DR Quadratic formula"""
+    """TL;DR Quadratic formula."""
     x_top = race.time - math.sqrt((race.time * race.time) - 4 * race.record_distance)
     x_neg = x_top / 2
 
@@ -92,6 +95,7 @@ def calculate_constant_time(race: Race) -> int:
 
 
 def part1(races: list[Race]) -> int:
+    """Returns the sum of the amnount of ways we can win each race."""
     permutations = 1
     for race in races:
         num_strats = calculate_race(race)
@@ -100,10 +104,12 @@ def part1(races: list[Race]) -> int:
 
 
 def part2(race: Race) -> int:
+    """Return amoutn of ways we can win the race."""
     return calculate_constant_time(race)
 
 
 def get_giga_race(races: list[Race]) -> Race:
+    """Converts from a list of races into one giga race."""
     giga_time = int("".join([str(race.time) for race in races]))
     giga_distance = int("".join([str(race.record_distance) for race in races]))
     giga_race = Race(giga_time, giga_distance)
@@ -111,7 +117,7 @@ def get_giga_race(races: list[Race]) -> Race:
 
 
 def main() -> None:
-    """Solves Day 6"""
+    """Solves Day 6."""
     races = read_inputs(INPUT)
 
     # q1 Dataclasses, brute force lmao
