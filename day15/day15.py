@@ -1,3 +1,4 @@
+"""Day15 solution."""
 from day15.lib.classes import AddRemove, Box, Lens, Step
 
 INPUT = "day15/input.txt"
@@ -5,6 +6,7 @@ INPUT_SMALL = "day15/input-small.txt"
 
 
 def get_input(path: str) -> list[str]:
+    """Get input into list of instructions to parse."""
     with open(path) as file:
         data = file.read()
     raw_steps = data.split(",")
@@ -12,6 +14,7 @@ def get_input(path: str) -> list[str]:
 
 
 def get_string_hash(string: str) -> int:
+    """Returns a string's ``hash``."""
     value: int = 0
     for char in string:
         value += ord(char)
@@ -21,7 +24,7 @@ def get_string_hash(string: str) -> int:
 
 
 def parse_step_pt2(raw_step: str) -> Step:
-    """Handles as step in part 2"""
+    """Handles as step in part 2."""
     if len(splits := raw_step.split("=")) == 2:
         box = get_string_hash(splits[0])
         strength = int(splits[1].strip())
@@ -34,7 +37,7 @@ def parse_step_pt2(raw_step: str) -> Step:
 
 
 def process_steps_pt2(steps: list[Step]) -> int:
-    """Process a list of steps"""
+    """Process a list of steps."""
     boxes: list[Box] = [Box(i) for i in range(256)]
 
     for step in steps:
@@ -50,16 +53,18 @@ def process_steps_pt2(steps: list[Step]) -> int:
 
 
 def question1(raw_steps: list[str]) -> int:
+    """Returns the sum of hashes for every step."""
     return sum(get_string_hash(raw_step) for raw_step in raw_steps)
 
 
 def question2(raw_steps: list[str]) -> int:
+    """Process each step into "lens" boxes and return the total lens power."""
     steps = [parse_step_pt2(raw_step) for raw_step in raw_steps]
     return process_steps_pt2(steps)
 
 
 def main() -> None:
-    """Main function"""
+    """Read input and call question1/question2."""
     raw_steps = get_input(INPUT)
 
     # q1

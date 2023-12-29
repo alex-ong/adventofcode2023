@@ -1,3 +1,4 @@
+"""Day15 main functions."""
 from day15.day15 import (
     INPUT_SMALL,
     get_input,
@@ -10,12 +11,14 @@ from day15.lib.classes import AddRemove, Step
 
 
 def test_get_input() -> None:
+    """Test reading input function."""
     steps: list[str] = get_input(INPUT_SMALL)
     assert len(steps) == 11
     assert steps[0] == "rn=1"
 
 
 def test_parse_pt2() -> None:
+    """Test parsing input for part2."""
     steps: list[str] = get_input(INPUT_SMALL)
     step: Step = parse_step_pt2(steps[0])
     assert step.lens_name == "rn"
@@ -23,12 +26,14 @@ def test_parse_pt2() -> None:
 
 
 def test_questions() -> None:
+    """Test question1/question2."""
     steps: list[str] = get_input(INPUT_SMALL)
     assert question1(steps) == 1320
     assert question2(steps) == 145
 
 
 def test_get_string_hash() -> None:
+    """Test string hashing function."""
     assert get_string_hash("rn=1") == 30
     assert get_string_hash("rn=1") == 30
     assert get_string_hash("cm-") == 253
