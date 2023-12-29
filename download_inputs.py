@@ -1,3 +1,4 @@
+"""Downloads the input files from adventofcode.com."""
 import os
 import time
 
@@ -8,6 +9,7 @@ BASE_URL = "https://adventofcode.com/2023/day/{}/input"
 
 
 def main() -> None:
+    """Main function, checks which folders you have, and then downloads files."""
     dotenv.load_dotenv()
     session = os.environ.get("SESSION", None)
     if session is None:
@@ -31,6 +33,7 @@ def main() -> None:
 
 
 def download_file(day: int, session: str) -> None:
+    """Downloads a given day, given your session key."""
     output_path = os.path.join(f"day{day:02d}", "input.txt")
     if os.path.exists(output_path):
         print("No download; file already exists")

@@ -1,9 +1,11 @@
+"""maker of accessory files."""
 import os
 from pathlib import Path
 from typing import Iterable
 
 
 def touch_days(days: Iterable[int]) -> None:
+    """Touches each day, creating /lib and /tests and relevant init files."""
     for day in days:
         os.makedirs(f"day{day:02}/lib", exist_ok=True)
         os.makedirs(f"day{day:02}/tests", exist_ok=True)
