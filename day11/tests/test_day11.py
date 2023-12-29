@@ -1,7 +1,9 @@
+"""Tests for day11."""
 from day11.day11 import INPUT_SMALL, Universe, get_total_distance, is_empty, parse_input
 
 
 def test_day11() -> None:
+    """Test day11 main function."""
     universe: Universe = parse_input(INPUT_SMALL)
     assert universe.num_rows == 10
     assert universe.num_cols == 10
@@ -22,6 +24,7 @@ def test_day11() -> None:
 
 
 def test_is_empty() -> None:
+    """Tests is_empty function on universe."""
     universe: Universe = parse_input(INPUT_SMALL)
     assert is_empty(universe.contents[3])
     assert not is_empty(universe.contents[0])
@@ -30,6 +33,7 @@ def test_is_empty() -> None:
 
 
 def test_expansion() -> None:
+    """Test expansion of universe."""
     universe: Universe = parse_input(INPUT_SMALL)
     assert universe.num_rows == 10
     assert universe.num_cols == 10
