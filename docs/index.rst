@@ -10,7 +10,10 @@ Welcome to adventofcode2023's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   autodoc.md
+   ci.md
    modules
+   
 
 Indices and tables
 ==================
