@@ -1,5 +1,4 @@
-"""Day 3 implementation
-"""
+"""Day 3 implementation."""
 
 
 from day03.lib.classes import Gear, Matrix, PartNumber
@@ -10,15 +9,18 @@ INPUT_SMALL = "day03/input-small.txt"
 
 
 def part1(part_numbers: list[PartNumber]) -> int:
+    """Return sum of valid partnumbers."""
     return sum([part_number.value for part_number in part_numbers])
 
 
 def part2(part_numbers: list[PartNumber], matrix: Matrix) -> int:
+    """Return sum of valid gear values."""
     gears: list[Gear] = matrix.get_gears(part_numbers)
     return sum(gear.gear_ratio for gear in gears)
 
 
 def main() -> None:
+    """Main entrypoint; grab input then run part1 and part2."""
     matrix: Matrix = get_matrix(INPUT)
     part_numbers: list["PartNumber"] = matrix.get_part_numbers()
     part_numbers = matrix.filter_engine_parts(part_numbers)

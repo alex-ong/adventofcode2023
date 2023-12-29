@@ -1,3 +1,4 @@
+"""tests day3's classes."""
 from dataclasses import dataclass
 
 import pytest
@@ -9,6 +10,8 @@ from day03.lib.parsers import get_matrix
 
 @dataclass
 class PartNumberTouchTest:
+    """Result for a part number touching something else."""
+
     col: int
     row: int
     row_size: int
@@ -16,6 +19,7 @@ class PartNumberTouchTest:
 
 
 def test_part_number() -> None:
+    """Tests part number class."""
     part_number = PartNumber(0, 0, 3, 467)
 
     assert part_number.end_index == 3
@@ -40,6 +44,7 @@ def test_part_number() -> None:
 
 
 def test_matrix() -> None:
+    """Tests matrix."""
     matrix: Matrix = get_matrix(INPUT_SMALL)
     part_numbers: list["PartNumber"] = matrix.get_part_numbers()
     assert (matrix.row_count, matrix.row_size) == (10, 10)
@@ -60,6 +65,7 @@ def test_matrix() -> None:
 
 
 def test_gear() -> None:
+    """Tests gear class."""
     # 69...
     # ..*78
     # 54...

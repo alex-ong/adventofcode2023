@@ -1,3 +1,4 @@
+"""Day3 classes."""
 import re
 from dataclasses import dataclass
 
@@ -7,13 +8,15 @@ NUMBER_REGEX = r"\d+"
 
 @dataclass
 class PartNumber:
+    """Class respresenting a potential part number, and its position."""
+
     col: int
     row: int
     length: int
     value: int
 
     def touching(self, col: int, row: int, row_size: int) -> bool:
-        """Returns if a given coordinate is touching this PartNumber"""
+        """Returns if a given coordinate is touching this PartNumber."""
         start_x = max(0, self.col - 1)
         end_x = min(self.end_index, row_size)
 
@@ -25,11 +28,14 @@ class PartNumber:
 
     @property
     def end_index(self) -> int:
+        """Returns the end column index of the number."""
         return self.col + self.length
 
 
 @dataclass
 class Gear:
+    """Class representing a potential gear (``*`` icon)."""
+
     col: int
     row: int
 
@@ -37,7 +43,7 @@ class Gear:
 
     @property
     def gear_ratio(self) -> int:
-        """If we have exactly two parts, returns the gear ratio"""
+        """If we have exactly two parts, returns the gear ratio."""
         if self.part_numbers is None:
             raise ValueError("self.part_numbers not initialized")
         if len(self.part_numbers) == 2:
@@ -47,18 +53,22 @@ class Gear:
 
 @dataclass
 class Matrix:
+    """Represents the entire 2d array."""
+
     data: list[str]
 
     @property
     def row_size(self) -> int:
+        """How long each row is."""
         return len(self.data[0])
 
     @property
     def row_count(self) -> int:
+        """How many rows there are."""
         return len(self.data)
 
     def get_part_numbers(self) -> list[PartNumber]:
-        """Retrieve numbered words like 456 from the matrix"""
+        """Retrieve numbered words like 456 from the matrix."""
         results = []
 
         for row, line in enumerate(self.data):
@@ -74,11 +84,11 @@ class Matrix:
 
     @staticmethod
     def is_engine_part_row(row: str) -> bool:
-        """Returns if there is an engine part in this row"""
+        """Returns if there is an engine part in this row."""
         return any(char not in NON_PART for char in row)
 
     def is_engine_part(self, part_number: PartNumber) -> bool:
-        """Return whether a part_number is an engine part by looking at its surroundings"""
+        """Return whether a part_number is an engine part by looking at its surroundings."""
         start_x = max(0, part_number.col - 1)
         end_x = min(part_number.end_index + 1, self.row_size)
 
@@ -106,7 +116,7 @@ class Matrix:
         return False
 
     def get_gears(self, part_numbers: list[PartNumber]) -> list[Gear]:
-        """Retrieve gears from the matrix"""
+        """Retrieve gears from the matrix."""
         results = []
         for row, line in enumerate(self.data):
             for col, char in enumerate(line):
@@ -119,7 +129,7 @@ class Matrix:
     def find_gear_parts(
         self, gear: Gear, part_numbers: list[PartNumber]
     ) -> list[PartNumber]:
-        """Returns a list of part_numbers that are touching a given gear"""
+        """Returns a list of part_numbers that are touching a given gear."""
         result = []
         for part_number in part_numbers:
             if part_number.touching(gear.col, gear.row, self.row_size):
@@ -127,5 +137,5 @@ class Matrix:
         return result
 
     def filter_engine_parts(self, part_numbers: list[PartNumber]) -> list[PartNumber]:
-        """Return the legit part numbers"""
+        """Return the legit part numbers."""
         return list(filter(self.is_engine_part, part_numbers))

@@ -1,3 +1,4 @@
+"""test day3 main functions."""
 from typing import TYPE_CHECKING
 
 from day03.day3 import INPUT_SMALL, part1, part2
@@ -8,6 +9,7 @@ if TYPE_CHECKING:
 
 
 def test_part1() -> None:
+    """Test part1."""
     matrix: Matrix = get_matrix(INPUT_SMALL)
     part_numbers: list[PartNumber] = matrix.get_part_numbers()
     part_numbers = matrix.filter_engine_parts(part_numbers)
@@ -15,6 +17,7 @@ def test_part1() -> None:
 
 
 def test_part2() -> None:
+    """Test part2."""
     matrix: Matrix = get_matrix(INPUT_SMALL)
     part_numbers: list[PartNumber] = matrix.get_part_numbers()
     part_numbers = matrix.filter_engine_parts(part_numbers)
