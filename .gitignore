@@ -5,3 +5,5 @@ input.txt
 
 /day10/big*.txt
 .coverage*
+
+docs/_build/
