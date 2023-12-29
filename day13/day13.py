@@ -1,4 +1,4 @@
-"""day13 solution"""
+"""day13 solution."""
 
 from dataclasses import dataclass
 from typing import Optional
@@ -8,24 +8,32 @@ INPUT_SMALL = "day13/input-small.txt"
 
 
 def distance(left: str, right: str) -> int:
-    """Returns edit distance of two strings"""
+    """Returns edit distance of two strings."""
     return sum(a != b for a, b in zip(left, right))
 
 
 @dataclass
 class Maze:
+    """2d array of tiles."""
+
     tiles: list[str]
 
     def solve(self, distance: int = 0) -> int:
+        """Solves a maze given an edit distance.
+
+        ``0`` == ``Equal mirror``
+        ``1`` == ``smudge in mirror``
+        """
         row_reflect = self.reflect_rows(distance)
         col_reflect = self.reflect_cols(distance)
         return self.score(row_reflect, col_reflect)
 
     def reflect_rows(self, distance: int) -> Optional[int]:
+        """Check a row's reflection."""
         return self.check_reflection(self.tiles, distance)
 
     def reflect_cols(self, distance: int) -> Optional[int]:
-        """Checks reflection of cols by flipping rows/cols"""
+        """Checks reflection of cols by flipping rows/cols."""
         cols: list[list[str]] = [[] for _ in range(len(self.tiles[0]))]
         for row in self.tiles:
             for col_index, col in enumerate(row):
@@ -35,7 +43,7 @@ class Maze:
         return self.check_reflection(cols_strs, distance)
 
     def check_reflection(self, data: list[str], target_dist: int) -> Optional[int]:
-        """Checks a reflection on rows or cols"""
+        """Checks a reflection on rows or cols."""
         for index in range(len(data)):
             if index == 0:
                 continue
@@ -51,7 +59,7 @@ class Maze:
         return None
 
     def score(self, row_reflect: Optional[int], col_reflect: Optional[int]) -> int:
-        """Returns score for q1"""
+        """Returns score for q1."""
         if col_reflect is not None:
             return col_reflect
         if row_reflect is not None:
@@ -60,6 +68,14 @@ class Maze:
 
 
 def read_input(path: str) -> list[Maze]:
+    """Read input file into well defined Mazes.
+
+    Args:
+        path (str): filename of input
+
+    Returns:
+        list[Maze]: list of well defined Mazes.
+    """
     mazes: list[Maze] = []
     with open(path) as file:
         lines: list[str] = []
@@ -77,6 +93,7 @@ def read_input(path: str) -> list[Maze]:
 
 
 def main() -> None:
+    """Loads input then runs q1/q2."""
     mazes: list[Maze] = read_input(INPUT)
 
     # q1
