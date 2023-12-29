@@ -1,4 +1,4 @@
-"""day8 solution"""
+"""day8 solution."""
 import itertools
 import math
 from dataclasses import dataclass, field
@@ -12,9 +12,7 @@ INPUT_C = "day08/input-c.txt"
 
 @dataclass
 class Location:
-    """A location on our map,
-    with names of other locations
-    """
+    """A location on our map, with names of other locations."""
 
     name: str
     left: str
@@ -23,36 +21,38 @@ class Location:
 
 @dataclass
 class LocationStep:
-    """Location + how many steps to get here
-    """
+    """Location + how many steps to get here."""
 
     location: Location
     steps: int
 
     def __hash__(self) -> int:
+        """Custom hash function so we can compare/set this class."""
         return hash(self.location.name + str(self.steps))
 
 
 class WorldMap:
-    """world map class"""
+    """world map class."""
 
     mappings: dict[str, Location]
 
     def __init__(self) -> None:
+        """Initialize an empty world map."""
         self.mappings = {}
 
     def add_location(self, location: Location) -> None:
-        """Add location to our mappings"""
+        """Add location to our mappings."""
         self.mappings[location.name] = location
 
 
 @dataclass
 class Directions:
-    """Simple directions string"""
+    """Simple directions string."""
 
     steps: str
 
     def get_step(self, index: int) -> str:
+        """Returns a step given its index."""
         return self.steps[index % len(self.steps)]
 
     def get_steps_iterator(self) -> Iterator[str]:
@@ -62,7 +62,7 @@ class Directions:
 
 @dataclass
 class Cycle:
-    """find a cycle"""
+    """Find a cycle."""
 
     start_location: Location
     location_steps: list[LocationStep]  # all the steps, including non-looping
@@ -73,10 +73,11 @@ class Cycle:
 
     @property
     def cycle_length(self) -> int:
-        """Return length of the repeating part"""
+        """Return length of the repeating part."""
         return len(self.location_steps) - self.cycle_start_index
 
     def __post_init__(self) -> None:
+        """Initializes the start indices and and end indices."""
         self.cycle_start_index = self.location_steps.index(self.cycle_start)
         end_zs: list[int] = []
         for index, location_step in enumerate(self.location_steps):
@@ -85,6 +86,7 @@ class Cycle:
         self.end_zs = end_zs
 
     def get_location(self, index: int) -> LocationStep:
+        """Gets a location given a step index."""
         if index < len(self.location_steps):
             return self.location_steps[index]
 
@@ -97,7 +99,7 @@ class Cycle:
 
 
 def read_input(path: str) -> tuple[Directions, WorldMap]:
-    """Reads input into directions/world_map"""
+    """Reads input into directions/world_map."""
     with open(path, "r", encoding="utf8") as file:
         directions = Directions(file.readline().strip())
         world_map = WorldMap()
@@ -114,7 +116,7 @@ def read_input(path: str) -> tuple[Directions, WorldMap]:
 
 
 def follow_directions(directions: Directions, world_map: WorldMap) -> int:
-    """Follows directions until we hit zzz"""
+    """Follows directions until we hit zzz."""
     mappings = world_map.mappings
     node: Location = mappings["AAA"]
     nodes_visited = 0
@@ -131,7 +133,7 @@ def follow_directions(directions: Directions, world_map: WorldMap) -> int:
 
 
 def get_location_as(world_map: WorldMap) -> list[Location]:
-    """Returns locations with an A at the end"""
+    """Returns locations with an A at the end."""
     return [
         location
         for location in world_map.mappings.values()
@@ -140,7 +142,7 @@ def get_location_as(world_map: WorldMap) -> list[Location]:
 
 
 def follow_directions_multi(directions: Directions, world_map: WorldMap) -> int:
-    """Follow all mappings ending in A until all of them are ZZZ"""
+    """Follow all mappings ending in A until all of them are ZZZ."""
     nodes: list[Location] = get_location_as(world_map)
 
     cycles = [find_cycle(node, world_map, directions) for node in nodes]
@@ -175,6 +177,7 @@ def follow_directions_multi(directions: Directions, world_map: WorldMap) -> int:
 def find_cycle(
     location: Location, world_map: WorldMap, directions: Directions
 ) -> Cycle:
+    """Finds the cycle from a start location."""
     start_location = location
     nodes: list[LocationStep] = []
     step_count = 0
@@ -204,7 +207,7 @@ def find_cycle(
 
 
 def main() -> None:
-    """Main function, solve the things"""
+    """Main function, solve the things."""
     # q1
     directions, world_map = read_input(INPUT)
     nodes_visited: int = follow_directions(directions, world_map)

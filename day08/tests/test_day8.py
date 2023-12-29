@@ -1,3 +1,4 @@
+"""day08 tests."""
 from day08.day8 import (
     INPUT_A,
     INPUT_B,
@@ -14,6 +15,7 @@ from day08.day8 import (
 
 
 def test_part1() -> None:
+    """Test ``part1()``."""
     directions, world_map = read_input(INPUT_A)
     assert follow_directions(directions, world_map) == 2
 
@@ -22,11 +24,13 @@ def test_part1() -> None:
 
 
 def test_part2() -> None:
+    """Test ``part2()``."""
     directions, world_map = read_input(INPUT_C)
     assert follow_directions_multi(directions, world_map) == 6
 
 
 def test_location_as() -> None:
+    """Test finding of the ``a`` locations."""
     _, world_map = read_input(INPUT_C)
     locations: list[Location] = get_location_as(world_map)
     names = [location.name for location in locations]
@@ -34,6 +38,7 @@ def test_location_as() -> None:
 
 
 def test_find_cycle() -> None:
+    """Test finding cycles."""
     directions, world_map = read_input(INPUT_C)
     locations: list[Location] = get_location_as(world_map)
 
@@ -47,6 +52,7 @@ def test_find_cycle() -> None:
 
 
 def test_directions() -> None:
+    """Test directions class."""
     directions: Directions = Directions("LRLRLLR")
     assert directions.get_step(0) == "L"
     assert directions.get_step(7) == "L"
