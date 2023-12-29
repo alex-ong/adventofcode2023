@@ -1,16 +1,19 @@
+"""tests for day02."""
 from day02.day2 import INPUT_SMALL, Draw, Game, game_filter, get_games, part1, part2
 
 
 def get_game1() -> Game:
+    """Returns a sample game."""
     return Game("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green")
 
 
 def get_game2() -> Game:
+    """Returns another sample game."""
     return Game("Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue")
 
 
 def test_draw() -> None:
-    """Test draws"""
+    """Test draws."""
     draw1: Draw = Draw("3 blue, 4 red")
     draw2: Draw = Draw("4 blue, 3 green")
     draw3: Draw = Draw("4 blue, 3 green, 1 red")
@@ -21,7 +24,7 @@ def test_draw() -> None:
 
 
 def test_game() -> None:
-    """Test games"""
+    """Test games."""
     game1: Game = get_game1()
     game2: Game = get_game2()
 
@@ -40,7 +43,7 @@ def test_game() -> None:
 
 
 def test_part1() -> None:
-    """Tests get_games, game_filter, part1"""
+    """Tests get_games, game_filter, part1."""
     games: list[Game] = get_games(INPUT_SMALL)
 
     # test game_filter
@@ -52,7 +55,7 @@ def test_part1() -> None:
 
 
 def test_part2() -> None:
-    """Tests power"""
+    """Tests power."""
     games: list[Game] = get_games(INPUT_SMALL)
 
     # test game_filter
