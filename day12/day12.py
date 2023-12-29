@@ -1,4 +1,4 @@
-"""day12 solution"""
+"""day12 solution."""
 from dataclasses import dataclass, field
 
 INPUT = "day12/input.txt"
@@ -7,17 +7,19 @@ INPUT_SMALL = "day12/input-small.txt"
 
 @dataclass
 class State:
+    """Thes tate of a spring."""
+
     items: str
     broken_springs: list[int]
 
     def valid(self) -> int:
-        """Returns true IFF we are completed without errors
-        """
+        """Returns true IFF we are completed without errors."""
         if len(self.items) == 0 and len(self.broken_springs) == 0:
             return 1
         return 0
 
     def __getitem__(self, index_or_slice: slice | int) -> str:
+        """Allows us to grab an index or slice of our items."""
         # slice access
         if isinstance(index_or_slice, slice):
             _slice = index_or_slice
@@ -29,19 +31,20 @@ class State:
         return self.items[index]
 
     def __hash__(self) -> int:
+        """Custom hash so we can use ``set()``."""
         return hash(str(self.items) + ":" + str(self.broken_springs))
 
 
 @dataclass
 class SpringLine:
-    """springline class"""
+    """Springline class."""
 
     items: str
     broken_springs: list[int]
     big_cache: dict[State, int] = field(init=False, repr=False, default_factory=dict)
 
     def unfold(self) -> "SpringLine":
-        """Makes it bigger"""
+        """Makes it 5x bigger (part2)."""
         return SpringLine("?".join([self.items] * 5), self.broken_springs * 5)
 
     def calculate(self) -> int:
@@ -50,12 +53,13 @@ class SpringLine:
         return self.calculate_recursive(first_state)
 
     def set_and_return(self, state: State, value: int) -> int:
-        """Sets and returns in one line"""
+        """Sets and returns in one line."""
         self.big_cache[state] = value
         return value
 
     def calculate_recursive(self, state: State) -> int:
-        """Recursive with memoization
+        """Recursive with memoization.
+
         1. memoized
         2. state.empty -> return if we are valid
         3. state[0] == "." chop it and continue
@@ -97,7 +101,7 @@ class SpringLine:
 
 
 def get_input(path: str) -> list[SpringLine]:
-    """Returns list of SpringLines from input file"""
+    """Returns list of SpringLines from input file."""
     result = []
     with open(path, "r", encoding="utf8") as file:
         for line in file:
@@ -109,12 +113,12 @@ def get_input(path: str) -> list[SpringLine]:
 
 
 def calculate_sum(spring_lines: list[SpringLine]) -> int:
-    """Calculates every spring line and then adds the totals"""
+    """Calculates every spring line and then adds the totals."""
     return sum(spring_line.calculate() for spring_line in spring_lines)
 
 
 def main() -> None:
-    """Main function"""
+    """Main function."""
     spring_lines = get_input(INPUT)
     # q1
     print(calculate_sum(spring_lines))

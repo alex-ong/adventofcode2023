@@ -1,7 +1,9 @@
+"""day12 tests."""
 from day12.day12 import INPUT_SMALL, SpringLine, calculate_sum, get_input
 
 
 def test_calculate_sum() -> None:
+    """Test ``calculate_sum()``."""
     spring_lines: list[SpringLine] = get_input(INPUT_SMALL)
     assert calculate_sum(spring_lines) == 21
 
@@ -10,6 +12,7 @@ def test_calculate_sum() -> None:
 
 
 def test_parser() -> None:
+    """Test ``get_input()``."""
     spring_lines: list[SpringLine] = get_input(INPUT_SMALL)
     assert spring_lines[0].items == "???.###"
     assert spring_lines[0].broken_springs == [1, 1, 3]
@@ -17,6 +20,7 @@ def test_parser() -> None:
 
 
 def test_spring_line() -> None:
+    """Test ``SpringLine`` class."""
     spring_line = SpringLine("?###????????", [3, 2, 1])
     assert spring_line.calculate() == 10
 
