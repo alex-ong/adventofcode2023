@@ -1,3 +1,4 @@
+"""Tests for main day14 functions."""
 from day14.day14 import (
     INPUT_SMALL,
     World,
@@ -12,23 +13,27 @@ INPUT_ARROW = "day14/input-arrow.txt"
 
 
 def test_get_input() -> None:
+    """Test ``get_input()``."""
     world: World = get_input(INPUT_SMALL)
     assert len(world.data) == 10  # rows
     assert len(world.data[0]) == 10  # cols
 
 
 def test_questions() -> None:
+    """Test main question functions."""
     world: World = get_input(INPUT_SMALL)
     assert question1(world) == 136
     assert question2(world) == 64
 
 
 def test_simulate_row() -> None:
+    """Test simulation of a row."""
     assert simulate_row(list("OO.#O....O"))[0] == list("OO.#OO....")
     assert simulate_row(list(".........O"))[0] == list("O.........")
 
 
 def test_rotate_world() -> None:
+    """Test rotating the world."""
     world: World = get_input(INPUT_ARROW)
 
     assert world.left_is == Direction.West

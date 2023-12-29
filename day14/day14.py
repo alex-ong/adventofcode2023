@@ -1,4 +1,4 @@
-"""day14 solution"""
+"""day14 solution."""
 
 from dataclasses import dataclass
 from typing import Any, Optional
@@ -11,35 +11,43 @@ INPUT = "day14/input.txt"
 
 @dataclass
 class World:
+    """2d array of boulders (square/round) and empty space."""
+
     data: Any
     left_is: Direction = Direction.West
 
     score: int | None = None
 
     def rotate_world_cw(self) -> "World":
+        """Rotate world clockwise."""
         rotated = list(zip(*self.data[::-1]))
         return World(rotated, self.left_is.next_direction_ccw())
 
     def rotate_world_ccw(self) -> "World":
+        """Rotate world anti-clockwise."""
         rotated = list(zip(*self.data))[::-1]
         return World(rotated, self.left_is.next_direction_cw())
 
     def __hash__(self) -> int:
+        """Custom hash function for use with ``set()``."""
         return hash(str(self.data) + ":" + str(self.left_is))
 
     def to_string(self) -> str:
+        """Well defined string of our world."""
         return "\n".join(str(row) for row in self.data)
 
     def as_orientiented_north(self) -> str:
-        """Print with north facing up"""
+        """Well defined string if our world has up as North."""
         world = self.correct_side()
         return world.to_string()
 
     def get_score(self) -> int:
+        """Get score of the world."""
         world = self.correct_side()
         return naive_score(world.data)
 
     def correct_side(self) -> "World":
+        """Return world oriented with North at the top."""
         world = self
         if world.left_is == Direction.West:
             return self
@@ -55,7 +63,11 @@ class World:
 
 
 def naive_score(world_rows: list[str]) -> int:
-    """Returns score assuming west is pointing left"""
+    """Returns score assuming west is pointing left.
+
+    For each row, a round boulder ``O``'s score is
+    ``num_rows`` minus its ``index``(higher weight to the left.)
+    """
     num_rows = len(world_rows)
     score = 0
     for index, row in enumerate(world_rows):
@@ -65,8 +77,9 @@ def naive_score(world_rows: list[str]) -> int:
 
 
 def simulate_row(row: list[str]) -> tuple[list[str], int]:
-    """Simulates a row; returns its value and the new row
-    Assume's that we are moving boulders to the left
+    """Simulates a row; returns its value and the new row.
+
+    Assumes that we are moving boulders to the left
     """
     square_indices = [-1] + [i for i, x in enumerate(row) if x == "#"] + [len(row)]
     pairs = zip(square_indices, square_indices[1:])
@@ -96,7 +109,7 @@ def simulate_world(world_rows: list[list[str]]) -> list[list[str]]:
 
 
 def get_input(path: str) -> World:
-    """Grabs input, rotated so that left is north"""
+    """Grabs input, rotated so that left is north."""
     with open(path) as file:
         lines = [line.strip() for line in file]
 
@@ -104,12 +117,24 @@ def get_input(path: str) -> World:
 
 
 def question1(world: World) -> int:
+    """Returns world's score after rotating the world once."""
     while world.left_is != Direction.North:
         world = world.rotate_world_ccw()
     return sum(simulate_row(row)[1] for row in world.data)
 
 
 def question2(world: World) -> int:
+    """Finds a loop in world rotation.
+
+    Once the loop is found we can estimate the world's state
+    after any amount of rotations
+
+    Args:
+        world (World): world to spin
+
+    Returns:
+        int: "weight" to the north after 1000000000 cycles.
+    """
     cache: dict[World, int] = {}
     cycle_results: list[World] = []
 
@@ -159,6 +184,7 @@ def question2(world: World) -> int:
 
 
 def main() -> None:
+    """Get input and run question1/question2."""
     world = get_input(INPUT)
 
     print(question1(world))
