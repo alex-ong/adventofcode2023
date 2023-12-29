@@ -2,7 +2,7 @@ adventofcode2023
 ================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
    day01
    day02

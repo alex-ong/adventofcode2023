@@ -7,6 +7,11 @@ Advent of Code 2023
 
 Website: https://adventofcode.com/2023
 
+API documentation and more information:
+
+https://alex-ong.github.io/adventofcode2023/index.html
+
+
 Setup
 ===
 

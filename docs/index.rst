@@ -7,11 +7,11 @@ Welcome to adventofcode2023's documentation!
 ============================================
 
 .. toctree::
-   :maxdepth: 2
    :caption: Contents:
+   :maxdepth: 1
 
-   autodoc.md
-   ci.md
+   autodoc
+   ci
    modules
    
 
