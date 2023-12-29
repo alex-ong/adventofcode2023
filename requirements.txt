@@ -1,5 +1,6 @@
 colorama==0.4.6
 coverage==7.3.4
+ghp-import==2.1.0
 graphviz==0.20.1
 matplotlib==3.8.2
 mypy==1.8.0
