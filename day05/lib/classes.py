@@ -1,3 +1,4 @@
+"""classes for day05."""
 from bisect import bisect_left
 from dataclasses import dataclass, field
 
@@ -6,7 +7,7 @@ INT_MAX = 4294967296
 
 @dataclass
 class MappingRange:
-    """Simple class for start/end range"""
+    """Simple class for start/end range."""
 
     start: int
     end: int
@@ -14,7 +15,7 @@ class MappingRange:
 
 @dataclass(order=True)
 class Mapping:
-    """Simple range based mapping"""
+    """Simple range based mapping."""
 
     src_start: int
     src_end: int = field(init=False)
@@ -25,19 +26,19 @@ class Mapping:
     injected: bool = False
 
     def __post_init__(self) -> None:
+        """Finalize pre-calculated fields."""
         self.src_end = self.src_start + self.size
         self.dest_end = self.dest_start + self.size
 
     def get_mapping(self, src_value: int) -> int:
-        """Converts from src_value to destination"""
+        """Converts from src_value to destination."""
         if self.src_start <= src_value < self.src_end:
             return src_value - self.src_start + self.dest_start
 
         raise ValueError(f"Item not within mapping range {src_value, self}")
 
     def get_mappings(self, start: int, end: int) -> tuple[MappingRange, int]:
-        """Returns the chunk from start to end, followed by the remainder
-        """
+        """Returns the chunk from start to end, followed by the remainder."""
         dest_start = start - self.src_start + self.dest_start
         dest_end_uncapped = end - self.src_start + self.dest_start
 
@@ -52,27 +53,32 @@ class Mapping:
 
 
 class NamedMap:
-    """a named map with a list of mappings
-    you can just use this class to search for a mapping
-    """
+    """a named map with a list of mappings."""
 
     name: str
     mappings: list[Mapping]
 
     def __init__(self, name: str):
-        """This one is a bit weird; the client should add mappings
+        """Create empty NamedMap from just its name.
+
+        This one is a bit weird; the client should add mappings
         after construction, then call finalize_mappings
-        This is to keep the file parsing code simpler.
+        This is to keep the file parsing code simpler
+
+        Args:
+            name (str): name of the mapping list
         """
         self.name = name
         self.mappings = []
 
     def add_mapping(self, mapping: Mapping) -> None:
-        """Adds a mapping to our list"""
+        """Adds a mapping to our list."""
         self.mappings.append(mapping)
 
     def finalize_mappings(self) -> None:
-        """* Sorts the mappings
+        """Post processes the mappings.
+
+        * Sorts the mappings
         * Fills in any missing ranges
         * Homogenizes so min_mapping is 0, and max_mapping is INT_MAX
         """
@@ -96,7 +102,7 @@ class NamedMap:
         self.mappings = self.extend_mapping_range(mappings)
 
     def extend_mapping_range(self, mappings: list[Mapping]) -> list[Mapping]:
-        """Ensure that mappings go from 0 -> INT_MAX"""
+        """Ensure that mappings go from 0 -> INT_MAX."""
         if mappings[0].src_start != 0:
             injected_mapping = Mapping(0, 0, mappings[0].src_start, True)
             mappings.insert(0, injected_mapping)
@@ -108,7 +114,7 @@ class NamedMap:
         return mappings
 
     def get_mapping(self, value: int) -> int:
-        """Uses binary search to grab the correct mapping, then apply it to one value"""
+        """Uses binary search to grab the correct mapping, then apply it to one value."""
         mapping_idx = bisect_left(self.mappings, value, key=lambda m: m.src_end - 1)
         mapping = self.mappings[mapping_idx]
         return mapping.get_mapping(value)
@@ -116,7 +122,7 @@ class NamedMap:
     def get_mapping_ranges(
         self, src_mapping_ranges: list[MappingRange]
     ) -> list[MappingRange]:
-        """Given a list of mapping ranges, returns a new list of mapping ranges"""
+        """Given a list of mapping ranges, returns a new list of mapping ranges."""
         result = []
         for src_mapping_range in src_mapping_ranges:
             mappings = self.get_mapping_range(src_mapping_range)
@@ -124,9 +130,7 @@ class NamedMap:
         return result
 
     def get_mapping_range(self, src_mapping_range: MappingRange) -> list[MappingRange]:
-        """Given a range like 100-200, returns a
-        list of lists describing the new mapped range
-        """
+        """Remaps a source range to a list of destination ranges."""
         # make a quick copy first
         src_start, src_end = src_mapping_range.start, src_mapping_range.end
         result: list[MappingRange] = []
@@ -147,6 +151,7 @@ class NamedMap:
         return result
 
     def __str__(self) -> str:
+        """Return string for list of mappings."""
         result = str(self.name) + "\n"
         result += "\n".join(str(mapping) for mapping in self.mappings)
         return result

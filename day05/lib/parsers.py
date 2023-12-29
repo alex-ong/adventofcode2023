@@ -1,8 +1,9 @@
+"""Parsing from source file to well defined classes."""
 from day05.lib.classes import Mapping, NamedMap
 
 
 def grab_inputs(path: str) -> tuple[list[int], list[NamedMap]]:
-    """Parses the source file"""
+    """Parses the source file."""
     seeds: list[int]
     maps: list[NamedMap] = []
     named_map: NamedMap

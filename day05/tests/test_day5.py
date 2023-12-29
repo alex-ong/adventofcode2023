@@ -1,3 +1,4 @@
+"""Day5 mainfile tests."""
 from typing import TYPE_CHECKING
 
 import pytest
@@ -11,6 +12,7 @@ if TYPE_CHECKING:
 
 
 def test_mapping() -> None:
+    """Test ``NamedMap`` class."""
     seeds: list[int]
     maps: list[NamedMap]
     seeds, maps = grab_inputs(INPUT_SMALL)
@@ -44,16 +46,19 @@ def test_mapping() -> None:
 
 
 def test_part1() -> None:
+    """Test ``part1()``."""
     seeds, maps = grab_inputs(INPUT_SMALL)
     assert part1(seeds, maps) == 35
 
 
 def test_part2() -> None:
+    """Test ``part2()``."""
     seeds, maps = grab_inputs(INPUT_SMALL)
     assert part2(seeds, maps) == 46
 
 
 def test_seed_to_mapping_ranges() -> None:
+    """Test construction of mapping ranges for part2."""
     data = [79, 14, 55, 13]
     # 79, len(14) -> 79, 93
     # 55, len(13) -> 55, 68
