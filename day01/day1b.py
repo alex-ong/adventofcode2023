@@ -38,6 +38,18 @@ MAPPINGS: list[WordNumber] = [
 
 
 def process_line(line: str) -> int:
+    """
+    Processes a line, returning the first and last integer
+    substrings like ``nine`` and ``one`` count as integers,
+    as do ``1`` and ``9``
+
+    Args:
+        line (str): a line to process
+
+    Returns:
+        int: integer value of the two numbers concatenated
+    """
+
     index_to_chars = {}
     for index, char in enumerate(line):
         if char.isnumeric():
@@ -56,16 +68,35 @@ def process_line(line: str) -> int:
 
 
 def get_input(input_file: str) -> list[str]:
+    """
+    Opens a file and returns a list of strings to handle
+
+    Args:
+        input_file (str): filepath of input
+
+    Returns:
+        list[str]: list of strings to parse
+    """
     with open(input_file, "r", encoding="utf8") as file:
         return list(file)
 
 
 def part2(lines: list[str]) -> int:
+    """
+    Returns sum of "first/last" numbers in line
+
+    Args:
+        lines (list[str]): list of lines to handle
+
+    Returns:
+        int: sum of "first/last" numbers in line
+    """
     total = sum(process_line(line) for line in lines)
     return total
 
 
 def main() -> None:
+    """Grabs input and then processes it"""
     lines = get_input(INPUT)
     print(part2(lines))
 
