@@ -1,3 +1,4 @@
+"""Tests for main functions in day10."""
 from typing import TYPE_CHECKING
 
 import pytest
@@ -25,6 +26,7 @@ if TYPE_CHECKING:
 
 
 def test_day10() -> None:
+    """Test day10."""
     pipe_map_a: PipeMap = read_input(INPUT_A)
     pipe_map_b: PipeMap = read_input(INPUT_B)
     # q1

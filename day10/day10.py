@@ -1,4 +1,4 @@
-"""day10"""
+"""day10 solution."""
 
 
 from day10.lib.direction import Direction
@@ -14,12 +14,12 @@ INPUT_D = "day10/input-d.txt"
 
 
 def process_input_line(row: int, line: str) -> list[Pipe]:
-    """Process a single line of input"""
+    """Process a single line of input."""
     return [Pipe(row, col, char) for col, char in enumerate(line.strip())]
 
 
 def read_input(path: str) -> PipeMap:
-    """Read the map"""
+    """Read the map."""
     with open(path, "r", encoding="utf8") as file:
         pipes = [process_input_line(row, line) for row, line in enumerate(file)]
         pipe_map = PipeMap(pipes)
@@ -27,7 +27,7 @@ def read_input(path: str) -> PipeMap:
 
 
 def find_s(pipe_map: PipeMap) -> Position:
-    """Finds the S pipe"""
+    """Finds the S pipe."""
     for row_idx, row in enumerate(pipe_map.pipes):
         finder = (col_idx for col_idx, pipe in enumerate(row) if pipe.is_start)
         try:
@@ -40,8 +40,20 @@ def find_s(pipe_map: PipeMap) -> Position:
 
 
 def calculate_s(start: Position, pipe_map: PipeMap) -> str:
-    """Calculate what the "S" character is as a pipe
-    Guaranteed that there will be two pipes going into us
+    """Calculate what the "S" character is as a pipe.
+
+    We should have exactly two pipes going into us
+
+    Args:
+        start (Position): position of S
+        pipe_map (PipeMap): map of pipes
+
+    Raises:
+        ValueError: ``S`` doesn't have any connecting pipes
+        AssertionError: ``S`` does not match any known pipe.
+
+    Returns:
+        str: The character representing the pipe
     """
     connecting = []
     pipe_directions = [Direction.NORTH, Direction.WEST, Direction.EAST, Direction.SOUTH]
@@ -67,6 +79,7 @@ def calculate_s(start: Position, pipe_map: PipeMap) -> str:
 
 
 def find_cycles(pipe_map: PipeMap) -> list[Pipe]:
+    """Finds the pipe path starting from S."""
     # first find S, and re-assign it
     s_position: Position = find_s(pipe_map)
     s_char: str = calculate_s(s_position, pipe_map)
@@ -86,8 +99,13 @@ def find_cycles(pipe_map: PipeMap) -> list[Pipe]:
 
 
 def flood_fill(pipe_map: PipeMap) -> int:
-    """Flood fills a pipemap from one starting tile
-    returns how many tiles were filled
+    """Flood fills a pipemap from one starting tile.
+
+    Args:
+        pipe_map (PipeMap): pipemap to fill
+
+    Returns:
+        int: how many tiles were filled
     """
     visited_positions = set()
     to_visit: list[Position] = [Position(0, 0)]
@@ -114,14 +132,14 @@ def flood_fill(pipe_map: PipeMap) -> int:
 
 
 def process_big_input_line(row: int, line: str) -> list[Pipe]:
-    """Process a single line of input"""
+    """Process a single line of input."""
     return [
         Pipe(row, col, char, is_loop=(char != " ")) for col, char in enumerate(line)
     ]
 
 
 def expand_map(pipe_map: PipeMap) -> PipeMap:
-    """Expands each pipe into a 3x3 tile"""
+    """Expands each pipe into a 3x3 tile."""
     big_map = []
 
     for row in pipe_map.pipes:
@@ -144,7 +162,7 @@ def expand_map(pipe_map: PipeMap) -> PipeMap:
 
 
 def reduce_map(big_map: PipeMap, small_map: PipeMap) -> PipeMap:
-    """Converts from fat map back down to small map"""
+    """Converts from fat map back down to small map."""
     rows = []
     for row_idx in range(small_map.height):
         row_tiles = []
@@ -167,7 +185,7 @@ def reduce_map(big_map: PipeMap, small_map: PipeMap) -> PipeMap:
 
 
 def expand_pipe(character: str, is_loop: bool) -> tuple[str, str, str]:
-    # expands a pipe character to big boi 3x3
+    """Expands a pipe character to big boi 3x3."""
     # fmt: off
     if not is_loop:
         return ("   ",
@@ -206,11 +224,13 @@ def expand_pipe(character: str, is_loop: bool) -> tuple[str, str, str]:
 
 
 def part1(pipe_map: PipeMap) -> int:
+    """Finds length of S loop."""
     pipe_path = find_cycles(pipe_map)
     return len(pipe_path) // 2
 
 
 def part2(pipe_map: PipeMap) -> int:
+    """Finds tiles "inside" the loop."""
     find_cycles(pipe_map)
 
     # print our map before we mutate it
@@ -233,7 +253,8 @@ def part2(pipe_map: PipeMap) -> int:
         total_unknown += sum(
             1 if col.pipe_bounds == PipeBounds.UNKNOWN else 0 for col in row
         )
-    # extra: show unknowns:
+
+    # extra step; mark unknown asn inside.
     for row in pipes:
         for col in row:
             if col.pipe_bounds == PipeBounds.UNKNOWN:
@@ -244,6 +265,7 @@ def part2(pipe_map: PipeMap) -> int:
 
 
 def main() -> None:
+    """Read input and run part1/part2."""
     pipe_map = read_input(INPUT)
     # q1
     print(part1(pipe_map))
