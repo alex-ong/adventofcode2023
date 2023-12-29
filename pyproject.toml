@@ -20,8 +20,8 @@ ignore = ["SIM108"]
 docstring-code-format = true
 
 # Todo: unmark this once we hit 100% comments
-#[tool.ruff.lint]
-#select = ["D"]
+[tool.ruff.lint]
+select = ["D"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"

@@ -1,4 +1,4 @@
-"""day7 solution"""
+"""day7 solution."""
 from collections import defaultdict
 from dataclasses import dataclass, field
 from functools import total_ordering
@@ -11,7 +11,7 @@ INPUT_SMALL = "day07/input-small.txt"
 @total_ordering
 @dataclass(eq=False)
 class Hand:
-    """Simple hand class, uses cards_inted and of_a_kind for sorting"""
+    """Simple hand class, uses cards_inted and of_a_kind for sorting."""
 
     cards: str
     bet: int
@@ -21,20 +21,20 @@ class Hand:
     CARD_MAPPING: ClassVar[str] = "23456789TJQKA"
 
     def __post_init__(self) -> None:
-        """Convert cards to ints"""
+        """Convert cards to ints."""
         self.cards_inted = [self.CARD_MAPPING.index(card) for card in self.cards]
         self.bet = int(self.bet)
         self.of_a_kind = self.calculate_of_a_kind()
 
     def calculate_of_a_kind(self) -> list[int]:
-        """Figure out card sets"""
+        """Figure out card sets."""
         card_sets: dict[str, int] = defaultdict(int)
         for card in self.cards:
             card_sets[card] += 1
         return sorted(card_sets.values(), reverse=True)
 
     def __lt__(self, other: Self) -> Any:
-        """Less than comparator function"""
+        """Less than comparator function."""
         if not isinstance(other, Hand):
             raise ValueError("using __lt__ on non identical class")
         # compare our sets
@@ -45,21 +45,20 @@ class Hand:
         return self.cards_inted < other.cards_inted  # int lists easy to compare
 
     def __eq__(self, other: object) -> bool:
+        """Compares if two hands are equal by comparing cards in same order and value."""
         if not isinstance(other, Hand):
             raise ValueError("using __lt__ on non identical class")
         return self.cards_inted == other.cards_inted
 
 
 class HandPart2(Hand):
-    """Part two; implements joker rule"""
+    """Part two; implements joker rule."""
 
     CARD_MAPPING = "J23456789TQKA"  # new card ordering
 
     # override
     def calculate_of_a_kind(self) -> list[int]:
-        """Figure out card sets;
-        jokers will be added to the biggest card set
-        """
+        """Figure out card sets; jokers will be added to the biggest card set."""
         card_sets: dict[str, int] = defaultdict(int)
         for card in self.cards:
             card_sets[card] += 1
@@ -74,7 +73,7 @@ class HandPart2(Hand):
 
 
 def parse_lines(cls: type, path: str) -> list[Hand]:
-    """Open input file and parse into hand structures"""
+    """Open input file and parse into hand structures."""
     with open(path, "r", encoding="utf8") as file:
         # wow super cool list comprehension thingo i'm so cool
         results = [cls(*line.split()) for line in file]
@@ -82,7 +81,7 @@ def parse_lines(cls: type, path: str) -> list[Hand]:
 
 
 def calculate_hands(cls: type, input_path: str) -> int:
-    """Generates class `cls` then calculates points"""
+    """Generates class `cls` then calculates points."""
     hands = sorted(parse_lines(cls, input_path))
 
     score = 0
@@ -92,7 +91,7 @@ def calculate_hands(cls: type, input_path: str) -> int:
 
 
 def main() -> None:
-    """Main func"""
+    """Main func."""
     # Q1
     print(calculate_hands(Hand, INPUT))
 
