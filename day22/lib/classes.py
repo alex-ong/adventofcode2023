@@ -50,12 +50,12 @@ class BoxData:
 
     @property
     def z_val_bot(self) -> int:
-        """return lowest z value (self.start_pos.z)"""
+        """Return lowest z value (self.start_pos.z)"""
         return self.start_pos.z
 
     @property
     def z_val_top(self) -> int:
-        """return maximum z value(self.end_pos.z)"""
+        """Return maximum z value(self.end_pos.z)"""
         return self.end_pos.z
 
     ####################################
@@ -86,14 +86,14 @@ class BoxData:
     ################################################
 
     def set_supports(self, supports: set["BoxData"]) -> None:
-        """blocks under us"""
+        """Blocks under us"""
         self.supports = supports
 
     def set_hats(self, hats: set["BoxData"]) -> None:
         self.hats = hats
 
     def recursive_fall(self, already_falling: set["BoxData"]) -> set["BoxData"]:
-        """returns all boxes above us that fall if we fall"""
+        """Returns all boxes above us that fall if we fall"""
         to_process: list[BoxData] = []  # items that will fall if this brick is removed
         result: set["BoxData"] = set()
         for hat in self.hats.difference(already_falling):
@@ -171,7 +171,6 @@ class Matrix:
 
     def can_fly_up(self, box: BoxData) -> bool:
         """Check cells above our block. If they're clear we can fly up"""
-
         # all our "hats" need to have > 1 supports
         hats = list(box.hats)
         return all(len(hat.supports) > 1 for hat in hats)

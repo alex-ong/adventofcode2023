@@ -54,7 +54,7 @@ class BaseModule(ABC):
         return []
 
     def add_to_graph(self, dot: Digraph) -> None:
-        """adds edges only to the graph. inheritors need to handle their repr"""
+        """Adds edges only to the graph. inheritors need to handle their repr"""
         attrs = {"color": self.arrow_color()}
 
         for output in self.outputs:
@@ -67,8 +67,7 @@ class BaseModule(ABC):
 
 @dataclass
 class FlipFlopModule(BaseModule):
-    """
-    If we receive HIGH, we are a sink (do nothing)
+    """If we receive HIGH, we are a sink (do nothing)
     If we receive LOW, flip our current value and send it to everyone
     """
 
@@ -99,8 +98,7 @@ class FlipFlopModule(BaseModule):
 
 @dataclass
 class ConjunctionModule(BaseModule):
-    """
-    Keeps track of all inputs.
+    """Keeps track of all inputs.
     Changes internal state, then sends high/low based on internal state
     """
 

@@ -21,7 +21,7 @@ class Hand:
     CARD_MAPPING: ClassVar[str] = "23456789TJQKA"
 
     def __post_init__(self) -> None:
-        """convert cards to ints"""
+        """Convert cards to ints"""
         self.cards_inted = [self.CARD_MAPPING.index(card) for card in self.cards]
         self.bet = int(self.bet)
         self.of_a_kind = self.calculate_of_a_kind()
@@ -57,11 +57,9 @@ class HandPart2(Hand):
 
     # override
     def calculate_of_a_kind(self) -> list[int]:
-        """
-        Figure out card sets;
+        """Figure out card sets;
         jokers will be added to the biggest card set
         """
-
         card_sets: dict[str, int] = defaultdict(int)
         for card in self.cards:
             card_sets[card] += 1
@@ -76,8 +74,7 @@ class HandPart2(Hand):
 
 
 def parse_lines(cls: type, path: str) -> list[Hand]:
-    """open input file and parse into hand structures"""
-
+    """Open input file and parse into hand structures"""
     with open(path, "r", encoding="utf8") as file:
         # wow super cool list comprehension thingo i'm so cool
         results = [cls(*line.split()) for line in file]
@@ -85,7 +82,7 @@ def parse_lines(cls: type, path: str) -> list[Hand]:
 
 
 def calculate_hands(cls: type, input_path: str) -> int:
-    """generates class `cls` then calculates points"""
+    """Generates class `cls` then calculates points"""
     hands = sorted(parse_lines(cls, input_path))
 
     score = 0
@@ -95,7 +92,7 @@ def calculate_hands(cls: type, input_path: str) -> int:
 
 
 def main() -> None:
-    """main func"""
+    """Main func"""
     # Q1
     print(calculate_hands(Hand, INPUT))
 

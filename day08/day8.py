@@ -12,8 +12,7 @@ INPUT_C = "day08/input-c.txt"
 
 @dataclass
 class Location:
-    """
-    A location on our map,
+    """A location on our map,
     with names of other locations
     """
 
@@ -24,8 +23,7 @@ class Location:
 
 @dataclass
 class LocationStep:
-    """
-    Location + how many steps to get here
+    """Location + how many steps to get here
     """
 
     location: Location
@@ -44,7 +42,7 @@ class WorldMap:
         self.mappings = {}
 
     def add_location(self, location: Location) -> None:
-        """add location to our mappings"""
+        """Add location to our mappings"""
         self.mappings[location.name] = location
 
 
@@ -75,7 +73,7 @@ class Cycle:
 
     @property
     def cycle_length(self) -> int:
-        """return length of the repeating part"""
+        """Return length of the repeating part"""
         return len(self.location_steps) - self.cycle_start_index
 
     def __post_init__(self) -> None:
@@ -99,7 +97,7 @@ class Cycle:
 
 
 def read_input(path: str) -> tuple[Directions, WorldMap]:
-    """reads input into directions/world_map"""
+    """Reads input into directions/world_map"""
     with open(path, "r", encoding="utf8") as file:
         directions = Directions(file.readline().strip())
         world_map = WorldMap()
@@ -116,8 +114,7 @@ def read_input(path: str) -> tuple[Directions, WorldMap]:
 
 
 def follow_directions(directions: Directions, world_map: WorldMap) -> int:
-    """follows directions until we hit zzz"""
-
+    """Follows directions until we hit zzz"""
     mappings = world_map.mappings
     node: Location = mappings["AAA"]
     nodes_visited = 0
@@ -207,7 +204,7 @@ def find_cycle(
 
 
 def main() -> None:
-    """main function, solve the things"""
+    """Main function, solve the things"""
     # q1
     directions, world_map = read_input(INPUT)
     nodes_visited: int = follow_directions(directions, world_map)

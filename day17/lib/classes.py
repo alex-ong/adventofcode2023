@@ -46,7 +46,7 @@ class SolutionCache:
         ]
 
     def add_solution(self, step: Step) -> bool:
-        """adds solution to cache returns whether an improvement was made"""
+        """Adds solution to cache returns whether an improvement was made"""
         tile_cache = self.cache[step.row][step.col]
         existing_item = tile_cache[step.direction, step.consecutive_steps]
         if existing_item is None:
@@ -80,8 +80,7 @@ class WorldPart1:
         return self.costs[row][col]
 
     def create_step(self, step: Step, direction: Direction) -> Step | None:
-        """
-        Create step from previous step and a given direction
+        """Create step from previous step and a given direction
         returns None if the step is invalid or suboptimal
         """
         row, col = direction.offset(step.row, step.col)
@@ -120,7 +119,7 @@ class WorldPart1:
         raise AssertionError("No solution found!")
 
     def is_oob(self, row: int, col: int) -> bool:
-        """true if laser is out of bounds"""
+        """True if laser is out of bounds"""
         return row < 0 or row >= self.num_rows or col < 0 or col >= self.num_cols
 
 

@@ -63,22 +63,20 @@ class Universe:
         self.num_cols = len(self.contents[0])
 
     def __getitem__(self, row_index: int) -> list[Point]:
-        """
-        we can just use universe[row]
+        """We can just use universe[row]
         instead of universe.contents[row]
         """
         return self.contents[row_index]
 
     def __iter__(self) -> Iterator[list[Point]]:
-        """
-        we can just use `for row in universe`
+        """We can just use `for row in universe`
         instead of `for row in universe.contents`
         """
         for row in self.contents:
             yield row
 
     def expand_contents(self) -> None:
-        """expands the contents of the universe"""
+        """Expands the contents of the universe"""
         for row in self.contents:
             if is_empty(row):
                 for item in row:
@@ -93,7 +91,7 @@ class Universe:
             col_index += 1
 
     def grab_galaxies(self) -> list[Galaxy]:
-        """grabs all galaxies"""
+        """Grabs all galaxies"""
         results = []
         galaxy_id = 0
         for index_row, row in enumerate(self.contents):
@@ -108,13 +106,13 @@ class Universe:
 
 
 def is_empty(items: list[Point]) -> bool:
-    """returns True if all the content is "." """
+    """Returns True if all the content is "." """
     has_content = any(x.item == "#" for x in items)
     return not has_content
 
 
 def parse_input(path: str) -> Universe:
-    """parse input file and return a universe"""
+    """Parse input file and return a universe"""
     with open(path, "r", encoding="utf8") as file:
         rows = []
         for row, line in enumerate(file):
@@ -125,7 +123,7 @@ def parse_input(path: str) -> Universe:
 
 
 def get_total_distance(galaxies: list[Galaxy], universe: Universe) -> int:
-    """returns total distance of all galaxies"""
+    """Returns total distance of all galaxies"""
     result = 0
     for index, galaxy in enumerate(galaxies):
         for galaxy2 in galaxies[index + 1 :]:
@@ -135,7 +133,7 @@ def get_total_distance(galaxies: list[Galaxy], universe: Universe) -> int:
 
 
 def main() -> None:
-    """main function, runs q1 and q2"""
+    """Main function, runs q1 and q2"""
     universe: Universe = parse_input(INPUT)
     universe.expand_contents()
     galaxies = universe.grab_galaxies()

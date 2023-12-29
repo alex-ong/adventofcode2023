@@ -10,8 +10,7 @@ from day20.lib.classes import (
 
 
 def parse_line(line: str) -> BaseModule:
-    """
-    %a -> inv, con
+    """%a -> inv, con
     """
     module_type_name, destinations = line.strip().split(" -> ")
     destination_list: list[str] = destinations.split(", ")
@@ -37,8 +36,7 @@ def get_modules(filename: str) -> list[BaseModule]:
 
 
 def finalize_modules(modules: list[BaseModule]) -> list[BaseModule]:
-    """
-    for each module, calculate its inputs.
+    """For each module, calculate its inputs.
     Then inject the inputs into our conjunction modules
     Modifies `modules` inplace, and returns it
     """

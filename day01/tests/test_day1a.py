@@ -1,10 +1,11 @@
+"""Tests for day1a."""
 import pytest
 
 from day01.day1a import INPUT_SMALL, get_first_last, get_input, part1
 
 
 def test_get_first_last() -> None:
-    """Tests a variety of strings on ``get_first_last()`` function"""
+    """Tests a variety of strings on ``get_first_last()`` function."""
     assert get_first_last("abcdef123asdf4") == ("1", "4")
     assert get_first_last("1") == ("1", "1")
     assert get_first_last("01") == ("0", "1")
@@ -19,13 +20,13 @@ def test_get_first_last() -> None:
 
 
 def test_part1() -> None:
-    """Tests ``part1()`` function"""
+    """Tests ``part1()`` function."""
     lines: list[str] = get_input(INPUT_SMALL)
     assert part1(lines) == 142
 
 
 def test_get_input() -> None:
-    """Tests ``get_input`` function"""
+    """Tests ``get_input`` function."""
     lines: list[str] = get_input(INPUT_SMALL)
     assert len(lines) == 4
     assert lines[0].strip() == "1abc2"

@@ -1,4 +1,4 @@
-"""day1b solution"""
+"""day1b solution."""
 
 
 from dataclasses import dataclass
@@ -9,17 +9,24 @@ INPUT_SMALL = "day01/input-small2.txt"
 
 @dataclass
 class IndexValue:
-    """index to value mapping"""
+    """index to value mapping."""
 
     index: int = 0
     value: str = "1"
 
     def __str__(self) -> str:
+        """to_string function.
+
+        Returns:
+            str: ``(i:{index}, v:{value})``
+        """
         return f"(i:{self.index}, v:{self.value})"
 
 
 @dataclass
 class WordNumber:
+    """Simple mapping from word to integer."""
+
     word: str = "one"
     number: str = "1"
 
@@ -38,10 +45,10 @@ MAPPINGS: list[WordNumber] = [
 
 
 def process_line(line: str) -> int:
-    """
-    Processes a line, returning the first and last integer
-    substrings like ``nine`` and ``one`` count as integers,
-    as do ``1`` and ``9``
+    """Processes a line, returning the first and last integer.
+
+    Substrings like ``nine`` and ``one`` count as integers,
+    as do ``1`` and ``9``.
 
     Args:
         line (str): a line to process
@@ -49,7 +56,6 @@ def process_line(line: str) -> int:
     Returns:
         int: integer value of the two numbers concatenated
     """
-
     index_to_chars = {}
     for index, char in enumerate(line):
         if char.isnumeric():
@@ -68,8 +74,7 @@ def process_line(line: str) -> int:
 
 
 def get_input(input_file: str) -> list[str]:
-    """
-    Opens a file and returns a list of strings to handle
+    """Opens a file and returns a list of strings to handle.
 
     Args:
         input_file (str): filepath of input
@@ -82,8 +87,7 @@ def get_input(input_file: str) -> list[str]:
 
 
 def part2(lines: list[str]) -> int:
-    """
-    Returns sum of "first/last" numbers in line
+    """Returns sum of "first/last" numbers in line.
 
     Args:
         lines (list[str]): list of lines to handle
@@ -96,7 +100,7 @@ def part2(lines: list[str]) -> int:
 
 
 def main() -> None:
-    """Grabs input and then processes it"""
+    """Grabs input and then processes it."""
     lines = get_input(INPUT)
     print(part2(lines))
 

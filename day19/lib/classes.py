@@ -63,8 +63,7 @@ class PartRange:
     def split(
         self, component: Component, split_value: int
     ) -> tuple[Optional["PartRange"], Optional["PartRange"]]:
-        """
-        Split a partrange in two, using a chosen component and splitvalue
+        """Split a partrange in two, using a chosen component and splitvalue
         in the case that our range falls on one whole side, we return None.
         E.g.
         range = 0-100; split == 200 -> return [(0-100), None]
@@ -140,7 +139,7 @@ class Condition:
     def process_part_range(
         self, part_range: PartRange
     ) -> tuple[Optional[PartRange], Optional[PartRange]]:
-        """return pass, fail as ranges"""
+        """Return pass, fail as ranges"""
         if self.sign == Comparator.LessThan:
             success, fail = part_range.split(self.component, self.value)
             return (success, fail)
@@ -157,7 +156,8 @@ class Rule:
 
     def process_part(self, part: Part) -> str | None:
         """Processes a part. Returns next workflow if successful,
-        or None if we failed this rule"""
+        or None if we failed this rule
+        """
         if self.condition is None:  # always pass
             return self.destination
         if self.condition.process_part(part):
@@ -185,7 +185,7 @@ class Workflow:
     rules: list[Rule]
 
     def process_part(self, part: Part) -> str:
-        """processes a part, returns the next workflow"""
+        """Processes a part, returns the next workflow"""
         for rule in self.rules:
             destination = rule.process_part(part)
             if destination is not None:
@@ -193,8 +193,7 @@ class Workflow:
         raise AssertionError("uh oh, hit the end of workflow!")
 
     def process_part_range(self, part_range: PartRange) -> list[PartRangeDest]:
-        """
-        Follow rule list. Each success has to branch off,
+        """Follow rule list. Each success has to branch off,
         each failure continues down the chain.
         """
         results: list[PartRangeDest] = []

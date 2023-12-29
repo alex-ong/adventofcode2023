@@ -75,7 +75,7 @@ class Path:
         return "\n".join("".join(char for char in row) for row in char_array)
 
     def __len__(self) -> int:
-        """length of path. Has to be -1 because problem is like that"""
+        """Length of path. Has to be -1 because problem is like that"""
         return len(self.route) - 1
 
     def __eq__(self, other: object) -> Any:
@@ -117,7 +117,7 @@ class Maze:
         self.grid[position.row][position.col] = value
 
     def is_oob(self, position: Position) -> bool:
-        """true if position is out of bounds"""
+        """True if position is out of bounds"""
         return (
             position.row < 0
             or position.row >= self.num_rows
@@ -130,7 +130,7 @@ class Maze:
         return result
 
     def get_cell_branches(self, position: Position) -> int:
-        """returns how many branches come out of this tile"""
+        """Returns how many branches come out of this tile"""
         result = 0
         if self[position] != ".":
             return 0
@@ -206,12 +206,10 @@ class Solver1:
 
 
 def generate_paths(path: Path, expansions: list[Position]) -> list[Path]:
-    """
-    Given a path and valid expansions, (optionally) copies the path.
+    """Given a path and valid expansions, (optionally) copies the path.
     Returns a list of new paths. If there is only one expansion, modifies it
     in-place
     """
-
     if len(expansions) == 0:
         return []
     elif len(expansions) == 1:

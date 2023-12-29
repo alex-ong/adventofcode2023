@@ -37,7 +37,7 @@ def part2(input: list[list[int]]) -> int:
 
 
 def main() -> None:
-    """mainfunc"""
+    """Mainfunc"""
     input: list[list[int]] = get_input(INPUT)
     # q1
     print(f"num steps: {part1(input)}")

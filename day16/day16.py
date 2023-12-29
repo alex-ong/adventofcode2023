@@ -1,5 +1,4 @@
-"""
-day16 solution
+"""day16 solution
 """
 
 
@@ -55,7 +54,7 @@ def part2(world: World) -> int:
 
 
 def main() -> None:
-    """main function"""
+    """Main function"""
     world = get_input(INPUT)
 
     print(part1(world))

@@ -59,7 +59,7 @@ def question2(raw_steps: list[str]) -> int:
 
 
 def main() -> None:
-    """main function"""
+    """Main function"""
     raw_steps = get_input(INPUT)
 
     # q1

@@ -11,8 +11,7 @@ class State:
     broken_springs: list[int]
 
     def valid(self) -> int:
-        """
-        returns true IFF we are completed without errors
+        """Returns true IFF we are completed without errors
         """
         if len(self.items) == 0 and len(self.broken_springs) == 0:
             return 1
@@ -42,22 +41,21 @@ class SpringLine:
     big_cache: dict[State, int] = field(init=False, repr=False, default_factory=dict)
 
     def unfold(self) -> "SpringLine":
-        """makes it bigger"""
+        """Makes it bigger"""
         return SpringLine("?".join([self.items] * 5), self.broken_springs * 5)
 
     def calculate(self) -> int:
-        """brute force with backtracking lets go..."""
+        """Brute force with backtracking lets go..."""
         first_state = State(self.items[:], self.broken_springs[:])
         return self.calculate_recursive(first_state)
 
     def set_and_return(self, state: State, value: int) -> int:
-        """sets and returns in one line"""
+        """Sets and returns in one line"""
         self.big_cache[state] = value
         return value
 
     def calculate_recursive(self, state: State) -> int:
-        """
-        Recursive with memoization
+        """Recursive with memoization
         1. memoized
         2. state.empty -> return if we are valid
         3. state[0] == "." chop it and continue
@@ -99,7 +97,7 @@ class SpringLine:
 
 
 def get_input(path: str) -> list[SpringLine]:
-    """returns list of SpringLines from input file"""
+    """Returns list of SpringLines from input file"""
     result = []
     with open(path, "r", encoding="utf8") as file:
         for line in file:
@@ -111,12 +109,12 @@ def get_input(path: str) -> list[SpringLine]:
 
 
 def calculate_sum(spring_lines: list[SpringLine]) -> int:
-    """calculates every spring line and then adds the totals"""
+    """Calculates every spring line and then adds the totals"""
     return sum(spring_line.calculate() for spring_line in spring_lines)
 
 
 def main() -> None:
-    """main function"""
+    """Main function"""
     spring_lines = get_input(INPUT)
     # q1
     print(calculate_sum(spring_lines))

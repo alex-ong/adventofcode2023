@@ -33,8 +33,7 @@ EXPORT_GRAPHS = False
 def simulate(
     modules: dict[str, BaseModule], stored_pulses: Optional[list[PulseTarget]] = None
 ) -> tuple[int, int]:
-    """
-    Simulate a list of modules.
+    """Simulate a list of modules.
     If you pass in stored_pulses, we will append every pulse to it
     """
     pulses: Queue[PulseTarget] = Queue()
@@ -64,8 +63,9 @@ def simulate(
 def get_loop_paths(
     start_switch: str, module_map: dict[str, BaseModule]
 ) -> list[BaseModule]:
-    """given a start path, returns the longest path until we hit a conjunction module
-    "" it should be n FlipFlops and then a single conjunction"""
+    """Given a start path, returns the longest path until we hit a conjunction module
+    "" it should be n FlipFlops and then a single conjunction
+    """
     path: list[BaseModule] = []
     current_module: BaseModule = module_map[start_switch]
     while isinstance(current_module, FlipFlopModule):
@@ -129,7 +129,6 @@ def get_module_groups(module_map: dict[str, BaseModule]) -> ModuleGroups:
 
 def graph_modules(module_groups: ModuleGroups, index: int) -> graphviz.Digraph:
     """Graphs the modules"""
-
     index_str = str(index).zfill(4)
     graph_attr = {"labelloc": "t", "label": index_str}
     dot = graphviz.Digraph(f"Push {index_str}", format="png", graph_attr=graph_attr)
@@ -171,7 +170,7 @@ def export_graph(
     simulation_counter: int,
     export_graphs: bool,
 ) -> None:
-    """export a graphviz datatype if graphing is enabled"""
+    """Export a graphviz datatype if graphing is enabled"""
     if export_graphs:
         dot = graph_modules(module_groups, simulation_counter)
         dots.append(dot)

@@ -1,5 +1,4 @@
-"""
-Day 4 solution
+"""Day 4 solution
 """
 
 INPUT = "day04/input.txt"
@@ -7,8 +6,7 @@ INPUT_SMALL = "day04/input-small.txt"
 
 
 def split_numbers(string: str) -> set[int]:
-    """
-    Splits a list of string'ed numbers into a set
+    """Splits a list of string'ed numbers into a set
     E.g: ` 39 40 41 42 ` -> set(39,40,41,42)
     """
     string = string.strip()
@@ -42,7 +40,7 @@ class Card:
         return points
 
     def get_matches(self) -> int:
-        """returns how many winners intersect with what we have"""
+        """Returns how many winners intersect with what we have"""
         intersection = self.winners.intersection(self.have)
         return len(intersection)
 
@@ -57,7 +55,7 @@ class Inventory:
         self.memoized = self.calculate_mappings()
 
     def calculate_mappings(self) -> dict[int, int]:
-        """returns map of card_id -> cards owned"""
+        """Returns map of card_id -> cards owned"""
         mappings = {}
         reversed_cards = self.all_cards[::-1]
         for card in reversed_cards:

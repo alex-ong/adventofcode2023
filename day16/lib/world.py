@@ -11,14 +11,14 @@ class SolvedWorld:
         self.data = [[[] for _ in range(num_cols)] for _ in range(num_rows)]
 
     def already_solved(self, laser: Laser) -> bool:
-        """returns true if laser already calculated"""
+        """Returns true if laser already calculated"""
         solutions = self.data[laser.row][laser.col]
         if laser in solutions:
             return True
         return False
 
     def add_laser(self, laser: Laser) -> None:
-        """adds laser to cell"""
+        """Adds laser to cell"""
         solutions = self.data[laser.row][laser.col]
         solutions.append(laser)
 
@@ -65,7 +65,7 @@ class World:
         return solved_world
 
     def is_oob(self, laser: Laser) -> bool:
-        """true if laser is out of bounds"""
+        """True if laser is out of bounds"""
         return (
             laser.row < 0
             or laser.row >= self.num_rows

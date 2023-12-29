@@ -50,8 +50,7 @@ class Solver2:
 
     @staticmethod
     def get_nodes(maze: Maze) -> dict[Position, Node]:
-        """
-        Gets does and marks them on the given maze
+        """Gets does and marks them on the given maze
         Note that the maze is modified in-place!
         Nodes are *not* populated with edges
         """
@@ -80,8 +79,7 @@ class Solver2:
     def calculate_edges(
         start_node: Node, nodes: dict[Position, Node], maze: Maze
     ) -> None:
-        """
-        Given a start Node and maze, modifies the maze inplace, filling it in with #
+        """Given a start Node and maze, modifies the maze inplace, filling it in with #
         Modifies the node and its connecting nodes by adding Edges
         """
         first_path = Path()

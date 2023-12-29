@@ -1,5 +1,4 @@
-"""
-Day 3 implementation
+"""Day 3 implementation
 """
 
 

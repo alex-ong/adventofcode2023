@@ -14,12 +14,12 @@ INPUT_D = "day10/input-d.txt"
 
 
 def process_input_line(row: int, line: str) -> list[Pipe]:
-    """process a single line of input"""
+    """Process a single line of input"""
     return [Pipe(row, col, char) for col, char in enumerate(line.strip())]
 
 
 def read_input(path: str) -> PipeMap:
-    """read the map"""
+    """Read the map"""
     with open(path, "r", encoding="utf8") as file:
         pipes = [process_input_line(row, line) for row, line in enumerate(file)]
         pipe_map = PipeMap(pipes)
@@ -40,8 +40,7 @@ def find_s(pipe_map: PipeMap) -> Position:
 
 
 def calculate_s(start: Position, pipe_map: PipeMap) -> str:
-    """
-    calculate what the "S" character is as a pipe
+    """Calculate what the "S" character is as a pipe
     Guaranteed that there will be two pipes going into us
     """
     connecting = []
@@ -87,8 +86,7 @@ def find_cycles(pipe_map: PipeMap) -> list[Pipe]:
 
 
 def flood_fill(pipe_map: PipeMap) -> int:
-    """
-    flood fills a pipemap from one starting tile
+    """Flood fills a pipemap from one starting tile
     returns how many tiles were filled
     """
     visited_positions = set()
@@ -116,14 +114,14 @@ def flood_fill(pipe_map: PipeMap) -> int:
 
 
 def process_big_input_line(row: int, line: str) -> list[Pipe]:
-    """process a single line of input"""
+    """Process a single line of input"""
     return [
         Pipe(row, col, char, is_loop=(char != " ")) for col, char in enumerate(line)
     ]
 
 
 def expand_map(pipe_map: PipeMap) -> PipeMap:
-    """expands each pipe into a 3x3 tile"""
+    """Expands each pipe into a 3x3 tile"""
     big_map = []
 
     for row in pipe_map.pipes:
@@ -146,7 +144,7 @@ def expand_map(pipe_map: PipeMap) -> PipeMap:
 
 
 def reduce_map(big_map: PipeMap, small_map: PipeMap) -> PipeMap:
-    """converts from fat map back down to small map"""
+    """Converts from fat map back down to small map"""
     rows = []
     for row_idx in range(small_map.height):
         row_tiles = []

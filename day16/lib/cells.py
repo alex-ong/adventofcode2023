@@ -1,5 +1,4 @@
-"""
-Cell classes
+"""Cell classes
 """
 from abc import ABC, abstractmethod
 

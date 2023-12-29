@@ -35,8 +35,7 @@ class PositionDist(Position):
         col: Optional[int] = None,
         distance: Optional[int] = None,
     ) -> "PositionDist":
-        """
-        return a copy with given args changed
+        """Return a copy with given args changed
         Distance will +1 if not supplied
         """
         row = row if row is not None else self.row
@@ -76,8 +75,7 @@ class BaseDistanceMaze(ABC):
 
     @abstractmethod
     def calc_steps(self, remainder: int) -> int:
-        """
-        calc steps, matching remainder == 1 or remainder == 0
+        """Calc steps, matching remainder == 1 or remainder == 0
         when modulo'ing by 2
         """
 
@@ -123,7 +121,7 @@ class DistanceMaze(BaseDistanceMaze):
         )
 
     def is_oob(self, position: Position) -> bool:
-        """true if position is out of bounds"""
+        """True if position is out of bounds"""
         return (
             position.row < 0
             or position.row >= self.num_rows
@@ -194,7 +192,7 @@ class DistanceMazes(BaseDistanceMaze):
         return self.grid[position]
 
     def __getitem__(self, position: Position) -> int:
-        """global coordinate 0 .. infinity"""
+        """Global coordinate 0 .. infinity"""
         big_pos, sub_pos = self.get_split_pos(position)
 
         result = self.grid[big_pos][sub_pos]
@@ -281,8 +279,7 @@ class GiantNodeParser:
     edge_dist: int
 
     def __init__(self, distance_mazes: DistanceMazes, nodes_to_edge: int) -> None:
-        """
-        e.g. 5x5, with steps == 10+2
+        """e.g. 5x5, with steps == 10+2
         nodes_to_edge == 2
         5x5, steps == 15+2
         nodes_to_edge == 3

@@ -33,7 +33,7 @@ GIGA_TARGET = 26_501_365  # even parity
 def mini_solve(
     start_pos: Position, maze: Maze, steps: int, distances: BaseDistanceMaze
 ) -> BaseDistanceMaze:
-    """given a basedistanceMaze, runs `steps` steps then returns the maze"""
+    """Given a basedistanceMaze, runs `steps` steps then returns the maze"""
     nodes: Queue[PositionDist] = Queue()
     nodes.put(PositionDist(start_pos.row, start_pos.col, distance=0))
 

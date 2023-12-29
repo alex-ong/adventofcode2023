@@ -8,7 +8,7 @@ INPUT_SMALL = "day13/input-small.txt"
 
 
 def distance(left: str, right: str) -> int:
-    """returns edit distance of two strings"""
+    """Returns edit distance of two strings"""
     return sum(a != b for a, b in zip(left, right))
 
 
@@ -25,7 +25,7 @@ class Maze:
         return self.check_reflection(self.tiles, distance)
 
     def reflect_cols(self, distance: int) -> Optional[int]:
-        """checks reflection of cols by flipping rows/cols"""
+        """Checks reflection of cols by flipping rows/cols"""
         cols: list[list[str]] = [[] for _ in range(len(self.tiles[0]))]
         for row in self.tiles:
             for col_index, col in enumerate(row):
@@ -51,7 +51,7 @@ class Maze:
         return None
 
     def score(self, row_reflect: Optional[int], col_reflect: Optional[int]) -> int:
-        """returns score for q1"""
+        """Returns score for q1"""
         if col_reflect is not None:
             return col_reflect
         if row_reflect is not None:

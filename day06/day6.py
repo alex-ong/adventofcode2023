@@ -30,7 +30,7 @@ class RaceStrat:
 
 
 def read_inputs(path: str) -> list[Race]:
-    """disgusting but short i guess"""
+    """Disgusting but short i guess"""
     with open(path, "r", encoding="utf8") as file:
         times = [int(item) for item in file.readline().split()[1:]]
         distance = [int(item) for item in file.readline().split()[1:]]
@@ -39,7 +39,7 @@ def read_inputs(path: str) -> list[Race]:
 
 
 def calculate_race(race: Race) -> int:
-    """naive calcuation of a race"""
+    """Naive calcuation of a race"""
     results: list[RaceStrat] = []
     for i in range(race.time):
         charge_time = i

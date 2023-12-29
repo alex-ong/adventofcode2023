@@ -57,7 +57,7 @@ def bind_keys(on_key_down: Any) -> None:
 
 
 def follow_block(y: float, box: BoxData) -> None:
-    """force camera to follow a block"""
+    """Force camera to follow a block"""
     pos = vpython.scene.camera.pos
     pos.y = max(y + box.start_pos.z, pos.y)
     vpython.scene.camera.pos = pos

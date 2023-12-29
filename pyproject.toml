@@ -16,6 +16,16 @@ ignore_missing_imports = true
 extend-select = ["C4", "C90", "SIM", "TCH"]
 ignore = ["SIM108"]
 
+[tool.ruff.format]
+docstring-code-format = true
+
+# Todo: unmark this once we hit 100% comments
+#[tool.ruff.lint]
+#select = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
 [tool.ruff.isort]
 section-order = [
     "future",

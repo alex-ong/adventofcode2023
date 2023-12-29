@@ -55,7 +55,7 @@ class World:
 
 
 def naive_score(world_rows: list[str]) -> int:
-    """returns score assuming west is pointing left"""
+    """Returns score assuming west is pointing left"""
     num_rows = len(world_rows)
     score = 0
     for index, row in enumerate(world_rows):
@@ -65,8 +65,7 @@ def naive_score(world_rows: list[str]) -> int:
 
 
 def simulate_row(row: list[str]) -> tuple[list[str], int]:
-    """
-    simulates a row; returns its value and the new row
+    """Simulates a row; returns its value and the new row
     Assume's that we are moving boulders to the left
     """
     square_indices = [-1] + [i for i, x in enumerate(row) if x == "#"] + [len(row)]
@@ -89,7 +88,7 @@ def simulate_row(row: list[str]) -> tuple[list[str], int]:
 
 
 def simulate_world(world_rows: list[list[str]]) -> list[list[str]]:
-    """simulates world by rolling to the left."""
+    """Simulates world by rolling to the left."""
     result = []
     for world_row in world_rows:
         result.append(simulate_row(world_row)[0])
@@ -97,7 +96,7 @@ def simulate_world(world_rows: list[list[str]]) -> list[list[str]]:
 
 
 def get_input(path: str) -> World:
-    """grabs input, rotated so that left is north"""
+    """Grabs input, rotated so that left is north"""
     with open(path) as file:
         lines = [line.strip() for line in file]
 

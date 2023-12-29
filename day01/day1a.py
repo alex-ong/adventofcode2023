@@ -1,6 +1,4 @@
-"""
-day1a solution
-"""
+"""day1a solution."""
 
 
 from typing import Optional
@@ -10,17 +8,20 @@ INPUT_SMALL = "day01/input-small.txt"
 
 
 def get_first_last(line: str) -> tuple[str, str]:
-    """
-    Returns first and last numeric character of a string
-    It can be the same character
+    """Returns first and last numeric character of a string.
+
+    It can be the same character.
 
     Args:
+    ----
         line (str): string to parse
 
     Raises:
+    ------
         ValueError: When there are no numbers in the string
 
     Returns:
+    -------
         tuple[str, str]: first char, last char
     """
     first: Optional[str] = None
@@ -37,28 +38,29 @@ def get_first_last(line: str) -> tuple[str, str]:
 
 
 def get_input(input_file: str) -> list[str]:
-    """
-    Grabs list of lines to parse from input file
+    """Grabs list of lines to parse from input file.
 
     Args:
+    ----
         input_file (str): input file's name
 
     Returns:
+    -------
         list[str]: list of lines to parse
     """
-
     with open(input_file, "r", encoding="utf8") as file:
         return list(file)
 
 
 def part1(lines: list[str]) -> int:
-    """
-    Runs day1/part1 of adventofcode2023
+    """Runs day1/part1 of adventofcode2023.
 
     Args:
+    ----
         lines (list[str]): list of lines to parse
 
     Returns:
+    -------
         int: sum of results for each line.
     """
     total = 0
@@ -70,7 +72,7 @@ def part1(lines: list[str]) -> int:
 
 
 def main() -> None:
-    """Grabs input then processes it"""
+    """Grabs input then processes it."""
     lines = get_input(INPUT)
     print(part1(lines))
 

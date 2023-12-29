@@ -36,8 +36,7 @@ class Mapping:
         raise ValueError(f"Item not within mapping range {src_value, self}")
 
     def get_mappings(self, start: int, end: int) -> tuple[MappingRange, int]:
-        """
-        Returns the chunk from start to end, followed by the remainder
+        """Returns the chunk from start to end, followed by the remainder
         """
         dest_start = start - self.src_start + self.dest_start
         dest_end_uncapped = end - self.src_start + self.dest_start
@@ -53,8 +52,7 @@ class Mapping:
 
 
 class NamedMap:
-    """
-    a named map with a list of mappings
+    """a named map with a list of mappings
     you can just use this class to search for a mapping
     """
 
@@ -62,8 +60,7 @@ class NamedMap:
     mappings: list[Mapping]
 
     def __init__(self, name: str):
-        """
-        This one is a bit weird; the client should add mappings
+        """This one is a bit weird; the client should add mappings
         after construction, then call finalize_mappings
         This is to keep the file parsing code simpler.
         """
@@ -75,8 +72,7 @@ class NamedMap:
         self.mappings.append(mapping)
 
     def finalize_mappings(self) -> None:
-        """
-        * Sorts the mappings
+        """* Sorts the mappings
         * Fills in any missing ranges
         * Homogenizes so min_mapping is 0, and max_mapping is INT_MAX
         """
@@ -128,8 +124,7 @@ class NamedMap:
         return result
 
     def get_mapping_range(self, src_mapping_range: MappingRange) -> list[MappingRange]:
-        """
-        Given a range like 100-200, returns a
+        """Given a range like 100-200, returns a
         list of lists describing the new mapped range
         """
         # make a quick copy first

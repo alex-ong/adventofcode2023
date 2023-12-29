@@ -67,8 +67,7 @@ class Pipe:
     def next_position(
         self, prev_direction: Direction | None
     ) -> tuple[Direction, Position]:
-        """
-        calculate the next position. Return
+        """Calculate the next position. Return
         where we came from if we move to next tile, and the new position
         """
         next_direction = self.next_direction(prev_direction)
@@ -94,7 +93,7 @@ class PipeMap:
         self.height = len(self.pipes)
 
     def get_pipe(self, position: Position) -> Pipe:
-        """returns a pipe given its position"""
+        """Returns a pipe given its position"""
         if not self.is_in_map(position):
             raise ValueError(f"Position outside map {position}")
         return self.pipes[position.row][position.col]
