@@ -1,3 +1,4 @@
+"""Day19 solution."""
 from queue import Queue
 
 from day19.lib.classes import Part, PartRange, PartRangeDest, Workflow
@@ -11,6 +12,16 @@ INPUT_SMALL = "day19/input-small.txt"
 
 
 def get_input(path: str) -> tuple[list[Workflow], list[Part]]:
+    """Open file and parse.
+
+    Returns well formed workflows and parts classes.
+
+    Args:
+        path (str): filepath for data
+
+    Returns:
+        tuple[list[Workflow], list[Part]]: list of workflows and parts.
+    """
     workflows: list[Workflow] = []
     parts: list[Part] = []
     parsing_parts: bool = False
@@ -29,6 +40,17 @@ def get_input(path: str) -> tuple[list[Workflow], list[Part]]:
 
 
 def process_part(workflows: dict[str, Workflow], part: Part) -> int:
+    """Processes a part.
+
+    Returns the part rating (or 0 if rejected)
+
+    Args:
+        workflows (dict[str, Workflow]): list of workflows.
+        part (Part): part to process
+
+    Returns:
+        int: value of part (or 0 if rejected)
+    """
     # ends are `A` and R
     # start is `in`
     workflow = workflows["in"]
@@ -42,6 +64,17 @@ def process_part(workflows: dict[str, Workflow], part: Part) -> int:
 
 
 def solve_part2(workflows: dict[str, Workflow]) -> int:
+    """Solve part2.
+
+    Assumes xmas values from 0 <= xmas <= 4000.
+    Returns total number of parts that pass.
+
+    Args:
+        workflows (dict[str, Workflow]): workflows to test
+
+    Returns:
+        int: total number of parts that pass.
+    """
     min_xmas = Part(1, 1, 1, 1)
     max_xmas = Part(4001, 4001, 4001, 4001)
     part_range = PartRange(min_xmas, max_xmas)
@@ -65,6 +98,7 @@ def solve_part2(workflows: dict[str, Workflow]) -> int:
 
 
 def part1(workflows: list[Workflow], parts: list[Part]) -> int:
+    """Solve part1."""
     workflows_mapping: dict[str, Workflow] = {wf.name: wf for wf in workflows}
     total = sum(process_part(workflows_mapping, part) for part in parts)
 
@@ -72,11 +106,13 @@ def part1(workflows: list[Workflow], parts: list[Part]) -> int:
 
 
 def part2(workflows: list[Workflow]) -> int:
+    """Solve part2."""
     workflows_mapping: dict[str, Workflow] = {wf.name: wf for wf in workflows}
     return solve_part2(workflows_mapping)
 
 
 def main() -> None:
+    """Load input file and run part1/part2."""
     # combined
     workflows, parts = get_input(INPUT)
 

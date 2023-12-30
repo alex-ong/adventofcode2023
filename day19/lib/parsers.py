@@ -1,11 +1,11 @@
-"""functions to create classes from pure text
-"""
+"""functions to create classes from pure text."""
 
 from day19.lib.classes import Comparator, Component, Condition, Part, Rule, Workflow
 
 
 def parse_part_string(part_string: str) -> Part:
-    r"""Returns a part from a string representation
+    r"""Returns a part from a string representation.
+
     e.g. ``{x=787,m=2655,a=1222,s=2876}\n``
     """
     part_string = part_string.strip()
@@ -24,7 +24,8 @@ def parse_part_string(part_string: str) -> Part:
 
 
 def parse_workflow_string(workflow_string: str) -> Workflow:
-    r"""Returns a workflow from a string representation
+    r"""Returns a workflow from a string representation.
+
     e.g. ``px{a<2006:qkq,m>2090:A,rfg}\n``
     """
     workflow_string = workflow_string.strip()
@@ -38,8 +39,7 @@ def parse_workflow_string(workflow_string: str) -> Workflow:
 
 
 def parse_rule_string(rule_string: str) -> Rule:
-    """e.g. ``a<2006:qkq`` or ``rfg``
-    """
+    """e.g. ``a<2006:qkq`` or ``rfg``."""
     dest_split = rule_string.split(":")
     if len(dest_split) == 1:
         return Rule(dest_split[0])
@@ -49,8 +49,7 @@ def parse_rule_string(rule_string: str) -> Rule:
 
 
 def parse_condition_string(cond_string: str) -> Condition:
-    """e.g. ``a<2006``
-    """
+    """e.g. ``a<2006``."""
     component = Component(cond_string[0])
     operator = Comparator(cond_string[1])
     value = int(cond_string[2:])

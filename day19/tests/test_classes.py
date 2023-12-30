@@ -1,3 +1,4 @@
+"""Tests for day19 classes."""
 from day19.lib.classes import (
     Comparator,
     Component,
@@ -11,10 +12,12 @@ from day19.lib.classes import (
 
 
 def get_part_range() -> tuple[Part, Part]:
+    """Returns a reusable partrange for our tests."""
     return Part(100, 100, 100, 100), Part(150, 200, 150, 150)
 
 
 def test_part_range() -> None:
+    """Test ``PartRange`` class."""
     low: Part = Part(100, 100, 100, 100)
     high: Part = Part(150, 200, 150, 150)
     part_range: PartRange = PartRange(low, high)
@@ -30,6 +33,7 @@ def test_part_range() -> None:
 
 
 def test_part_range_dest() -> None:
+    """Test ``PartRangeDest`` class."""
     part_range: PartRange = PartRange(*get_part_range())
     part_range_dest = PartRangeDest(part_range, "test")
     assert (
@@ -39,6 +43,7 @@ def test_part_range_dest() -> None:
 
 
 def test_rule() -> None:
+    """Test ``Rule`` class."""
     rule = Rule("test", Condition(Component.M, Comparator.LessThan, 50))
 
     low: Part = Part(100, 100, 100, 100)
@@ -50,6 +55,7 @@ def test_rule() -> None:
 
 
 def test_workflow() -> None:
+    """Test ``Workflow`` class."""
     rule1: Rule = Rule("test", Condition(Component.M, Comparator.LessThan, 50))
     rule2: Rule = Rule("rest")
     workflow: Workflow = Workflow("workflow1", [rule1, rule2])

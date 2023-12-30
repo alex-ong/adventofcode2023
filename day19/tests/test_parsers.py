@@ -1,5 +1,4 @@
-"""Test lib.parsers
-"""
+"""Test lib.parsers."""
 
 
 from day19.lib.classes import Comparator, Component, Condition, Part, Rule, Workflow
@@ -12,8 +11,7 @@ from day19.lib.parsers import (
 
 
 def test_parse_part_string() -> None:
-    r"""E.g: ``{x=787,m=2655,a=1222,s=2876}\n``
-    """
+    r"""E.g: ``{x=787,m=2655,a=1222,s=2876}\n``."""
     part: Part = parse_part_string("{x=787,m=2655,a=1222,s=2876}\n")
     assert part == Part(787, 2655, 1222, 2876)
 
@@ -22,8 +20,7 @@ def test_parse_part_string() -> None:
 
 
 def test_parse_workflow_string() -> None:
-    r"""E.g: ``px{a<2006:qkq,m>2090:A,rfg}\n``
-    """
+    r"""E.g: ``px{a<2006:qkq,m>2090:A,rfg}\n``."""
     workflow: Workflow = parse_workflow_string("px{a<2006:qkq,m>2090:A,rfg}\n")
     rules = [
         Rule("qkq", Condition(Component.A, Comparator.LessThan, 2006)),
@@ -40,8 +37,7 @@ def test_parse_workflow_string() -> None:
 
 
 def test_parse_rule_string() -> None:
-    """E.g: ``a<2006:qkq`` or ``rfg``
-    """
+    """E.g: ``a<2006:qkq`` or ``rfg``."""
     rule: Rule = parse_rule_string("a<2006:qkq")
     rule2: Rule = Rule("qkq", Condition(Component.A, Comparator.LessThan, 2006))
 
@@ -58,8 +54,7 @@ def test_parse_rule_string() -> None:
 
 
 def test_parse_condition_string() -> None:
-    """E.g. ``a<2006``
-    """
+    """E.g. ``a<2006``."""
     condition: Condition = parse_condition_string("a<2006")
     condition2: Condition = Condition(Component.A, Comparator.LessThan, 2006)
     assert condition == condition2
