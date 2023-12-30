@@ -2,11 +2,12 @@
 
 [Full report](https://htmlpreview.github.io/?https://github.com/alex-ong/adventofcode2023/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-| Name      |    Stmts |     Miss |   Branch |   BrPart |       Cover |   Missing |
-|---------- | -------: | -------: | -------: | -------: | ----------: | --------: |
-| **TOTAL** | **4300** |    **0** | **1444** |    **0** | **100.00%** |           |
+| Name               |    Stmts |     Miss |   Branch |   BrPart |      Cover |   Missing |
+|------------------- | -------: | -------: | -------: | -------: | ---------: | --------: |
+| day16/lib/cells.py |       69 |        1 |       32 |        0 |     99.01% |        38 |
+|          **TOTAL** | **4309** |    **1** | **1448** |    **0** | **99.98%** |           |
 
-171 files skipped due to complete coverage.
+170 files skipped due to complete coverage.
 
 
 ## Setup coverage badge
