@@ -1,3 +1,4 @@
+"""Day20 solution."""
 import math
 import os
 import shutil
@@ -34,6 +35,7 @@ def simulate(
     modules: dict[str, BaseModule], stored_pulses: Optional[list[PulseTarget]] = None
 ) -> tuple[int, int]:
     """Simulate a list of modules.
+
     If you pass in stored_pulses, we will append every pulse to it
     """
     pulses: Queue[PulseTarget] = Queue()
@@ -63,8 +65,9 @@ def simulate(
 def get_loop_paths(
     start_switch: str, module_map: dict[str, BaseModule]
 ) -> list[BaseModule]:
-    """Given a start path, returns the longest path until we hit a conjunction module
-    "" it should be n FlipFlops and then a single conjunction
+    """Given a start path, returns the longest path until we hit a conjunction module.
+
+    It should be n FlipFlops and then a single conjunction
     """
     path: list[BaseModule] = []
     current_module: BaseModule = module_map[start_switch]
@@ -88,8 +91,8 @@ def get_loop_paths(
 
 
 def path_is_start_state(modules: list[BaseModule]) -> bool:
-    """For every module in the path, make sure its in its "default" state"""
-    return all(module.is_default_state() for module in modules)
+    """For every module in the path, make sure its in its "initial" state."""
+    return all(module.is_initial_state() for module in modules)
 
 
 T = TypeVar("T", bound=BaseModule)
@@ -98,11 +101,12 @@ T = TypeVar("T", bound=BaseModule)
 def get_typed_module(
     module_map: dict[str, BaseModule], key: str, module_type: Type[T]
 ) -> T:
+    """Typecast a module."""
     return cast(T, module_map[key])
 
 
 def get_module_groups(module_map: dict[str, BaseModule]) -> ModuleGroups:
-    """Splits the modules into their respective pipelines"""
+    """Splits the modules into their respective pipelines."""
     broadcaster = get_typed_module(module_map, "broadcaster", BroadcastModule)
 
     loop_paths = [
@@ -128,7 +132,7 @@ def get_module_groups(module_map: dict[str, BaseModule]) -> ModuleGroups:
 
 
 def graph_modules(module_groups: ModuleGroups, index: int) -> graphviz.Digraph:
-    """Graphs the modules"""
+    """Graphs the modules."""
     index_str = str(index).zfill(4)
     graph_attr = {"labelloc": "t", "label": index_str}
     dot = graphviz.Digraph(f"Push {index_str}", format="png", graph_attr=graph_attr)
@@ -170,7 +174,7 @@ def export_graph(
     simulation_counter: int,
     export_graphs: bool,
 ) -> None:
-    """Export a graphviz datatype if graphing is enabled"""
+    """Export a graphviz datatype if graphing is enabled."""
     if export_graphs:
         dot = graph_modules(module_groups, simulation_counter)
         dots.append(dot)
@@ -179,7 +183,7 @@ def export_graph(
 def part2(
     modules: list[BaseModule], export_graphs: bool = False
 ) -> tuple[int, list[graphviz.Graph]]:
-    """We find out the loop length for each of the 4~ paths"""
+    """We find out the loop length for each of the 4~ paths."""
     module_map = {module.name: module for module in modules}
     module_groups: ModuleGroups = get_module_groups(module_map)
 
@@ -207,6 +211,7 @@ def part2(
 
 
 def part1(modules: list[BaseModule]) -> int:
+    """Counts low/high count for each module."""
     module_map = {module.name: module for module in modules}
     low_total = 0
     high_total = 0
@@ -220,18 +225,18 @@ def part1(modules: list[BaseModule]) -> int:
 
 
 def output_graph(dot: graphviz.Graph, directory: str) -> None:
-    """Saves a dot to file"""
+    """Saves a dot to file."""
     dot.render(directory=directory)
 
 
 def output_graph_wrapper(args: tuple[graphviz.Graph, str]) -> None:
-    """Since process_map doesnt support star_args, we gotta use this"""
+    """Since process_map doesnt support star_args, we gotta use this."""
     dot, directory = args
     output_graph(dot, directory)
 
 
 def output_files(dots: list[graphviz.Graph], directory: str) -> None:
-    """Saves a list of dots to file"""
+    """Saves a list of dots to file."""
     if len(dots) == 0:
         return
     shutil.rmtree(directory, ignore_errors=True)
@@ -246,6 +251,7 @@ def output_files(dots: list[graphviz.Graph], directory: str) -> None:
 
 
 def main() -> None:
+    """Loads data from file then runs part1/part2."""
     modules = get_modules(FILE)
     # q1
     print(part1(modules))

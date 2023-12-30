@@ -1,3 +1,4 @@
+"""Test day20 main functions."""
 import os
 import tempfile
 from typing import TYPE_CHECKING
@@ -10,6 +11,7 @@ if TYPE_CHECKING:
 
 
 def test_day20() -> None:
+    """Test day20 main functions."""
     modules = get_modules(FILE_A)
     assert part1(modules) == 32000000
 
@@ -40,6 +42,7 @@ def test_day20() -> None:
 
 
 def test_part2() -> None:
+    """Test ``part2()``."""
     modules = get_modules(FILE_PT2)
     result, dots = part2(modules, True)
     assert result == 495

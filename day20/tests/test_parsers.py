@@ -1,3 +1,4 @@
+"""Test parsing code."""
 from day20.day20 import FILE_A, FILE_B
 from day20.lib.classes import (
     BaseModule,
@@ -9,6 +10,7 @@ from day20.lib.parsers import finalize_modules, get_modules, parse_line
 
 
 def test_parse_line() -> None:
+    """Test ``parse_line()``."""
     module: BaseModule = parse_line("broadcaster -> a")
     assert isinstance(module, BroadcastModule)
     module = parse_line("%a -> inv, con")
@@ -21,6 +23,7 @@ def test_parse_line() -> None:
 
 
 def test_get_modules() -> None:
+    """Test ``get_modules``."""
     modules: list[BaseModule] = get_modules(FILE_A)
     assert len(modules) == 5
     assert modules[0].outputs == ["a", "b", "c"]
@@ -37,6 +40,7 @@ def test_get_modules() -> None:
 
 
 def test_finalize_modules() -> None:
+    """Test ``finalize_modules()``."""
     modules: list[BaseModule] = get_modules(FILE_A)
     modules = finalize_modules(modules)
 

@@ -1,3 +1,4 @@
+"""Day20 parsers."""
 from collections import defaultdict
 
 from day20.lib.classes import (
@@ -10,7 +11,9 @@ from day20.lib.classes import (
 
 
 def parse_line(line: str) -> BaseModule:
-    """%a -> inv, con
+    """Parses a line into a BaseModule.
+
+    e.g. ``%a -> inv, con``.
     """
     module_type_name, destinations = line.strip().split(" -> ")
     destination_list: list[str] = destinations.split(", ")
@@ -25,6 +28,14 @@ def parse_line(line: str) -> BaseModule:
 
 
 def get_modules(filename: str) -> list[BaseModule]:
+    """Opens a file and returns all the modules.
+
+    Args:
+        filename (str): name of file to open
+
+    Returns:
+        list[BaseModule]: list of modules.
+    """
     modules: list[BaseModule] = []
     with open(filename, encoding="utf8") as file:
         for line in file:
@@ -36,7 +47,9 @@ def get_modules(filename: str) -> list[BaseModule]:
 
 
 def finalize_modules(modules: list[BaseModule]) -> list[BaseModule]:
-    """For each module, calculate its inputs.
+    """Finalize construction of all modules.
+
+    For each module, calculate its inputs.
     Then inject the inputs into our conjunction modules
     Modifies `modules` inplace, and returns it
     """
