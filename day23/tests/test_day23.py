@@ -1,3 +1,4 @@
+"""Test day23 main functions."""
 from typing import TYPE_CHECKING
 
 from day23.day23 import INPUT_SMALL, part1, part2
@@ -9,6 +10,7 @@ if TYPE_CHECKING:
 
 
 def test_solver() -> None:
+    """Test ``Solver1``."""
     maze: Maze = get_maze(INPUT_SMALL)
 
     solver = Solver1(maze)
@@ -21,10 +23,12 @@ def test_solver() -> None:
 
 
 def test_part1() -> None:
+    """Test ``part1()``."""
     maze: Maze = get_maze(INPUT_SMALL)
     assert part1(maze) == 94
 
 
 def test_part2() -> None:
+    """Test ``part2()``."""
     maze: Maze = get_maze(INPUT_SMALL)
     assert part2(maze) == 154

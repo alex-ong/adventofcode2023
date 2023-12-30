@@ -1,3 +1,4 @@
+"""Tests for day23 classes."""
 import pytest
 
 from day23.day23 import INPUT_SMALL
@@ -6,6 +7,7 @@ from day23.lib.parsers import get_maze
 
 
 def test_position() -> None:
+    """Test ``Position`` class."""
     pos: Position = Position(0, 0)
     pos2 = pos.copy_modify()
     assert pos == pos2
@@ -16,6 +18,7 @@ def test_position() -> None:
 
 
 def test_maze() -> None:
+    """Test ``Maze`` class."""
     maze: Maze = get_maze(INPUT_SMALL)
     assert maze[Position(0, 0)] == "#"
     assert maze[Position(0, 1)] == "."
@@ -34,6 +37,7 @@ def test_maze() -> None:
 
 
 def test_solver1() -> None:
+    """Test ``Solver`` class."""
     maze: Maze = get_maze(INPUT_SMALL)
     solver: Solver1 = Solver1(maze)
 
@@ -62,6 +66,7 @@ def test_solver1() -> None:
 
 
 def test_path() -> None:
+    """Test ``Path`` class."""
     path = Path()
 
     # assert that path.last() fails when calling on empty path
@@ -80,6 +85,7 @@ def test_path() -> None:
 
 
 def test_generate_paths() -> None:
+    """Test ``generate_paths()``."""
     path = Path()
     path.add(Position(0, 0))
     path.add(Position(0, 1))

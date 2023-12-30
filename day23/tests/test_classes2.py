@@ -1,3 +1,4 @@
+"""Test day23 part 2."""
 from typing import TYPE_CHECKING
 
 from day23.day23 import INPUT_SMALL
@@ -10,6 +11,7 @@ if TYPE_CHECKING:
 
 
 def test_solver2() -> None:
+    """Test ``Solver2`` class."""
     maze: Maze = get_maze(INPUT_SMALL)
 
     # get_nodes

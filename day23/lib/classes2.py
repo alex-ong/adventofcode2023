@@ -1,4 +1,4 @@
-"""part 2 solution"""
+"""part 2 solution."""
 import math
 import os
 import time
@@ -17,40 +17,52 @@ colorama.init(convert=True)
 
 @dataclass(eq=True)
 class Node:
+    """Node representing a fork to another."""
+
     name: int = field(compare=True)
     position: Position = field(compare=False)
     edges: list["Edge"] = field(default_factory=list, repr=False, compare=False)
 
     def __str__(self) -> str:
+        """Pretty-print."""
         return f"{self.name}: ({self.position}) {[str(edge) for edge in self.edges]}"
 
 
 @dataclass
 class Edge:
+    """Edge class, representing a path between nodes."""
+
     node1: int
     node2: int
     path: Path = field(repr=False)
     length: int = 0
 
     def __post_init__(self) -> None:
+        """Cache our length."""
         self.length = len(self.path)
 
     def flip(self) -> "Edge":
+        """Reverse a path."""
         return Edge(self.node2, self.node1, self.path.flip())
 
     def __str__(self) -> str:
+        """Pretty-print."""
         return f"{self.node1}->{self.node2}, {self.length}"
 
 
 class Solver2:
+    """Solver for part 2."""
+
     input_maze: Maze
 
     def __init__(self, maze: Maze) -> None:
+        """Store maze that we need to solve."""
         self.input_maze = maze
 
     @staticmethod
     def get_nodes(maze: Maze) -> dict[Position, Node]:
-        """Gets does and marks them on the given maze
+        """Gets nodes and marks them on the given maze.
+
         Note that the maze is modified in-place!
         Nodes are *not* populated with edges
         """
@@ -79,7 +91,9 @@ class Solver2:
     def calculate_edges(
         start_node: Node, nodes: dict[Position, Node], maze: Maze
     ) -> None:
-        """Given a start Node and maze, modifies the maze inplace, filling it in with #
+        """Calculate edges of the maze.
+
+        Modifies the maze inplace, filling it in with #.
         Modifies the node and its connecting nodes by adding Edges
         """
         first_path = Path()
@@ -102,7 +116,7 @@ class Solver2:
 
     @staticmethod
     def expand_path(path: Path, maze: Maze) -> list[Path]:
-        """Expands a path, nuking that section of the maze using #"""
+        """Expands a path, nuking that section of the maze using #."""
         current_pos: Position = path.last()
         expansions = current_pos.expand()
 
@@ -120,6 +134,7 @@ class Solver2:
         return classes.generate_paths(path, valid_expansions)
 
     def build_nodes(self) -> list[Node]:
+        """Build nodes and edges on a copy of the maze."""
         # make backup of maze
         maze_copy = self.input_maze.copy()
         nodes: dict[Position, Node] = self.get_nodes(maze_copy)
@@ -130,6 +145,7 @@ class Solver2:
         return list(nodes.values())
 
     def solve(self) -> int:
+        """Solves the maze."""
         nodes: list[Node] = self.build_nodes()
 
         print("\n".join(str(node) for node in nodes))
@@ -149,7 +165,7 @@ def solve2(
     seen: set[int],
     forks_remaining: int,
 ) -> int:
-    """Solves a dfs by creating forking into multiprocessing"""
+    """Solves a dfs by creating forking into multiprocessing."""
     if current == destination:
         return distance
 
@@ -198,5 +214,5 @@ def solve2(
 
 
 def solve2_helper(args: list[Any]) -> int:
-    """ThreadPoolExecutor doesnt have starmap so we use a helper"""
+    """ThreadPoolExecutor doesnt have starmap so we use a helper."""
     return solve2(*args)

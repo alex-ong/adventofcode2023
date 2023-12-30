@@ -1,3 +1,4 @@
+"""Test parsers."""
 from typing import TYPE_CHECKING
 
 from day23.day23 import INPUT_SMALL
@@ -8,6 +9,7 @@ if TYPE_CHECKING:
 
 
 def test_get_maze() -> None:
+    """Test ``get_maze()``."""
     maze: Maze = get_maze(INPUT_SMALL)
     assert maze.num_rows == 23
     assert maze.num_cols == 23
