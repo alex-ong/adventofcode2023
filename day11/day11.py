@@ -24,10 +24,13 @@ class Galaxy:
         result = 0
         expansion_rate = universe.expansion_rate
 
-        for row in range(start_row, end_row):
-            result += universe[row][start_col].get_point_distance(expansion_rate)
-        for col in range(start_col, end_col):
-            result += universe[end_row][col].get_point_distance(expansion_rate)
+        expanded_rows = universe.row_lookup[end_row] - universe.row_lookup[start_row]
+        unexpanded_rows = (end_row - start_row) - expanded_rows
+        result += expanded_rows * expansion_rate + unexpanded_rows
+
+        expanded_cols = universe.col_lookup[end_col] - universe.col_lookup[start_col]
+        unexpanded_cols = (end_col - start_col) - expanded_cols
+        result += expanded_cols * expansion_rate + unexpanded_cols
         return result
 
 
@@ -63,6 +66,9 @@ class Universe:
     num_rows: int = field(repr=False, init=False)
     num_cols: int = field(repr=False, init=False)
 
+    row_lookup: list[int] = field(repr=False, init=False)
+    col_lookup: list[int] = field(repr=False, init=False)
+
     def __post_init__(self) -> None:
         """Initialize num_rows/num_cols."""
         self.num_rows = len(self.contents)
@@ -87,18 +93,44 @@ class Universe:
 
     def expand_contents(self) -> None:
         """Expands the contents of the universe."""
-        for row in self.contents:
+        expanded_rows = []
+        for row_index, row in enumerate(self.contents):
             if is_empty(row):
                 for item in row:
                     item.is_expanded = True
+                expanded_rows.append(row_index)
 
+        expanded_cols = []
         col_index = 0
         while col_index < len(self.contents[0]):
             col = [row[col_index] for row in self.contents]
             if is_empty(col):
                 for item in col:
                     item.is_expanded = True
+                expanded_cols.append(col_index)
             col_index += 1
+
+        self.init_lookups(expanded_rows, expanded_cols)
+
+    def init_lookups(self, expanded_rows: list[int], expanded_cols: list[int]) -> None:
+        """Initialize lookup tables."""
+        self.row_lookup = self.expanded_to_lookup(expanded_rows, self.num_rows)
+        self.col_lookup = self.expanded_to_lookup(expanded_cols, self.num_cols)
+
+    def expanded_to_lookup(self, expanded_items: list[int], size: int) -> list[int]:
+        """Convert from ``[3,7]``, ``10`` to ``00011112222``."""
+        result = [0 for _ in range(size)]
+        last_index = 0
+        expanded_items.append(size)
+
+        for expand_index, expanded_row in enumerate(expanded_items):
+            for i in range(last_index, expanded_row):
+                result[i] = expand_index
+
+            last_index = expanded_row
+        result.append(expanded_items[-1])
+
+        return result
 
     def grab_galaxies(self) -> list[Galaxy]:
         """Grabs all galaxies."""
@@ -143,6 +175,9 @@ def get_total_distance(galaxies: list[Galaxy], universe: Universe) -> int:
     return result
 
 
+import time
+
+
 def main() -> None:
     """Main function, runs q1 and q2."""
     universe: Universe = parse_input(INPUT)
@@ -153,6 +188,7 @@ def main() -> None:
     print(get_total_distance(galaxies, universe))
     # q2: expansion = 1000000
     universe.expansion_rate = 1000000
+
     print(get_total_distance(galaxies, universe))
 
 
