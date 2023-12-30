@@ -1,4 +1,4 @@
-"""day18 solution"""
+"""day18 solution."""
 
 from dataclasses import dataclass
 from enum import StrEnum
@@ -12,25 +12,33 @@ INPUT_SMALL = "day18/input-small.txt"
 
 @dataclass
 class Position:
+    """Simple 2d point."""
+
     row: int = 0
     col: int = 0
 
 
 class Direction(StrEnum):
+    """Cardinal direction in ``UDLR``."""
+
     Up = "U"
     Down = "D"
     Left = "L"
     Right = "R"
 
     def __repr__(self) -> str:  # pragma: no cover
+        """Custom repr for easy printing."""
         return str(self)
 
     def __str__(self) -> str:
+        """Up/Down/Left/Right."""
         return self.name
 
 
-@dataclass
+@dataclass(frozen=True)
 class Command:
+    """Well defined command dataclass."""
+
     direction: Direction
     steps: int
     color: str
@@ -39,6 +47,19 @@ class Command:
 def generate_offsets(
     position: Position, direction: Direction, steps: int
 ) -> list[Position]:
+    """Generate position offsets.
+
+    Args:
+        position (Position): base position
+        direction (Direction): direction of travel
+        steps (int): number of steps to generate
+
+    Raises:
+        AssertionError: If direciton is invalid.
+
+    Returns:
+        list[Position]: list of new positions.
+    """
     if direction == Direction.Right:
         return [Position(position.row, position.col + i) for i in range(1, steps + 1)]
     if direction == Direction.Left:
@@ -51,6 +72,8 @@ def generate_offsets(
 
 
 class Matrix:
+    """2d array representing world."""
+
     contents: list[list[Tile]]
 
     min_pos: Position
@@ -63,6 +86,7 @@ class Matrix:
     dug_tiles = 0
 
     def __init__(self, min_pos: Position, max_pos: Position) -> None:
+        """Generate 2d array with min/max position for offsetting."""
         self.num_rows = max_pos.row - min_pos.row + 1
         self.num_cols = max_pos.col - min_pos.col + 1
         self.contents = [
@@ -70,7 +94,17 @@ class Matrix:
         ]
 
     def process_command(self, miner_pos: Position, command: Command) -> Position:
-        """Process command, returning miner's new position"""
+        """Process command.
+
+        This moves the miner around.
+
+        Args:
+            miner_pos (Position): miner's current position
+            command (Command): command to process
+
+        Returns:
+            Position: miner's new position.
+        """
         offsets = generate_offsets(miner_pos, command.direction, command.steps)
         self.wall_tiles += len(offsets)
         for offset in offsets:
@@ -78,8 +112,7 @@ class Matrix:
         return offsets[-1]
 
     def dig_out(self) -> None:
-        # digs out the non-perimeter tiles, returning how many were "dug out"
-
+        """Dig out non-perimeter tiles using flood-fill."""
         # cache for what's been visited
         visited: list[list[bool]] = [
             [False for _ in range(self.num_cols)] for _ in range(self.num_rows)
@@ -105,7 +138,14 @@ class Matrix:
                 to_process.put(generate_offsets(position, direction, 1)[0])
 
     def is_oob(self, position: Position) -> bool:
-        """True if position out of bounds"""
+        """Returns if a position is out of bounds.
+
+        Args:
+            position (Position): position to check.
+
+        Returns:
+            bool: True if out of bounds.
+        """
         return (
             position.row < 0
             or position.row >= self.num_rows
@@ -114,10 +154,22 @@ class Matrix:
         )
 
     def __str__(self) -> str:
+        """Custom __str__ for pretty printing matrix."""
         return "\n".join("".join(str(tile) for tile in row) for row in self.contents)
 
 
 def get_matrix_range(commands: list[Command]) -> tuple[Position, Position]:
+    """Calculate minimum and maximum position in matrix.
+
+    Since we start in the middle somewhere, we get negative positions.
+    This can be useds to offset the matrix when we construct it.
+
+    Args:
+        commands (list[Command]): list of commands that will be run.
+
+    Returns:
+        tuple[Position, Position]: [min,max] positions.
+    """
     position = Position()
     max_row, max_col = 0, 0
     min_row, min_col = 0, 0
@@ -131,6 +183,7 @@ def get_matrix_range(commands: list[Command]) -> tuple[Position, Position]:
 
 
 def get_input(path: str) -> list[Command]:
+    """Reads input from file into well-formed list of commands."""
     commands = []
     with open(path, encoding="utf-8") as file:
         for line in file:
@@ -141,6 +194,13 @@ def get_input(path: str) -> list[Command]:
 
 
 def get_solution(commands: list[Command]) -> int:
+    """Calculates solution.
+
+    1. Pre-calculates the range
+    2. Creates edge tiles
+    3. Flood fill centre.
+    4. Count tiles.
+    """
     min_pos, max_pos = get_matrix_range(commands)
 
     matrix: Matrix = Matrix(min_pos, max_pos)
@@ -159,6 +219,7 @@ def get_solution(commands: list[Command]) -> int:
 
 
 def main() -> None:
+    """Load data and then find solution to part1."""
     commands: list[Command] = get_input(INPUT)
     get_solution(commands)
 

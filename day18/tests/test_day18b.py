@@ -1,7 +1,9 @@
+"""test day18b main functions."""
 from day18.day18b import INPUT_SMALL, Command, Direction, get_input, get_solution
 
 
 def test_day18b() -> None:
+    """Test day18b main function."""
     commands: list[Command] = get_input(INPUT_SMALL)
     assert len(commands) == 14
     assert commands[0].steps == 461937 and commands[0].direction == Direction.Right
@@ -11,6 +13,7 @@ def test_day18b() -> None:
 
 
 def test_command() -> None:
+    """Test hex code conversion."""
     assert Command("70c710").steps == 461937
     assert Command("0dc571").steps == 56407
     assert Command("5713f0").steps == 356671
