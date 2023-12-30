@@ -1,3 +1,4 @@
+"""Test main functions of day22."""
 from typing import TYPE_CHECKING
 
 from day22.day22 import INPUT_SMALL, Visualization
@@ -8,6 +9,7 @@ if TYPE_CHECKING:
 
 
 def test_visualization() -> None:
+    """Tests results from day22 vis class."""
     boxes: list[BoxData] = get_boxes(INPUT_SMALL)
     vis = Visualization(boxes, False)
 

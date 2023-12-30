@@ -1,3 +1,4 @@
+"""Day22 solution."""
 import vpython
 
 from day22.lib.classes import BoxData, Matrix
@@ -13,11 +14,19 @@ ANIMATE = True
 
 
 class Visualization:
+    """Visualization class."""
+
     boxes: list[BoxData]
     matrix: Matrix
     has_started: bool
 
     def __init__(self, boxes: list[BoxData], animate: bool = True) -> None:
+        """Initialize Vis.
+
+        Args:
+            boxes (list[BoxData]): list of boxes to visualize
+            animate (bool, optional): Whether to animate the visualizatoin. (Default=True)
+        """
         self.boxes = boxes
         self.boxes.sort(key=lambda x: x.z_val_bot)
         self.matrix = Matrix()
@@ -29,14 +38,17 @@ class Visualization:
         self.has_started = False
 
     def vis_rate(self, rate: float) -> None:
+        """Wait a given amount if we are animating."""
         if self.animate:
             vpython.rate(rate)
 
     def follow_block(self, y: float, box: BoxData) -> None:
+        """Snap camera to a given box."""
         if self.animate:
             follow_block(y, box)
 
     def start(self) -> None:
+        """Start visualization calcuations."""
         if self.has_started:  # pragma: no cover
             return
         self.has_started = True
@@ -67,13 +79,16 @@ class Visualization:
         self.animate_part2()
 
     def calculate_part1(self) -> int:
+        """Calculate part1. (number of boxes that can fly up)."""
         # short answer
         return sum(1 if self.matrix.can_fly_up(item) else 0 for item in self.boxes)
 
     def calculate_part2(self) -> int:
+        """Calculate part2 (number of boxes that will fall if each box is removed."""
         return sum(len(box.recursive_fall({box})) for box in self.boxes)
 
     def animate_part1(self) -> None:
+        """Animate part 1."""
         if self.animate:
             vpython.scene.camera.pos = CAMERA_POS_1
             vpython.scene.camera.axis = CAMERA_AXIS_1
@@ -88,6 +103,7 @@ class Visualization:
                     self.vis_rate(60)
 
     def animate_part2(self) -> None:
+        """Animate part2."""
         if self.animate:
             vpython.scene.camera.pos = CAMERA_POS_1
             vpython.scene.camera.axis = CAMERA_AXIS_1
@@ -110,6 +126,7 @@ class Visualization:
 
 
 def main() -> None:
+    """Grab boxes and solve, while animating solution."""
     boxes: list[BoxData] = get_boxes(INPUT)
     vis = Visualization(boxes, ANIMATE)
 

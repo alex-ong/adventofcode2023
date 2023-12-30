@@ -1,3 +1,4 @@
+"""Test classes in day22."""
 from typing import TYPE_CHECKING
 
 from day22.lib.classes import BoxData, Vector3
@@ -7,6 +8,7 @@ if TYPE_CHECKING:
 
 
 def test_box_data() -> None:
+    """Tests ``BoxData`` class."""
     start: Vector3 = Vector3(1, 1, 1)
     end: Vector3 = Vector3(1, 4, 1)
     box: BoxData = BoxData("memes", start, end)

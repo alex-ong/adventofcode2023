@@ -1,3 +1,4 @@
+"""Classes for day22."""
 from dataclasses import dataclass, field
 from typing import Optional
 
@@ -6,16 +7,20 @@ import vpython
 
 @dataclass
 class Vector3:
+    """Simple 3d vector."""
+
     x: int
     y: int
     z: int
 
 
-@dataclass
+@dataclass(unsafe_hash=True)
 class BoxData:
-    name: str
-    start_pos: Vector3
-    end_pos: Vector3
+    """A box in 3d space."""
+
+    name: str = field(hash=True)
+    start_pos: Vector3 = field(hash=False)
+    end_pos: Vector3 = field(hash=False)
     vbox: Optional[vpython.box] = field(
         init=False, repr=False, hash=False, default=None
     )
@@ -31,6 +36,7 @@ class BoxData:
 
     @property
     def vpos(self) -> vpython.vector:
+        """Pos according to vpython."""
         pos = self.start_pos
         return vpython.vector(
             pos.x + self.length / 2, pos.z + self.height / 2, pos.y + self.width / 2
@@ -38,33 +44,38 @@ class BoxData:
 
     @property
     def length(self) -> float:
+        """Length according to vpython."""
         return float(self.end_pos.x - self.start_pos.x + 1)
 
     @property
     def width(self) -> float:
+        """Width according to vpython."""
         return float(self.end_pos.y - self.start_pos.y + 1)
 
     @property
     def height(self) -> float:
+        """Height according to vpython."""
         return float(self.end_pos.z - self.start_pos.z + 1)
 
     @property
     def z_val_bot(self) -> int:
-        """Return lowest z value (self.start_pos.z)"""
+        """Return lowest z value (self.start_pos.z)."""
         return self.start_pos.z
 
     @property
     def z_val_top(self) -> int:
-        """Return maximum z value(self.end_pos.z)"""
+        """Return maximum z value(self.end_pos.z)."""
         return self.end_pos.z
 
     ####################################
     # Visualisation calls  (not ci'ed) #
     ####################################
     def set_vbox(self, vbox: vpython.box) -> None:  # pragma: no cover
+        """Store a vpython box onto this boxdata."""
         self.vbox = vbox
 
     def fall(self) -> None:
+        """Move block down vertically."""
         self.start_pos.z -= 1
         self.end_pos.z -= 1
         # vbox y == boxdata z
@@ -72,11 +83,13 @@ class BoxData:
             self.vbox.pos.y -= 1
 
     def select(self) -> None:
+        """Select a box by offsetting it to the side."""
         if self.vbox is not None:  # pragma: no cover
             self.vbox.pos.x += 30
             self.vbox.pos.z -= 30
 
     def unselect(self) -> None:
+        """Unselect a box by putting it back."""
         if self.vbox is not None:  # pragma: no cover
             self.vbox.pos.x -= 30
             self.vbox.pos.z += 30
@@ -86,14 +99,15 @@ class BoxData:
     ################################################
 
     def set_supports(self, supports: set["BoxData"]) -> None:
-        """Blocks under us"""
+        """Set the BoxData's that support us."""
         self.supports = supports
 
     def set_hats(self, hats: set["BoxData"]) -> None:
+        """Set the BoxData's that we support."""
         self.hats = hats
 
     def recursive_fall(self, already_falling: set["BoxData"]) -> set["BoxData"]:
-        """Returns all boxes above us that fall if we fall"""
+        """Returns all boxes above us that fall if we fall."""
         to_process: list[BoxData] = []  # items that will fall if this brick is removed
         result: set["BoxData"] = set()
         for hat in self.hats.difference(already_falling):
@@ -111,15 +125,15 @@ class BoxData:
 
         return result
 
-    def __hash__(self) -> int:
-        return hash(f"{self.start_pos} | {self.end_pos}")
-
 
 class Matrix:
+    """3d matrix."""
+
     # z, x, y
     layers: list[list[list[Optional[BoxData]]]]
 
     def __init__(self, z_height: int = 400, xy: int = 10):
+        """Initialize based on size."""
         self.layers = []
         for _ in range(z_height):
             layer: list[list[Optional[BoxData]]] = [
@@ -128,6 +142,14 @@ class Matrix:
             self.layers.append(layer)
 
     def can_fall_down(self, box: BoxData) -> bool:
+        """Whether a given box can fall downwards.
+
+        Args:
+            box (BoxData): box to test
+
+        Returns:
+            bool: True if the box can fall.
+        """
         if box.z_val_bot == 1:
             return False
         for x in range(box.start_pos.x, box.end_pos.x + 1):
@@ -147,7 +169,7 @@ class Matrix:
                     self.layers[z][x][y] = box
 
     def get_supports(self, box: BoxData) -> set[BoxData]:
-        # return which boxes are supporting this box
+        """Return which boxes are supporting this box."""
         if box.z_val_bot == 1:
             return set()
 
@@ -160,7 +182,7 @@ class Matrix:
         return supports
 
     def get_hats(self, box: BoxData) -> set[BoxData]:
-        # return which boxes are resting on this box.
+        """Return which boxes are resting on this box."""
         hats: set[BoxData] = set()  # list of items we're supporting
         for x in range(box.start_pos.x, box.end_pos.x + 1):
             for y in range(box.start_pos.y, box.end_pos.y + 1):
@@ -170,7 +192,7 @@ class Matrix:
         return hats
 
     def can_fly_up(self, box: BoxData) -> bool:
-        """Check cells above our block. If they're clear we can fly up"""
+        """Check cells above our block. If they're clear we can fly up."""
         # all our "hats" need to have > 1 supports
         hats = list(box.hats)
         return all(len(hat.supports) > 1 for hat in hats)

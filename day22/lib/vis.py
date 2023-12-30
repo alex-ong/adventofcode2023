@@ -1,3 +1,4 @@
+"""Visualization classes."""
 import random
 from typing import Any
 
@@ -7,6 +8,15 @@ from day22.lib.classes import BoxData, Matrix, Vector3
 
 
 def construct_box(box_data: BoxData, color: vpython.vector) -> vpython.box:
+    """Constructs a vpython box from a box_data.
+
+    Args:
+        box_data (BoxData): box data to mimic
+        color (vpython.vector): color of box for vis.
+
+    Returns:
+        vpython.box: a vpython.box
+    """
     return vpython.box(
         pos=box_data.vpos,
         length=box_data.length,
@@ -17,6 +27,7 @@ def construct_box(box_data: BoxData, color: vpython.vector) -> vpython.box:
 
 
 def random_color() -> vpython.vector:
+    """Returns a random color compatible with vpython."""
     hsv = vpython.vector(random.random(), random.uniform(0.5, 1.0), 1.0)
     return vpython.color.hsv_to_rgb(hsv)
 
@@ -29,7 +40,7 @@ CAMERA_AXIS_1 = vpython.vector(-83.3746, -20.0517, -69.4084)
 
 
 def init_vis(boxes: list[BoxData]) -> None:
-    """Initialize vis boxes. Only called if we're visualizing"""
+    """Initialize vis boxes. Only called if we're visualizing."""
     for box in boxes:
         color = random_color()
         vbox = construct_box(box, color)
@@ -45,6 +56,8 @@ def init_vis(boxes: list[BoxData]) -> None:
 
 
 def bind_keys(on_key_down: Any) -> None:
+    """Bind keyboard events, so that ``enter`` calls the given callback."""
+
     def callback(evt: Any) -> None:
         character = evt.key
         if character == "shift":
@@ -57,13 +70,14 @@ def bind_keys(on_key_down: Any) -> None:
 
 
 def follow_block(y: float, box: BoxData) -> None:
-    """Force camera to follow a block"""
+    """Force camera to follow a block."""
     pos = vpython.scene.camera.pos
     pos.y = max(y + box.start_pos.z, pos.y)
     vpython.scene.camera.pos = pos
 
 
 def animate_part1(boxes: list[BoxData], matrix: Matrix) -> None:
+    """Animates part1."""
     vpython.scene.camera.pos = CAMERA_POS_1
     vpython.scene.camera.axis = CAMERA_AXIS_1
     for box in boxes:
@@ -78,6 +92,7 @@ def animate_part1(boxes: list[BoxData], matrix: Matrix) -> None:
 
 
 def animate_part2(boxes: list[BoxData]) -> None:
+    """Animates part2."""
     vpython.scene.camera.pos = CAMERA_POS_1
     vpython.scene.camera.axis = CAMERA_AXIS_1
     reversed_boxes = sorted(boxes, key=lambda box: box.end_pos.z, reverse=True)
