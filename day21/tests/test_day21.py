@@ -1,3 +1,4 @@
+"""Test main functions."""
 import pytest
 
 from day21.day21 import FILE_SMALL, solve
@@ -8,6 +9,7 @@ INPUT_5x5 = "day21/tests/input-5x5.txt"
 
 
 def test_day21() -> None:
+    """Test day21 main functions."""
     start_pos, maze = parse_maze(FILE_SMALL)
 
     assert solve(start_pos, maze, 6) == 16

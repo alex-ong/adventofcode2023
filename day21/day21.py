@@ -1,4 +1,4 @@
-"""day21 solution"""
+"""day21 solution."""
 
 from dataclasses import dataclass
 from queue import Queue
@@ -33,7 +33,7 @@ GIGA_TARGET = 26_501_365  # even parity
 def mini_solve(
     start_pos: Position, maze: Maze, steps: int, distances: BaseDistanceMaze
 ) -> BaseDistanceMaze:
-    """Given a basedistanceMaze, runs `steps` steps then returns the maze"""
+    """Given a BaseDistanceMaze, runs `steps` steps then returns the maze."""
     nodes: Queue[PositionDist] = Queue()
     nodes.put(PositionDist(start_pos.row, start_pos.col, distance=0))
 
@@ -68,6 +68,8 @@ def mini_solve(
 
 @dataclass
 class SmartSteps:
+    """How many boards to edge of solution, and steps to simulate."""
+
     boards_to_edge: int
     steps: int
 
@@ -75,13 +77,14 @@ class SmartSteps:
 def naive_solve(
     start_pos: Position, maze: Maze, steps: int, distances: BaseDistanceMaze
 ) -> int:
+    """Naively solve a maze."""
     distances = mini_solve(start_pos, maze, steps, distances)
     print(distances.overlay(maze))
     return distances.calc_steps(steps % 2)
 
 
 def calculate_smart_steps(board_size: int, steps: int) -> SmartSteps:
-    """Given a board size and num steps, calculate how many steps we actually need"""
+    """Given a board size and num steps, calculate how many steps we actually need."""
     steps_remaining = steps % board_size
     if steps_remaining != board_size // 2:
         raise ValueError("big mode only supported for steps_remaining == maze_rows//2")
@@ -105,6 +108,18 @@ def solve(
     unlimited_map: bool = False,
     brute_force: bool = False,  # for > 3 boards wide, use smart algo
 ) -> int:
+    """Solve the maze.
+
+    Args:
+        start_pos (Position): start position
+        maze (Maze): maze to solve
+        steps (int): number of steps
+        unlimited_map (bool, optional): whether the map is infinite (Default=False)
+        brute_force (bool, optional): Whether to brute force. (Defaults=False).
+
+    Returns:
+        int: number of valid positions.
+    """
     distances: BaseDistanceMaze
 
     if unlimited_map:
@@ -139,6 +154,7 @@ def solve(
 
 
 def main() -> None:
+    """Load data then solve part1/part2."""
     start_pos, maze = parse_maze(FILE)
     # part1
     print(solve(start_pos, maze, 64))
