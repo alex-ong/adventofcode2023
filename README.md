@@ -17,6 +17,7 @@ Setup
 
 1. Install python 3.11: `winget install Python.Python.3.11 -i`
 1. Install dependencies: `pip install -r requirements.txt`
+1. Install Graphviz for all users: `winget install Graphviz.Graphviz -i ` 
 
 This installs to your default python, so hopefully it all matches up :)
 I couldn't be bothered setting up pipenv for this one.
