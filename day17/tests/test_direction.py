@@ -1,7 +1,9 @@
+"""Test direction class."""
 from day17.lib.direction import Direction
 
 
 def test_direction() -> None:
+    """Test ``Direction`` class."""
     assert Direction.WEST.opposite() == Direction.EAST
     assert Direction.EAST.opposite() == Direction.WEST
     assert Direction.SOUTH.opposite() == Direction.NORTH

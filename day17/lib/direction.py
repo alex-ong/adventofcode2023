@@ -1,10 +1,9 @@
-"""Direction class
-"""
+"""Direction class."""
 from enum import IntEnum
 
 
 class Direction(IntEnum):
-    """Simple direction enum"""
+    """Simple direction enum."""
 
     NORTH = 0
     EAST = 1
@@ -12,6 +11,7 @@ class Direction(IntEnum):
     WEST = 3
 
     def __str__(self) -> str:
+        """Human readable string (``^>v<``)."""
         if self == Direction.NORTH:
             return "^"
         elif self == Direction.EAST:
@@ -23,10 +23,12 @@ class Direction(IntEnum):
         raise AssertionError("invalid value")
 
     def opposite(self) -> "Direction":
+        """Return opposite direction ``W``<->``E`` ``S``<->``N``."""
         int_value = int(self)
         return Direction((int_value + 2) % len(Direction))
 
     def offset(self, row: int, col: int) -> tuple[int, int]:
+        """Offset a position by our direction."""
         if self == Direction.NORTH:
             return (row - 1, col)
         if self == Direction.EAST:
@@ -38,6 +40,7 @@ class Direction(IntEnum):
         raise AssertionError("direction not suppported", self)
 
     def offset_list(self, row: int, col: int, size: int = 4) -> list[tuple[int, int]]:
+        """Offset a position by our direction and size vector."""
         offsets = range(1, size + 1)
         if self == Direction.NORTH:
             return [(row - i, col) for i in offsets]

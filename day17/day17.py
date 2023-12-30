@@ -1,4 +1,4 @@
-"""day17 solution"""
+"""day17 solution."""
 from typing import Optional
 
 from colorama import Back
@@ -12,7 +12,7 @@ INPUT_PT2 = "day17/input-pt2.txt"
 
 
 def solve_and_print(world: WorldPart1) -> int:
-    """Solve and print"""
+    """Solve and print."""
     result = world.solve()
     world_string = [[str(val) for val in row] for row in world.costs]
 
@@ -27,17 +27,25 @@ def solve_and_print(world: WorldPart1) -> int:
 
 
 def part1(input: list[list[int]]) -> int:
+    """Load input and solve part1.
+
+    (minimum path, max 3 in one direction)
+    """
     world: WorldPart1 = WorldPart1(input)
     return solve_and_print(world)
 
 
 def part2(input: list[list[int]]) -> int:
+    """Load input and solve part2.
+
+    (minimum path, min 4, max 10 in one direction)
+    """
     world: WorldPart2 = WorldPart2(input)
     return solve_and_print(world)
 
 
 def main() -> None:
-    """Mainfunc"""
+    """Load input and run part1/part2."""
     input: list[list[int]] = get_input(INPUT)
     # q1
     print(f"num steps: {part1(input)}")
