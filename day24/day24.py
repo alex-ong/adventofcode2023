@@ -1,4 +1,4 @@
-"""day24 solution"""
+"""day24 solution."""
 from typing import Optional
 
 import z3
@@ -11,6 +11,7 @@ INPUT_SMALL = ("day24/input-small.txt", Vector2(7, 27))
 
 
 def get_intersection_2d(left: Hailstone, right: Hailstone) -> Optional[Vector2]:
+    """Returns intersection of two hailstones."""
     pos1 = left.position.xy
     dir1 = left.velocity.xy
     pos2 = right.position.xy
@@ -33,10 +34,15 @@ def get_intersection_2d(left: Hailstone, right: Hailstone) -> Optional[Vector2]:
 
 
 def within_2d(point: Vector2, min_max: Vector2) -> bool:
+    """Returns whether a point is inside a given rectangle.
+
+    x and y are both symmetric and defined by min_max.
+    """
     return min_max.x <= point.x <= min_max.y and min_max.x <= point.y <= min_max.y
 
 
 def part1(hailstones: list[Hailstone], valid_range: Vector2) -> int:
+    """Solve part1: list of hailstones that are within a given rectangle."""
     result = 0
     print(len(hailstones))
     left: Hailstone
@@ -55,6 +61,7 @@ def part1(hailstones: list[Hailstone], valid_range: Vector2) -> int:
 
 
 def part2(hailstones: list[Hailstone]) -> int:
+    """Solve part2: a magic hailstone that passes through all other hailstones."""
     x, y, z = z3.Reals("x y z")
     vx, vy, vz = z3.Reals("vx vy vz")
 
@@ -90,6 +97,7 @@ def part2(hailstones: list[Hailstone]) -> int:
 
 
 def main() -> None:
+    """Loads input then solves."""
     input_data, valid_range = INPUT
 
     hailstones: list[Hailstone] = parse_input(input_data)

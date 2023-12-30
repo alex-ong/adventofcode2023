@@ -1,9 +1,11 @@
+"""Test parsing functions."""
 from day24.day24 import INPUT_SMALL
 from day24.lib.classes import Hailstone, Vector3
 from day24.lib.parsers import parse_input, parse_vector3
 
 
 def test_vector3() -> None:
+    """Test ``parse_vector3()``."""
     v1: Vector3 = parse_vector3(" 2, 4, 8")
     assert v1.x == 2
     assert v1.y == 4
@@ -16,6 +18,7 @@ def test_vector3() -> None:
 
 
 def test_parser() -> None:
+    """Test ``parse_input()``."""
     file_path, _ = INPUT_SMALL
     hailstones: list[Hailstone] = parse_input(file_path)
 
