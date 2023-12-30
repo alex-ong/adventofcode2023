@@ -1,4 +1,4 @@
-"""day25 solution"""
+"""day25 solution."""
 from dataclasses import dataclass
 
 import matplotlib.pyplot as plt
@@ -11,19 +11,27 @@ SHOW_GRAPH = False
 
 @dataclass
 class Connection:
+    """Connection between two nodes."""
+
     src: str
     dests: list[str]
 
     def node_names(self) -> list[str]:
+        """Return all nodes in a connection."""
         return [self.src] + self.dests
 
 
 def parse_connection(line: str) -> Connection:
+    """Parse connection into well defined class.
+
+    E.g. ``src: dest1 dest2 dest3``.
+    """
     src, dests = line.split(":")
     return Connection(src, dests.split())
 
 
 def get_data(path: str) -> list[Connection]:
+    """Loads data and parses it into list of connections."""
     connections: list[Connection] = []
     with open(path, "r", encoding="utf8") as file:
         for line in file:
@@ -33,14 +41,14 @@ def get_data(path: str) -> list[Connection]:
 
 
 def show_graph(graph: nx.Graph) -> None:  # pragma: no cover
-    """Draws a graph that you can see"""
+    """Draws a graph that you can see."""
     nx.draw(graph, with_labels=True)
     plt.draw()
     plt.show()
 
 
 def solve_nodes(connections: list[Connection]) -> int:
-    """Graphs the modules"""
+    """Graphs the modules."""
     G = nx.Graph()
 
     nodes: set[str] = set()
@@ -60,6 +68,7 @@ def solve_nodes(connections: list[Connection]) -> int:
 
 
 def main() -> None:
+    """Load data and solve."""
     conns = get_data(INPUT)
     result = solve_nodes(conns)
     print(result)
