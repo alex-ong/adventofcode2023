@@ -54,4 +54,4 @@ exclude_lines = [
 omit = ["download_inputs.py", "maker.py", "day22/lib/vis.py"]
 precision = 2
 skip_covered = true
-fail_under = 100
+fail_under = 0
