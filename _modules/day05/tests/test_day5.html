@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day05.tests.test_day5 &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day05.tests.test_day5</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day05.tests.test_day5</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Day5 mainfile tests.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="kn">from</span> <span class="nn">day05.day5</span> <span class="kn">import</span> <span class="n">INPUT_GAPS</span><span class="p">,</span> <span class="n">INPUT_SMALL</span><span class="p">,</span> <span class="n">part1</span><span class="p">,</span> <span class="n">part2</span><span class="p">,</span> <span class="n">seed_to_mapping_ranges</span>
+<span class="kn">from</span> <span class="nn">day05.lib.classes</span> <span class="kn">import</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">MappingRange</span>
+<span class="kn">from</span> <span class="nn">day05.lib.parsers</span> <span class="kn">import</span> <span class="n">grab_inputs</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">day05.lib.classes</span> <span class="kn">import</span> <span class="n">NamedMap</span>
+
+
+<div class="viewcode-block" id="test_mapping">
+<a class="viewcode-back" href="../../../day05.tests.html#day05.tests.test_day5.test_mapping">[docs]</a>
+<span class="k">def</span> <span class="nf">test_mapping</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test ``NamedMap`` class.&quot;&quot;&quot;</span>
+    <span class="n">seeds</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">maps</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">NamedMap</span><span class="p">]</span>
+    <span class="n">seeds</span><span class="p">,</span> <span class="n">maps</span> <span class="o">=</span> <span class="n">grab_inputs</span><span class="p">(</span><span class="n">INPUT_SMALL</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">seeds</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">maps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="mi">79</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">82</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="nb">map</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">maps</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">map</span><span class="o">.</span><span class="n">get_mapping</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="n">results</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># call mapping with integer outside its range</span>
+    <span class="n">mapping</span><span class="p">:</span> <span class="n">Mapping</span> <span class="o">=</span> <span class="n">maps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mappings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="n">mapping</span><span class="o">.</span><span class="n">get_mapping</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">src_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">seeds</span><span class="p">,</span> <span class="n">maps</span> <span class="o">=</span> <span class="n">grab_inputs</span><span class="p">(</span><span class="n">INPUT_GAPS</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">maps</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;seed-to-soil&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Mapping(src_start=0, src_end=15, dest_start=0, size=15, injected=True)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Mapping(src_start=15, src_end=63, dest_start=15, size=48, injected=False)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Mapping(src_start=63, src_end=100, dest_start=63, size=37, injected=True)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Mapping(src_start=100, src_end=120, dest_start=100, size=20, injected=False)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Mapping(src_start=120, src_end=4294967290, dest_start=120, size=4294967170, injected=True)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Mapping(src_start=4294967290, src_end=4294967296, dest_start=4294967290, size=6, injected=False)&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_part1">
+<a class="viewcode-back" href="../../../day05.tests.html#day05.tests.test_day5.test_part1">[docs]</a>
+<span class="k">def</span> <span class="nf">test_part1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test ``part1()``.&quot;&quot;&quot;</span>
+    <span class="n">seeds</span><span class="p">,</span> <span class="n">maps</span> <span class="o">=</span> <span class="n">grab_inputs</span><span class="p">(</span><span class="n">INPUT_SMALL</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">part1</span><span class="p">(</span><span class="n">seeds</span><span class="p">,</span> <span class="n">maps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">35</span></div>
+
+
+
+<div class="viewcode-block" id="test_part2">
+<a class="viewcode-back" href="../../../day05.tests.html#day05.tests.test_day5.test_part2">[docs]</a>
+<span class="k">def</span> <span class="nf">test_part2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test ``part2()``.&quot;&quot;&quot;</span>
+    <span class="n">seeds</span><span class="p">,</span> <span class="n">maps</span> <span class="o">=</span> <span class="n">grab_inputs</span><span class="p">(</span><span class="n">INPUT_SMALL</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">part2</span><span class="p">(</span><span class="n">seeds</span><span class="p">,</span> <span class="n">maps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">46</span></div>
+
+
+
+<div class="viewcode-block" id="test_seed_to_mapping_ranges">
+<a class="viewcode-back" href="../../../day05.tests.html#day05.tests.test_day5.test_seed_to_mapping_ranges">[docs]</a>
+<span class="k">def</span> <span class="nf">test_seed_to_mapping_ranges</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test construction of mapping ranges for part2.&quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">79</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">13</span><span class="p">]</span>
+    <span class="c1"># 79, len(14) -&gt; 79, 93</span>
+    <span class="c1"># 55, len(13) -&gt; 55, 68</span>
+    <span class="n">ranges</span> <span class="o">=</span> <span class="n">seed_to_mapping_ranges</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">MappingRange</span><span class="p">(</span><span class="mi">79</span><span class="p">,</span> <span class="mi">93</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">MappingRange</span><span class="p">(</span><span class="mi">55</span><span class="p">,</span> <span class="mi">68</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

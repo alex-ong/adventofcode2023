@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day19.lib package &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="day19.tests package" href="day19.tests.html" />
+    <link rel="prev" title="day19 package" href="day19.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci.html">Continuous Integration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">adventofcode2023</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">day01 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">day02 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">day03 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">day04 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">day05 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">day06 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">day07 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">day08 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">day09 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.html">day10 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">day11 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">day12 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">day13 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.html">day14 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">day15 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day16.html">day16 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day17.html">day17 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">day18 package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="day19.html">day19 package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="day19.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">day19.lib package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.tests.html">day19.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day19.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.html#module-day19.day19">day19.day19 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.html#module-day19">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day20.html">day20 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">day21 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day22.html">day22 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day23.html">day23 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">day24 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">day25 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download_inputs.html">download_inputs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maker.html">maker module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">adventofcode2023</a></li>
+          <li class="breadcrumb-item"><a href="day19.html">day19 package</a></li>
+      <li class="breadcrumb-item active">day19.lib package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/day19.lib.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="day19-lib-package">
+<h1>day19.lib package<a class="headerlink" href="#day19-lib-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-day19.lib.classes">
+<span id="day19-lib-classes-module"></span><h2>day19.lib.classes module<a class="headerlink" href="#module-day19.lib.classes" title="Link to this heading"></a></h2>
+<p>well defined classes for day19.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day19.lib.classes.Comparator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day19.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Comparator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day19/lib/classes.html#Comparator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Comparator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
+<p>Well defined comparators <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Comparator.GreaterThan">
+<span class="sig-name descname"><span class="pre">GreaterThan</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'&gt;'</span></em><a class="headerlink" href="#day19.lib.classes.Comparator.GreaterThan" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Comparator.LessThan">
+<span class="sig-name descname"><span class="pre">LessThan</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'&lt;'</span></em><a class="headerlink" href="#day19.lib.classes.Comparator.LessThan" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day19.lib.classes.Component">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day19.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day19/lib/classes.html#Component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Component" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
+<p>A well defined component inside a part.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Component.A">
+<span class="sig-name descname"><span class="pre">A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'a'</span></em><a class="headerlink" href="#day19.lib.classes.Component.A" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Component.M">
+<span class="sig-name descname"><span class="pre">M</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m'</span></em><a class="headerlink" href="#day19.lib.classes.Component.M" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Component.S">
+<span class="sig-name descname"><span class="pre">S</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'s'</span></em><a class="headerlink" href="#day19.lib.classes.Component.S" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Component.X">
+<span class="sig-name descname"><span class="pre">X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'x'</span></em><a class="headerlink" href="#day19.lib.classes.Component.X" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day19.lib.classes.Condition">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day19.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Component" title="day19.lib.classes.Component"><span class="pre">Component</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sign</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Comparator" title="day19.lib.classes.Comparator"><span class="pre">Comparator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day19/lib/classes.html#Condition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Condition" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A condition for a part to succeed/fail.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Condition.component">
+<span class="sig-name descname"><span class="pre">component</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day19.lib.classes.Component" title="day19.lib.classes.Component"><span class="pre">Component</span></a></em><a class="headerlink" href="#day19.lib.classes.Condition.component" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day19.lib.classes.Condition.process_part">
+<span class="sig-name descname"><span class="pre">process_part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day19/lib/classes.html#Condition.process_part"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Condition.process_part" title="Link to this definition"></a></dt>
+<dd><p>Checks a part to see if it matches our condition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>part</strong> (<a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part"><em>Part</em></a>) – part to check</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – if component/sign are unsupported</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the part passes our condition.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day19.lib.classes.Condition.process_part_range">
+<span class="sig-name descname"><span class="pre">process_part_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><span class="pre">PartRange</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><span class="pre">PartRange</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><span class="pre">PartRange</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day19/lib/classes.html#Condition.process_part_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Condition.process_part_range" title="Link to this definition"></a></dt>
+<dd><p>Splits a part range based on success/fail.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>part_range</strong> (<a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><em>PartRange</em></a>) – Partrange to check.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If we have an unknown comparator</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>successful part range, failed partrange</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[Optional[<a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange">PartRange</a>], Optional[<a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange">PartRange</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Condition.sign">
+<span class="sig-name descname"><span class="pre">sign</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day19.lib.classes.Comparator" title="day19.lib.classes.Comparator"><span class="pre">Comparator</span></a></em><a class="headerlink" href="#day19.lib.classes.Condition.sign" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Condition.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day19.lib.classes.Condition.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day19.lib.classes.Part">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day19.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day19/lib/classes.html#Part"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Part" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Well defined part with x,m,a,s values.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Part.a">
+<span class="sig-name descname"><span class="pre">a</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day19.lib.classes.Part.a" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day19.lib.classes.Part.clone_modify">
+<span class="sig-name descname"><span class="pre">clone_modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Component" title="day19.lib.classes.Component"><span class="pre">Component</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a></span></span><a class="reference internal" href="_modules/day19/lib/classes.html#Part.clone_modify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Part.clone_modify" title="Link to this definition"></a></dt>
+<dd><p>Clones this part and modifies one component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>component</strong> (<a class="reference internal" href="#day19.lib.classes.Component" title="day19.lib.classes.Component"><em>Component</em></a>) – component to change</p></li>
+<li><p><strong>value</strong> (<em>int</em>) – new value of component</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>clone of this part with one component changed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part">Part</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day19.lib.classes.Part.get_value">
+<span class="sig-name descname"><span class="pre">get_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Component" title="day19.lib.classes.Component"><span class="pre">Component</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day19/lib/classes.html#Part.get_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Part.get_value" title="Link to this definition"></a></dt>
+<dd><p>Returns value of a component inside this part.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Part.m">
+<span class="sig-name descname"><span class="pre">m</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day19.lib.classes.Part.m" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day19.lib.classes.Part.rating">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rating</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day19.lib.classes.Part.rating" title="Link to this definition"></a></dt>
+<dd><p>Returns rating of part (sum of xmas).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Part.s">
+<span class="sig-name descname"><span class="pre">s</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day19.lib.classes.Part.s" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Part.x">
+<span class="sig-name descname"><span class="pre">x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day19.lib.classes.Part.x" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day19.lib.classes.PartRange">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day19.lib.classes.</span></span><span class="sig-name descname"><span class="pre">PartRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day19/lib/classes.html#PartRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.PartRange" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A range of parts (min/max) based on component values.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.PartRange.max_values">
+<span class="sig-name descname"><span class="pre">max_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a></em><a class="headerlink" href="#day19.lib.classes.PartRange.max_values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.PartRange.min_values">
+<span class="sig-name descname"><span class="pre">min_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a></em><a class="headerlink" href="#day19.lib.classes.PartRange.min_values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day19.lib.classes.PartRange.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day19/lib/classes.html#PartRange.size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.PartRange.size" title="Link to this definition"></a></dt>
+<dd><p>Returns the size of the partrange.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day19.lib.classes.PartRange.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Component" title="day19.lib.classes.Component"><span class="pre">Component</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><span class="pre">PartRange</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><span class="pre">PartRange</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day19/lib/classes.html#PartRange.split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.PartRange.split" title="Link to this definition"></a></dt>
+<dd><p>Split a partrange in two, using a chosen component and splitvalue.</p>
+<p>In the case that our range falls on one whole side, we return None.
+E.g.
+range = 0-100; split == 200 -&gt; return [(0-100), None]
+range = 100-200; split == 50 -&gt; return [None, (100-200)]
+range = 100-200, split == 150 -&gt; return [(100-150), (150-200)]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day19.lib.classes.PartRangeDest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day19.lib.classes.</span></span><span class="sig-name descname"><span class="pre">PartRangeDest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><span class="pre">PartRange</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day19/lib/classes.html#PartRangeDest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.PartRangeDest" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Combinatoin of partrange and a destination workflow.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.PartRangeDest.destination">
+<span class="sig-name descname"><span class="pre">destination</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#day19.lib.classes.PartRangeDest.destination" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.PartRangeDest.part_range">
+<span class="sig-name descname"><span class="pre">part_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><span class="pre">PartRange</span></a></em><a class="headerlink" href="#day19.lib.classes.PartRangeDest.part_range" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day19.lib.classes.Rule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day19.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Condition" title="day19.lib.classes.Condition"><span class="pre">Condition</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day19/lib/classes.html#Rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Rule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A Rule consists of a condition + destination.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Rule.condition">
+<span class="sig-name descname"><span class="pre">condition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day19.lib.classes.Condition" title="day19.lib.classes.Condition"><span class="pre">Condition</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#day19.lib.classes.Rule.condition" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Rule.destination">
+<span class="sig-name descname"><span class="pre">destination</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#day19.lib.classes.Rule.destination" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day19.lib.classes.Rule.process_part">
+<span class="sig-name descname"><span class="pre">process_part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day19/lib/classes.html#Rule.process_part"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Rule.process_part" title="Link to this definition"></a></dt>
+<dd><p>Processes a part.</p>
+<p>Returns next workflow if successful,
+or None if we failed this rule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day19.lib.classes.Rule.process_part_range">
+<span class="sig-name descname"><span class="pre">process_part_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><span class="pre">PartRange</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day19.lib.classes.PartRangeDest" title="day19.lib.classes.PartRangeDest"><span class="pre">PartRangeDest</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><span class="pre">PartRange</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day19/lib/classes.html#Rule.process_part_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Rule.process_part_range" title="Link to this definition"></a></dt>
+<dd><p>Processes a PartRange.</p>
+<p>Returns next workflow and partrange for succeeding parts.
+Returns the remainder partrange that failed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>part_range</strong> (<a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><em>PartRange</em></a>) – base partrange.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>success, fail</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[Optional[<a class="reference internal" href="#day19.lib.classes.PartRangeDest" title="day19.lib.classes.PartRangeDest">PartRangeDest</a>], Optional[<a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange">PartRange</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day19.lib.classes.Workflow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day19.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Workflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day19.lib.classes.Rule" title="day19.lib.classes.Rule"><span class="pre">Rule</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day19/lib/classes.html#Workflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Workflow" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The name of the workflow + a bunch of rules for parts to follow.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Workflow.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#day19.lib.classes.Workflow.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day19.lib.classes.Workflow.process_part">
+<span class="sig-name descname"><span class="pre">process_part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/day19/lib/classes.html#Workflow.process_part"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Workflow.process_part" title="Link to this definition"></a></dt>
+<dd><p>Processes a part, returns the next workflow.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day19.lib.classes.Workflow.process_part_range">
+<span class="sig-name descname"><span class="pre">process_part_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day19.lib.classes.PartRange" title="day19.lib.classes.PartRange"><span class="pre">PartRange</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day19.lib.classes.PartRangeDest" title="day19.lib.classes.PartRangeDest"><span class="pre">PartRangeDest</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day19/lib/classes.html#Workflow.process_part_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.classes.Workflow.process_part_range" title="Link to this definition"></a></dt>
+<dd><p>Follow rule list, splitting off PartRanges.</p>
+<p>Each success has to branch off.
+Each failure continues down the chain.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day19.lib.classes.Workflow.rules">
+<span class="sig-name descname"><span class="pre">rules</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day19.lib.classes.Rule" title="day19.lib.classes.Rule"><span class="pre">Rule</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day19.lib.classes.Workflow.rules" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-day19.lib.parsers">
+<span id="day19-lib-parsers-module"></span><h2>day19.lib.parsers module<a class="headerlink" href="#module-day19.lib.parsers" title="Link to this heading"></a></h2>
+<p>functions to create classes from pure text.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="day19.lib.parsers.parse_condition_string">
+<span class="sig-prename descclassname"><span class="pre">day19.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_condition_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cond_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day19.lib.classes.Condition" title="day19.lib.classes.Condition"><span class="pre">Condition</span></a></span></span><a class="reference internal" href="_modules/day19/lib/parsers.html#parse_condition_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.parsers.parse_condition_string" title="Link to this definition"></a></dt>
+<dd><p>e.g. <code class="docutils literal notranslate"><span class="pre">a&lt;2006</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day19.lib.parsers.parse_part_string">
+<span class="sig-prename descclassname"><span class="pre">day19.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_part_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a></span></span><a class="reference internal" href="_modules/day19/lib/parsers.html#parse_part_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.parsers.parse_part_string" title="Link to this definition"></a></dt>
+<dd><p>Returns a part from a string representation.</p>
+<p>e.g. <code class="docutils literal notranslate"><span class="pre">{x=787,m=2655,a=1222,s=2876}\n</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day19.lib.parsers.parse_rule_string">
+<span class="sig-prename descclassname"><span class="pre">day19.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_rule_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day19.lib.classes.Rule" title="day19.lib.classes.Rule"><span class="pre">Rule</span></a></span></span><a class="reference internal" href="_modules/day19/lib/parsers.html#parse_rule_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.parsers.parse_rule_string" title="Link to this definition"></a></dt>
+<dd><p>e.g. <code class="docutils literal notranslate"><span class="pre">a&lt;2006:qkq</span></code> or <code class="docutils literal notranslate"><span class="pre">rfg</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day19.lib.parsers.parse_workflow_string">
+<span class="sig-prename descclassname"><span class="pre">day19.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_workflow_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day19.lib.classes.Workflow" title="day19.lib.classes.Workflow"><span class="pre">Workflow</span></a></span></span><a class="reference internal" href="_modules/day19/lib/parsers.html#parse_workflow_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.lib.parsers.parse_workflow_string" title="Link to this definition"></a></dt>
+<dd><p>Returns a workflow from a string representation.</p>
+<p>e.g. <code class="docutils literal notranslate"><span class="pre">px{a&lt;2006:qkq,m&gt;2090:A,rfg}\n</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-day19.lib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-day19.lib" title="Link to this heading"></a></h2>
+<p>Library modules for part19.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="day19.html" class="btn btn-neutral float-left" title="day19 package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="day19.tests.html" class="btn btn-neutral float-right" title="day19.tests package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

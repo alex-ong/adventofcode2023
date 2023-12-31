@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day03.tests.test_classes &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day03.tests.test_classes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day03.tests.test_classes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;tests day3&#39;s classes.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="kn">from</span> <span class="nn">day03.day3</span> <span class="kn">import</span> <span class="n">INPUT_SMALL</span>
+<span class="kn">from</span> <span class="nn">day03.lib.classes</span> <span class="kn">import</span> <span class="n">Gear</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">PartNumber</span>
+<span class="kn">from</span> <span class="nn">day03.lib.parsers</span> <span class="kn">import</span> <span class="n">get_matrix</span>
+
+
+<div class="viewcode-block" id="PartNumberTouchTest">
+<a class="viewcode-back" href="../../../day03.tests.html#day03.tests.test_classes.PartNumberTouchTest">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">PartNumberTouchTest</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result for a part number touching something else.&quot;&quot;&quot;</span>
+
+    <span class="n">col</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">row</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">row_size</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">bool</span></div>
+
+
+
+<div class="viewcode-block" id="test_part_number">
+<a class="viewcode-back" href="../../../day03.tests.html#day03.tests.test_classes.test_part_number">[docs]</a>
+<span class="k">def</span> <span class="nf">test_part_number</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tests part number class.&quot;&quot;&quot;</span>
+    <span class="n">part_number</span> <span class="o">=</span> <span class="n">PartNumber</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">467</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">part_number</span><span class="o">.</span><span class="n">end_index</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="n">tests</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="n">PartNumberTouchTest</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">tests</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">part_number</span><span class="o">.</span><span class="n">touching</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">col</span><span class="p">,</span> <span class="n">test</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">test</span><span class="o">.</span><span class="n">row_size</span><span class="p">)</span> <span class="o">==</span> <span class="n">test</span><span class="o">.</span><span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="test_matrix">
+<a class="viewcode-back" href="../../../day03.tests.html#day03.tests.test_classes.test_matrix">[docs]</a>
+<span class="k">def</span> <span class="nf">test_matrix</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tests matrix.&quot;&quot;&quot;</span>
+    <span class="n">matrix</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="n">get_matrix</span><span class="p">(</span><span class="n">INPUT_SMALL</span><span class="p">)</span>
+    <span class="n">part_numbers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;PartNumber&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">get_part_numbers</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">row_count</span><span class="p">,</span> <span class="n">matrix</span><span class="o">.</span><span class="n">row_size</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">part_numbers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span>
+    <span class="n">part_numbers</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">filter_engine_parts</span><span class="p">(</span><span class="n">part_numbers</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">part_numbers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span>
+
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">is_engine_part_row</span><span class="p">(</span><span class="s2">&quot;123.24.56&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">is_engine_part_row</span><span class="p">(</span><span class="s2">&quot;123.#24.56&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">is_engine_part_row</span><span class="p">(</span><span class="s2">&quot;123.*24.56&quot;</span><span class="p">)</span>
+
+    <span class="n">gears</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gear</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">get_gears</span><span class="p">(</span><span class="n">part_numbers</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">gears</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="n">matrix2</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">([</span><span class="s2">&quot;*755.&quot;</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">matrix2</span><span class="o">.</span><span class="n">is_engine_part</span><span class="p">(</span><span class="n">PartNumber</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">755</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="test_gear">
+<a class="viewcode-back" href="../../../day03.tests.html#day03.tests.test_classes.test_gear">[docs]</a>
+<span class="k">def</span> <span class="nf">test_gear</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tests gear class.&quot;&quot;&quot;</span>
+    <span class="c1"># 69...</span>
+    <span class="c1"># ..*78</span>
+    <span class="c1"># 54...</span>
+    <span class="n">part_number1</span> <span class="o">=</span> <span class="n">PartNumber</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">69</span><span class="p">)</span>
+    <span class="n">part_number2</span> <span class="o">=</span> <span class="n">PartNumber</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">78</span><span class="p">)</span>
+    <span class="n">part_number3</span> <span class="o">=</span> <span class="n">PartNumber</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">54</span><span class="p">)</span>
+
+    <span class="n">gear1</span> <span class="o">=</span> <span class="n">Gear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="n">part_number1</span><span class="p">])</span>
+    <span class="n">gear2</span> <span class="o">=</span> <span class="n">Gear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="n">part_number1</span><span class="p">,</span> <span class="n">part_number2</span><span class="p">])</span>
+    <span class="n">gear3</span> <span class="o">=</span> <span class="n">Gear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="n">part_number1</span><span class="p">,</span> <span class="n">part_number2</span><span class="p">,</span> <span class="n">part_number3</span><span class="p">])</span>
+
+    <span class="k">assert</span> <span class="n">gear1</span><span class="o">.</span><span class="n">gear_ratio</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">gear2</span><span class="o">.</span><span class="n">gear_ratio</span> <span class="o">==</span> <span class="mi">69</span> <span class="o">*</span> <span class="mi">78</span>
+    <span class="k">assert</span> <span class="n">gear3</span><span class="o">.</span><span class="n">gear_ratio</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="n">gear_not_init</span> <span class="o">=</span> <span class="n">Gear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="n">gear_not_init</span><span class="o">.</span><span class="n">gear_ratio</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

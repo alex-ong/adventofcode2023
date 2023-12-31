@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day05.lib.classes &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day05.lib.classes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day05.lib.classes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;classes for day05.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">bisect</span> <span class="kn">import</span> <span class="n">bisect_left</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+
+<span class="n">INT_MAX</span> <span class="o">=</span> <span class="mi">4294967296</span>
+
+
+<div class="viewcode-block" id="MappingRange">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.MappingRange">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">MappingRange</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple class for start/end range.&quot;&quot;&quot;</span>
+
+    <span class="n">start</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">end</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+
+<div class="viewcode-block" id="Mapping">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.Mapping">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Mapping</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple range based mapping.&quot;&quot;&quot;</span>
+
+    <span class="n">src_start</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">src_end</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">dest_start</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">dest_end</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="n">injected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finalize pre-calculated fields.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">src_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dest_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest_start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+
+<div class="viewcode-block" id="Mapping.get_mapping">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.Mapping.get_mapping">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts from src_value to destination.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_start</span> <span class="o">&lt;=</span> <span class="n">src_value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_end</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">src_value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest_start</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Item not within mapping range </span><span class="si">{</span><span class="n">src_value</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Mapping.get_mappings">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.Mapping.get_mappings">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_mappings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">MappingRange</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the chunk from start to end, followed by the remainder.&quot;&quot;&quot;</span>
+        <span class="n">dest_start</span> <span class="o">=</span> <span class="n">start</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest_start</span>
+        <span class="n">dest_end_uncapped</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest_start</span>
+
+        <span class="k">if</span> <span class="n">dest_end_uncapped</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest_end</span><span class="p">:</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="n">dest_end_uncapped</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest_end</span>
+
+        <span class="n">dest_end_capped</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dest_end_uncapped</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest_end</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">MappingRange</span><span class="p">(</span><span class="n">dest_start</span><span class="p">,</span> <span class="n">dest_end_capped</span><span class="p">),</span> <span class="n">remaining</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="NamedMap">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.NamedMap">[docs]</a>
+<span class="k">class</span> <span class="nc">NamedMap</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;a named map with a list of mappings.&quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">mappings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Mapping</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create empty NamedMap from just its name.</span>
+
+<span class="sd">        This one is a bit weird; the client should add mappings</span>
+<span class="sd">        after construction, then call finalize_mappings</span>
+<span class="sd">        This is to keep the file parsing code simpler</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): name of the mapping list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mappings</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="NamedMap.add_mapping">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.NamedMap.add_mapping">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a mapping to our list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mappings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NamedMap.finalize_mappings">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.NamedMap.finalize_mappings">[docs]</a>
+    <span class="k">def</span> <span class="nf">finalize_mappings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Post processes the mappings.</span>
+
+<span class="sd">        * Sorts the mappings</span>
+<span class="sd">        * Fills in any missing ranges</span>
+<span class="sd">        * Homogenizes so min_mapping is 0, and max_mapping is INT_MAX</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mappings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mappings</span>
+        <span class="n">mappings</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="c1"># Find gaps in the mappings and fill them in</span>
+        <span class="n">filled_in_mappings</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">prev_mapping</span> <span class="o">=</span> <span class="n">mappings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">mapping</span> <span class="ow">in</span> <span class="n">mappings</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">prev_mapping</span><span class="o">.</span><span class="n">src_end</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">src_start</span>
+            <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">:</span>
+                <span class="n">injected_mapping</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="n">filled_in_mappings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">injected_mapping</span><span class="p">)</span>
+            <span class="n">prev_mapping</span> <span class="o">=</span> <span class="n">mapping</span>
+
+        <span class="c1"># inject our mappings. We add them to the end, then sort</span>
+        <span class="n">mappings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">filled_in_mappings</span><span class="p">)</span>
+        <span class="n">mappings</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mappings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extend_mapping_range</span><span class="p">(</span><span class="n">mappings</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NamedMap.extend_mapping_range">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.NamedMap.extend_mapping_range">[docs]</a>
+    <span class="k">def</span> <span class="nf">extend_mapping_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mappings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Mapping</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Mapping</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure that mappings go from 0 -&gt; INT_MAX.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">mappings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">src_start</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">injected_mapping</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mappings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">src_start</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="n">mappings</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">injected_mapping</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mappings</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">src_end</span> <span class="o">!=</span> <span class="n">INT_MAX</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">mappings</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">src_end</span>
+            <span class="n">injected_mapping</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">INT_MAX</span> <span class="o">-</span> <span class="n">start</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="n">mappings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">injected_mapping</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">mappings</span></div>
+
+
+<div class="viewcode-block" id="NamedMap.get_mapping">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.NamedMap.get_mapping">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Uses binary search to grab the correct mapping, then apply it to one value.&quot;&quot;&quot;</span>
+        <span class="n">mapping_idx</span> <span class="o">=</span> <span class="n">bisect_left</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mappings</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">src_end</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mappings</span><span class="p">[</span><span class="n">mapping_idx</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get_mapping</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NamedMap.get_mapping_ranges">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.NamedMap.get_mapping_ranges">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_mapping_ranges</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">src_mapping_ranges</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MappingRange</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MappingRange</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Given a list of mapping ranges, returns a new list of mapping ranges.&quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">src_mapping_range</span> <span class="ow">in</span> <span class="n">src_mapping_ranges</span><span class="p">:</span>
+            <span class="n">mappings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mapping_range</span><span class="p">(</span><span class="n">src_mapping_range</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">mappings</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="NamedMap.get_mapping_range">
+<a class="viewcode-back" href="../../../day05.lib.html#day05.lib.classes.NamedMap.get_mapping_range">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_mapping_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_mapping_range</span><span class="p">:</span> <span class="n">MappingRange</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MappingRange</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remaps a source range to a list of destination ranges.&quot;&quot;&quot;</span>
+        <span class="c1"># make a quick copy first</span>
+        <span class="n">src_start</span><span class="p">,</span> <span class="n">src_end</span> <span class="o">=</span> <span class="n">src_mapping_range</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">src_mapping_range</span><span class="o">.</span><span class="n">end</span>
+        <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MappingRange</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># find out where the start is</span>
+        <span class="n">mapping_start_idx</span> <span class="o">=</span> <span class="n">bisect_left</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mappings</span><span class="p">,</span> <span class="n">src_start</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">src_end</span>
+        <span class="p">)</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="n">src_end</span> <span class="o">-</span> <span class="n">src_start</span>
+
+        <span class="k">while</span> <span class="n">remaining</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">mapping_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mappings</span><span class="p">[</span><span class="n">mapping_start_idx</span><span class="p">]</span>
+            <span class="n">mapping_range</span><span class="p">,</span> <span class="n">remaining</span> <span class="o">=</span> <span class="n">mapping_start</span><span class="o">.</span><span class="n">get_mappings</span><span class="p">(</span><span class="n">src_start</span><span class="p">,</span> <span class="n">src_end</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mapping_range</span><span class="p">)</span>
+            <span class="n">src_start</span> <span class="o">=</span> <span class="n">src_end</span> <span class="o">-</span> <span class="n">remaining</span>  <span class="c1"># move src_start upwards over time</span>
+            <span class="n">mapping_start_idx</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># no need to re-bisect. just go next</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return string for list of mappings.&quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span> <span class="k">for</span> <span class="n">mapping</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mappings</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

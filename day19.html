@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day19 package &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="day19.lib package" href="day19.lib.html" />
+    <link rel="prev" title="day18.tests package" href="day18.tests.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci.html">Continuous Integration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">adventofcode2023</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">day01 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">day02 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">day03 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">day04 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">day05 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">day06 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">day07 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">day08 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">day09 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.html">day10 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">day11 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">day12 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">day13 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.html">day14 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">day15 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day16.html">day16 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day17.html">day17 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">day18 package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">day19 package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html">day19.lib package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.tests.html">day19.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-day19.day19">day19.day19 module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#day19.day19.get_input"><code class="docutils literal notranslate"><span class="pre">get_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day19.day19.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day19.day19.part1"><code class="docutils literal notranslate"><span class="pre">part1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day19.day19.part2"><code class="docutils literal notranslate"><span class="pre">part2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day19.day19.process_part"><code class="docutils literal notranslate"><span class="pre">process_part()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day19.day19.solve_part2"><code class="docutils literal notranslate"><span class="pre">solve_part2()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-day19">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day20.html">day20 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">day21 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day22.html">day22 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day23.html">day23 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">day24 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">day25 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download_inputs.html">download_inputs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maker.html">maker module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">adventofcode2023</a></li>
+      <li class="breadcrumb-item active">day19 package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/day19.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="day19-package">
+<h1>day19 package<a class="headerlink" href="#day19-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="day19.lib.html">day19.lib package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="day19.lib.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.lib.html#module-day19.lib.classes">day19.lib.classes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Comparator"><code class="docutils literal notranslate"><span class="pre">Comparator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Comparator.GreaterThan"><code class="docutils literal notranslate"><span class="pre">Comparator.GreaterThan</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Comparator.LessThan"><code class="docutils literal notranslate"><span class="pre">Comparator.LessThan</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Component"><code class="docutils literal notranslate"><span class="pre">Component</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Component.A"><code class="docutils literal notranslate"><span class="pre">Component.A</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Component.M"><code class="docutils literal notranslate"><span class="pre">Component.M</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Component.S"><code class="docutils literal notranslate"><span class="pre">Component.S</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Component.X"><code class="docutils literal notranslate"><span class="pre">Component.X</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Condition"><code class="docutils literal notranslate"><span class="pre">Condition</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Condition.component"><code class="docutils literal notranslate"><span class="pre">Condition.component</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Condition.process_part"><code class="docutils literal notranslate"><span class="pre">Condition.process_part()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Condition.process_part_range"><code class="docutils literal notranslate"><span class="pre">Condition.process_part_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Condition.sign"><code class="docutils literal notranslate"><span class="pre">Condition.sign</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Condition.value"><code class="docutils literal notranslate"><span class="pre">Condition.value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part"><code class="docutils literal notranslate"><span class="pre">Part</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part.a"><code class="docutils literal notranslate"><span class="pre">Part.a</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part.clone_modify"><code class="docutils literal notranslate"><span class="pre">Part.clone_modify()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part.get_value"><code class="docutils literal notranslate"><span class="pre">Part.get_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part.m"><code class="docutils literal notranslate"><span class="pre">Part.m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part.rating"><code class="docutils literal notranslate"><span class="pre">Part.rating</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part.s"><code class="docutils literal notranslate"><span class="pre">Part.s</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part.x"><code class="docutils literal notranslate"><span class="pre">Part.x</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.classes.PartRange"><code class="docutils literal notranslate"><span class="pre">PartRange</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.PartRange.max_values"><code class="docutils literal notranslate"><span class="pre">PartRange.max_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.PartRange.min_values"><code class="docutils literal notranslate"><span class="pre">PartRange.min_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.PartRange.size"><code class="docutils literal notranslate"><span class="pre">PartRange.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.PartRange.split"><code class="docutils literal notranslate"><span class="pre">PartRange.split()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.classes.PartRangeDest"><code class="docutils literal notranslate"><span class="pre">PartRangeDest</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.PartRangeDest.destination"><code class="docutils literal notranslate"><span class="pre">PartRangeDest.destination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.PartRangeDest.part_range"><code class="docutils literal notranslate"><span class="pre">PartRangeDest.part_range</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Rule"><code class="docutils literal notranslate"><span class="pre">Rule</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Rule.condition"><code class="docutils literal notranslate"><span class="pre">Rule.condition</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Rule.destination"><code class="docutils literal notranslate"><span class="pre">Rule.destination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Rule.process_part"><code class="docutils literal notranslate"><span class="pre">Rule.process_part()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Rule.process_part_range"><code class="docutils literal notranslate"><span class="pre">Rule.process_part_range()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow"><code class="docutils literal notranslate"><span class="pre">Workflow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow.name"><code class="docutils literal notranslate"><span class="pre">Workflow.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow.process_part"><code class="docutils literal notranslate"><span class="pre">Workflow.process_part()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow.process_part_range"><code class="docutils literal notranslate"><span class="pre">Workflow.process_part_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow.rules"><code class="docutils literal notranslate"><span class="pre">Workflow.rules</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day19.lib.html#module-day19.lib.parsers">day19.lib.parsers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.parsers.parse_condition_string"><code class="docutils literal notranslate"><span class="pre">parse_condition_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.parsers.parse_part_string"><code class="docutils literal notranslate"><span class="pre">parse_part_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.parsers.parse_rule_string"><code class="docutils literal notranslate"><span class="pre">parse_rule_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.lib.html#day19.lib.parsers.parse_workflow_string"><code class="docutils literal notranslate"><span class="pre">parse_workflow_string()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day19.lib.html#module-day19.lib">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="day19.tests.html">day19.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="day19.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.tests.html#module-day19.tests.test_classes">day19.tests.test_classes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day19.tests.html#day19.tests.test_classes.get_part_range"><code class="docutils literal notranslate"><span class="pre">get_part_range()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.tests.html#day19.tests.test_classes.test_part_range"><code class="docutils literal notranslate"><span class="pre">test_part_range()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.tests.html#day19.tests.test_classes.test_part_range_dest"><code class="docutils literal notranslate"><span class="pre">test_part_range_dest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.tests.html#day19.tests.test_classes.test_rule"><code class="docutils literal notranslate"><span class="pre">test_rule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.tests.html#day19.tests.test_classes.test_workflow"><code class="docutils literal notranslate"><span class="pre">test_workflow()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day19.tests.html#module-day19.tests.test_day19">day19.tests.test_day19 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day19.tests.html#day19.tests.test_day19.test_day19"><code class="docutils literal notranslate"><span class="pre">test_day19()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day19.tests.html#module-day19.tests.test_parsers">day19.tests.test_parsers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day19.tests.html#day19.tests.test_parsers.test_parse_condition_string"><code class="docutils literal notranslate"><span class="pre">test_parse_condition_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.tests.html#day19.tests.test_parsers.test_parse_part_string"><code class="docutils literal notranslate"><span class="pre">test_parse_part_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.tests.html#day19.tests.test_parsers.test_parse_rule_string"><code class="docutils literal notranslate"><span class="pre">test_parse_rule_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day19.tests.html#day19.tests.test_parsers.test_parse_workflow_string"><code class="docutils literal notranslate"><span class="pre">test_parse_workflow_string()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day19.tests.html#module-day19.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-day19.day19">
+<span id="day19-day19-module"></span><h2>day19.day19 module<a class="headerlink" href="#module-day19.day19" title="Link to this heading"></a></h2>
+<p>Day19 solution.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="day19.day19.get_input">
+<span class="sig-prename descclassname"><span class="pre">day19.day19.</span></span><span class="sig-name descname"><span class="pre">get_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow" title="day19.lib.classes.Workflow"><span class="pre">Workflow</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day19/day19.html#get_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.day19.get_input" title="Link to this definition"></a></dt>
+<dd><p>Open file and parse.</p>
+<p>Returns well formed workflows and parts classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – filepath for data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of workflows and parts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[list[<a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow" title="day19.lib.classes.Workflow">Workflow</a>], list[<a class="reference internal" href="day19.lib.html#day19.lib.classes.Part" title="day19.lib.classes.Part">Part</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day19.day19.main">
+<span class="sig-prename descclassname"><span class="pre">day19.day19.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day19/day19.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.day19.main" title="Link to this definition"></a></dt>
+<dd><p>Load input file and run part1/part2.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day19.day19.part1">
+<span class="sig-prename descclassname"><span class="pre">day19.day19.</span></span><span class="sig-name descname"><span class="pre">part1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow" title="day19.lib.classes.Workflow"><span class="pre">Workflow</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day19/day19.html#part1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.day19.part1" title="Link to this definition"></a></dt>
+<dd><p>Solve part1.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day19.day19.part2">
+<span class="sig-prename descclassname"><span class="pre">day19.day19.</span></span><span class="sig-name descname"><span class="pre">part2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow" title="day19.lib.classes.Workflow"><span class="pre">Workflow</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day19/day19.html#part2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.day19.part2" title="Link to this definition"></a></dt>
+<dd><p>Solve part2.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day19.day19.process_part">
+<span class="sig-prename descclassname"><span class="pre">day19.day19.</span></span><span class="sig-name descname"><span class="pre">process_part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow" title="day19.lib.classes.Workflow"><span class="pre">Workflow</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">part</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day19.lib.html#day19.lib.classes.Part" title="day19.lib.classes.Part"><span class="pre">Part</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day19/day19.html#process_part"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.day19.process_part" title="Link to this definition"></a></dt>
+<dd><p>Processes a part.</p>
+<p>Returns the part rating (or 0 if rejected)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflows</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow" title="day19.lib.classes.Workflow"><em>Workflow</em></a><em>]</em>) – list of workflows.</p></li>
+<li><p><strong>part</strong> (<a class="reference internal" href="day19.lib.html#day19.lib.classes.Part" title="day19.lib.classes.Part"><em>Part</em></a>) – part to process</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>value of part (or 0 if rejected)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day19.day19.solve_part2">
+<span class="sig-prename descclassname"><span class="pre">day19.day19.</span></span><span class="sig-name descname"><span class="pre">solve_part2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow" title="day19.lib.classes.Workflow"><span class="pre">Workflow</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day19/day19.html#solve_part2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day19.day19.solve_part2" title="Link to this definition"></a></dt>
+<dd><p>Solve part2.</p>
+<p>Assumes xmas values from 0 &lt;= xmas &lt;= 4000.
+Returns total number of parts that pass.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>workflows</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="day19.lib.html#day19.lib.classes.Workflow" title="day19.lib.classes.Workflow"><em>Workflow</em></a><em>]</em>) – workflows to test</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>total number of parts that pass.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-day19">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-day19" title="Link to this heading"></a></h2>
+<p>Day19 solution.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="day18.tests.html" class="btn btn-neutral float-left" title="day18.tests package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="day19.lib.html" class="btn btn-neutral float-right" title="day19.lib package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

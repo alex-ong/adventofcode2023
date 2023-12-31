@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day18.day18a &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day18.day18a</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day18.day18a</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;day18 solution.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">StrEnum</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+
+<span class="kn">from</span> <span class="nn">day18.lib.tile</span> <span class="kn">import</span> <span class="n">EdgeTile</span><span class="p">,</span> <span class="n">HoleTile</span><span class="p">,</span> <span class="n">Tile</span>
+
+<span class="n">INPUT</span> <span class="o">=</span> <span class="s2">&quot;day18/input.txt&quot;</span>
+<span class="n">INPUT_SMALL</span> <span class="o">=</span> <span class="s2">&quot;day18/input-small.txt&quot;</span>
+
+
+<div class="viewcode-block" id="Position">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.Position">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Position</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple 2d point.&quot;&quot;&quot;</span>
+
+    <span class="n">row</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">col</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="Direction">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.Direction">[docs]</a>
+<span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cardinal direction in ``UDLR``.&quot;&quot;&quot;</span>
+
+    <span class="n">Up</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
+    <span class="n">Down</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
+    <span class="n">Left</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+    <span class="n">Right</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Custom repr for easy printing.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Up/Down/Left/Right.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+
+
+
+<div class="viewcode-block" id="Command">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.Command">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Command</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Well defined command dataclass.&quot;&quot;&quot;</span>
+
+    <span class="n">direction</span><span class="p">:</span> <span class="n">Direction</span>
+    <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">color</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+
+<div class="viewcode-block" id="generate_offsets">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.generate_offsets">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_offsets</span><span class="p">(</span>
+    <span class="n">position</span><span class="p">:</span> <span class="n">Position</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="n">Direction</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Position</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate position offsets.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        position (Position): base position</span>
+<span class="sd">        direction (Direction): direction of travel</span>
+<span class="sd">        steps (int): number of steps to generate</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        AssertionError: If direciton is invalid.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list[Position]: list of new positions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Right</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Position</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">position</span><span class="o">.</span><span class="n">col</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Left</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Position</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">position</span><span class="o">.</span><span class="n">col</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Down</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Position</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">row</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">position</span><span class="o">.</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Up</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Position</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">row</span> <span class="o">-</span> <span class="n">i</span><span class="p">,</span> <span class="n">position</span><span class="o">.</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Direction not supported</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Matrix">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.Matrix">[docs]</a>
+<span class="k">class</span> <span class="nc">Matrix</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;2d array representing world.&quot;&quot;&quot;</span>
+
+    <span class="n">contents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Tile</span><span class="p">]]</span>
+
+    <span class="n">min_pos</span><span class="p">:</span> <span class="n">Position</span>
+    <span class="n">max_pos</span><span class="p">:</span> <span class="n">Position</span>
+
+    <span class="n">num_rows</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">num_cols</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="n">wall_tiles</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dug_tiles</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_pos</span><span class="p">:</span> <span class="n">Position</span><span class="p">,</span> <span class="n">max_pos</span><span class="p">:</span> <span class="n">Position</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate 2d array with min/max position for offsetting.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span> <span class="o">=</span> <span class="n">max_pos</span><span class="o">.</span><span class="n">row</span> <span class="o">-</span> <span class="n">min_pos</span><span class="o">.</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span> <span class="o">=</span> <span class="n">max_pos</span><span class="o">.</span><span class="n">col</span> <span class="o">-</span> <span class="n">min_pos</span><span class="o">.</span><span class="n">col</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="n">Tile</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span>
+        <span class="p">]</span>
+
+<div class="viewcode-block" id="Matrix.process_command">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.Matrix.process_command">[docs]</a>
+    <span class="k">def</span> <span class="nf">process_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">miner_pos</span><span class="p">:</span> <span class="n">Position</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="n">Command</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Position</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process command.</span>
+
+<span class="sd">        This moves the miner around.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            miner_pos (Position): miner&#39;s current position</span>
+<span class="sd">            command (Command): command to process</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Position: miner&#39;s new position.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">offsets</span> <span class="o">=</span> <span class="n">generate_offsets</span><span class="p">(</span><span class="n">miner_pos</span><span class="p">,</span> <span class="n">command</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span> <span class="n">command</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wall_tiles</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">offsets</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">offsets</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">offset</span><span class="o">.</span><span class="n">row</span><span class="p">][</span><span class="n">offset</span><span class="o">.</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">EdgeTile</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">command</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">offsets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Matrix.dig_out">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.Matrix.dig_out">[docs]</a>
+    <span class="k">def</span> <span class="nf">dig_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dig out non-perimeter tiles using flood-fill.&quot;&quot;&quot;</span>
+        <span class="c1"># cache for what&#39;s been visited</span>
+        <span class="n">visited</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="kc">False</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="c1"># list of nodes to explore</span>
+        <span class="n">to_process</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="n">Position</span><span class="p">]</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="n">to_process</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">Position</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span>
+
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">to_process</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">position</span><span class="p">:</span> <span class="n">Position</span> <span class="o">=</span> <span class="n">to_process</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_oob</span><span class="p">(</span><span class="n">position</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;pre-allocated matrix shouldn&#39;t cause OOB&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">visited</span><span class="p">[</span><span class="n">position</span><span class="o">.</span><span class="n">row</span><span class="p">][</span><span class="n">position</span><span class="o">.</span><span class="n">col</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">position</span><span class="o">.</span><span class="n">row</span><span class="p">][</span><span class="n">position</span><span class="o">.</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">contents</span> <span class="o">!=</span> <span class="s2">&quot;.&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">position</span><span class="o">.</span><span class="n">row</span><span class="p">][</span><span class="n">position</span><span class="o">.</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">HoleTile</span><span class="p">()</span>
+            <span class="n">visited</span><span class="p">[</span><span class="n">position</span><span class="o">.</span><span class="n">row</span><span class="p">][</span><span class="n">position</span><span class="o">.</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dug_tiles</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="n">Direction</span><span class="p">:</span>
+                <span class="n">to_process</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">generate_offsets</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="Matrix.is_oob">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.Matrix.is_oob">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_oob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Position</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns if a position is out of bounds.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            position (Position): position to check.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if out of bounds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">position</span><span class="o">.</span><span class="n">row</span> <span class="o">&lt;</span> <span class="mi">0</span>
+            <span class="ow">or</span> <span class="n">position</span><span class="o">.</span><span class="n">row</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span>
+            <span class="ow">or</span> <span class="n">position</span><span class="o">.</span><span class="n">col</span> <span class="o">&lt;</span> <span class="mi">0</span>
+            <span class="ow">or</span> <span class="n">position</span><span class="o">.</span><span class="n">col</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span>
+        <span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Custom __str__ for pretty printing matrix.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="k">for</span> <span class="n">tile</span> <span class="ow">in</span> <span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_matrix_range">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.get_matrix_range">[docs]</a>
+<span class="k">def</span> <span class="nf">get_matrix_range</span><span class="p">(</span><span class="n">commands</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Command</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Position</span><span class="p">,</span> <span class="n">Position</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate minimum and maximum position in matrix.</span>
+
+<span class="sd">    Since we start in the middle somewhere, we get negative positions.</span>
+<span class="sd">    This can be useds to offset the matrix when we construct it.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        commands (list[Command]): list of commands that will be run.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[Position, Position]: [min,max] positions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">Position</span><span class="p">()</span>
+    <span class="n">max_row</span><span class="p">,</span> <span class="n">max_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">min_row</span><span class="p">,</span> <span class="n">min_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">generate_offsets</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">command</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span> <span class="n">command</span><span class="o">.</span><span class="n">steps</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">min_row</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">min_row</span><span class="p">)</span>
+        <span class="n">min_col</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">col</span><span class="p">,</span> <span class="n">min_col</span><span class="p">)</span>
+        <span class="n">max_row</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">max_row</span><span class="p">)</span>
+        <span class="n">max_col</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">col</span><span class="p">,</span> <span class="n">max_col</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Position</span><span class="p">(</span><span class="n">min_row</span><span class="p">,</span> <span class="n">min_col</span><span class="p">),</span> <span class="n">Position</span><span class="p">(</span><span class="n">max_row</span><span class="p">,</span> <span class="n">max_col</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_input">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.get_input">[docs]</a>
+<span class="k">def</span> <span class="nf">get_input</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Command</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reads input from file into well-formed list of commands.&quot;&quot;&quot;</span>
+    <span class="n">commands</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">direction</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="n">instruction</span> <span class="o">=</span> <span class="n">Command</span><span class="p">(</span><span class="n">Direction</span><span class="p">(</span><span class="n">direction</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">steps</span><span class="p">),</span> <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instruction</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">commands</span></div>
+
+
+
+<div class="viewcode-block" id="get_solution">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.get_solution">[docs]</a>
+<span class="k">def</span> <span class="nf">get_solution</span><span class="p">(</span><span class="n">commands</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Command</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates solution.</span>
+
+<span class="sd">    1. Pre-calculates the range</span>
+<span class="sd">    2. Creates edge tiles</span>
+<span class="sd">    3. Flood fill centre.</span>
+<span class="sd">    4. Count tiles.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">min_pos</span><span class="p">,</span> <span class="n">max_pos</span> <span class="o">=</span> <span class="n">get_matrix_range</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span>
+
+    <span class="n">matrix</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">min_pos</span><span class="p">,</span> <span class="n">max_pos</span><span class="p">)</span>
+    <span class="n">position</span><span class="p">:</span> <span class="n">Position</span> <span class="o">=</span> <span class="n">Position</span><span class="p">(</span><span class="o">-</span><span class="n">min_pos</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="o">-</span><span class="n">min_pos</span><span class="o">.</span><span class="n">col</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">process_command</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+    <span class="n">matrix</span><span class="o">.</span><span class="n">dig_out</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dug: </span><span class="si">{</span><span class="n">matrix</span><span class="o">.</span><span class="n">dug_tiles</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wall: </span><span class="si">{</span><span class="n">matrix</span><span class="o">.</span><span class="n">wall_tiles</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total: </span><span class="si">{</span><span class="n">matrix</span><span class="o">.</span><span class="n">dug_tiles</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">matrix</span><span class="o">.</span><span class="n">wall_tiles</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">matrix</span><span class="o">.</span><span class="n">dug_tiles</span> <span class="o">+</span> <span class="n">matrix</span><span class="o">.</span><span class="n">wall_tiles</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../day18.html#day18.day18a.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load data and then find solution to part1.&quot;&quot;&quot;</span>
+    <span class="n">commands</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Command</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="n">INPUT</span><span class="p">)</span>
+    <span class="n">get_solution</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

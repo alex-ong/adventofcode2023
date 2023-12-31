@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day19.lib.classes &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day19.lib.classes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day19.lib.classes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;well defined classes for day19.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">StrEnum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+
+<div class="viewcode-block" id="Part">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Part">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Part</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Well defined part with x,m,a,s values.&quot;&quot;&quot;</span>
+
+    <span class="n">x</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">m</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">a</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">s</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rating</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns rating of part (sum of xmas).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">])</span>
+
+<div class="viewcode-block" id="Part.clone_modify">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Part.clone_modify">[docs]</a>
+    <span class="k">def</span> <span class="nf">clone_modify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">:</span> <span class="s2">&quot;Component&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Part&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clones this part and modifies one component.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            component (Component): component to change</span>
+<span class="sd">            value (int): new value of component</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Part: clone of this part with one component changed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">X</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">M</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">A</span><span class="p">:</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">S</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">return</span> <span class="n">Part</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Part.get_value">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Part.get_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">:</span> <span class="s2">&quot;Component&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns value of a component inside this part.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">X</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">M</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">A</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">S</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported component</span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Component">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Component">[docs]</a>
+<span class="k">class</span> <span class="nc">Component</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A well defined component inside a part.&quot;&quot;&quot;</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="s2">&quot;m&quot;</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="s2">&quot;s&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="PartRange">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.PartRange">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">PartRange</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A range of parts (min/max) based on component values.&quot;&quot;&quot;</span>
+
+    <span class="n">min_values</span><span class="p">:</span> <span class="n">Part</span>  <span class="c1"># from</span>
+    <span class="n">max_values</span><span class="p">:</span> <span class="n">Part</span>  <span class="c1"># to, non-inclusive</span>
+
+<div class="viewcode-block" id="PartRange.size">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.PartRange.size">[docs]</a>
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the size of the partrange.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+            <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="o">.</span><span class="n">m</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="o">.</span><span class="n">m</span><span class="p">)</span>
+            <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="o">.</span><span class="n">a</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
+            <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="o">.</span><span class="n">s</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PartRange.split">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.PartRange.split">[docs]</a>
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">:</span> <span class="n">Component</span><span class="p">,</span> <span class="n">split_value</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;PartRange&quot;</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;PartRange&quot;</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Split a partrange in two, using a chosen component and splitvalue.</span>
+
+<span class="sd">        In the case that our range falls on one whole side, we return None.</span>
+<span class="sd">        E.g.</span>
+<span class="sd">        range = 0-100; split == 200 -&gt; return [(0-100), None]</span>
+<span class="sd">        range = 100-200; split == 50 -&gt; return [None, (100-200)]</span>
+<span class="sd">        range = 100-200, split == 150 -&gt; return [(100-150), (150-200)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">min_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+        <span class="n">max_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">split_value</span> <span class="o">&gt;=</span> <span class="n">max_value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">split_value</span> <span class="o">&lt;</span> <span class="n">min_value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">mid_high</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="o">.</span><span class="n">clone_modify</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">split_value</span><span class="p">)</span>
+        <span class="n">mid_low</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="o">.</span><span class="n">clone_modify</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">split_value</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">PartRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="p">,</span> <span class="n">mid_low</span><span class="p">),</span>
+            <span class="n">PartRange</span><span class="p">(</span><span class="n">mid_high</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compact string representing our range.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">&lt;=x&lt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="o">.</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="o">.</span><span class="n">m</span><span class="si">}</span><span class="s2">&lt;=m&lt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="o">.</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="o">.</span><span class="n">a</span><span class="si">}</span><span class="s2">&lt;=a&lt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="o">.</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_values</span><span class="o">.</span><span class="n">s</span><span class="si">}</span><span class="s2">&lt;=s&lt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_values</span><span class="o">.</span><span class="n">s</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PartRangeDest">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.PartRangeDest">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">PartRangeDest</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Combinatoin of partrange and a destination workflow.&quot;&quot;&quot;</span>
+
+    <span class="n">part_range</span><span class="p">:</span> <span class="n">PartRange</span>
+    <span class="n">destination</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compact string representation.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">destination</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">part_range</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Comparator">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Comparator">[docs]</a>
+<span class="k">class</span> <span class="nc">Comparator</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Well defined comparators ``&lt;`` and ``&gt;``.&quot;&quot;&quot;</span>
+
+    <span class="n">LessThan</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span>
+    <span class="n">GreaterThan</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Condition">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Condition">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Condition</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A condition for a part to succeed/fail.&quot;&quot;&quot;</span>
+
+    <span class="n">component</span><span class="p">:</span> <span class="n">Component</span>
+    <span class="n">sign</span><span class="p">:</span> <span class="n">Comparator</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">int</span>
+
+<div class="viewcode-block" id="Condition.process_part">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Condition.process_part">[docs]</a>
+    <span class="k">def</span> <span class="nf">process_part</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="n">Part</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks a part to see if it matches our condition.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            part (Part): part to check</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: if component/sign are unsupported</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the part passes our condition.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">part_val</span><span class="p">:</span> <span class="nb">int</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">X</span><span class="p">:</span>
+            <span class="n">part_val</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">x</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">M</span><span class="p">:</span>
+            <span class="n">part_val</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">m</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">A</span><span class="p">:</span>
+            <span class="n">part_val</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">a</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">S</span><span class="p">:</span>
+            <span class="n">part_val</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">s</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported component: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">==</span> <span class="n">Comparator</span><span class="o">.</span><span class="n">GreaterThan</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">part_val</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">==</span> <span class="n">Comparator</span><span class="o">.</span><span class="n">LessThan</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">part_val</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported comparator: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sign</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Condition.process_part_range">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Condition.process_part_range">[docs]</a>
+    <span class="k">def</span> <span class="nf">process_part_range</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">part_range</span><span class="p">:</span> <span class="n">PartRange</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">PartRange</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PartRange</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Splits a part range based on success/fail.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            part_range (PartRange): Partrange to check.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: If we have an unknown comparator</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[Optional[PartRange], Optional[PartRange]]: successful part range, failed partrange</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">==</span> <span class="n">Comparator</span><span class="o">.</span><span class="n">LessThan</span><span class="p">:</span>
+            <span class="n">success</span><span class="p">,</span> <span class="n">fail</span> <span class="o">=</span> <span class="n">part_range</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">success</span><span class="p">,</span> <span class="n">fail</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">==</span> <span class="n">Comparator</span><span class="o">.</span><span class="n">GreaterThan</span><span class="p">:</span>
+            <span class="n">fail</span><span class="p">,</span> <span class="n">success</span> <span class="o">=</span> <span class="n">part_range</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">success</span><span class="p">,</span> <span class="n">fail</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown comparator: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sign</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Rule">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Rule">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Rule</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A Rule consists of a condition + destination.&quot;&quot;&quot;</span>
+
+    <span class="n">destination</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">condition</span><span class="p">:</span> <span class="n">Condition</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Rule.process_part">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Rule.process_part">[docs]</a>
+    <span class="k">def</span> <span class="nf">process_part</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="n">Part</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Processes a part.</span>
+
+<span class="sd">        Returns next workflow if successful,</span>
+<span class="sd">        or None if we failed this rule</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># always pass</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">destination</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">process_part</span><span class="p">(</span><span class="n">part</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">destination</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Rule.process_part_range">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Rule.process_part_range">[docs]</a>
+    <span class="k">def</span> <span class="nf">process_part_range</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">part_range</span><span class="p">:</span> <span class="n">PartRange</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">PartRangeDest</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PartRange</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Processes a PartRange.</span>
+
+<span class="sd">        Returns next workflow and partrange for succeeding parts.</span>
+<span class="sd">        Returns the remainder partrange that failed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            part_range (PartRange): base partrange.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[Optional[PartRangeDest], Optional[PartRange]]: success, fail</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">success</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PartRange</span><span class="p">]</span>
+        <span class="n">fail</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PartRange</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pass all</span>
+            <span class="n">success</span><span class="p">,</span> <span class="n">fail</span> <span class="o">=</span> <span class="n">part_range</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># split up range</span>
+            <span class="n">success</span><span class="p">,</span> <span class="n">fail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">process_part_range</span><span class="p">(</span><span class="n">part_range</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">PartRangeDest</span><span class="p">(</span><span class="n">success</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">destination</span><span class="p">),</span> <span class="n">fail</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">fail</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Workflow">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Workflow">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Workflow</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The name of the workflow + a bunch of rules for parts to follow.&quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">rules</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Rule</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Workflow.process_part">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Workflow.process_part">[docs]</a>
+    <span class="k">def</span> <span class="nf">process_part</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="n">Part</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Processes a part, returns the next workflow.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">:</span>
+            <span class="n">destination</span> <span class="o">=</span> <span class="n">rule</span><span class="o">.</span><span class="n">process_part</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">destination</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">destination</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;uh oh, hit the end of workflow!&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Workflow.process_part_range">
+<a class="viewcode-back" href="../../../day19.lib.html#day19.lib.classes.Workflow.process_part_range">[docs]</a>
+    <span class="k">def</span> <span class="nf">process_part_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">part_range</span><span class="p">:</span> <span class="n">PartRange</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PartRangeDest</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Follow rule list, splitting off PartRanges.</span>
+
+<span class="sd">        Each success has to branch off.</span>
+<span class="sd">        Each failure continues down the chain.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">PartRangeDest</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">remainder</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PartRange</span><span class="p">]</span> <span class="o">=</span> <span class="n">part_range</span>
+
+        <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">remainder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="n">success</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">rule</span><span class="o">.</span><span class="n">process_part_range</span><span class="p">(</span><span class="n">remainder</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+            <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">results</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

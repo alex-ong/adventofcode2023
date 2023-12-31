@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day07.day7 &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day07.day7</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day07.day7</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;day7 solution.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">total_ordering</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Self</span>
+
+<span class="n">INPUT</span> <span class="o">=</span> <span class="s2">&quot;day07/input.txt&quot;</span>
+<span class="n">INPUT_SMALL</span> <span class="o">=</span> <span class="s2">&quot;day07/input-small.txt&quot;</span>
+
+
+<div class="viewcode-block" id="Hand">
+<a class="viewcode-back" href="../../day07.html#day07.day7.Hand">[docs]</a>
+<span class="nd">@total_ordering</span>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Hand</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple hand class, uses cards_inted and of_a_kind for sorting.&quot;&quot;&quot;</span>
+
+    <span class="n">cards</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">bet</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="n">cards_inted</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">of_a_kind</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">CARD_MAPPING</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;23456789TJQKA&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert cards to ints.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards_inted</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CARD_MAPPING</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">card</span><span class="p">)</span> <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bet</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bet</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">of_a_kind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_of_a_kind</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Hand.calculate_of_a_kind">
+<a class="viewcode-back" href="../../day07.html#day07.day7.Hand.calculate_of_a_kind">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate_of_a_kind</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Figure out card sets.&quot;&quot;&quot;</span>
+        <span class="n">card_sets</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="p">:</span>
+            <span class="n">card_sets</span><span class="p">[</span><span class="n">card</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">card_sets</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Less than comparator function.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Hand</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;using __lt__ on non identical class&quot;</span><span class="p">)</span>
+        <span class="c1"># compare our sets</span>
+        <span class="k">for</span> <span class="n">ours</span><span class="p">,</span> <span class="n">theirs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">of_a_kind</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">of_a_kind</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ours</span> <span class="o">!=</span> <span class="n">theirs</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ours</span> <span class="o">&lt;</span> <span class="n">theirs</span>
+        <span class="c1"># compare our individual cards</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_inted</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">cards_inted</span>  <span class="c1"># int lists easy to compare</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compares if two hands are equal by comparing cards in same order and value.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Hand</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;using __lt__ on non identical class&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_inted</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">cards_inted</span></div>
+
+
+
+<div class="viewcode-block" id="HandPart2">
+<a class="viewcode-back" href="../../day07.html#day07.day7.HandPart2">[docs]</a>
+<span class="k">class</span> <span class="nc">HandPart2</span><span class="p">(</span><span class="n">Hand</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Part two; implements joker rule.&quot;&quot;&quot;</span>
+
+    <span class="n">CARD_MAPPING</span> <span class="o">=</span> <span class="s2">&quot;J23456789TQKA&quot;</span>  <span class="c1"># new card ordering</span>
+
+    <span class="c1"># override</span>
+<div class="viewcode-block" id="HandPart2.calculate_of_a_kind">
+<a class="viewcode-back" href="../../day07.html#day07.day7.HandPart2.calculate_of_a_kind">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate_of_a_kind</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Figure out card sets; jokers will be added to the biggest card set.&quot;&quot;&quot;</span>
+        <span class="n">card_sets</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="p">:</span>
+            <span class="n">card_sets</span><span class="p">[</span><span class="n">card</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">jokers</span> <span class="o">=</span> <span class="n">card_sets</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;J&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">card_sets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">jokers</span><span class="p">]</span>
+
+        <span class="n">of_a_kind</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">card_sets</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">of_a_kind</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">jokers</span>
+        <span class="k">return</span> <span class="n">of_a_kind</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="parse_lines">
+<a class="viewcode-back" href="../../day07.html#day07.day7.parse_lines">[docs]</a>
+<span class="k">def</span> <span class="nf">parse_lines</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Hand</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Open input file and parse into hand structures.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="c1"># wow super cool list comprehension thingo i&#39;m so cool</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_hands">
+<a class="viewcode-back" href="../../day07.html#day07.day7.calculate_hands">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_hands</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">input_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates class `cls` then calculates points.&quot;&quot;&quot;</span>
+    <span class="n">hands</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">parse_lines</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_path</span><span class="p">))</span>
+
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">rank</span><span class="p">,</span> <span class="n">hand</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hands</span><span class="p">):</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="p">(</span><span class="n">rank</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">hand</span><span class="o">.</span><span class="n">bet</span>
+    <span class="k">return</span> <span class="n">score</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../day07.html#day07.day7.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main func.&quot;&quot;&quot;</span>
+    <span class="c1"># Q1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">calculate_hands</span><span class="p">(</span><span class="n">Hand</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">))</span>
+
+    <span class="c1"># Q2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">calculate_hands</span><span class="p">(</span><span class="n">HandPart2</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">))</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

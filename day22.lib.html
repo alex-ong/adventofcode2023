@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day22.lib package &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="day22.tests package" href="day22.tests.html" />
+    <link rel="prev" title="day22 package" href="day22.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci.html">Continuous Integration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">adventofcode2023</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">day01 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">day02 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">day03 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">day04 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">day05 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">day06 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">day07 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">day08 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">day09 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.html">day10 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">day11 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">day12 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">day13 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.html">day14 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">day15 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day16.html">day16 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day17.html">day17 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">day18 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.html">day19 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day20.html">day20 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">day21 package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="day22.html">day22 package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="day22.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">day22.lib package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="day22.tests.html">day22.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day22.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day22.html#module-day22.day22">day22.day22 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day22.html#module-day22">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day23.html">day23 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">day24 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">day25 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download_inputs.html">download_inputs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maker.html">maker module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">adventofcode2023</a></li>
+          <li class="breadcrumb-item"><a href="day22.html">day22 package</a></li>
+      <li class="breadcrumb-item active">day22.lib package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/day22.lib.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="day22-lib-package">
+<h1>day22.lib package<a class="headerlink" href="#day22-lib-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-day22.lib.classes">
+<span id="day22-lib-classes-module"></span><h2>day22.lib.classes module<a class="headerlink" href="#module-day22.lib.classes" title="Link to this heading"></a></h2>
+<p>Classes for day22.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day22.lib.classes.</span></span><span class="sig-name descname"><span class="pre">BoxData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day22.lib.classes.Vector3" title="day22.lib.classes.Vector3"><span class="pre">Vector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day22.lib.classes.Vector3" title="day22.lib.classes.Vector3"><span class="pre">Vector3</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day22/lib/classes.html#BoxData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.BoxData" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A box in 3d space.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.end_pos">
+<span class="sig-name descname"><span class="pre">end_pos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day22.lib.classes.Vector3" title="day22.lib.classes.Vector3"><span class="pre">Vector3</span></a></em><a class="headerlink" href="#day22.lib.classes.BoxData.end_pos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.fall">
+<span class="sig-name descname"><span class="pre">fall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#BoxData.fall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.BoxData.fall" title="Link to this definition"></a></dt>
+<dd><p>Move block down vertically.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.hats">
+<span class="sig-name descname"><span class="pre">hats</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day22.lib.classes.BoxData.hats" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.height">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#day22.lib.classes.BoxData.height" title="Link to this definition"></a></dt>
+<dd><p>Height according to vpython.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.length">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#day22.lib.classes.BoxData.length" title="Link to this definition"></a></dt>
+<dd><p>Length according to vpython.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#day22.lib.classes.BoxData.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.recursive_fall">
+<span class="sig-name descname"><span class="pre">recursive_fall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">already_falling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#BoxData.recursive_fall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.BoxData.recursive_fall" title="Link to this definition"></a></dt>
+<dd><p>Returns all boxes above us that fall if we fall.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#BoxData.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.BoxData.select" title="Link to this definition"></a></dt>
+<dd><p>Select a box by offsetting it to the side.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.set_hats">
+<span class="sig-name descname"><span class="pre">set_hats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#BoxData.set_hats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.BoxData.set_hats" title="Link to this definition"></a></dt>
+<dd><p>Set the BoxData’s that we support.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.set_supports">
+<span class="sig-name descname"><span class="pre">set_supports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">supports</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#BoxData.set_supports"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.BoxData.set_supports" title="Link to this definition"></a></dt>
+<dd><p>Set the BoxData’s that support us.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.set_vbox">
+<span class="sig-name descname"><span class="pre">set_vbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vbox</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">box</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#BoxData.set_vbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.BoxData.set_vbox" title="Link to this definition"></a></dt>
+<dd><p>Store a vpython box onto this boxdata.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.start_pos">
+<span class="sig-name descname"><span class="pre">start_pos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day22.lib.classes.Vector3" title="day22.lib.classes.Vector3"><span class="pre">Vector3</span></a></em><a class="headerlink" href="#day22.lib.classes.BoxData.start_pos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.supports">
+<span class="sig-name descname"><span class="pre">supports</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day22.lib.classes.BoxData.supports" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.total_hats">
+<span class="sig-name descname"><span class="pre">total_hats</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day22.lib.classes.BoxData.total_hats" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.unselect">
+<span class="sig-name descname"><span class="pre">unselect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#BoxData.unselect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.BoxData.unselect" title="Link to this definition"></a></dt>
+<dd><p>Unselect a box by putting it back.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.vbox">
+<span class="sig-name descname"><span class="pre">vbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">box</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#day22.lib.classes.BoxData.vbox" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.vpos">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vpos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">vector</span></em><a class="headerlink" href="#day22.lib.classes.BoxData.vpos" title="Link to this definition"></a></dt>
+<dd><p>Pos according to vpython.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#day22.lib.classes.BoxData.width" title="Link to this definition"></a></dt>
+<dd><p>Width according to vpython.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.z_val_bot">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">z_val_bot</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day22.lib.classes.BoxData.z_val_bot" title="Link to this definition"></a></dt>
+<dd><p>Return lowest z value (self.start_pos.z).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day22.lib.classes.BoxData.z_val_top">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">z_val_top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day22.lib.classes.BoxData.z_val_top" title="Link to this definition"></a></dt>
+<dd><p>Return maximum z value(self.end_pos.z).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day22.lib.classes.Matrix">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day22.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day22/lib/classes.html#Matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.Matrix" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>3d matrix.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.Matrix.can_fall_down">
+<span class="sig-name descname"><span class="pre">can_fall_down</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#Matrix.can_fall_down"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.Matrix.can_fall_down" title="Link to this definition"></a></dt>
+<dd><p>Whether a given box can fall downwards.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>box</strong> (<a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><em>BoxData</em></a>) – box to test</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the box can fall.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.Matrix.can_fly_up">
+<span class="sig-name descname"><span class="pre">can_fly_up</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#Matrix.can_fly_up"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.Matrix.can_fly_up" title="Link to this definition"></a></dt>
+<dd><p>Check cells above our block. If they’re clear we can fly up.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.Matrix.get_hats">
+<span class="sig-name descname"><span class="pre">get_hats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#Matrix.get_hats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.Matrix.get_hats" title="Link to this definition"></a></dt>
+<dd><p>Return which boxes are resting on this box.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.Matrix.get_supports">
+<span class="sig-name descname"><span class="pre">get_supports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#Matrix.get_supports"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.Matrix.get_supports" title="Link to this definition"></a></dt>
+<dd><p>Return which boxes are supporting this box.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.Matrix.layers">
+<span class="sig-name descname"><span class="pre">layers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day22.lib.classes.Matrix.layers" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day22.lib.classes.Matrix.register_box">
+<span class="sig-name descname"><span class="pre">register_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/classes.html#Matrix.register_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.Matrix.register_box" title="Link to this definition"></a></dt>
+<dd><p>Register box into matrix.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day22.lib.classes.Vector3">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day22.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Vector3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day22/lib/classes.html#Vector3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.classes.Vector3" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simple 3d vector.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.Vector3.x">
+<span class="sig-name descname"><span class="pre">x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day22.lib.classes.Vector3.x" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.Vector3.y">
+<span class="sig-name descname"><span class="pre">y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day22.lib.classes.Vector3.y" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day22.lib.classes.Vector3.z">
+<span class="sig-name descname"><span class="pre">z</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day22.lib.classes.Vector3.z" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-day22.lib.parsers">
+<span id="day22-lib-parsers-module"></span><h2>day22.lib.parsers module<a class="headerlink" href="#module-day22.lib.parsers" title="Link to this heading"></a></h2>
+<p>Parse vectors/boxes from string to class.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="day22.lib.parsers.get_boxes">
+<span class="sig-prename descclassname"><span class="pre">day22.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">get_boxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day22/lib/parsers.html#get_boxes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.parsers.get_boxes" title="Link to this definition"></a></dt>
+<dd><p>Returns a wellformed box from a string.</p>
+<p>E.g. 1,2,3~1,2,4</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day22.lib.parsers.parse_vector">
+<span class="sig-prename descclassname"><span class="pre">day22.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day22.lib.classes.Vector3" title="day22.lib.classes.Vector3"><span class="pre">Vector3</span></a></span></span><a class="reference internal" href="_modules/day22/lib/parsers.html#parse_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.parsers.parse_vector" title="Link to this definition"></a></dt>
+<dd><p>Returns a wellformed vector from a string.</p>
+<p>e.g. 1,2,3</p>
+</dd></dl>
+
+</section>
+<section id="module-day22.lib.vis">
+<span id="day22-lib-vis-module"></span><h2>day22.lib.vis module<a class="headerlink" href="#module-day22.lib.vis" title="Link to this heading"></a></h2>
+<p>Visualization classes.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="day22.lib.vis.animate_part1">
+<span class="sig-prename descclassname"><span class="pre">day22.lib.vis.</span></span><span class="sig-name descname"><span class="pre">animate_part1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boxes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day22.lib.classes.Matrix" title="day22.lib.classes.Matrix"><span class="pre">Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/vis.html#animate_part1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.vis.animate_part1" title="Link to this definition"></a></dt>
+<dd><p>Animates part1.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day22.lib.vis.animate_part2">
+<span class="sig-prename descclassname"><span class="pre">day22.lib.vis.</span></span><span class="sig-name descname"><span class="pre">animate_part2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boxes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/vis.html#animate_part2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.vis.animate_part2" title="Link to this definition"></a></dt>
+<dd><p>Animates part2.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day22.lib.vis.bind_keys">
+<span class="sig-prename descclassname"><span class="pre">day22.lib.vis.</span></span><span class="sig-name descname"><span class="pre">bind_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">on_key_down</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/vis.html#bind_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.vis.bind_keys" title="Link to this definition"></a></dt>
+<dd><p>Bind keyboard events, so that <code class="docutils literal notranslate"><span class="pre">enter</span></code> calls the given callback.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day22.lib.vis.construct_box">
+<span class="sig-prename descclassname"><span class="pre">day22.lib.vis.</span></span><span class="sig-name descname"><span class="pre">construct_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">vector</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">box</span></span></span><a class="reference internal" href="_modules/day22/lib/vis.html#construct_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.vis.construct_box" title="Link to this definition"></a></dt>
+<dd><p>Constructs a vpython box from a box_data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>box_data</strong> (<a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><em>BoxData</em></a>) – box data to mimic</p></li>
+<li><p><strong>color</strong> (<em>vpython.vector</em>) – color of box for vis.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a vpython.box</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>vpython.box</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day22.lib.vis.follow_block">
+<span class="sig-prename descclassname"><span class="pre">day22.lib.vis.</span></span><span class="sig-name descname"><span class="pre">follow_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/vis.html#follow_block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.vis.follow_block" title="Link to this definition"></a></dt>
+<dd><p>Force camera to follow a block.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day22.lib.vis.init_vis">
+<span class="sig-prename descclassname"><span class="pre">day22.lib.vis.</span></span><span class="sig-name descname"><span class="pre">init_vis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boxes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day22.lib.classes.BoxData" title="day22.lib.classes.BoxData"><span class="pre">BoxData</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day22/lib/vis.html#init_vis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.vis.init_vis" title="Link to this definition"></a></dt>
+<dd><p>Initialize vis boxes. Only called if we’re visualizing.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day22.lib.vis.random_color">
+<span class="sig-prename descclassname"><span class="pre">day22.lib.vis.</span></span><span class="sig-name descname"><span class="pre">random_color</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">vector</span></span></span><a class="reference internal" href="_modules/day22/lib/vis.html#random_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day22.lib.vis.random_color" title="Link to this definition"></a></dt>
+<dd><p>Returns a random color compatible with vpython.</p>
+</dd></dl>
+
+</section>
+<section id="module-day22.lib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-day22.lib" title="Link to this heading"></a></h2>
+<p>Library classes for day22.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="day22.html" class="btn btn-neutral float-left" title="day22 package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="day22.tests.html" class="btn btn-neutral float-right" title="day22.tests package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

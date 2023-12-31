@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day03.lib package &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="day03.tests package" href="day03.tests.html" />
+    <link rel="prev" title="day03 package" href="day03.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci.html">Continuous Integration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">adventofcode2023</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">day01 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">day02 package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="day03.html">day03 package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="day03.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">day03.lib package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="day03.tests.html">day03.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day03.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day03.html#module-day03.day3">day03.day3 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day03.html#module-day03">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">day04 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">day05 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">day06 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">day07 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">day08 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">day09 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.html">day10 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">day11 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">day12 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">day13 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.html">day14 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">day15 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day16.html">day16 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day17.html">day17 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">day18 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.html">day19 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day20.html">day20 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">day21 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day22.html">day22 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day23.html">day23 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">day24 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">day25 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download_inputs.html">download_inputs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maker.html">maker module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">adventofcode2023</a></li>
+          <li class="breadcrumb-item"><a href="day03.html">day03 package</a></li>
+      <li class="breadcrumb-item active">day03.lib package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/day03.lib.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="day03-lib-package">
+<h1>day03.lib package<a class="headerlink" href="#day03-lib-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-day03.lib.classes">
+<span id="day03-lib-classes-module"></span><h2>day03.lib.classes module<a class="headerlink" href="#module-day03.lib.classes" title="Link to this heading"></a></h2>
+<p>Day3 classes.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day03.lib.classes.Gear">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day03.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Gear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">part_numbers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day03.lib.classes.PartNumber" title="day03.lib.classes.PartNumber"><span class="pre">PartNumber</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day03/lib/classes.html#Gear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.classes.Gear" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class representing a potential gear (<code class="docutils literal notranslate"><span class="pre">*</span></code> icon).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day03.lib.classes.Gear.col">
+<span class="sig-name descname"><span class="pre">col</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day03.lib.classes.Gear.col" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day03.lib.classes.Gear.gear_ratio">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gear_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day03.lib.classes.Gear.gear_ratio" title="Link to this definition"></a></dt>
+<dd><p>If we have exactly two parts, returns the gear ratio.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day03.lib.classes.Gear.part_numbers">
+<span class="sig-name descname"><span class="pre">part_numbers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day03.lib.classes.PartNumber" title="day03.lib.classes.PartNumber"><span class="pre">PartNumber</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#day03.lib.classes.Gear.part_numbers" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day03.lib.classes.Gear.row">
+<span class="sig-name descname"><span class="pre">row</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day03.lib.classes.Gear.row" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day03.lib.classes.Matrix">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day03.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day03/lib/classes.html#Matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.classes.Matrix" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the entire 2d array.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day03.lib.classes.Matrix.data">
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day03.lib.classes.Matrix.data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day03.lib.classes.Matrix.filter_engine_parts">
+<span class="sig-name descname"><span class="pre">filter_engine_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_numbers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day03.lib.classes.PartNumber" title="day03.lib.classes.PartNumber"><span class="pre">PartNumber</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day03.lib.classes.PartNumber" title="day03.lib.classes.PartNumber"><span class="pre">PartNumber</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day03/lib/classes.html#Matrix.filter_engine_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.classes.Matrix.filter_engine_parts" title="Link to this definition"></a></dt>
+<dd><p>Return the legit part numbers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day03.lib.classes.Matrix.find_gear_parts">
+<span class="sig-name descname"><span class="pre">find_gear_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gear</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day03.lib.classes.Gear" title="day03.lib.classes.Gear"><span class="pre">Gear</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">part_numbers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day03.lib.classes.PartNumber" title="day03.lib.classes.PartNumber"><span class="pre">PartNumber</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day03.lib.classes.PartNumber" title="day03.lib.classes.PartNumber"><span class="pre">PartNumber</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day03/lib/classes.html#Matrix.find_gear_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.classes.Matrix.find_gear_parts" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of part_numbers that are touching a given gear.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day03.lib.classes.Matrix.get_gears">
+<span class="sig-name descname"><span class="pre">get_gears</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_numbers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day03.lib.classes.PartNumber" title="day03.lib.classes.PartNumber"><span class="pre">PartNumber</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day03.lib.classes.Gear" title="day03.lib.classes.Gear"><span class="pre">Gear</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day03/lib/classes.html#Matrix.get_gears"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.classes.Matrix.get_gears" title="Link to this definition"></a></dt>
+<dd><p>Retrieve gears from the matrix.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day03.lib.classes.Matrix.get_part_numbers">
+<span class="sig-name descname"><span class="pre">get_part_numbers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day03.lib.classes.PartNumber" title="day03.lib.classes.PartNumber"><span class="pre">PartNumber</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day03/lib/classes.html#Matrix.get_part_numbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.classes.Matrix.get_part_numbers" title="Link to this definition"></a></dt>
+<dd><p>Retrieve numbered words like 456 from the matrix.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day03.lib.classes.Matrix.is_engine_part">
+<span class="sig-name descname"><span class="pre">is_engine_part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day03.lib.classes.PartNumber" title="day03.lib.classes.PartNumber"><span class="pre">PartNumber</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day03/lib/classes.html#Matrix.is_engine_part"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.classes.Matrix.is_engine_part" title="Link to this definition"></a></dt>
+<dd><p>Return whether a part_number is an engine part by looking at its surroundings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day03.lib.classes.Matrix.is_engine_part_row">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_engine_part_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day03/lib/classes.html#Matrix.is_engine_part_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.classes.Matrix.is_engine_part_row" title="Link to this definition"></a></dt>
+<dd><p>Returns if there is an engine part in this row.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day03.lib.classes.Matrix.row_count">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">row_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day03.lib.classes.Matrix.row_count" title="Link to this definition"></a></dt>
+<dd><p>How many rows there are.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day03.lib.classes.Matrix.row_size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">row_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day03.lib.classes.Matrix.row_size" title="Link to this definition"></a></dt>
+<dd><p>How long each row is.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day03.lib.classes.PartNumber">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day03.lib.classes.</span></span><span class="sig-name descname"><span class="pre">PartNumber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day03/lib/classes.html#PartNumber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.classes.PartNumber" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class respresenting a potential part number, and its position.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day03.lib.classes.PartNumber.col">
+<span class="sig-name descname"><span class="pre">col</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day03.lib.classes.PartNumber.col" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day03.lib.classes.PartNumber.end_index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">end_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day03.lib.classes.PartNumber.end_index" title="Link to this definition"></a></dt>
+<dd><p>Returns the end column index of the number.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day03.lib.classes.PartNumber.length">
+<span class="sig-name descname"><span class="pre">length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day03.lib.classes.PartNumber.length" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day03.lib.classes.PartNumber.row">
+<span class="sig-name descname"><span class="pre">row</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day03.lib.classes.PartNumber.row" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day03.lib.classes.PartNumber.touching">
+<span class="sig-name descname"><span class="pre">touching</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day03/lib/classes.html#PartNumber.touching"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.classes.PartNumber.touching" title="Link to this definition"></a></dt>
+<dd><p>Returns if a given coordinate is touching this PartNumber.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day03.lib.classes.PartNumber.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day03.lib.classes.PartNumber.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-day03.lib.parsers">
+<span id="day03-lib-parsers-module"></span><h2>day03.lib.parsers module<a class="headerlink" href="#module-day03.lib.parsers" title="Link to this heading"></a></h2>
+<p>Functions to parse from a file into well defined classes.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="day03.lib.parsers.get_matrix">
+<span class="sig-prename descclassname"><span class="pre">day03.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">get_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day03.lib.classes.Matrix" title="day03.lib.classes.Matrix"><span class="pre">Matrix</span></a></span></span><a class="reference internal" href="_modules/day03/lib/parsers.html#get_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day03.lib.parsers.get_matrix" title="Link to this definition"></a></dt>
+<dd><p>Convert text file to matrix.</p>
+</dd></dl>
+
+</section>
+<section id="module-day03.lib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-day03.lib" title="Link to this heading"></a></h2>
+<p>day03 libraries.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="day03.html" class="btn btn-neutral float-left" title="day03 package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="day03.tests.html" class="btn btn-neutral float-right" title="day03.tests package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

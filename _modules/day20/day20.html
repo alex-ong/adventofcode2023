@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day20.day20 &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day20.day20</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day20.day20</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Day20 solution.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">cast</span>
+
+<span class="kn">import</span> <span class="nn">graphviz</span>
+<span class="kn">from</span> <span class="nn">tqdm.contrib.concurrent</span> <span class="kn">import</span> <span class="n">process_map</span>
+
+<span class="kn">from</span> <span class="nn">day20.lib.classes</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BaseModule</span><span class="p">,</span>
+    <span class="n">BroadcastModule</span><span class="p">,</span>
+    <span class="n">ConjunctionModule</span><span class="p">,</span>
+    <span class="n">FlipFlopModule</span><span class="p">,</span>
+    <span class="n">LoopCounter</span><span class="p">,</span>
+    <span class="n">ModuleGroups</span><span class="p">,</span>
+    <span class="n">Pulse</span><span class="p">,</span>
+    <span class="n">PulseTarget</span><span class="p">,</span>
+    <span class="n">SinkModule</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">day20.lib.parsers</span> <span class="kn">import</span> <span class="n">get_modules</span>
+
+<span class="n">FILE_A</span> <span class="o">=</span> <span class="s2">&quot;day20/input-a.txt&quot;</span>
+<span class="n">FILE_B</span> <span class="o">=</span> <span class="s2">&quot;day20/input-b.txt&quot;</span>
+<span class="n">FILE_PT2</span> <span class="o">=</span> <span class="s2">&quot;day20/input-test2.txt&quot;</span>
+<span class="n">FILE_PROD</span> <span class="o">=</span> <span class="s2">&quot;day20/input.txt&quot;</span>
+
+<span class="n">FILE</span> <span class="o">=</span> <span class="n">FILE_PROD</span>
+<span class="n">VIS_FOLDER</span> <span class="o">=</span> <span class="s2">&quot;day20/vis&quot;</span>
+<span class="n">EXPORT_GRAPHS</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="simulate">
+<a class="viewcode-back" href="../../day20.html#day20.day20.simulate">[docs]</a>
+<span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
+    <span class="n">modules</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseModule</span><span class="p">],</span> <span class="n">stored_pulses</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">PulseTarget</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simulate a list of modules.</span>
+
+<span class="sd">    If you pass in stored_pulses, we will append every pulse to it</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pulses</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="n">PulseTarget</span><span class="p">]</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+    <span class="n">pulses</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">PulseTarget</span><span class="p">(</span><span class="n">Pulse</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span> <span class="s2">&quot;button&quot;</span><span class="p">,</span> <span class="s2">&quot;broadcaster&quot;</span><span class="p">))</span>
+    <span class="n">low</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">high</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">pulses</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+        <span class="n">pulse_target</span><span class="p">:</span> <span class="n">PulseTarget</span> <span class="o">=</span> <span class="n">pulses</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">stored_pulses</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">stored_pulses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pulse_target</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pulse_target</span><span class="o">.</span><span class="n">pulse</span> <span class="o">==</span> <span class="n">Pulse</span><span class="o">.</span><span class="n">LOW</span><span class="p">:</span>
+            <span class="n">low</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">high</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">module</span><span class="p">:</span> <span class="n">BaseModule</span> <span class="o">=</span> <span class="n">modules</span><span class="p">[</span><span class="n">pulse_target</span><span class="o">.</span><span class="n">target</span><span class="p">]</span>
+        <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">PulseTarget</span><span class="p">]</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">handle_pulse</span><span class="p">(</span>
+            <span class="n">pulse_target</span><span class="o">.</span><span class="n">src</span><span class="p">,</span> <span class="n">pulse_target</span><span class="o">.</span><span class="n">pulse</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="n">pulses</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span></div>
+
+
+
+<div class="viewcode-block" id="get_loop_paths">
+<a class="viewcode-back" href="../../day20.html#day20.day20.get_loop_paths">[docs]</a>
+<span class="k">def</span> <span class="nf">get_loop_paths</span><span class="p">(</span>
+    <span class="n">start_switch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseModule</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseModule</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given a start path, returns the longest path until we hit a conjunction module.</span>
+
+<span class="sd">    It should be n FlipFlops and then a single conjunction</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseModule</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">current_module</span><span class="p">:</span> <span class="n">BaseModule</span> <span class="o">=</span> <span class="n">module_map</span><span class="p">[</span><span class="n">start_switch</span><span class="p">]</span>
+    <span class="k">while</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current_module</span><span class="p">,</span> <span class="n">FlipFlopModule</span><span class="p">):</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_module</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_module</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">current_module</span> <span class="o">=</span> <span class="n">module_map</span><span class="p">[</span><span class="n">current_module</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># return flipflop in outputs</span>
+            <span class="n">outputs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseModule</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">module_map</span><span class="p">[</span><span class="n">output</span><span class="p">]</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">current_module</span><span class="o">.</span><span class="n">outputs</span>
+            <span class="p">]</span>
+            <span class="n">filtered</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">outputs</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">FlipFlopModule</span><span class="p">)]</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">current_module</span> <span class="o">=</span> <span class="n">filtered</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_module</span><span class="p">)</span>  <span class="c1"># should be a ConjunctionModule</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current_module</span><span class="p">,</span> <span class="n">ConjunctionModule</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span></div>
+
+
+
+<div class="viewcode-block" id="path_is_start_state">
+<a class="viewcode-back" href="../../day20.html#day20.day20.path_is_start_state">[docs]</a>
+<span class="k">def</span> <span class="nf">path_is_start_state</span><span class="p">(</span><span class="n">modules</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseModule</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;For every module in the path, make sure its in its &quot;initial&quot; state.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">is_initial_state</span><span class="p">()</span> <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">)</span></div>
+
+
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">BaseModule</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_typed_module">
+<a class="viewcode-back" href="../../day20.html#day20.day20.get_typed_module">[docs]</a>
+<span class="k">def</span> <span class="nf">get_typed_module</span><span class="p">(</span>
+    <span class="n">module_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseModule</span><span class="p">],</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Typecast a module.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">module_map</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="get_module_groups">
+<a class="viewcode-back" href="../../day20.html#day20.day20.get_module_groups">[docs]</a>
+<span class="k">def</span> <span class="nf">get_module_groups</span><span class="p">(</span><span class="n">module_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseModule</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ModuleGroups</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Splits the modules into their respective pipelines.&quot;&quot;&quot;</span>
+    <span class="n">broadcaster</span> <span class="o">=</span> <span class="n">get_typed_module</span><span class="p">(</span><span class="n">module_map</span><span class="p">,</span> <span class="s2">&quot;broadcaster&quot;</span><span class="p">,</span> <span class="n">BroadcastModule</span><span class="p">)</span>
+
+    <span class="n">loop_paths</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">get_loop_paths</span><span class="p">(</span><span class="n">node_name</span><span class="p">,</span> <span class="n">module_map</span><span class="p">)</span> <span class="k">for</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">broadcaster</span><span class="o">.</span><span class="n">outputs</span>
+    <span class="p">]</span>
+    <span class="n">loop_tails</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConjunctionModule</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># for each loop, the conjunction module goes to one other conjunction.</span>
+    <span class="c1"># grab this set of conjunctions, they are known as loop_tails</span>
+    <span class="k">for</span> <span class="n">loop_path</span> <span class="ow">in</span> <span class="n">loop_paths</span><span class="p">:</span>
+        <span class="n">last_node</span> <span class="o">=</span> <span class="n">loop_path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">module_map</span><span class="p">[</span><span class="n">node_name</span><span class="p">]</span> <span class="k">for</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">last_node</span><span class="o">.</span><span class="n">outputs</span><span class="p">]</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ConjunctionModule</span><span class="p">)]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">loop_tails</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">filtered</span><span class="p">)</span>
+
+    <span class="n">last_join_name</span> <span class="o">=</span> <span class="n">loop_tails</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">last_conjunction</span> <span class="o">=</span> <span class="n">get_typed_module</span><span class="p">(</span><span class="n">module_map</span><span class="p">,</span> <span class="n">last_join_name</span><span class="p">,</span> <span class="n">ConjunctionModule</span><span class="p">)</span>
+    <span class="n">sink</span> <span class="o">=</span> <span class="n">get_typed_module</span><span class="p">(</span><span class="n">module_map</span><span class="p">,</span> <span class="s2">&quot;rx&quot;</span><span class="p">,</span> <span class="n">SinkModule</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ModuleGroups</span><span class="p">(</span><span class="n">broadcaster</span><span class="p">,</span> <span class="n">loop_paths</span><span class="p">,</span> <span class="n">loop_tails</span><span class="p">,</span> <span class="n">last_conjunction</span><span class="p">,</span> <span class="n">sink</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="graph_modules">
+<a class="viewcode-back" href="../../day20.html#day20.day20.graph_modules">[docs]</a>
+<span class="k">def</span> <span class="nf">graph_modules</span><span class="p">(</span><span class="n">module_groups</span><span class="p">:</span> <span class="n">ModuleGroups</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">Digraph</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Graphs the modules.&quot;&quot;&quot;</span>
+    <span class="n">index_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">graph_attr</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;labelloc&quot;</span><span class="p">:</span> <span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">index_str</span><span class="p">}</span>
+    <span class="n">dot</span> <span class="o">=</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">Digraph</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Push </span><span class="si">{</span><span class="n">index_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">graph_attr</span><span class="o">=</span><span class="n">graph_attr</span><span class="p">)</span>
+
+    <span class="c1"># broadcaster</span>
+    <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">graph_attr</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">})</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">module_groups</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="c1"># loop nodes</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">loop</span><span class="p">)</span> <span class="k">for</span> <span class="n">loop</span> <span class="ow">in</span> <span class="n">module_groups</span><span class="o">.</span><span class="n">loops</span><span class="p">)):</span>
+        <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">graph_attr</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="s2">&quot;same&quot;</span><span class="p">})</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s2">&quot;same&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">loop_path</span> <span class="ow">in</span> <span class="n">module_groups</span><span class="o">.</span><span class="n">loops</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">loop_path</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">loop_path</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                    <span class="n">s</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="c1"># loop tails</span>
+    <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">graph_attr</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="s2">&quot;same&quot;</span><span class="p">})</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">module_groups</span><span class="o">.</span><span class="n">loop_tails</span><span class="p">:</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="c1"># penultimate</span>
+    <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">graph_attr</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="s2">&quot;same&quot;</span><span class="p">})</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">module_groups</span><span class="o">.</span><span class="n">penultimate</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">graph_attr</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">})</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">module_groups</span><span class="o">.</span><span class="n">sink</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="c1"># now that we&#39;ve done ranks, just add all of them with their arrows.</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">module_groups</span><span class="o">.</span><span class="n">all_nodes</span><span class="p">:</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">add_to_graph</span><span class="p">(</span><span class="n">dot</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dot</span></div>
+
+
+
+<div class="viewcode-block" id="export_graph">
+<a class="viewcode-back" href="../../day20.html#day20.day20.export_graph">[docs]</a>
+<span class="k">def</span> <span class="nf">export_graph</span><span class="p">(</span>
+    <span class="n">dots</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">graphviz</span><span class="o">.</span><span class="n">Graph</span><span class="p">],</span>
+    <span class="n">module_groups</span><span class="p">:</span> <span class="n">ModuleGroups</span><span class="p">,</span>
+    <span class="n">simulation_counter</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">export_graphs</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Export a graphviz datatype if graphing is enabled.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">export_graphs</span><span class="p">:</span>
+        <span class="n">dot</span> <span class="o">=</span> <span class="n">graph_modules</span><span class="p">(</span><span class="n">module_groups</span><span class="p">,</span> <span class="n">simulation_counter</span><span class="p">)</span>
+        <span class="n">dots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dot</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="part2">
+<a class="viewcode-back" href="../../day20.html#day20.day20.part2">[docs]</a>
+<span class="k">def</span> <span class="nf">part2</span><span class="p">(</span>
+    <span class="n">modules</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseModule</span><span class="p">],</span> <span class="n">export_graphs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">graphviz</span><span class="o">.</span><span class="n">Graph</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;We find out the loop length for each of the 4~ paths.&quot;&quot;&quot;</span>
+    <span class="n">module_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">module</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">module</span> <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">}</span>
+    <span class="n">module_groups</span><span class="p">:</span> <span class="n">ModuleGroups</span> <span class="o">=</span> <span class="n">get_module_groups</span><span class="p">(</span><span class="n">module_map</span><span class="p">)</span>
+
+    <span class="c1"># graph modules in initial state</span>
+    <span class="n">dots</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">graphviz</span><span class="o">.</span><span class="n">Graph</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">simulation_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">loop_counter</span><span class="p">:</span> <span class="n">LoopCounter</span> <span class="o">=</span> <span class="n">LoopCounter</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">module_groups</span><span class="o">.</span><span class="n">loops</span><span class="p">))</span>
+
+    <span class="c1"># output our initial state:</span>
+    <span class="n">export_graph</span><span class="p">(</span><span class="n">dots</span><span class="p">,</span> <span class="n">module_groups</span><span class="p">,</span> <span class="n">simulation_counter</span><span class="p">,</span> <span class="n">export_graphs</span><span class="p">)</span>
+
+    <span class="c1"># run simulation, screenshotting everytime one of the paths &quot;loops&quot;</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">loop_counter</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
+        <span class="n">simulate</span><span class="p">(</span><span class="n">module_map</span><span class="p">)</span>
+        <span class="n">simulation_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">loop_path</span> <span class="ow">in</span> <span class="n">module_groups</span><span class="o">.</span><span class="n">loops</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">path_is_start_state</span><span class="p">(</span><span class="n">loop_path</span><span class="p">):</span>
+                <span class="n">loop_end_name</span> <span class="o">=</span> <span class="n">loop_path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">loop_counter</span><span class="o">.</span><span class="n">add_result</span><span class="p">(</span><span class="n">loop_end_name</span><span class="p">,</span> <span class="n">simulation_counter</span><span class="p">)</span>
+        <span class="n">export_graph</span><span class="p">(</span><span class="n">dots</span><span class="p">,</span> <span class="n">module_groups</span><span class="p">,</span> <span class="n">simulation_counter</span><span class="p">,</span> <span class="n">export_graphs</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">loop_counter</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lcm</span><span class="p">(</span><span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="n">loop_counter</span><span class="o">.</span><span class="n">loop_lengths</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">dots</span></div>
+
+
+
+<div class="viewcode-block" id="part1">
+<a class="viewcode-back" href="../../day20.html#day20.day20.part1">[docs]</a>
+<span class="k">def</span> <span class="nf">part1</span><span class="p">(</span><span class="n">modules</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseModule</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Counts low/high count for each module.&quot;&quot;&quot;</span>
+    <span class="n">module_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">module</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">module</span> <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">}</span>
+    <span class="n">low_total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">high_total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">simulate</span><span class="p">(</span><span class="n">module_map</span><span class="p">)</span>
+        <span class="n">low_total</span> <span class="o">+=</span> <span class="n">low</span>
+        <span class="n">high_total</span> <span class="o">+=</span> <span class="n">high</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">low_total</span><span class="p">,</span> <span class="n">high_total</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">low_total</span> <span class="o">*</span> <span class="n">high_total</span></div>
+
+
+
+<div class="viewcode-block" id="output_graph">
+<a class="viewcode-back" href="../../day20.html#day20.day20.output_graph">[docs]</a>
+<span class="k">def</span> <span class="nf">output_graph</span><span class="p">(</span><span class="n">dot</span><span class="p">:</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Saves a dot to file.&quot;&quot;&quot;</span>
+    <span class="n">dot</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="n">directory</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="output_graph_wrapper">
+<a class="viewcode-back" href="../../day20.html#day20.day20.output_graph_wrapper">[docs]</a>
+<span class="k">def</span> <span class="nf">output_graph_wrapper</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">graphviz</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Since process_map doesnt support star_args, we gotta use this.&quot;&quot;&quot;</span>
+    <span class="n">dot</span><span class="p">,</span> <span class="n">directory</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="n">output_graph</span><span class="p">(</span><span class="n">dot</span><span class="p">,</span> <span class="n">directory</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="output_files">
+<a class="viewcode-back" href="../../day20.html#day20.day20.output_files">[docs]</a>
+<span class="k">def</span> <span class="nf">output_files</span><span class="p">(</span><span class="n">dots</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">graphviz</span><span class="o">.</span><span class="n">Graph</span><span class="p">],</span> <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Saves a list of dots to file.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dots</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">dot_dirs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">dot</span><span class="p">,</span> <span class="n">directory</span><span class="p">)</span> <span class="k">for</span> <span class="n">dot</span> <span class="ow">in</span> <span class="n">dots</span><span class="p">]</span>
+    <span class="n">process_map</span><span class="p">(</span><span class="n">output_graph_wrapper</span><span class="p">,</span> <span class="n">dot_dirs</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="c1"># Cleanup *.gv files</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.gv&quot;</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../day20.html#day20.day20.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads data from file then runs part1/part2.&quot;&quot;&quot;</span>
+    <span class="n">modules</span> <span class="o">=</span> <span class="n">get_modules</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
+    <span class="c1"># q1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">part1</span><span class="p">(</span><span class="n">modules</span><span class="p">))</span>
+
+    <span class="c1"># q2</span>
+    <span class="c1"># Reload because part1 ruins stuff</span>
+
+    <span class="n">modules</span> <span class="o">=</span> <span class="n">get_modules</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
+    <span class="n">result</span><span class="p">,</span> <span class="n">dots</span> <span class="o">=</span> <span class="n">part2</span><span class="p">(</span><span class="n">modules</span><span class="p">,</span> <span class="n">EXPORT_GRAPHS</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="n">output_files</span><span class="p">(</span><span class="n">dots</span><span class="p">,</span> <span class="n">VIS_FOLDER</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

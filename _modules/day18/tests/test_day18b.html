@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day18.tests.test_day18b &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day18.tests.test_day18b</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day18.tests.test_day18b</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;test day18b main functions.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">day18.day18b</span> <span class="kn">import</span> <span class="n">INPUT_SMALL</span><span class="p">,</span> <span class="n">Command</span><span class="p">,</span> <span class="n">Direction</span><span class="p">,</span> <span class="n">get_input</span><span class="p">,</span> <span class="n">get_solution</span>
+
+
+<div class="viewcode-block" id="test_day18b">
+<a class="viewcode-back" href="../../../day18.tests.html#day18.tests.test_day18b.test_day18b">[docs]</a>
+<span class="k">def</span> <span class="nf">test_day18b</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test day18b main function.&quot;&quot;&quot;</span>
+    <span class="n">commands</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Command</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="n">INPUT_SMALL</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span> <span class="o">==</span> <span class="mi">14</span>
+    <span class="k">assert</span> <span class="n">commands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">461937</span> <span class="ow">and</span> <span class="n">commands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Right</span>
+    <span class="k">assert</span> <span class="n">commands</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">56407</span> <span class="ow">and</span> <span class="n">commands</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Down</span>
+
+    <span class="k">assert</span> <span class="n">get_solution</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span> <span class="o">==</span> <span class="mi">952408144115</span></div>
+
+
+
+<div class="viewcode-block" id="test_command">
+<a class="viewcode-back" href="../../../day18.tests.html#day18.tests.test_day18b.test_command">[docs]</a>
+<span class="k">def</span> <span class="nf">test_command</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test hex code conversion.&quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;70c710&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">461937</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;0dc571&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">56407</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;5713f0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">356671</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;d2c081&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">863240</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;59c680&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">367720</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;411b91&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">266681</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;8ceee2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">577262</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;caa173&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">829975</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;1b58a2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">112010</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;caa171&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">829975</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;7807d2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">491645</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;a77fa3&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">686074</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;015232&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">5411</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;7a21e3&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">500254</span>
+
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;70c710&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Right</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;0dc571&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Down</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;5713f0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Right</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;d2c081&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Down</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;59c680&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Right</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;411b91&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Down</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;8ceee2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Left</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;caa173&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Up</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;1b58a2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Left</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;caa171&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Down</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;7807d2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Left</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;a77fa3&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Up</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;015232&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Left</span>
+    <span class="k">assert</span> <span class="n">Command</span><span class="p">(</span><span class="s2">&quot;7a21e3&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Up</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day23.lib package &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="day23.tests package" href="day23.tests.html" />
+    <link rel="prev" title="day23 package" href="day23.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci.html">Continuous Integration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">adventofcode2023</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">day01 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">day02 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">day03 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">day04 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">day05 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">day06 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">day07 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">day08 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">day09 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.html">day10 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">day11 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">day12 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">day13 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.html">day14 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">day15 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day16.html">day16 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day17.html">day17 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">day18 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.html">day19 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day20.html">day20 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">day21 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day22.html">day22 package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="day23.html">day23 package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="day23.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">day23.lib package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="day23.tests.html">day23.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day23.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day23.html#module-day23.day23">day23.day23 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day23.html#module-day23">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">day24 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">day25 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download_inputs.html">download_inputs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maker.html">maker module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">adventofcode2023</a></li>
+          <li class="breadcrumb-item"><a href="day23.html">day23 package</a></li>
+      <li class="breadcrumb-item active">day23.lib package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/day23.lib.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="day23-lib-package">
+<h1>day23.lib package<a class="headerlink" href="#day23-lib-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-day23.lib.classes">
+<span id="day23-lib-classes-module"></span><h2>day23.lib.classes module<a class="headerlink" href="#module-day23.lib.classes" title="Link to this heading"></a></h2>
+<p>Classes for part1.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day23.lib.classes.Maze">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day23.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Maze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day23/lib/classes.html#Maze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Maze" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>2d array of chars.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Maze.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><span class="pre">Maze</span></a></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Maze.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Maze.copy" title="Link to this definition"></a></dt>
+<dd><p>Copies us.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Maze.get_cell_branches">
+<span class="sig-name descname"><span class="pre">get_cell_branches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Maze.get_cell_branches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Maze.get_cell_branches" title="Link to this definition"></a></dt>
+<dd><p>Returns how many branches come out of this tile.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes.Maze.grid">
+<span class="sig-name descname"><span class="pre">grid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day23.lib.classes.Maze.grid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Maze.is_oob">
+<span class="sig-name descname"><span class="pre">is_oob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Maze.is_oob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Maze.is_oob" title="Link to this definition"></a></dt>
+<dd><p>True if position is out of bounds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes.Maze.num_cols">
+<span class="sig-name descname"><span class="pre">num_cols</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day23.lib.classes.Maze.num_cols" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes.Maze.num_rows">
+<span class="sig-name descname"><span class="pre">num_rows</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day23.lib.classes.Maze.num_rows" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day23.lib.classes.Path">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day23.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Path</span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Path" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A list of Positions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Path.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Path.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Path.add" title="Link to this definition"></a></dt>
+<dd><p>Add a position to the path.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Path.can_add">
+<span class="sig-name descname"><span class="pre">can_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Path.can_add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Path.can_add" title="Link to this definition"></a></dt>
+<dd><p>Whether we can add a given position.</p>
+<p>If we have already visited the position, we can’t</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Path.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Path.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Path.copy" title="Link to this definition"></a></dt>
+<dd><p>Copy us.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Path.flip">
+<span class="sig-name descname"><span class="pre">flip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Path.flip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Path.flip" title="Link to this definition"></a></dt>
+<dd><p>Flip a path by reversing the order.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Path.last">
+<span class="sig-name descname"><span class="pre">last</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Path.last"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Path.last" title="Link to this definition"></a></dt>
+<dd><p>Return last position in path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if we have no positions.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>last position in path</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position">Position</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes.Path.nodes">
+<span class="sig-name descname"><span class="pre">nodes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day23.lib.classes.Path.nodes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Path.overlay">
+<span class="sig-name descname"><span class="pre">overlay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maze</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><span class="pre">Maze</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Path.overlay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Path.overlay" title="Link to this definition"></a></dt>
+<dd><p>Overlay us onto a maze, return a neat string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>maze</strong> (<a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><em>Maze</em></a>) – maze to overlay.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a nice string to print.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes.Path.route">
+<span class="sig-name descname"><span class="pre">route</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day23.lib.classes.Path.route" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day23.lib.classes.Position">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day23.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day23/lib/classes.html#Position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Position" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simple 2d Vector.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes.Position.col">
+<span class="sig-name descname"><span class="pre">col</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day23.lib.classes.Position.col" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Position.copy_modify">
+<span class="sig-name descname"><span class="pre">copy_modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Position.copy_modify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Position.copy_modify" title="Link to this definition"></a></dt>
+<dd><p>Copies us and offsets by the given offset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Position.expand">
+<span class="sig-name descname"><span class="pre">expand</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Position.expand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Position.expand" title="Link to this definition"></a></dt>
+<dd><p>Expand in 4 cardinal directions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes.Position.row">
+<span class="sig-name descname"><span class="pre">row</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day23.lib.classes.Position.row" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day23.lib.classes.Solver1">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day23.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Solver1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maze</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><span class="pre">Maze</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">handle_hills</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day23/lib/classes.html#Solver1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Solver1" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Solver for part1.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Solver1.expand_hill">
+<span class="sig-name descname"><span class="pre">expand_hill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Solver1.expand_hill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Solver1.expand_hill" title="Link to this definition"></a></dt>
+<dd><p>Expand valid positions based on our current tile.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Solver1.expand_path">
+<span class="sig-name descname"><span class="pre">expand_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Solver1.expand_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Solver1.expand_path" title="Link to this definition"></a></dt>
+<dd><p>Expand path based on current path.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes.Solver1.handle_hills">
+<span class="sig-name descname"><span class="pre">handle_hills</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#day23.lib.classes.Solver1.handle_hills" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes.Solver1.maze">
+<span class="sig-name descname"><span class="pre">maze</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><span class="pre">Maze</span></a></em><a class="headerlink" href="#day23.lib.classes.Solver1.maze" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes.Solver1.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#Solver1.solve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.Solver1.solve" title="Link to this definition"></a></dt>
+<dd><p>Solve the maze, using bfs.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day23.lib.classes.generate_paths">
+<span class="sig-prename descclassname"><span class="pre">day23.lib.classes.</span></span><span class="sig-name descname"><span class="pre">generate_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">expansions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day23/lib/classes.html#generate_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes.generate_paths" title="Link to this definition"></a></dt>
+<dd><p>Given a path and valid expansions, (optionally) copies the path.</p>
+<p>Returns a list of new paths.
+If there is only one expansion, modifies it in-place</p>
+</dd></dl>
+
+</section>
+<section id="module-day23.lib.classes2">
+<span id="day23-lib-classes2-module"></span><h2>day23.lib.classes2 module<a class="headerlink" href="#module-day23.lib.classes2" title="Link to this heading"></a></h2>
+<p>part 2 solution.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day23.lib.classes2.Edge">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day23.lib.classes2.</span></span><span class="sig-name descname"><span class="pre">Edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day23/lib/classes2.html#Edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.Edge" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Edge class, representing a path between nodes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes2.Edge.flip">
+<span class="sig-name descname"><span class="pre">flip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day23.lib.classes2.Edge" title="day23.lib.classes2.Edge"><span class="pre">Edge</span></a></span></span><a class="reference internal" href="_modules/day23/lib/classes2.html#Edge.flip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.Edge.flip" title="Link to this definition"></a></dt>
+<dd><p>Reverse a path.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes2.Edge.length">
+<span class="sig-name descname"><span class="pre">length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#day23.lib.classes2.Edge.length" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes2.Edge.node1">
+<span class="sig-name descname"><span class="pre">node1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day23.lib.classes2.Edge.node1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes2.Edge.node2">
+<span class="sig-name descname"><span class="pre">node2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day23.lib.classes2.Edge.node2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes2.Edge.path">
+<span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a></em><a class="headerlink" href="#day23.lib.classes2.Edge.path" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day23.lib.classes2.Node">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day23.lib.classes2.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position:</span> <span class="pre">~day23.lib.classes.Position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges:</span> <span class="pre">list[~day23.lib.classes2.Edge]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day23/lib/classes2.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.Node" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Node representing a fork to another.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes2.Node.edges">
+<span class="sig-name descname"><span class="pre">edges</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes2.Edge" title="day23.lib.classes2.Edge"><span class="pre">Edge</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day23.lib.classes2.Node.edges" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes2.Node.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day23.lib.classes2.Node.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes2.Node.position">
+<span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a></em><a class="headerlink" href="#day23.lib.classes2.Node.position" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day23.lib.classes2.Solver2">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day23.lib.classes2.</span></span><span class="sig-name descname"><span class="pre">Solver2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maze</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><span class="pre">Maze</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day23/lib/classes2.html#Solver2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.Solver2" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Solver for part 2.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes2.Solver2.build_nodes">
+<span class="sig-name descname"><span class="pre">build_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes2.Node" title="day23.lib.classes2.Node"><span class="pre">Node</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day23/lib/classes2.html#Solver2.build_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.Solver2.build_nodes" title="Link to this definition"></a></dt>
+<dd><p>Build nodes and edges on a copy of the maze.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes2.Solver2.calculate_edges">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes2.Node" title="day23.lib.classes2.Node"><span class="pre">Node</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#day23.lib.classes2.Node" title="day23.lib.classes2.Node"><span class="pre">Node</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maze</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><span class="pre">Maze</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day23/lib/classes2.html#Solver2.calculate_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.Solver2.calculate_edges" title="Link to this definition"></a></dt>
+<dd><p>Calculate edges of the maze.</p>
+<p>Modifies the maze inplace, filling it in with #.
+Modifies the node and its connecting nodes by adding Edges</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes2.Solver2.expand_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">expand_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">maze</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><span class="pre">Maze</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Path" title="day23.lib.classes.Path"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day23/lib/classes2.html#Solver2.expand_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.Solver2.expand_path" title="Link to this definition"></a></dt>
+<dd><p>Expands a path, nuking that section of the maze using #.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes2.Solver2.get_nodes">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maze</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><span class="pre">Maze</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes.Position" title="day23.lib.classes.Position"><span class="pre">Position</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#day23.lib.classes2.Node" title="day23.lib.classes2.Node"><span class="pre">Node</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day23/lib/classes2.html#Solver2.get_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.Solver2.get_nodes" title="Link to this definition"></a></dt>
+<dd><p>Gets nodes and marks them on the given maze.</p>
+<p>Note that the maze is modified in-place!
+Nodes are <em>not</em> populated with edges</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day23.lib.classes2.Solver2.input_maze">
+<span class="sig-name descname"><span class="pre">input_maze</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><span class="pre">Maze</span></a></em><a class="headerlink" href="#day23.lib.classes2.Solver2.input_maze" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day23.lib.classes2.Solver2.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day23/lib/classes2.html#Solver2.solve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.Solver2.solve" title="Link to this definition"></a></dt>
+<dd><p>Solves the maze.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day23.lib.classes2.solve2">
+<span class="sig-prename descclassname"><span class="pre">day23.lib.classes2.</span></span><span class="sig-name descname"><span class="pre">solve2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day23.lib.classes2.Node" title="day23.lib.classes2.Node"><span class="pre">Node</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forks_remaining</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day23/lib/classes2.html#solve2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.solve2" title="Link to this definition"></a></dt>
+<dd><p>Solves a dfs by creating forking into multiprocessing.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day23.lib.classes2.solve2_helper">
+<span class="sig-prename descclassname"><span class="pre">day23.lib.classes2.</span></span><span class="sig-name descname"><span class="pre">solve2_helper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day23/lib/classes2.html#solve2_helper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.classes2.solve2_helper" title="Link to this definition"></a></dt>
+<dd><p>ThreadPoolExecutor doesnt have starmap so we use a helper.</p>
+</dd></dl>
+
+</section>
+<section id="module-day23.lib.parsers">
+<span id="day23-lib-parsers-module"></span><h2>day23.lib.parsers module<a class="headerlink" href="#module-day23.lib.parsers" title="Link to this heading"></a></h2>
+<p>Day23 parsers.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="day23.lib.parsers.get_maze">
+<span class="sig-prename descclassname"><span class="pre">day23.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">get_maze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day23.lib.classes.Maze" title="day23.lib.classes.Maze"><span class="pre">Maze</span></a></span></span><a class="reference internal" href="_modules/day23/lib/parsers.html#get_maze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day23.lib.parsers.get_maze" title="Link to this definition"></a></dt>
+<dd><p>Parse input file and return wellformed maze.</p>
+</dd></dl>
+
+</section>
+<section id="module-day23.lib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-day23.lib" title="Link to this heading"></a></h2>
+<p>Library functions for day23.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="day23.html" class="btn btn-neutral float-left" title="day23 package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="day23.tests.html" class="btn btn-neutral float-right" title="day23.tests package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

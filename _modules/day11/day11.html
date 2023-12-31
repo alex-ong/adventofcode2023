@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day11.day11 &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day11.day11</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day11.day11</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;day11 solution.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span>
+
+<span class="n">INPUT</span> <span class="o">=</span> <span class="s2">&quot;day11/input.txt&quot;</span>
+<span class="n">INPUT_SMALL</span> <span class="o">=</span> <span class="s2">&quot;day11/input-small.txt&quot;</span>
+
+
+<div class="viewcode-block" id="Galaxy">
+<a class="viewcode-back" href="../../day11.html#day11.day11.Galaxy">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Galaxy</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Galaxy represented as its position and unique id.&quot;&quot;&quot;</span>
+
+    <span class="n">row</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">col</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
+
+<div class="viewcode-block" id="Galaxy.distance">
+<a class="viewcode-back" href="../../day11.html#day11.day11.Galaxy.distance">[docs]</a>
+    <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;Galaxy&quot;</span><span class="p">,</span> <span class="n">universe</span><span class="p">:</span> <span class="s2">&quot;Universe&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return distance from one galaxy to another.</span>
+
+<span class="sd">        Accounts for &quot;expanded&quot; spaces in the universe</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_row</span><span class="p">,</span> <span class="n">end_row</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">row</span><span class="p">])</span>
+        <span class="n">start_col</span><span class="p">,</span> <span class="n">end_col</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">col</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">col</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">expansion_rate</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">expansion_rate</span>
+
+        <span class="n">expanded_rows</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">row_lookup</span><span class="p">[</span><span class="n">end_row</span><span class="p">]</span> <span class="o">-</span> <span class="n">universe</span><span class="o">.</span><span class="n">row_lookup</span><span class="p">[</span><span class="n">start_row</span><span class="p">]</span>
+        <span class="n">unexpanded_rows</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_row</span> <span class="o">-</span> <span class="n">start_row</span><span class="p">)</span> <span class="o">-</span> <span class="n">expanded_rows</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">expanded_rows</span> <span class="o">*</span> <span class="n">expansion_rate</span> <span class="o">+</span> <span class="n">unexpanded_rows</span>
+
+        <span class="n">expanded_cols</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">col_lookup</span><span class="p">[</span><span class="n">end_col</span><span class="p">]</span> <span class="o">-</span> <span class="n">universe</span><span class="o">.</span><span class="n">col_lookup</span><span class="p">[</span><span class="n">start_col</span><span class="p">]</span>
+        <span class="n">unexpanded_cols</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_col</span> <span class="o">-</span> <span class="n">start_col</span><span class="p">)</span> <span class="o">-</span> <span class="n">expanded_cols</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">expanded_cols</span> <span class="o">*</span> <span class="n">expansion_rate</span> <span class="o">+</span> <span class="n">unexpanded_cols</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Point">
+<a class="viewcode-back" href="../../day11.html#day11.day11.Point">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Point represented by character and whether it is expanded.&quot;&quot;&quot;</span>
+
+    <span class="n">row</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">col</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">item</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">is_expanded</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Point.get_point_distance">
+<a class="viewcode-back" href="../../day11.html#day11.day11.Point.get_point_distance">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_point_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expansion_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns how big this &quot;point&quot; is based on if its expanded.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_expanded</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">expansion_rate</span>
+        <span class="k">return</span> <span class="mi">1</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Show ``@`` if we&#39;re expanded, otherwise original value.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_expanded</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;@&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">item</span></div>
+
+
+
+<div class="viewcode-block" id="Universe">
+<a class="viewcode-back" href="../../day11.html#day11.day11.Universe">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Universe</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Universe class; 2d array of . and #.&quot;&quot;&quot;</span>
+
+    <span class="n">contents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Point</span><span class="p">]]</span>
+    <span class="n">expansion_rate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="n">num_rows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">num_cols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">row_lookup</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">col_lookup</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize num_rows/num_cols.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Point</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns index into a row.</span>
+
+<span class="sd">        We can just use ``universe[row]``</span>
+<span class="sd">        instead of ``universe.contents[row]``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">row_index</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Point</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns iterator over all rows.</span>
+
+<span class="sd">        We can just use ``for row in universe``</span>
+<span class="sd">        instead of ``for row in universe.contents``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">row</span>
+
+<div class="viewcode-block" id="Universe.expand_contents">
+<a class="viewcode-back" href="../../day11.html#day11.day11.Universe.expand_contents">[docs]</a>
+    <span class="k">def</span> <span class="nf">expand_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Expands the contents of the universe.&quot;&quot;&quot;</span>
+        <span class="n">expanded_rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">is_empty</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">is_expanded</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">expanded_rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_index</span><span class="p">)</span>
+
+        <span class="n">expanded_cols</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">col_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">col_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">col_index</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">is_empty</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">is_expanded</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">expanded_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col_index</span><span class="p">)</span>
+            <span class="n">col_index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_lookups</span><span class="p">(</span><span class="n">expanded_rows</span><span class="p">,</span> <span class="n">expanded_cols</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Universe.init_lookups">
+<a class="viewcode-back" href="../../day11.html#day11.day11.Universe.init_lookups">[docs]</a>
+    <span class="k">def</span> <span class="nf">init_lookups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expanded_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">expanded_cols</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize lookup tables.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_lookup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_to_lookup</span><span class="p">(</span><span class="n">expanded_rows</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_lookup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_to_lookup</span><span class="p">(</span><span class="n">expanded_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Universe.expanded_to_lookup">
+<a class="viewcode-back" href="../../day11.html#day11.day11.Universe.expanded_to_lookup">[docs]</a>
+    <span class="k">def</span> <span class="nf">expanded_to_lookup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expanded_items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert from ``[3,7]``, ``10`` to ``00011112222``.&quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span>
+        <span class="n">last_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">expanded_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">expand_index</span><span class="p">,</span> <span class="n">expanded_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">expanded_items</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">last_index</span><span class="p">,</span> <span class="n">expanded_row</span><span class="p">):</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">expand_index</span>
+
+            <span class="n">last_index</span> <span class="o">=</span> <span class="n">expanded_row</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expanded_items</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="Universe.grab_galaxies">
+<a class="viewcode-back" href="../../day11.html#day11.day11.Universe.grab_galaxies">[docs]</a>
+    <span class="k">def</span> <span class="nf">grab_galaxies</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Galaxy</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Grabs all galaxies.&quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">galaxy_id</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">index_row</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">index_col</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">item</span> <span class="o">==</span> <span class="s2">&quot;#&quot;</span><span class="p">:</span>
+                    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Galaxy</span><span class="p">(</span><span class="n">index_row</span><span class="p">,</span> <span class="n">index_col</span><span class="p">,</span> <span class="n">galaxy_id</span><span class="p">))</span>
+                    <span class="n">galaxy_id</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Custom string function to print this universe.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="is_empty">
+<a class="viewcode-back" href="../../day11.html#day11.day11.is_empty">[docs]</a>
+<span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Point</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns True if all the content is ``.``.&quot;&quot;&quot;</span>
+    <span class="n">has_content</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">item</span> <span class="o">==</span> <span class="s2">&quot;#&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">items</span><span class="p">)</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">has_content</span></div>
+
+
+
+<div class="viewcode-block" id="parse_input">
+<a class="viewcode-back" href="../../day11.html#day11.day11.parse_input">[docs]</a>
+<span class="k">def</span> <span class="nf">parse_input</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Universe</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse input file and return a universe.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">row_points</span> <span class="o">=</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">line</span><span class="p">)]</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_points</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Universe</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_total_distance">
+<a class="viewcode-back" href="../../day11.html#day11.day11.get_total_distance">[docs]</a>
+<span class="k">def</span> <span class="nf">get_total_distance</span><span class="p">(</span><span class="n">galaxies</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Galaxy</span><span class="p">],</span> <span class="n">universe</span><span class="p">:</span> <span class="n">Universe</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns total distance of all galaxies.&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">galaxy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">galaxies</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">galaxy2</span> <span class="ow">in</span> <span class="n">galaxies</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]:</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="n">galaxy</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">galaxy2</span><span class="p">,</span> <span class="n">universe</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">distance</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../day11.html#day11.day11.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function, runs q1 and q2.&quot;&quot;&quot;</span>
+    <span class="n">universe</span><span class="p">:</span> <span class="n">Universe</span> <span class="o">=</span> <span class="n">parse_input</span><span class="p">(</span><span class="n">INPUT</span><span class="p">)</span>
+    <span class="n">universe</span><span class="o">.</span><span class="n">expand_contents</span><span class="p">()</span>
+    <span class="n">galaxies</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">grab_galaxies</span><span class="p">()</span>
+
+    <span class="c1"># q1: expansion = 2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">get_total_distance</span><span class="p">(</span><span class="n">galaxies</span><span class="p">,</span> <span class="n">universe</span><span class="p">))</span>
+    <span class="c1"># q2: expansion = 1000000</span>
+    <span class="n">universe</span><span class="o">.</span><span class="n">expansion_rate</span> <span class="o">=</span> <span class="mi">1000000</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">get_total_distance</span><span class="p">(</span><span class="n">galaxies</span><span class="p">,</span> <span class="n">universe</span><span class="p">))</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

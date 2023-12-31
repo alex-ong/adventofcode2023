@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day10.day10 &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day10.day10</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day10.day10</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;day10 solution.&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">day10.lib.direction</span> <span class="kn">import</span> <span class="n">Direction</span>
+<span class="kn">from</span> <span class="nn">day10.lib.pipebounds</span> <span class="kn">import</span> <span class="n">PipeBounds</span>
+<span class="kn">from</span> <span class="nn">day10.lib.pipes</span> <span class="kn">import</span> <span class="n">Pipe</span><span class="p">,</span> <span class="n">PipeMap</span>
+<span class="kn">from</span> <span class="nn">day10.lib.position</span> <span class="kn">import</span> <span class="n">Position</span>
+
+<span class="n">INPUT</span> <span class="o">=</span> <span class="s2">&quot;day10/input.txt&quot;</span>
+<span class="n">INPUT_A</span> <span class="o">=</span> <span class="s2">&quot;day10/input-a.txt&quot;</span>
+<span class="n">INPUT_B</span> <span class="o">=</span> <span class="s2">&quot;day10/input-b.txt&quot;</span>
+<span class="n">INPUT_C</span> <span class="o">=</span> <span class="s2">&quot;day10/input-c.txt&quot;</span>
+<span class="n">INPUT_D</span> <span class="o">=</span> <span class="s2">&quot;day10/input-d.txt&quot;</span>
+
+
+<div class="viewcode-block" id="process_input_line">
+<a class="viewcode-back" href="../../day10.html#day10.day10.process_input_line">[docs]</a>
+<span class="k">def</span> <span class="nf">process_input_line</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Pipe</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process a single line of input.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">Pipe</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">char</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())]</span></div>
+
+
+
+<div class="viewcode-block" id="read_input">
+<a class="viewcode-back" href="../../day10.html#day10.day10.read_input">[docs]</a>
+<span class="k">def</span> <span class="nf">read_input</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PipeMap</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read the map.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">pipes</span> <span class="o">=</span> <span class="p">[</span><span class="n">process_input_line</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">file</span><span class="p">)]</span>
+        <span class="n">pipe_map</span> <span class="o">=</span> <span class="n">PipeMap</span><span class="p">(</span><span class="n">pipes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pipe_map</span></div>
+
+
+
+<div class="viewcode-block" id="find_s">
+<a class="viewcode-back" href="../../day10.html#day10.day10.find_s">[docs]</a>
+<span class="k">def</span> <span class="nf">find_s</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">:</span> <span class="n">PipeMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Position</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds the S pipe.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">row_idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pipe_map</span><span class="o">.</span><span class="n">pipes</span><span class="p">):</span>
+        <span class="n">finder</span> <span class="o">=</span> <span class="p">(</span><span class="n">col_idx</span> <span class="k">for</span> <span class="n">col_idx</span><span class="p">,</span> <span class="n">pipe</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">if</span> <span class="n">pipe</span><span class="o">.</span><span class="n">is_start</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">col_idx</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">finder</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Position</span><span class="p">(</span><span class="n">row_idx</span><span class="p">,</span> <span class="n">col_idx</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;No S pipe found!&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_s">
+<a class="viewcode-back" href="../../day10.html#day10.day10.calculate_s">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_s</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="n">Position</span><span class="p">,</span> <span class="n">pipe_map</span><span class="p">:</span> <span class="n">PipeMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate what the &quot;S&quot; character is as a pipe.</span>
+
+<span class="sd">    We should have exactly two pipes going into us</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        start (Position): position of S</span>
+<span class="sd">        pipe_map (PipeMap): map of pipes</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: ``S`` doesn&#39;t have any connecting pipes</span>
+<span class="sd">        AssertionError: ``S`` does not match any known pipe.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The character representing the pipe</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">connecting</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pipe_directions</span> <span class="o">=</span> <span class="p">[</span><span class="n">Direction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">WEST</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">EAST</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="n">pipe_directions</span><span class="p">:</span>
+        <span class="n">pos</span><span class="p">:</span> <span class="n">Position</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">next_position</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+        <span class="n">tile</span><span class="p">:</span> <span class="n">Pipe</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">pipe_map</span><span class="o">.</span><span class="n">get_pipe_safe</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># e.g. S is on an edge</span>
+            <span class="k">continue</span>
+        <span class="n">opposite_direction</span> <span class="o">=</span> <span class="n">direction</span><span class="o">.</span><span class="n">opposite</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">opposite_direction</span> <span class="ow">in</span> <span class="n">Pipe</span><span class="o">.</span><span class="n">PIPE_DIRECTION</span><span class="p">[</span><span class="n">tile</span><span class="o">.</span><span class="n">character</span><span class="p">]:</span>
+            <span class="n">connecting</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connecting</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;S is not a a valid pipe&quot;</span><span class="p">)</span>
+
+    <span class="c1"># should now have connecting == [NORTH, EAST]:</span>
+    <span class="k">for</span> <span class="n">character</span><span class="p">,</span> <span class="n">pipe_directions</span> <span class="ow">in</span> <span class="n">Pipe</span><span class="o">.</span><span class="n">PIPE_DIRECTION</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">connecting</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">pipe_directions</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">character</span>
+
+    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;No mapping found for `s` pipe&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="find_cycles">
+<a class="viewcode-back" href="../../day10.html#day10.day10.find_cycles">[docs]</a>
+<span class="k">def</span> <span class="nf">find_cycles</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">:</span> <span class="n">PipeMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Pipe</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds the pipe path starting from S.&quot;&quot;&quot;</span>
+    <span class="c1"># first find S, and re-assign it</span>
+    <span class="n">s_position</span><span class="p">:</span> <span class="n">Position</span> <span class="o">=</span> <span class="n">find_s</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">)</span>
+    <span class="n">s_char</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">calculate_s</span><span class="p">(</span><span class="n">s_position</span><span class="p">,</span> <span class="n">pipe_map</span><span class="p">)</span>
+    <span class="n">s_pipe</span><span class="p">:</span> <span class="n">Pipe</span> <span class="o">=</span> <span class="n">pipe_map</span><span class="o">.</span><span class="n">get_pipe</span><span class="p">(</span><span class="n">s_position</span><span class="p">)</span>
+    <span class="n">s_pipe</span><span class="o">.</span><span class="n">character</span> <span class="o">=</span> <span class="n">s_char</span>
+
+    <span class="n">pipe_path</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Pipe</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">current_pipe</span><span class="p">:</span> <span class="n">Pipe</span> <span class="o">=</span> <span class="n">s_pipe</span>
+    <span class="n">direction</span><span class="p">:</span> <span class="n">Direction</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">while</span> <span class="n">current_pipe</span> <span class="o">!=</span> <span class="n">s_pipe</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">pipe_path</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">pipe_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_pipe</span><span class="p">)</span>
+        <span class="n">direction</span><span class="p">,</span> <span class="n">position</span> <span class="o">=</span> <span class="n">current_pipe</span><span class="o">.</span><span class="n">next_position</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+        <span class="n">current_pipe</span> <span class="o">=</span> <span class="n">pipe_map</span><span class="o">.</span><span class="n">get_pipe</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">current_pipe</span><span class="o">.</span><span class="n">is_loop</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">pipe_path</span></div>
+
+
+
+<div class="viewcode-block" id="flood_fill">
+<a class="viewcode-back" href="../../day10.html#day10.day10.flood_fill">[docs]</a>
+<span class="k">def</span> <span class="nf">flood_fill</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">:</span> <span class="n">PipeMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Flood fills a pipemap from one starting tile.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pipe_map (PipeMap): pipemap to fill</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: how many tiles were filled</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">visited_positions</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">to_visit</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Position</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">Position</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+
+    <span class="n">directions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Direction</span><span class="p">)</span>
+    <span class="n">num_outside</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">to_visit</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">to_visit</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">visited_positions</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># mark the position as outside</span>
+        <span class="n">pipe</span><span class="p">:</span> <span class="n">Pipe</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">pipe_map</span><span class="o">.</span><span class="n">get_pipe_safe</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pipe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">pipe</span><span class="o">.</span><span class="n">is_loop</span><span class="p">:</span>
+            <span class="n">pipe</span><span class="o">.</span><span class="n">pipe_bounds</span> <span class="o">=</span> <span class="n">PipeBounds</span><span class="o">.</span><span class="n">OUTSIDE</span>
+            <span class="n">num_outside</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="n">directions</span><span class="p">:</span>
+                <span class="n">new_position</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">next_position</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+                <span class="n">to_visit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_position</span><span class="p">)</span>
+        <span class="n">visited_positions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">num_outside</span></div>
+
+
+
+<div class="viewcode-block" id="process_big_input_line">
+<a class="viewcode-back" href="../../day10.html#day10.day10.process_big_input_line">[docs]</a>
+<span class="k">def</span> <span class="nf">process_big_input_line</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Pipe</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process a single line of input.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">Pipe</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">char</span><span class="p">,</span> <span class="n">is_loop</span><span class="o">=</span><span class="p">(</span><span class="n">char</span> <span class="o">!=</span> <span class="s2">&quot; &quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="expand_map">
+<a class="viewcode-back" href="../../day10.html#day10.day10.expand_map">[docs]</a>
+<span class="k">def</span> <span class="nf">expand_map</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">:</span> <span class="n">PipeMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PipeMap</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Expands each pipe into a 3x3 tile.&quot;&quot;&quot;</span>
+    <span class="n">big_map</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pipe_map</span><span class="o">.</span><span class="n">pipes</span><span class="p">:</span>
+        <span class="c1"># three rows per original row:</span>
+        <span class="n">big_rows</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="n">big_pipe</span> <span class="o">=</span> <span class="n">expand_pipe</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">character</span><span class="p">,</span> <span class="n">col</span><span class="o">.</span><span class="n">is_loop</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">row_idx</span><span class="p">,</span> <span class="n">big_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">big_pipe</span><span class="p">):</span>
+                <span class="n">big_rows</span><span class="p">[</span><span class="n">row_idx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">big_row</span>
+
+        <span class="n">big_map</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">big_rows</span><span class="p">)</span>
+
+    <span class="c1"># now convert big_map into &quot;nice&quot; pipes:</span>
+    <span class="n">pipes</span> <span class="o">=</span> <span class="p">[</span><span class="n">process_big_input_line</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">big_map</span><span class="p">)]</span>
+
+    <span class="n">pipe_map</span> <span class="o">=</span> <span class="n">PipeMap</span><span class="p">(</span><span class="n">pipes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pipe_map</span></div>
+
+
+
+<div class="viewcode-block" id="reduce_map">
+<a class="viewcode-back" href="../../day10.html#day10.day10.reduce_map">[docs]</a>
+<span class="k">def</span> <span class="nf">reduce_map</span><span class="p">(</span><span class="n">big_map</span><span class="p">:</span> <span class="n">PipeMap</span><span class="p">,</span> <span class="n">small_map</span><span class="p">:</span> <span class="n">PipeMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PipeMap</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts from fat map back down to small map.&quot;&quot;&quot;</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">small_map</span><span class="o">.</span><span class="n">height</span><span class="p">):</span>
+        <span class="n">row_tiles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">big_map_row_idx</span> <span class="o">=</span> <span class="n">row_idx</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">col_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">small_map</span><span class="o">.</span><span class="n">width</span><span class="p">):</span>
+            <span class="n">big_map_col_idx</span> <span class="o">=</span> <span class="n">col_idx</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="n">Position</span><span class="p">(</span><span class="n">big_map_row_idx</span><span class="p">,</span> <span class="n">big_map_col_idx</span><span class="p">)</span>
+            <span class="n">tile</span> <span class="o">=</span> <span class="n">big_map</span><span class="o">.</span><span class="n">get_pipe</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+            <span class="n">new_tile</span> <span class="o">=</span> <span class="n">Pipe</span><span class="p">(</span>
+                <span class="n">row_idx</span><span class="p">,</span>
+                <span class="n">col_idx</span><span class="p">,</span>
+                <span class="n">tile</span><span class="o">.</span><span class="n">character</span><span class="p">,</span>
+                <span class="n">is_loop</span><span class="o">=</span><span class="n">tile</span><span class="o">.</span><span class="n">is_loop</span><span class="p">,</span>
+                <span class="n">pipe_bounds</span><span class="o">=</span><span class="n">tile</span><span class="o">.</span><span class="n">pipe_bounds</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">row_tiles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_tile</span><span class="p">)</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_tiles</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">PipeMap</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="expand_pipe">
+<a class="viewcode-back" href="../../day10.html#day10.day10.expand_pipe">[docs]</a>
+<span class="k">def</span> <span class="nf">expand_pipe</span><span class="p">(</span><span class="n">character</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_loop</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Expands a pipe character to big boi 3x3.&quot;&quot;&quot;</span>
+    <span class="c1"># fmt: off</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_loop</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;   &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;   &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;   &quot;</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;|&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot; | &quot;</span><span class="p">,</span>
+                <span class="s2">&quot; | &quot;</span><span class="p">,</span>
+                <span class="s2">&quot; | &quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;   &quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;---&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;   &quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot; | &quot;</span><span class="p">,</span> 
+                <span class="s2">&quot; L-&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;   &quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;J&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot; | &quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;-J &quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;   &quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;7&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;   &quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;-7 &quot;</span><span class="p">,</span> 
+                <span class="s2">&quot; | &quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;F&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;   &quot;</span><span class="p">,</span> 
+                <span class="s2">&quot; F-&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot; | &quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;unknown character </span><span class="si">{character}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    <span class="c1"># fmt: on</span>
+
+
+<div class="viewcode-block" id="part1">
+<a class="viewcode-back" href="../../day10.html#day10.day10.part1">[docs]</a>
+<span class="k">def</span> <span class="nf">part1</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">:</span> <span class="n">PipeMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds length of S loop.&quot;&quot;&quot;</span>
+    <span class="n">pipe_path</span> <span class="o">=</span> <span class="n">find_cycles</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">pipe_path</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span></div>
+
+
+
+<div class="viewcode-block" id="part2">
+<a class="viewcode-back" href="../../day10.html#day10.day10.part2">[docs]</a>
+<span class="k">def</span> <span class="nf">part2</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">:</span> <span class="n">PipeMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds tiles &quot;inside&quot; the loop.&quot;&quot;&quot;</span>
+    <span class="n">find_cycles</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">)</span>
+
+    <span class="c1"># print our map before we mutate it</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">)</span>
+
+    <span class="n">big_map</span><span class="p">:</span> <span class="n">PipeMap</span> <span class="o">=</span> <span class="n">expand_map</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">)</span>
+    <span class="c1"># you can use this to view it lol.</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;day10/big_unfilled.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">big_map</span><span class="p">))</span>
+
+    <span class="n">flood_fill</span><span class="p">(</span><span class="n">big_map</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;day10/big_filled.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">big_map</span><span class="p">))</span>
+
+    <span class="n">small_map</span><span class="p">:</span> <span class="n">PipeMap</span> <span class="o">=</span> <span class="n">reduce_map</span><span class="p">(</span><span class="n">big_map</span><span class="p">,</span> <span class="n">pipe_map</span><span class="p">)</span>
+
+    <span class="n">pipes</span> <span class="o">=</span> <span class="n">small_map</span><span class="o">.</span><span class="n">pipes</span>
+    <span class="n">total_unknown</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pipes</span><span class="p">:</span>
+        <span class="n">total_unknown</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span>
+            <span class="mi">1</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">pipe_bounds</span> <span class="o">==</span> <span class="n">PipeBounds</span><span class="o">.</span><span class="n">UNKNOWN</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">row</span>
+        <span class="p">)</span>
+
+    <span class="c1"># extra step; mark unknown asn inside.</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pipes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">pipe_bounds</span> <span class="o">==</span> <span class="n">PipeBounds</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">:</span>
+                <span class="n">col</span><span class="o">.</span><span class="n">pipe_bounds</span> <span class="o">=</span> <span class="n">PipeBounds</span><span class="o">.</span><span class="n">INSIDE</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">small_map</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">total_unknown</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../day10.html#day10.day10.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read input and run part1/part2.&quot;&quot;&quot;</span>
+    <span class="n">pipe_map</span> <span class="o">=</span> <span class="n">read_input</span><span class="p">(</span><span class="n">INPUT</span><span class="p">)</span>
+    <span class="c1"># q1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">part1</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">))</span>
+    <span class="c1"># q2. Flood fill the outside, then subtract length of loop.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">part2</span><span class="p">(</span><span class="n">pipe_map</span><span class="p">))</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

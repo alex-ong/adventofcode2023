@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day17.lib.classes &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day17.lib.classes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day17.lib.classes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;classes for day 17.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">PriorityQueue</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">day17.lib.direction</span> <span class="kn">import</span> <span class="n">ALL_DIRECTIONS</span><span class="p">,</span> <span class="n">Direction</span>
+
+
+<div class="viewcode-block" id="Step">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.Step">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Step</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents one &quot;step&quot;, which could be a multi-step.&quot;&quot;&quot;</span>
+
+    <span class="n">total_cost</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">row</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">col</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">direction</span><span class="p">:</span> <span class="n">Direction</span>
+    <span class="n">consecutive_steps</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="n">src_step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Step&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">hash</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TileCache">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.TileCache">[docs]</a>
+<span class="k">class</span> <span class="nc">TileCache</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A cache of shortest routes to a tile from each direction.&quot;&quot;&quot;</span>
+
+    <span class="n">cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Direction</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Step</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]]</span>
+    <span class="n">cache_min</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># min steps in direction</span>
+    <span class="n">cache_max</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># max steps in direction</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache_min</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">cache_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the tile with an empty entry from each direction.&quot;&quot;&quot;</span>
+        <span class="n">cache_length</span> <span class="o">=</span> <span class="n">cache_max</span> <span class="o">-</span> <span class="n">cache_min</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">cache_length</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ALL_DIRECTIONS</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_min</span> <span class="o">=</span> <span class="n">cache_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_max</span> <span class="o">=</span> <span class="n">cache_max</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_steps</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Direction</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Step</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lookup our cache based on how many steps in one direction we took to get here.&quot;&quot;&quot;</span>
+        <span class="n">direction</span><span class="p">,</span> <span class="n">steps</span> <span class="o">=</span> <span class="n">dir_steps</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">direction</span><span class="p">][</span><span class="n">steps</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_min</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_steps</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Direction</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">item</span><span class="p">:</span> <span class="n">Step</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set steps based on how many steps in one direction we took to get here.&quot;&quot;&quot;</span>
+        <span class="n">direction</span><span class="p">,</span> <span class="n">steps</span> <span class="o">=</span> <span class="n">dir_steps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">direction</span><span class="p">][</span><span class="n">steps</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_min</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span></div>
+
+
+
+<div class="viewcode-block" id="SolutionCache">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.SolutionCache">[docs]</a>
+<span class="k">class</span> <span class="nc">SolutionCache</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;2d array of tilecaches.&quot;&quot;&quot;</span>
+
+    <span class="n">cache</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">TileCache</span><span class="p">]]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_rows</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">cache_min</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">cache_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate empty tile cache.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="n">TileCache</span><span class="p">(</span><span class="n">cache_min</span><span class="p">,</span> <span class="n">cache_max</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_cols</span><span class="p">)]</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rows</span><span class="p">)</span>
+        <span class="p">]</span>
+
+<div class="viewcode-block" id="SolutionCache.add_solution">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.SolutionCache.add_solution">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="n">Step</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds solution to cache returns whether an improvement was made.&quot;&quot;&quot;</span>
+        <span class="n">tile_cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">step</span><span class="o">.</span><span class="n">row</span><span class="p">][</span><span class="n">step</span><span class="o">.</span><span class="n">col</span><span class="p">]</span>
+        <span class="n">existing_item</span> <span class="o">=</span> <span class="n">tile_cache</span><span class="p">[</span><span class="n">step</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span> <span class="n">step</span><span class="o">.</span><span class="n">consecutive_steps</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">existing_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tile_cache</span><span class="p">[</span><span class="n">step</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span> <span class="n">step</span><span class="o">.</span><span class="n">consecutive_steps</span><span class="p">]</span> <span class="o">=</span> <span class="n">step</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># due to the way that we run in BFS, we shouldn&#39;t be getting</span>
+        <span class="c1"># into this branch</span>
+        <span class="k">if</span> <span class="n">step</span><span class="o">.</span><span class="n">total_cost</span> <span class="o">&lt;</span> <span class="n">existing_item</span><span class="o">.</span><span class="n">total_cost</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;this shouldn&#39;t be possible&quot;</span><span class="p">)</span>
+            <span class="c1"># tile_cache[step.direction, step.consecutive_steps] = step</span>
+            <span class="c1"># return True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="WorldPart1">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.WorldPart1">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">WorldPart1</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;World for part1.&quot;&quot;&quot;</span>
+
+    <span class="n">costs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+    <span class="n">num_rows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">num_cols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Post initialize cached properties.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">costs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">costs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_col</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns cost at given row/col.&quot;&quot;&quot;</span>
+        <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">row_col</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_oob</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">costs</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span>
+
+<div class="viewcode-block" id="WorldPart1.create_step">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.WorldPart1.create_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="n">Step</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="n">Direction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Step</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create step from previous step and a given direction.</span>
+
+<span class="sd">        Returns None if the step is invalid or suboptimal</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">direction</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">step</span><span class="o">.</span><span class="n">col</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cost</span> <span class="o">:=</span> <span class="bp">self</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">step</span><span class="o">.</span><span class="n">direction</span><span class="o">.</span><span class="n">opposite</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">step</span><span class="o">.</span><span class="n">direction</span><span class="p">:</span>
+            <span class="n">consecutive</span> <span class="o">=</span> <span class="n">step</span><span class="o">.</span><span class="n">consecutive_steps</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">consecutive</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">consecutive</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">Step</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">total_cost</span> <span class="o">+</span> <span class="n">cost</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">consecutive</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WorldPart1.solve">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.WorldPart1.solve">[docs]</a>
+    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Step</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Solve using dynamic programming.</span>
+
+<span class="sd">        Returns final step which contains src steps;</span>
+<span class="sd">        so we have the entire path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># we need to do this via DP</span>
+        <span class="n">solution_cache</span> <span class="o">=</span> <span class="n">SolutionCache</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">step</span><span class="p">:</span> <span class="n">Step</span> <span class="o">=</span> <span class="n">Step</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">steps_to_explore</span><span class="p">:</span> <span class="n">PriorityQueue</span><span class="p">[</span><span class="n">Step</span><span class="p">]</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">()</span>
+        <span class="n">steps_to_explore</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">steps_to_explore</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="n">steps_to_explore</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">step</span><span class="o">.</span><span class="n">row</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">step</span><span class="o">.</span><span class="n">col</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">step</span>  <span class="c1"># result!</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">solution_cache</span><span class="o">.</span><span class="n">add_solution</span><span class="p">(</span><span class="n">step</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="n">ALL_DIRECTIONS</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">new_step</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_step</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">direction</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">steps_to_explore</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">new_step</span><span class="p">)</span>
+
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;No solution found!&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WorldPart1.is_oob">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.WorldPart1.is_oob">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_oob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns if we are out of bounds.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            row (int): row to check</span>
+<span class="sd">            col (int): col to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: if we are out of bounds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">row</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span> <span class="ow">or</span> <span class="n">col</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">col</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="WorldPart2">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.WorldPart2">[docs]</a>
+<span class="k">class</span> <span class="nc">WorldPart2</span><span class="p">(</span><span class="n">WorldPart1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extension of part1 with a few overrides.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="WorldPart2.create_step">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.WorldPart2.create_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="n">Step</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="n">Direction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Step</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create step from previous step and a given direction.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">step</span><span class="o">.</span><span class="n">direction</span><span class="o">.</span><span class="n">opposite</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">step</span><span class="o">.</span><span class="n">direction</span><span class="p">:</span>
+            <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">direction</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">step</span><span class="o">.</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">cost</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">cost</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">consecutive</span> <span class="o">=</span> <span class="n">step</span><span class="o">.</span><span class="n">consecutive_steps</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">consecutive</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">Step</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">total_cost</span> <span class="o">+</span> <span class="n">cost</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">consecutive</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">consecutive</span> <span class="o">=</span> <span class="mi">4</span>
+            <span class="n">row_cols</span> <span class="o">=</span> <span class="n">direction</span><span class="o">.</span><span class="n">offset_list</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">step</span><span class="o">.</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">multi_cost</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">row_col</span> <span class="ow">in</span> <span class="n">row_cols</span><span class="p">:</span>
+                <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">row_col</span>
+                <span class="n">cost</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">cost</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+                <span class="n">multi_cost</span> <span class="o">+=</span> <span class="n">cost</span>
+
+            <span class="k">return</span> <span class="n">Step</span><span class="p">(</span>
+                <span class="n">step</span><span class="o">.</span><span class="n">total_cost</span> <span class="o">+</span> <span class="n">multi_cost</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">consecutive</span><span class="p">,</span> <span class="n">step</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WorldPart2.solve">
+<a class="viewcode-back" href="../../../day17.lib.html#day17.lib.classes.WorldPart2.solve">[docs]</a>
+    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Step</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Solve using DP.</span>
+
+<span class="sd">        Returns final step which contains src steps;</span>
+<span class="sd">        so we have the entire path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># we need to do this via DP</span>
+        <span class="n">solution_cache</span> <span class="o">=</span> <span class="n">SolutionCache</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">step</span><span class="p">:</span> <span class="n">Step</span> <span class="o">=</span> <span class="n">Step</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">steps_to_explore</span><span class="p">:</span> <span class="n">PriorityQueue</span><span class="p">[</span><span class="n">Step</span><span class="p">]</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">()</span>
+        <span class="n">steps_to_explore</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">steps_to_explore</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="n">steps_to_explore</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">step</span><span class="o">.</span><span class="n">row</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">step</span><span class="o">.</span><span class="n">col</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cols</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">step</span>  <span class="c1"># result!</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">solution_cache</span><span class="o">.</span><span class="n">add_solution</span><span class="p">(</span><span class="n">step</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="n">ALL_DIRECTIONS</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">new_step</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_step</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">direction</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">steps_to_explore</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">new_step</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;No solution found!&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

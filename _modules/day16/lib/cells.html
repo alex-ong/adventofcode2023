@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day16.lib.cells &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day16.lib.cells</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day16.lib.cells</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Cell classes.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span>
+
+<span class="kn">from</span> <span class="nn">day16.lib.direction</span> <span class="kn">import</span> <span class="n">Direction</span>
+<span class="kn">from</span> <span class="nn">day16.lib.laser</span> <span class="kn">import</span> <span class="n">Laser</span>
+
+
+<div class="viewcode-block" id="Cell">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.Cell">[docs]</a>
+<span class="k">class</span> <span class="nc">Cell</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract cell class.&quot;&quot;&quot;</span>
+
+    <span class="n">contents</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="c1"># each cell can register itself to us</span>
+    <span class="n">CELL_TYPES</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Cell&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default constructor, sets our contents.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="n">contents</span>
+
+<div class="viewcode-block" id="Cell.register_cell_type">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.Cell.register_cell_type">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">register_cell_type</span><span class="p">(</span>
+        <span class="n">cell_contents</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">type</span><span class="p">[</span><span class="s2">&quot;Cell&quot;</span><span class="p">]],</span> <span class="nb">type</span><span class="p">[</span><span class="s2">&quot;Cell&quot;</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Registers a cell type to this factory.&quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Cell&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Cell&quot;</span><span class="p">]:</span>
+            <span class="n">Cell</span><span class="o">.</span><span class="n">CELL_TYPES</span><span class="p">[</span><span class="n">cell_contents</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span>
+            <span class="k">return</span> <span class="bp">cls</span>
+
+        <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+<div class="viewcode-block" id="Cell.construct">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.Cell.construct">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">construct</span><span class="p">(</span><span class="n">contents</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Cell&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct proper cell from given contents.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Cell</span><span class="o">.</span><span class="n">CELL_TYPES</span><span class="p">[</span><span class="n">contents</span><span class="p">](</span><span class="n">contents</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unrecognized content </span><span class="si">{</span><span class="n">contents</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Cell.next_lasers">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.Cell.next_lasers">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">next_lasers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">laser</span><span class="p">:</span> <span class="n">Laser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Laser</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return next lasers given a laser entering this cell.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">,</span> <span class="n">laser</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DotCell">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.DotCell">[docs]</a>
+<span class="nd">@Cell</span><span class="o">.</span><span class="n">register_cell_type</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">DotCell</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A dot cell.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DotCell.next_lasers">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.DotCell.next_lasers">[docs]</a>
+    <span class="k">def</span> <span class="nf">next_lasers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">laser</span><span class="p">:</span> <span class="n">Laser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Laser</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lasers pass directly through this tile.&quot;&quot;&quot;</span>
+        <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="n">laser</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">col</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span><span class="p">)]</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DashCell">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.DashCell">[docs]</a>
+<span class="nd">@Cell</span><span class="o">.</span><span class="n">register_cell_type</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">DashCell</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A ``-`` cell.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DashCell.next_lasers">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.DashCell.next_lasers">[docs]</a>
+    <span class="k">def</span> <span class="nf">next_lasers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">laser</span><span class="p">:</span> <span class="n">Laser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Laser</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lasers must end up going east/west after passing through this cell.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Direction</span><span class="o">.</span><span class="n">EAST</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">WEST</span><span class="p">]:</span>
+            <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="n">laser</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">col</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span><span class="p">)]</span>
+        <span class="k">elif</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Direction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">]:</span>
+            <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">col</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">Laser</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">EAST</span><span class="p">),</span>
+                <span class="n">Laser</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">WEST</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown direction </span><span class="si">{</span><span class="n">laser</span><span class="o">.</span><span class="n">direction</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PipeCell">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.PipeCell">[docs]</a>
+<span class="nd">@Cell</span><span class="o">.</span><span class="n">register_cell_type</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PipeCell</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A ``|`` cell.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PipeCell.next_lasers">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.PipeCell.next_lasers">[docs]</a>
+    <span class="k">def</span> <span class="nf">next_lasers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">laser</span><span class="p">:</span> <span class="n">Laser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Laser</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lasers must end up going north/south after passing through this cell.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Direction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">]:</span>
+            <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="n">laser</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">col</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span><span class="p">)]</span>
+        <span class="k">elif</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Direction</span><span class="o">.</span><span class="n">EAST</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">WEST</span><span class="p">]:</span>
+            <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">col</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">Laser</span><span class="p">(</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">),</span>
+                <span class="n">Laser</span><span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown direction </span><span class="si">{</span><span class="n">laser</span><span class="o">.</span><span class="n">direction</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ForwardSlashCell">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.ForwardSlashCell">[docs]</a>
+<span class="nd">@Cell</span><span class="o">.</span><span class="n">register_cell_type</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ForwardSlashCell</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A ``/`` cell.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ForwardSlashCell.next_lasers">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.ForwardSlashCell.next_lasers">[docs]</a>
+    <span class="k">def</span> <span class="nf">next_lasers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">laser</span><span class="p">:</span> <span class="n">Laser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Laser</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lasers go diagonal mode.&quot;&quot;&quot;</span>
+        <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">col</span>
+        <span class="k">if</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">EAST</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">EAST</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">WEST</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">WEST</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">)]</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown direction </span><span class="si">{</span><span class="n">laser</span><span class="o">.</span><span class="n">direction</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BackSlashCell">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.BackSlashCell">[docs]</a>
+<span class="nd">@Cell</span><span class="o">.</span><span class="n">register_cell_type</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BackSlashCell</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A ``\`` cell.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BackSlashCell.next_lasers">
+<a class="viewcode-back" href="../../../day16.lib.html#day16.lib.cells.BackSlashCell.next_lasers">[docs]</a>
+    <span class="k">def</span> <span class="nf">next_lasers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">laser</span><span class="p">:</span> <span class="n">Laser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Laser</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lasers go diagonal mode.&quot;&quot;&quot;</span>
+        <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">col</span>
+        <span class="k">if</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">EAST</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">EAST</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">WEST</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">laser</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">WEST</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">Laser</span><span class="p">(</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">)]</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown direction </span><span class="si">{</span><span class="n">laser</span><span class="o">.</span><span class="n">direction</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day08.day8 &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day08.day8</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day08.day8</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;day8 solution.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span>
+
+<span class="n">INPUT</span> <span class="o">=</span> <span class="s2">&quot;day08/input.txt&quot;</span>
+<span class="n">INPUT_A</span> <span class="o">=</span> <span class="s2">&quot;day08/input-a.txt&quot;</span>
+<span class="n">INPUT_B</span> <span class="o">=</span> <span class="s2">&quot;day08/input-b.txt&quot;</span>
+<span class="n">INPUT_C</span> <span class="o">=</span> <span class="s2">&quot;day08/input-c.txt&quot;</span>
+
+
+<div class="viewcode-block" id="Location">
+<a class="viewcode-back" href="../../day08.html#day08.day8.Location">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Location</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A location on our map, with names of other locations.&quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">left</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">right</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+
+<div class="viewcode-block" id="LocationStep">
+<a class="viewcode-back" href="../../day08.html#day08.day8.LocationStep">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">LocationStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Location + how many steps to get here.&quot;&quot;&quot;</span>
+
+    <span class="n">location</span><span class="p">:</span> <span class="n">Location</span>
+    <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Custom hash function so we can compare/set this class.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="WorldMap">
+<a class="viewcode-back" href="../../day08.html#day08.day8.WorldMap">[docs]</a>
+<span class="k">class</span> <span class="nc">WorldMap</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;world map class.&quot;&quot;&quot;</span>
+
+    <span class="n">mappings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Location</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize an empty world map.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mappings</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="WorldMap.add_location">
+<a class="viewcode-back" href="../../day08.html#day08.day8.WorldMap.add_location">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">Location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add location to our mappings.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mappings</span><span class="p">[</span><span class="n">location</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">location</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Directions">
+<a class="viewcode-back" href="../../day08.html#day08.day8.Directions">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Directions</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple directions string.&quot;&quot;&quot;</span>
+
+    <span class="n">steps</span><span class="p">:</span> <span class="nb">str</span>
+
+<div class="viewcode-block" id="Directions.get_step">
+<a class="viewcode-back" href="../../day08.html#day08.day8.Directions.get_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a step given its index.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="Directions.get_steps_iterator">
+<a class="viewcode-back" href="../../day08.html#day08.day8.Directions.get_steps_iterator">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_steps_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a iterator that loops through indefinitely.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Cycle">
+<a class="viewcode-back" href="../../day08.html#day08.day8.Cycle">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Cycle</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find a cycle.&quot;&quot;&quot;</span>
+
+    <span class="n">start_location</span><span class="p">:</span> <span class="n">Location</span>
+    <span class="n">location_steps</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LocationStep</span><span class="p">]</span>  <span class="c1"># all the steps, including non-looping</span>
+    <span class="n">cycle_start</span><span class="p">:</span> <span class="n">LocationStep</span>  <span class="c1"># the step that loops</span>
+
+    <span class="n">cycle_start_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># index of cycle_start</span>
+    <span class="n">end_zs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cycle_length</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return length of the repeating part.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location_steps</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cycle_start_index</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the start indices and and end indices.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cycle_start_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">location_steps</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cycle_start</span><span class="p">)</span>
+        <span class="n">end_zs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">location_step</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location_steps</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">location_step</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">):</span>
+                <span class="n">end_zs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_zs</span> <span class="o">=</span> <span class="n">end_zs</span>
+
+<div class="viewcode-block" id="Cycle.get_location">
+<a class="viewcode-back" href="../../day08.html#day08.day8.Cycle.get_location">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LocationStep</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets a location given a step index.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location_steps</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">location_steps</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="c1"># 2nd half of array is from cycle_start_index -&gt; end</span>
+        <span class="n">index</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location_steps</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cycle_start_index</span>
+        <span class="n">index</span> <span class="o">%=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cycle_length</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">location_steps</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="read_input">
+<a class="viewcode-back" href="../../day08.html#day08.day8.read_input">[docs]</a>
+<span class="k">def</span> <span class="nf">read_input</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Directions</span><span class="p">,</span> <span class="n">WorldMap</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reads input into directions/world_map.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">directions</span> <span class="o">=</span> <span class="n">Directions</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">world_map</span> <span class="o">=</span> <span class="n">WorldMap</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># 0123456789012345</span>
+            <span class="c1"># GXF = (XQB, GFH)</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">12</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="n">Location</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+            <span class="n">world_map</span><span class="o">.</span><span class="n">add_location</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">directions</span><span class="p">,</span> <span class="n">world_map</span></div>
+
+
+
+<div class="viewcode-block" id="follow_directions">
+<a class="viewcode-back" href="../../day08.html#day08.day8.follow_directions">[docs]</a>
+<span class="k">def</span> <span class="nf">follow_directions</span><span class="p">(</span><span class="n">directions</span><span class="p">:</span> <span class="n">Directions</span><span class="p">,</span> <span class="n">world_map</span><span class="p">:</span> <span class="n">WorldMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Follows directions until we hit zzz.&quot;&quot;&quot;</span>
+    <span class="n">mappings</span> <span class="o">=</span> <span class="n">world_map</span><span class="o">.</span><span class="n">mappings</span>
+    <span class="n">node</span><span class="p">:</span> <span class="n">Location</span> <span class="o">=</span> <span class="n">mappings</span><span class="p">[</span><span class="s2">&quot;AAA&quot;</span><span class="p">]</span>
+    <span class="n">nodes_visited</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">directions</span><span class="o">.</span><span class="n">get_steps_iterator</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">step</span> <span class="o">==</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">mappings</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">mappings</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">]</span>
+        <span class="n">nodes_visited</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;ZZZ&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">nodes_visited</span>
+
+    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Unreachable; iterator is infinite&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_location_as">
+<a class="viewcode-back" href="../../day08.html#day08.day8.get_location_as">[docs]</a>
+<span class="k">def</span> <span class="nf">get_location_as</span><span class="p">(</span><span class="n">world_map</span><span class="p">:</span> <span class="n">WorldMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Location</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns locations with an A at the end.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">location</span>
+        <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">world_map</span><span class="o">.</span><span class="n">mappings</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">location</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+    <span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="follow_directions_multi">
+<a class="viewcode-back" href="../../day08.html#day08.day8.follow_directions_multi">[docs]</a>
+<span class="k">def</span> <span class="nf">follow_directions_multi</span><span class="p">(</span><span class="n">directions</span><span class="p">:</span> <span class="n">Directions</span><span class="p">,</span> <span class="n">world_map</span><span class="p">:</span> <span class="n">WorldMap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Follow all mappings ending in A until all of them are ZZZ.&quot;&quot;&quot;</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Location</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_location_as</span><span class="p">(</span><span class="n">world_map</span><span class="p">)</span>
+
+    <span class="n">cycles</span> <span class="o">=</span> <span class="p">[</span><span class="n">find_cycle</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">world_map</span><span class="p">,</span> <span class="n">directions</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="n">cycles</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="n">cycle</span><span class="o">.</span><span class="n">start_location</span><span class="p">,</span>
+            <span class="n">cycle</span><span class="o">.</span><span class="n">cycle_start_index</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">cycle</span><span class="o">.</span><span class="n">location_steps</span><span class="p">),</span>
+            <span class="n">cycle</span><span class="o">.</span><span class="n">cycle_length</span><span class="p">,</span>
+            <span class="n">cycle</span><span class="o">.</span><span class="n">end_zs</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># each cycle only has one z in it.</span>
+    <span class="c1"># Also, each path is</span>
+    <span class="c1"># [beginning][loop------z--endloop]</span>
+    <span class="c1"># endloop.size == beginning.size</span>
+
+    <span class="c1"># That means it can be simplified by finding the lcm</span>
+
+    <span class="n">lcm</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lcm</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">cycle</span><span class="o">.</span><span class="n">cycle_length</span> <span class="k">for</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="n">cycles</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lcm</span><span class="p">)</span>  <span class="c1"># 13,663,968,099,527</span>
+
+    <span class="n">index</span> <span class="o">=</span> <span class="n">cycles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">end_zs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">lcm</span>
+    <span class="k">for</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="n">cycles</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">cycle</span><span class="o">.</span><span class="n">get_location</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">lcm</span></div>
+
+
+
+<div class="viewcode-block" id="find_cycle">
+<a class="viewcode-back" href="../../day08.html#day08.day8.find_cycle">[docs]</a>
+<span class="k">def</span> <span class="nf">find_cycle</span><span class="p">(</span>
+    <span class="n">location</span><span class="p">:</span> <span class="n">Location</span><span class="p">,</span> <span class="n">world_map</span><span class="p">:</span> <span class="n">WorldMap</span><span class="p">,</span> <span class="n">directions</span><span class="p">:</span> <span class="n">Directions</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Cycle</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds the cycle from a start location.&quot;&quot;&quot;</span>
+    <span class="n">start_location</span> <span class="o">=</span> <span class="n">location</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LocationStep</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">step_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">mappings</span> <span class="o">=</span> <span class="n">world_map</span><span class="o">.</span><span class="n">mappings</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">LocationStep</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">step_count</span><span class="p">)</span>
+    <span class="n">location_steps_lookup</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">location_steps_lookup</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">directions</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="n">step_count</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="n">mappings</span><span class="p">[</span><span class="n">location</span><span class="o">.</span><span class="n">left</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="n">mappings</span><span class="p">[</span><span class="n">location</span><span class="o">.</span><span class="n">right</span><span class="p">]</span>
+
+        <span class="n">node</span> <span class="o">=</span> <span class="n">LocationStep</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">step_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">location_steps_lookup</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">step_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">step_count</span> <span class="o">%=</span> <span class="nb">len</span><span class="p">(</span><span class="n">directions</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Cycle</span><span class="p">(</span><span class="n">start_location</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../day08.html#day08.day8.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function, solve the things.&quot;&quot;&quot;</span>
+    <span class="c1"># q1</span>
+    <span class="n">directions</span><span class="p">,</span> <span class="n">world_map</span> <span class="o">=</span> <span class="n">read_input</span><span class="p">(</span><span class="n">INPUT</span><span class="p">)</span>
+    <span class="n">nodes_visited</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">follow_directions</span><span class="p">(</span><span class="n">directions</span><span class="p">,</span> <span class="n">world_map</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">nodes_visited</span><span class="p">)</span>
+    <span class="c1"># q2</span>
+    <span class="n">follow_directions_multi</span><span class="p">(</span><span class="n">directions</span><span class="p">,</span> <span class="n">world_map</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

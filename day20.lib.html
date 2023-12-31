@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day20.lib package &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="day20.tests package" href="day20.tests.html" />
+    <link rel="prev" title="day20 package" href="day20.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci.html">Continuous Integration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">adventofcode2023</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">day01 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">day02 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">day03 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">day04 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">day05 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">day06 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">day07 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">day08 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">day09 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.html">day10 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">day11 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">day12 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">day13 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.html">day14 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">day15 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day16.html">day16 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day17.html">day17 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">day18 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.html">day19 package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="day20.html">day20 package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="day20.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">day20.lib package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="day20.tests.html">day20.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day20.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day20.html#module-day20.day20">day20.day20 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day20.html#module-day20">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">day21 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day22.html">day22 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day23.html">day23 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">day24 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">day25 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download_inputs.html">download_inputs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maker.html">maker module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">adventofcode2023</a></li>
+          <li class="breadcrumb-item"><a href="day20.html">day20 package</a></li>
+      <li class="breadcrumb-item active">day20.lib package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/day20.lib.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="day20-lib-package">
+<h1>day20.lib package<a class="headerlink" href="#day20-lib-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-day20.lib.classes">
+<span id="day20-lib-classes-module"></span><h2>day20.lib.classes module<a class="headerlink" href="#module-day20.lib.classes" title="Link to this heading"></a></h2>
+<p>Classes for day20.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day20.lib.classes.BaseModule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day20.lib.classes.</span></span><span class="sig-name descname"><span class="pre">BaseModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day20/lib/classes.html#BaseModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.BaseModule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base module.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.BaseModule.add_to_graph">
+<span class="sig-name descname"><span class="pre">add_to_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Digraph</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#BaseModule.add_to_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.BaseModule.add_to_graph" title="Link to this definition"></a></dt>
+<dd><p>Adds edges only to the graph. inheritors need to handle their repr.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.BaseModule.arrow_color">
+<span class="sig-name descname"><span class="pre">arrow_color</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#BaseModule.arrow_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.BaseModule.arrow_color" title="Link to this definition"></a></dt>
+<dd><p>Return arrow color for graphviz.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.BaseModule.handle_pulse">
+<span class="sig-name descname"><span class="pre">handle_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pulse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day20.lib.classes.Pulse" title="day20.lib.classes.Pulse"><span class="pre">Pulse</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.PulseTarget" title="day20.lib.classes.PulseTarget"><span class="pre">PulseTarget</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#BaseModule.handle_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.BaseModule.handle_pulse" title="Link to this definition"></a></dt>
+<dd><p>Keep track of lows/highs through all modules.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.BaseModule.is_initial_state">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_initial_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#BaseModule.is_initial_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.BaseModule.is_initial_state" title="Link to this definition"></a></dt>
+<dd><p>Returns if the module is in the initial state.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.BaseModule.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#day20.lib.classes.BaseModule.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.BaseModule.num_high">
+<span class="sig-name descname"><span class="pre">num_high</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#day20.lib.classes.BaseModule.num_high" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.BaseModule.num_low">
+<span class="sig-name descname"><span class="pre">num_low</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#day20.lib.classes.BaseModule.num_low" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.BaseModule.outputs">
+<span class="sig-name descname"><span class="pre">outputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day20.lib.classes.BaseModule.outputs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day20.lib.classes.BroadcastModule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day20.lib.classes.</span></span><span class="sig-name descname"><span class="pre">BroadcastModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day20/lib/classes.html#BroadcastModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.BroadcastModule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModule</span></code></a></p>
+<p>Broadcasts to all outputs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.BroadcastModule.add_to_graph">
+<span class="sig-name descname"><span class="pre">add_to_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Digraph</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#BroadcastModule.add_to_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.BroadcastModule.add_to_graph" title="Link to this definition"></a></dt>
+<dd><p>Add node to graphviz digraph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.BroadcastModule.handle_pulse">
+<span class="sig-name descname"><span class="pre">handle_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pulse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day20.lib.classes.Pulse" title="day20.lib.classes.Pulse"><span class="pre">Pulse</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.PulseTarget" title="day20.lib.classes.PulseTarget"><span class="pre">PulseTarget</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#BroadcastModule.handle_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.BroadcastModule.handle_pulse" title="Link to this definition"></a></dt>
+<dd><p>Broadcasts to all outputs immediately.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.BroadcastModule.is_initial_state">
+<span class="sig-name descname"><span class="pre">is_initial_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#BroadcastModule.is_initial_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.BroadcastModule.is_initial_state" title="Link to this definition"></a></dt>
+<dd><p>Always true.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day20.lib.classes.ConjunctionModule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day20.lib.classes.</span></span><span class="sig-name descname"><span class="pre">ConjunctionModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day20/lib/classes.html#ConjunctionModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.ConjunctionModule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModule</span></code></a></p>
+<p>Keeps track of all inputs.</p>
+<p>Changes internal state, then sends high/low based on internal state</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.ConjunctionModule.add_to_graph">
+<span class="sig-name descname"><span class="pre">add_to_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Digraph</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#ConjunctionModule.add_to_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.ConjunctionModule.add_to_graph" title="Link to this definition"></a></dt>
+<dd><p>Add this module to a GraphViz Digraph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.ConjunctionModule.arrow_color">
+<span class="sig-name descname"><span class="pre">arrow_color</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#ConjunctionModule.arrow_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.ConjunctionModule.arrow_color" title="Link to this definition"></a></dt>
+<dd><p>Returns red.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.ConjunctionModule.current_count">
+<span class="sig-name descname"><span class="pre">current_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#ConjunctionModule.current_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.ConjunctionModule.current_count" title="Link to this definition"></a></dt>
+<dd><p>Returns current count of inputs that sent <code class="docutils literal notranslate"><span class="pre">high</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.ConjunctionModule.handle_pulse">
+<span class="sig-name descname"><span class="pre">handle_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pulse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day20.lib.classes.Pulse" title="day20.lib.classes.Pulse"><span class="pre">Pulse</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.PulseTarget" title="day20.lib.classes.PulseTarget"><span class="pre">PulseTarget</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#ConjunctionModule.handle_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.ConjunctionModule.handle_pulse" title="Link to this definition"></a></dt>
+<dd><p>Store pulse, then send based on current state.</p>
+<p>If all our values are high, we send low to all our outputs.
+Otherwise, we send <code class="docutils literal notranslate"><span class="pre">LOW</span></code> to all our outputs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.ConjunctionModule.inputs">
+<span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#day20.lib.classes.Pulse" title="day20.lib.classes.Pulse"><span class="pre">Pulse</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day20.lib.classes.ConjunctionModule.inputs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.ConjunctionModule.is_initial_state">
+<span class="sig-name descname"><span class="pre">is_initial_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#ConjunctionModule.is_initial_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.ConjunctionModule.is_initial_state" title="Link to this definition"></a></dt>
+<dd><p>Returns True if all our inputs are LOW.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.ConjunctionModule.set_inputs">
+<span class="sig-name descname"><span class="pre">set_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#ConjunctionModule.set_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.ConjunctionModule.set_inputs" title="Link to this definition"></a></dt>
+<dd><p>Sets our list of input modules.</p>
+<p>Initializes their values to Low.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day20.lib.classes.FlipFlopModule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day20.lib.classes.</span></span><span class="sig-name descname"><span class="pre">FlipFlopModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day20.lib.classes.Pulse" title="day20.lib.classes.Pulse"><span class="pre">Pulse</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Pulse.LOW</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day20/lib/classes.html#FlipFlopModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.FlipFlopModule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModule</span></code></a></p>
+<p>If we receive HIGH, we are a sink (do nothing).</p>
+<p>If we receive LOW, flip our current value and send it to everyone</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.FlipFlopModule.add_to_graph">
+<span class="sig-name descname"><span class="pre">add_to_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Digraph</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#FlipFlopModule.add_to_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.FlipFlopModule.add_to_graph" title="Link to this definition"></a></dt>
+<dd><p>Adds ourselves to a graphviz digraph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.FlipFlopModule.handle_pulse">
+<span class="sig-name descname"><span class="pre">handle_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pulse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day20.lib.classes.Pulse" title="day20.lib.classes.Pulse"><span class="pre">Pulse</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.PulseTarget" title="day20.lib.classes.PulseTarget"><span class="pre">PulseTarget</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#FlipFlopModule.handle_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.FlipFlopModule.handle_pulse" title="Link to this definition"></a></dt>
+<dd><p>Handle pulse by forwarding if we receive low.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.FlipFlopModule.is_initial_state">
+<span class="sig-name descname"><span class="pre">is_initial_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#FlipFlopModule.is_initial_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.FlipFlopModule.is_initial_state" title="Link to this definition"></a></dt>
+<dd><p>Returns true if we are in our initial state.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.FlipFlopModule.state">
+<span class="sig-name descname"><span class="pre">state</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day20.lib.classes.Pulse" title="day20.lib.classes.Pulse"><span class="pre">Pulse</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#day20.lib.classes.FlipFlopModule.state" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day20.lib.classes.LoopCounter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day20.lib.classes.</span></span><span class="sig-name descname"><span class="pre">LoopCounter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_loop_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day20/lib/classes.html#LoopCounter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.LoopCounter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Keeps track of loop lengths.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.LoopCounter.add_result">
+<span class="sig-name descname"><span class="pre">add_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#LoopCounter.add_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.LoopCounter.add_result" title="Link to this definition"></a></dt>
+<dd><p>Adds a result to our loop_count.</p>
+<p>If we already had a loop with that name, we ignore it.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day20.lib.classes.LoopCounter.finished">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">finished</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#day20.lib.classes.LoopCounter.finished" title="Link to this definition"></a></dt>
+<dd><p>Returns True if our loop_lengths are equal to our target.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.LoopCounter.loop_lengths">
+<span class="sig-name descname"><span class="pre">loop_lengths</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day20.lib.classes.LoopCounter.loop_lengths" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day20.lib.classes.LoopCounter.num_results">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day20.lib.classes.LoopCounter.num_results" title="Link to this definition"></a></dt>
+<dd><p>Returns number of loop_lenghts submitted.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.LoopCounter.target_loop_count">
+<span class="sig-name descname"><span class="pre">target_loop_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day20.lib.classes.LoopCounter.target_loop_count" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day20.lib.classes.MappingModule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day20.lib.classes.</span></span><span class="sig-name descname"><span class="pre">MappingModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day20/lib/classes.html#MappingModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.MappingModule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>map to a list of outputs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.MappingModule.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#day20.lib.classes.MappingModule.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.MappingModule.outputs">
+<span class="sig-name descname"><span class="pre">outputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day20.lib.classes.MappingModule.outputs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day20.lib.classes.ModuleGroups">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day20.lib.classes.</span></span><span class="sig-name descname"><span class="pre">ModuleGroups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day20.lib.classes.BroadcastModule" title="day20.lib.classes.BroadcastModule"><span class="pre">BroadcastModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">loops</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><span class="pre">BaseModule</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loop_tails</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.ConjunctionModule" title="day20.lib.classes.ConjunctionModule"><span class="pre">ConjunctionModule</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penultimate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day20.lib.classes.ConjunctionModule" title="day20.lib.classes.ConjunctionModule"><span class="pre">ConjunctionModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sink</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day20.lib.classes.SinkModule" title="day20.lib.classes.SinkModule"><span class="pre">SinkModule</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day20/lib/classes.html#ModuleGroups"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.ModuleGroups" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A group of modules for part2.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.ModuleGroups.all_nodes">
+<span class="sig-name descname"><span class="pre">all_nodes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><span class="pre">BaseModule</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day20.lib.classes.ModuleGroups.all_nodes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.ModuleGroups.head">
+<span class="sig-name descname"><span class="pre">head</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day20.lib.classes.BroadcastModule" title="day20.lib.classes.BroadcastModule"><span class="pre">BroadcastModule</span></a></em><a class="headerlink" href="#day20.lib.classes.ModuleGroups.head" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.ModuleGroups.loop_tails">
+<span class="sig-name descname"><span class="pre">loop_tails</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.ConjunctionModule" title="day20.lib.classes.ConjunctionModule"><span class="pre">ConjunctionModule</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day20.lib.classes.ModuleGroups.loop_tails" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.ModuleGroups.loops">
+<span class="sig-name descname"><span class="pre">loops</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><span class="pre">BaseModule</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day20.lib.classes.ModuleGroups.loops" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.ModuleGroups.penultimate">
+<span class="sig-name descname"><span class="pre">penultimate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day20.lib.classes.ConjunctionModule" title="day20.lib.classes.ConjunctionModule"><span class="pre">ConjunctionModule</span></a></em><a class="headerlink" href="#day20.lib.classes.ModuleGroups.penultimate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.ModuleGroups.sink">
+<span class="sig-name descname"><span class="pre">sink</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day20.lib.classes.SinkModule" title="day20.lib.classes.SinkModule"><span class="pre">SinkModule</span></a></em><a class="headerlink" href="#day20.lib.classes.ModuleGroups.sink" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day20.lib.classes.Pulse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day20.lib.classes.</span></span><span class="sig-name descname"><span class="pre">Pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day20/lib/classes.html#Pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.Pulse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Flag</span></code></p>
+<p>Simple True/False enum.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.Pulse.HIGH">
+<span class="sig-name descname"><span class="pre">HIGH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#day20.lib.classes.Pulse.HIGH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.Pulse.LOW">
+<span class="sig-name descname"><span class="pre">LOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#day20.lib.classes.Pulse.LOW" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day20.lib.classes.PulseTarget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day20.lib.classes.</span></span><span class="sig-name descname"><span class="pre">PulseTarget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pulse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day20.lib.classes.Pulse" title="day20.lib.classes.Pulse"><span class="pre">Pulse</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day20/lib/classes.html#PulseTarget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.PulseTarget" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A pulse(low/high) from src to dest.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.PulseTarget.pulse">
+<span class="sig-name descname"><span class="pre">pulse</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day20.lib.classes.Pulse" title="day20.lib.classes.Pulse"><span class="pre">Pulse</span></a></em><a class="headerlink" href="#day20.lib.classes.PulseTarget.pulse" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.PulseTarget.src">
+<span class="sig-name descname"><span class="pre">src</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#day20.lib.classes.PulseTarget.src" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day20.lib.classes.PulseTarget.target">
+<span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#day20.lib.classes.PulseTarget.target" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day20.lib.classes.SinkModule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day20.lib.classes.</span></span><span class="sig-name descname"><span class="pre">SinkModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day20/lib/classes.html#SinkModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.SinkModule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModule</span></code></a></p>
+<p>Sink module, gets something but sends it no where else.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.SinkModule.add_to_graph">
+<span class="sig-name descname"><span class="pre">add_to_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Digraph</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#SinkModule.add_to_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.SinkModule.add_to_graph" title="Link to this definition"></a></dt>
+<dd><p>Adds this node to the graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.SinkModule.handle_pulse">
+<span class="sig-name descname"><span class="pre">handle_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pulse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day20.lib.classes.Pulse" title="day20.lib.classes.Pulse"><span class="pre">Pulse</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.PulseTarget" title="day20.lib.classes.PulseTarget"><span class="pre">PulseTarget</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#SinkModule.handle_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.SinkModule.handle_pulse" title="Link to this definition"></a></dt>
+<dd><p>Always eats inputs and never sends onwards.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day20.lib.classes.SinkModule.is_initial_state">
+<span class="sig-name descname"><span class="pre">is_initial_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day20/lib/classes.html#SinkModule.is_initial_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.classes.SinkModule.is_initial_state" title="Link to this definition"></a></dt>
+<dd><p>Always true.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-day20.lib.parsers">
+<span id="day20-lib-parsers-module"></span><h2>day20.lib.parsers module<a class="headerlink" href="#module-day20.lib.parsers" title="Link to this heading"></a></h2>
+<p>Day20 parsers.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="day20.lib.parsers.finalize_modules">
+<span class="sig-prename descclassname"><span class="pre">day20.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">finalize_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><span class="pre">BaseModule</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><span class="pre">BaseModule</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day20/lib/parsers.html#finalize_modules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.parsers.finalize_modules" title="Link to this definition"></a></dt>
+<dd><p>Finalize construction of all modules.</p>
+<p>For each module, calculate its inputs.
+Then inject the inputs into our conjunction modules
+Modifies <cite>modules</cite> inplace, and returns it</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day20.lib.parsers.get_modules">
+<span class="sig-prename descclassname"><span class="pre">day20.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">get_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><span class="pre">BaseModule</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day20/lib/parsers.html#get_modules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.parsers.get_modules" title="Link to this definition"></a></dt>
+<dd><p>Opens a file and returns all the modules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – name of file to open</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of modules.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule">BaseModule</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day20.lib.parsers.parse_line">
+<span class="sig-prename descclassname"><span class="pre">day20.lib.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day20.lib.classes.BaseModule" title="day20.lib.classes.BaseModule"><span class="pre">BaseModule</span></a></span></span><a class="reference internal" href="_modules/day20/lib/parsers.html#parse_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day20.lib.parsers.parse_line" title="Link to this definition"></a></dt>
+<dd><p>Parses a line into a BaseModule.</p>
+<p>e.g. <code class="docutils literal notranslate"><span class="pre">%a</span> <span class="pre">-&gt;</span> <span class="pre">inv,</span> <span class="pre">con</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="module-day20.lib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-day20.lib" title="Link to this heading"></a></h2>
+<p>Library modules for day20.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="day20.html" class="btn btn-neutral float-left" title="day20 package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="day20.tests.html" class="btn btn-neutral float-right" title="day20.tests package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

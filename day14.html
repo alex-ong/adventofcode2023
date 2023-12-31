@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day14 package &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="day14.lib package" href="day14.lib.html" />
+    <link rel="prev" title="day13.tests package" href="day13.tests.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci.html">Continuous Integration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">adventofcode2023</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">day01 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">day02 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">day03 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">day04 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">day05 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">day06 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">day07 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">day08 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">day09 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.html">day10 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">day11 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">day12 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">day13 package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">day14 package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day14.lib.html">day14.lib package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="day14.tests.html">day14.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-day14.day14">day14.day14 module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#day14.day14.World"><code class="docutils literal notranslate"><span class="pre">World</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day14.day14.get_input"><code class="docutils literal notranslate"><span class="pre">get_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day14.day14.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day14.day14.naive_score"><code class="docutils literal notranslate"><span class="pre">naive_score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day14.day14.question1"><code class="docutils literal notranslate"><span class="pre">question1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day14.day14.question2"><code class="docutils literal notranslate"><span class="pre">question2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day14.day14.simulate_row"><code class="docutils literal notranslate"><span class="pre">simulate_row()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day14.day14.simulate_world"><code class="docutils literal notranslate"><span class="pre">simulate_world()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-day14">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">day15 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day16.html">day16 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day17.html">day17 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">day18 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.html">day19 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day20.html">day20 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">day21 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day22.html">day22 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day23.html">day23 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">day24 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">day25 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download_inputs.html">download_inputs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maker.html">maker module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">adventofcode2023</a></li>
+      <li class="breadcrumb-item active">day14 package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/day14.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="day14-package">
+<h1>day14 package<a class="headerlink" href="#day14-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="day14.lib.html">day14.lib package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="day14.lib.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.lib.html#module-day14.lib.direction">day14.lib.direction module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day14.lib.html#day14.lib.direction.Direction"><code class="docutils literal notranslate"><span class="pre">Direction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day14.lib.html#day14.lib.direction.Direction.East"><code class="docutils literal notranslate"><span class="pre">Direction.East</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day14.lib.html#day14.lib.direction.Direction.North"><code class="docutils literal notranslate"><span class="pre">Direction.North</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day14.lib.html#day14.lib.direction.Direction.South"><code class="docutils literal notranslate"><span class="pre">Direction.South</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day14.lib.html#day14.lib.direction.Direction.West"><code class="docutils literal notranslate"><span class="pre">Direction.West</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day14.lib.html#day14.lib.direction.Direction.next_direction_ccw"><code class="docutils literal notranslate"><span class="pre">Direction.next_direction_ccw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day14.lib.html#day14.lib.direction.Direction.next_direction_cw"><code class="docutils literal notranslate"><span class="pre">Direction.next_direction_cw()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day14.lib.html#module-day14.lib">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="day14.tests.html">day14.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="day14.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.tests.html#module-day14.tests.test_day14">day14.tests.test_day14 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day14.tests.html#day14.tests.test_day14.test_get_input"><code class="docutils literal notranslate"><span class="pre">test_get_input()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day14.tests.html#day14.tests.test_day14.test_questions"><code class="docutils literal notranslate"><span class="pre">test_questions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day14.tests.html#day14.tests.test_day14.test_rotate_world"><code class="docutils literal notranslate"><span class="pre">test_rotate_world()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="day14.tests.html#day14.tests.test_day14.test_simulate_row"><code class="docutils literal notranslate"><span class="pre">test_simulate_row()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day14.tests.html#module-day14.tests.test_direction">day14.tests.test_direction module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day14.tests.html#day14.tests.test_direction.test_direction"><code class="docutils literal notranslate"><span class="pre">test_direction()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day14.tests.html#module-day14.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-day14.day14">
+<span id="day14-day14-module"></span><h2>day14.day14 module<a class="headerlink" href="#module-day14.day14" title="Link to this heading"></a></h2>
+<p>day14 solution.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day14.day14.World">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day14.day14.</span></span><span class="sig-name descname"><span class="pre">World</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_is</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day14.lib.html#day14.lib.direction.Direction" title="day14.lib.direction.Direction"><span class="pre">Direction</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Direction.West</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day14/day14.html#World"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.World" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>2d array of boulders (square/round) and empty space.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day14.day14.World.as_orientiented_north">
+<span class="sig-name descname"><span class="pre">as_orientiented_north</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/day14/day14.html#World.as_orientiented_north"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.World.as_orientiented_north" title="Link to this definition"></a></dt>
+<dd><p>Well defined string if our world has up as North.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day14.day14.World.correct_side">
+<span class="sig-name descname"><span class="pre">correct_side</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day14.day14.World" title="day14.day14.World"><span class="pre">World</span></a></span></span><a class="reference internal" href="_modules/day14/day14.html#World.correct_side"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.World.correct_side" title="Link to this definition"></a></dt>
+<dd><p>Return world oriented with North at the top.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day14.day14.World.data">
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#day14.day14.World.data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day14.day14.World.get_score">
+<span class="sig-name descname"><span class="pre">get_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day14/day14.html#World.get_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.World.get_score" title="Link to this definition"></a></dt>
+<dd><p>Get score of the world.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day14.day14.World.left_is">
+<span class="sig-name descname"><span class="pre">left_is</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="day14.lib.html#day14.lib.direction.Direction" title="day14.lib.direction.Direction"><span class="pre">Direction</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#day14.day14.World.left_is" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day14.day14.World.rotate_world_ccw">
+<span class="sig-name descname"><span class="pre">rotate_world_ccw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day14.day14.World" title="day14.day14.World"><span class="pre">World</span></a></span></span><a class="reference internal" href="_modules/day14/day14.html#World.rotate_world_ccw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.World.rotate_world_ccw" title="Link to this definition"></a></dt>
+<dd><p>Rotate world anti-clockwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day14.day14.World.rotate_world_cw">
+<span class="sig-name descname"><span class="pre">rotate_world_cw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day14.day14.World" title="day14.day14.World"><span class="pre">World</span></a></span></span><a class="reference internal" href="_modules/day14/day14.html#World.rotate_world_cw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.World.rotate_world_cw" title="Link to this definition"></a></dt>
+<dd><p>Rotate world clockwise.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day14.day14.World.score">
+<span class="sig-name descname"><span class="pre">score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#day14.day14.World.score" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day14.day14.World.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/day14/day14.html#World.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.World.to_string" title="Link to this definition"></a></dt>
+<dd><p>Well defined string of our world.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day14.day14.get_input">
+<span class="sig-prename descclassname"><span class="pre">day14.day14.</span></span><span class="sig-name descname"><span class="pre">get_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day14.day14.World" title="day14.day14.World"><span class="pre">World</span></a></span></span><a class="reference internal" href="_modules/day14/day14.html#get_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.get_input" title="Link to this definition"></a></dt>
+<dd><p>Grabs input, rotated so that left is north.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day14.day14.main">
+<span class="sig-prename descclassname"><span class="pre">day14.day14.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day14/day14.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.main" title="Link to this definition"></a></dt>
+<dd><p>Get input and run question1/question2.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day14.day14.naive_score">
+<span class="sig-prename descclassname"><span class="pre">day14.day14.</span></span><span class="sig-name descname"><span class="pre">naive_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">world_rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day14/day14.html#naive_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.naive_score" title="Link to this definition"></a></dt>
+<dd><p>Returns score assuming west is pointing left.</p>
+<p>For each row, a round boulder <code class="docutils literal notranslate"><span class="pre">O</span></code>’s score is
+<code class="docutils literal notranslate"><span class="pre">num_rows</span></code> minus its <code class="docutils literal notranslate"><span class="pre">index</span></code> (higher weight to the left.)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day14.day14.question1">
+<span class="sig-prename descclassname"><span class="pre">day14.day14.</span></span><span class="sig-name descname"><span class="pre">question1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">world</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day14.day14.World" title="day14.day14.World"><span class="pre">World</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day14/day14.html#question1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.question1" title="Link to this definition"></a></dt>
+<dd><p>Returns world’s score after rotating the world once.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day14.day14.question2">
+<span class="sig-prename descclassname"><span class="pre">day14.day14.</span></span><span class="sig-name descname"><span class="pre">question2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">world</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day14.day14.World" title="day14.day14.World"><span class="pre">World</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day14/day14.html#question2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.question2" title="Link to this definition"></a></dt>
+<dd><p>Finds a loop in world rotation.</p>
+<p>Once the loop is found we can estimate the world’s state
+after any amount of rotations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>world</strong> (<a class="reference internal" href="#day14.day14.World" title="day14.day14.World"><em>World</em></a>) – world to spin</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>“weight” to the north after 1000000000 cycles.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day14.day14.simulate_row">
+<span class="sig-prename descclassname"><span class="pre">day14.day14.</span></span><span class="sig-name descname"><span class="pre">simulate_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day14/day14.html#simulate_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.simulate_row" title="Link to this definition"></a></dt>
+<dd><p>Simulates a row; returns its value and the new row.</p>
+<p>Assumes that we are moving boulders to the left</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day14.day14.simulate_world">
+<span class="sig-prename descclassname"><span class="pre">day14.day14.</span></span><span class="sig-name descname"><span class="pre">simulate_world</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">world_rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day14/day14.html#simulate_world"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day14.day14.simulate_world" title="Link to this definition"></a></dt>
+<dd><p>Simulates world by rolling to the left.</p>
+</dd></dl>
+
+</section>
+<section id="module-day14">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-day14" title="Link to this heading"></a></h2>
+<p>Day14 Solution.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="day13.tests.html" class="btn btn-neutral float-left" title="day13.tests package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="day14.lib.html" class="btn btn-neutral float-right" title="day14.lib package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

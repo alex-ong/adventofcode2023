@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day10 package &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="day10.lib package" href="day10.lib.html" />
+    <link rel="prev" title="day09.tests package" href="day09.tests.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci.html">Continuous Integration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">adventofcode2023</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">day01 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">day02 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">day03 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">day04 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">day05 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">day06 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">day07 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">day08 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">day09 package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">day10 package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html">day10.lib package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.tests.html">day10.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-day10.day10">day10.day10 module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.calculate_s"><code class="docutils literal notranslate"><span class="pre">calculate_s()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.expand_map"><code class="docutils literal notranslate"><span class="pre">expand_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.expand_pipe"><code class="docutils literal notranslate"><span class="pre">expand_pipe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.find_cycles"><code class="docutils literal notranslate"><span class="pre">find_cycles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.find_s"><code class="docutils literal notranslate"><span class="pre">find_s()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.flood_fill"><code class="docutils literal notranslate"><span class="pre">flood_fill()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.part1"><code class="docutils literal notranslate"><span class="pre">part1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.part2"><code class="docutils literal notranslate"><span class="pre">part2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.process_big_input_line"><code class="docutils literal notranslate"><span class="pre">process_big_input_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.process_input_line"><code class="docutils literal notranslate"><span class="pre">process_input_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.read_input"><code class="docutils literal notranslate"><span class="pre">read_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#day10.day10.reduce_map"><code class="docutils literal notranslate"><span class="pre">reduce_map()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-day10">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">day11 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">day12 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">day13 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.html">day14 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">day15 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day16.html">day16 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day17.html">day17 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">day18 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.html">day19 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day20.html">day20 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">day21 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day22.html">day22 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day23.html">day23 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">day24 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">day25 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download_inputs.html">download_inputs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maker.html">maker module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">adventofcode2023</a></li>
+      <li class="breadcrumb-item active">day10 package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/day10.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="day10-package">
+<h1>day10 package<a class="headerlink" href="#day10-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="day10.lib.html">day10.lib package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="day10.lib.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.lib.html#module-day10.lib.direction">day10.lib.direction module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day10.lib.html#day10.lib.direction.Direction"><code class="docutils literal notranslate"><span class="pre">Direction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.direction.Direction.EAST"><code class="docutils literal notranslate"><span class="pre">Direction.EAST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.direction.Direction.NORTH"><code class="docutils literal notranslate"><span class="pre">Direction.NORTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.direction.Direction.SOUTH"><code class="docutils literal notranslate"><span class="pre">Direction.SOUTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.direction.Direction.WEST"><code class="docutils literal notranslate"><span class="pre">Direction.WEST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.direction.Direction.opposite"><code class="docutils literal notranslate"><span class="pre">Direction.opposite()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day10.lib.html#module-day10.lib.pipebounds">day10.lib.pipebounds module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day10.lib.html#day10.lib.pipebounds.PipeBounds"><code class="docutils literal notranslate"><span class="pre">PipeBounds</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipebounds.PipeBounds.INSIDE"><code class="docutils literal notranslate"><span class="pre">PipeBounds.INSIDE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipebounds.PipeBounds.OUTSIDE"><code class="docutils literal notranslate"><span class="pre">PipeBounds.OUTSIDE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipebounds.PipeBounds.PIPE"><code class="docutils literal notranslate"><span class="pre">PipeBounds.PIPE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipebounds.PipeBounds.UNKNOWN"><code class="docutils literal notranslate"><span class="pre">PipeBounds.UNKNOWN</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day10.lib.html#module-day10.lib.pipes">day10.lib.pipes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe"><code class="docutils literal notranslate"><span class="pre">Pipe</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.PIPE_DIRECTION"><code class="docutils literal notranslate"><span class="pre">Pipe.PIPE_DIRECTION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.character"><code class="docutils literal notranslate"><span class="pre">Pipe.character</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.col"><code class="docutils literal notranslate"><span class="pre">Pipe.col</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.font"><code class="docutils literal notranslate"><span class="pre">Pipe.font</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.is_loop"><code class="docutils literal notranslate"><span class="pre">Pipe.is_loop</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.is_start"><code class="docutils literal notranslate"><span class="pre">Pipe.is_start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.next_direction"><code class="docutils literal notranslate"><span class="pre">Pipe.next_direction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.next_position"><code class="docutils literal notranslate"><span class="pre">Pipe.next_position()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.pipe_bounds"><code class="docutils literal notranslate"><span class="pre">Pipe.pipe_bounds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.position"><code class="docutils literal notranslate"><span class="pre">Pipe.position</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe.row"><code class="docutils literal notranslate"><span class="pre">Pipe.row</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap"><code class="docutils literal notranslate"><span class="pre">PipeMap</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap.get_pipe"><code class="docutils literal notranslate"><span class="pre">PipeMap.get_pipe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap.get_pipe_safe"><code class="docutils literal notranslate"><span class="pre">PipeMap.get_pipe_safe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap.height"><code class="docutils literal notranslate"><span class="pre">PipeMap.height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap.is_in_map"><code class="docutils literal notranslate"><span class="pre">PipeMap.is_in_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap.pipes"><code class="docutils literal notranslate"><span class="pre">PipeMap.pipes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap.width"><code class="docutils literal notranslate"><span class="pre">PipeMap.width</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day10.lib.html#module-day10.lib.position">day10.lib.position module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day10.lib.html#day10.lib.position.Position"><code class="docutils literal notranslate"><span class="pre">Position</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.position.Position.col"><code class="docutils literal notranslate"><span class="pre">Position.col</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.position.Position.next_position"><code class="docutils literal notranslate"><span class="pre">Position.next_position()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.lib.html#day10.lib.position.Position.row"><code class="docutils literal notranslate"><span class="pre">Position.row</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day10.lib.html#module-day10.lib">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="day10.tests.html">day10.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="day10.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.tests.html#module-day10.tests.test_day10">day10.tests.test_day10 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day10.tests.html#day10.tests.test_day10.test_day10"><code class="docutils literal notranslate"><span class="pre">test_day10()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day10.tests.html#module-day10.tests.test_direction">day10.tests.test_direction module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="day10.tests.html#day10.tests.test_direction.test_direction"><code class="docutils literal notranslate"><span class="pre">test_direction()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day10.tests.html#module-day10.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-day10.day10">
+<span id="day10-day10-module"></span><h2>day10.day10 module<a class="headerlink" href="#module-day10.day10" title="Link to this heading"></a></h2>
+<p>day10 solution.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.calculate_s">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">calculate_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day10.lib.html#day10.lib.position.Position" title="day10.lib.position.Position"><span class="pre">Position</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipe_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/day10/day10.html#calculate_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.calculate_s" title="Link to this definition"></a></dt>
+<dd><p>Calculate what the “S” character is as a pipe.</p>
+<p>We should have exactly two pipes going into us</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<a class="reference internal" href="day10.lib.html#day10.lib.position.Position" title="day10.lib.position.Position"><em>Position</em></a>) – position of S</p></li>
+<li><p><strong>pipe_map</strong> (<a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><em>PipeMap</em></a>) – map of pipes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – <code class="docutils literal notranslate"><span class="pre">S</span></code> doesn’t have any connecting pipes</p></li>
+<li><p><strong>AssertionError</strong> – <code class="docutils literal notranslate"><span class="pre">S</span></code> does not match any known pipe.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The character representing the pipe</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.expand_map">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">expand_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></span><a class="reference internal" href="_modules/day10/day10.html#expand_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.expand_map" title="Link to this definition"></a></dt>
+<dd><p>Expands each pipe into a 3x3 tile.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.expand_pipe">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">expand_pipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">character</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_loop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day10/day10.html#expand_pipe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.expand_pipe" title="Link to this definition"></a></dt>
+<dd><p>Expands a pipe character to big boi 3x3.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.find_cycles">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">find_cycles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe" title="day10.lib.pipes.Pipe"><span class="pre">Pipe</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day10/day10.html#find_cycles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.find_cycles" title="Link to this definition"></a></dt>
+<dd><p>Finds the pipe path starting from S.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.find_s">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">find_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="day10.lib.html#day10.lib.position.Position" title="day10.lib.position.Position"><span class="pre">Position</span></a></span></span><a class="reference internal" href="_modules/day10/day10.html#find_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.find_s" title="Link to this definition"></a></dt>
+<dd><p>Finds the S pipe.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.flood_fill">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">flood_fill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day10/day10.html#flood_fill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.flood_fill" title="Link to this definition"></a></dt>
+<dd><p>Flood fills a pipemap from one starting tile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pipe_map</strong> (<a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><em>PipeMap</em></a>) – pipemap to fill</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>how many tiles were filled</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.main">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day10/day10.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.main" title="Link to this definition"></a></dt>
+<dd><p>Read input and run part1/part2.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.part1">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">part1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day10/day10.html#part1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.part1" title="Link to this definition"></a></dt>
+<dd><p>Finds length of S loop.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.part2">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">part2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/day10/day10.html#part2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.part2" title="Link to this definition"></a></dt>
+<dd><p>Finds tiles “inside” the loop.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.process_big_input_line">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">process_big_input_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe" title="day10.lib.pipes.Pipe"><span class="pre">Pipe</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day10/day10.html#process_big_input_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.process_big_input_line" title="Link to this definition"></a></dt>
+<dd><p>Process a single line of input.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.process_input_line">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">process_input_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="day10.lib.html#day10.lib.pipes.Pipe" title="day10.lib.pipes.Pipe"><span class="pre">Pipe</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day10/day10.html#process_input_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.process_input_line" title="Link to this definition"></a></dt>
+<dd><p>Process a single line of input.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.read_input">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">read_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></span><a class="reference internal" href="_modules/day10/day10.html#read_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.read_input" title="Link to this definition"></a></dt>
+<dd><p>Read the map.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="day10.day10.reduce_map">
+<span class="sig-prename descclassname"><span class="pre">day10.day10.</span></span><span class="sig-name descname"><span class="pre">reduce_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">big_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">small_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="day10.lib.html#day10.lib.pipes.PipeMap" title="day10.lib.pipes.PipeMap"><span class="pre">PipeMap</span></a></span></span><a class="reference internal" href="_modules/day10/day10.html#reduce_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.day10.reduce_map" title="Link to this definition"></a></dt>
+<dd><p>Converts from fat map back down to small map.</p>
+</dd></dl>
+
+</section>
+<section id="module-day10">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-day10" title="Link to this heading"></a></h2>
+<p>Day10 solution.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="day09.tests.html" class="btn btn-neutral float-left" title="day09.tests package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="day10.lib.html" class="btn btn-neutral float-right" title="day10.lib package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

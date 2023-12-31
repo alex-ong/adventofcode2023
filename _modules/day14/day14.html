@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day14.day14 &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day14.day14</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day14.day14</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;day14 solution.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">day14.lib.direction</span> <span class="kn">import</span> <span class="n">Direction</span>
+
+<span class="n">INPUT_SMALL</span> <span class="o">=</span> <span class="s2">&quot;day14/input-small.txt&quot;</span>
+<span class="n">INPUT</span> <span class="o">=</span> <span class="s2">&quot;day14/input.txt&quot;</span>
+
+
+<div class="viewcode-block" id="World">
+<a class="viewcode-back" href="../../day14.html#day14.day14.World">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">World</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;2d array of boulders (square/round) and empty space.&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">left_is</span><span class="p">:</span> <span class="n">Direction</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">West</span>
+
+    <span class="n">score</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="World.rotate_world_cw">
+<a class="viewcode-back" href="../../day14.html#day14.day14.World.rotate_world_cw">[docs]</a>
+    <span class="k">def</span> <span class="nf">rotate_world_cw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;World&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Rotate world clockwise.&quot;&quot;&quot;</span>
+        <span class="n">rotated</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">World</span><span class="p">(</span><span class="n">rotated</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_is</span><span class="o">.</span><span class="n">next_direction_ccw</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="World.rotate_world_ccw">
+<a class="viewcode-back" href="../../day14.html#day14.day14.World.rotate_world_ccw">[docs]</a>
+    <span class="k">def</span> <span class="nf">rotate_world_ccw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;World&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Rotate world anti-clockwise.&quot;&quot;&quot;</span>
+        <span class="n">rotated</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">World</span><span class="p">(</span><span class="n">rotated</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_is</span><span class="o">.</span><span class="n">next_direction_cw</span><span class="p">())</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Custom hash function for use with ``set()``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_is</span><span class="p">))</span>
+
+<div class="viewcode-block" id="World.to_string">
+<a class="viewcode-back" href="../../day14.html#day14.day14.World.to_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Well defined string of our world.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="World.as_orientiented_north">
+<a class="viewcode-back" href="../../day14.html#day14.day14.World.as_orientiented_north">[docs]</a>
+    <span class="k">def</span> <span class="nf">as_orientiented_north</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Well defined string if our world has up as North.&quot;&quot;&quot;</span>
+        <span class="n">world</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">correct_side</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">world</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="World.get_score">
+<a class="viewcode-back" href="../../day14.html#day14.day14.World.get_score">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_score</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get score of the world.&quot;&quot;&quot;</span>
+        <span class="n">world</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">correct_side</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">naive_score</span><span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="World.correct_side">
+<a class="viewcode-back" href="../../day14.html#day14.day14.World.correct_side">[docs]</a>
+    <span class="k">def</span> <span class="nf">correct_side</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;World&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return world oriented with North at the top.&quot;&quot;&quot;</span>
+        <span class="n">world</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">if</span> <span class="n">world</span><span class="o">.</span><span class="n">left_is</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">West</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">elif</span> <span class="n">world</span><span class="o">.</span><span class="n">left_is</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">North</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">world</span><span class="o">.</span><span class="n">rotate_world_cw</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">world</span><span class="o">.</span><span class="n">left_is</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">East</span><span class="p">:</span>
+            <span class="n">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">rotate_world_cw</span><span class="p">()</span>
+            <span class="n">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">rotate_world_cw</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">world</span>
+        <span class="k">elif</span> <span class="n">world</span><span class="o">.</span><span class="n">left_is</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">South</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">world</span><span class="o">.</span><span class="n">rotate_world_ccw</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported Direction: </span><span class="si">{</span><span class="n">world</span><span class="o">.</span><span class="n">left_is</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="naive_score">
+<a class="viewcode-back" href="../../day14.html#day14.day14.naive_score">[docs]</a>
+<span class="k">def</span> <span class="nf">naive_score</span><span class="p">(</span><span class="n">world_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns score assuming west is pointing left.</span>
+
+<span class="sd">    For each row, a round boulder ``O``&#39;s score is</span>
+<span class="sd">    ``num_rows`` minus its ``index`` (higher weight to the left.)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">num_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">world_rows</span><span class="p">)</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">world_rows</span><span class="p">):</span>
+        <span class="n">o_count</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;O&quot;</span><span class="p">)</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="n">o_count</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_rows</span> <span class="o">-</span> <span class="n">index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">score</span></div>
+
+
+
+<div class="viewcode-block" id="simulate_row">
+<a class="viewcode-back" href="../../day14.html#day14.day14.simulate_row">[docs]</a>
+<span class="k">def</span> <span class="nf">simulate_row</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simulates a row; returns its value and the new row.</span>
+
+<span class="sd">    Assumes that we are moving boulders to the left</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">square_indices</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;#&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)]</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">square_indices</span><span class="p">,</span> <span class="n">square_indices</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="n">row_score</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">new_row</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+        <span class="n">sub_array</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">end</span><span class="p">]</span>
+        <span class="n">o_count</span> <span class="o">=</span> <span class="n">sub_array</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;O&quot;</span><span class="p">)</span>
+        <span class="n">start_score</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">end_score</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">-</span> <span class="n">start</span> <span class="o">-</span> <span class="n">o_count</span>
+        <span class="n">sub_array_score</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">start_score</span> <span class="o">+</span> <span class="n">end_score</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">o_count</span><span class="p">)</span>
+        <span class="n">row_score</span> <span class="o">+=</span> <span class="n">sub_array_score</span>
+        <span class="n">new_row</span> <span class="o">+=</span> <span class="s2">&quot;O&quot;</span> <span class="o">*</span> <span class="n">o_count</span>
+        <span class="n">new_row</span> <span class="o">+=</span> <span class="s2">&quot;.&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="o">-</span> <span class="n">o_count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">new_row</span> <span class="o">+=</span> <span class="s2">&quot;#&quot;</span>
+
+    <span class="n">new_row</span> <span class="o">=</span> <span class="n">new_row</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_row</span><span class="p">),</span> <span class="n">row_score</span></div>
+
+
+
+<div class="viewcode-block" id="simulate_world">
+<a class="viewcode-back" href="../../day14.html#day14.day14.simulate_world">[docs]</a>
+<span class="k">def</span> <span class="nf">simulate_world</span><span class="p">(</span><span class="n">world_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simulates world by rolling to the left.&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">world_row</span> <span class="ow">in</span> <span class="n">world_rows</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simulate_row</span><span class="p">(</span><span class="n">world_row</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="get_input">
+<a class="viewcode-back" href="../../day14.html#day14.day14.get_input">[docs]</a>
+<span class="k">def</span> <span class="nf">get_input</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">World</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Grabs input, rotated so that left is north.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">World</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="question1">
+<a class="viewcode-back" href="../../day14.html#day14.day14.question1">[docs]</a>
+<span class="k">def</span> <span class="nf">question1</span><span class="p">(</span><span class="n">world</span><span class="p">:</span> <span class="n">World</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns world&#39;s score after rotating the world once.&quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="n">world</span><span class="o">.</span><span class="n">left_is</span> <span class="o">!=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">North</span><span class="p">:</span>
+        <span class="n">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">rotate_world_ccw</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">simulate_row</span><span class="p">(</span><span class="n">row</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">world</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="question2">
+<a class="viewcode-back" href="../../day14.html#day14.day14.question2">[docs]</a>
+<span class="k">def</span> <span class="nf">question2</span><span class="p">(</span><span class="n">world</span><span class="p">:</span> <span class="n">World</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds a loop in world rotation.</span>
+
+<span class="sd">    Once the loop is found we can estimate the world&#39;s state</span>
+<span class="sd">    after any amount of rotations</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        world (World): world to spin</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: &quot;weight&quot; to the north after 1000000000 cycles.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">World</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">cycle_results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">World</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># starting state: left_is north</span>
+    <span class="k">while</span> <span class="n">world</span><span class="o">.</span><span class="n">left_is</span> <span class="o">!=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">North</span><span class="p">:</span>
+        <span class="n">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">rotate_world_ccw</span><span class="p">()</span>
+    <span class="n">world</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">simulate_world</span><span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">cycle_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">cycle_start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">cycle_end</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">while</span> <span class="n">cycle_start</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cycle_end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">Direction</span><span class="o">.</span><span class="n">North</span><span class="p">,</span>  <span class="c1"># left_is north</span>
+            <span class="n">Direction</span><span class="o">.</span><span class="n">West</span><span class="p">,</span>  <span class="c1"># left_is west</span>
+            <span class="n">Direction</span><span class="o">.</span><span class="n">South</span><span class="p">,</span>  <span class="c1"># left_is south</span>
+            <span class="n">Direction</span><span class="o">.</span><span class="n">East</span><span class="p">,</span>  <span class="c1"># left_is east</span>
+        <span class="p">]:</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">East</span><span class="p">:</span>  <span class="c1"># calculate score *before*</span>
+                <span class="k">if</span> <span class="n">world</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
+                    <span class="n">cycle_start</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="n">world</span><span class="p">]</span>
+                    <span class="n">cycle_end</span> <span class="o">=</span> <span class="n">cycle_index</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cache</span><span class="p">[</span><span class="n">world</span><span class="p">]</span> <span class="o">=</span> <span class="n">cycle_index</span>
+                    <span class="n">cycle_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">world</span><span class="p">)</span>
+            <span class="n">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">rotate_world_cw</span><span class="p">()</span>
+            <span class="n">world</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">simulate_world</span><span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">world</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span>
+
+        <span class="n">cycle_index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">cycle_end</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">cycle_start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;cycle_end and cycle_end should not be None&quot;</span><span class="p">)</span>
+
+    <span class="n">cycle_length</span> <span class="o">=</span> <span class="n">cycle_end</span> <span class="o">-</span> <span class="n">cycle_start</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cycle length: </span><span class="si">{</span><span class="n">cycle_length</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">final_target</span> <span class="o">=</span> <span class="mi">1000000000</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="p">(</span><span class="n">final_target</span> <span class="o">-</span> <span class="n">cycle_start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">cycle_length</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">cycle_results</span><span class="p">[</span><span class="n">cycle_start</span> <span class="o">+</span> <span class="n">target</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">score</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;No score found!&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">score</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../day14.html#day14.day14.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get input and run question1/question2.&quot;&quot;&quot;</span>
+    <span class="n">world</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="n">INPUT</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">question1</span><span class="p">(</span><span class="n">world</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">question2</span><span class="p">(</span><span class="n">world</span><span class="p">))</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

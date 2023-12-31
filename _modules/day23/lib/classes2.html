@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day23.lib.classes2 &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day23.lib.classes2</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day23.lib.classes2</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;part 2 solution.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span> <span class="k">as</span> <span class="n">Pool</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">import</span> <span class="nn">colorama</span>
+
+<span class="kn">from</span> <span class="nn">day23.lib</span> <span class="kn">import</span> <span class="n">classes</span>
+<span class="kn">from</span> <span class="nn">day23.lib.classes</span> <span class="kn">import</span> <span class="n">Maze</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">Position</span>
+
+<span class="n">colorama</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">convert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Node">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.Node">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Node representing a fork to another.&quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">compare</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">position</span><span class="p">:</span> <span class="n">Position</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">compare</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">edges</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Edge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">compare</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pretty-print.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s2">) </span><span class="si">{</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">edge</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Edge">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.Edge">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Edge</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Edge class, representing a path between nodes.&quot;&quot;&quot;</span>
+
+    <span class="n">node1</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">node2</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cache our length.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Edge.flip">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.Edge.flip">[docs]</a>
+    <span class="k">def</span> <span class="nf">flip</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Edge&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reverse a path.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Edge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">node1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">flip</span><span class="p">())</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pretty-print.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">node1</span><span class="si">}</span><span class="s2">-&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">node2</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Solver2">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.Solver2">[docs]</a>
+<span class="k">class</span> <span class="nc">Solver2</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Solver for part 2.&quot;&quot;&quot;</span>
+
+    <span class="n">input_maze</span><span class="p">:</span> <span class="n">Maze</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maze</span><span class="p">:</span> <span class="n">Maze</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store maze that we need to solve.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_maze</span> <span class="o">=</span> <span class="n">maze</span>
+
+<div class="viewcode-block" id="Solver2.get_nodes">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.Solver2.get_nodes">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_nodes</span><span class="p">(</span><span class="n">maze</span><span class="p">:</span> <span class="n">Maze</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Position</span><span class="p">,</span> <span class="n">Node</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets nodes and marks them on the given maze.</span>
+
+<span class="sd">        Note that the maze is modified in-place!</span>
+<span class="sd">        Nodes are *not* populated with edges</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">start</span> <span class="o">=</span> <span class="n">Position</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maze</span><span class="o">.</span><span class="n">num_rows</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maze</span><span class="o">.</span><span class="n">num_cols</span><span class="p">):</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="n">Position</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">maze</span><span class="o">.</span><span class="n">get_cell_branches</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+                    <span class="n">name</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="c1"># add start and end coz they are dumb</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">Position</span><span class="p">(</span><span class="n">maze</span><span class="o">.</span><span class="n">num_rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">maze</span><span class="o">.</span><span class="n">num_cols</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="n">maze</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">position</span><span class="p">]</span> <span class="o">=</span> <span class="n">colorama</span><span class="o">.</span><span class="n">Back</span><span class="o">.</span><span class="n">GREEN</span> <span class="o">+</span> <span class="s2">&quot;X&quot;</span> <span class="o">+</span> <span class="n">colorama</span><span class="o">.</span><span class="n">Back</span><span class="o">.</span><span class="n">BLACK</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">position</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Solver2.calculate_edges">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.Solver2.calculate_edges">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">calculate_edges</span><span class="p">(</span>
+        <span class="n">start_node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Position</span><span class="p">,</span> <span class="n">Node</span><span class="p">],</span> <span class="n">maze</span><span class="p">:</span> <span class="n">Maze</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate edges of the maze.</span>
+
+<span class="sd">        Modifies the maze inplace, filling it in with #.</span>
+<span class="sd">        Modifies the node and its connecting nodes by adding Edges</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">first_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">()</span>
+        <span class="n">first_path</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">start_node</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">paths</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="n">paths</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">first_path</span><span class="p">)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">paths</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">pos</span> <span class="o">!=</span> <span class="n">start_node</span><span class="o">.</span><span class="n">position</span> <span class="ow">and</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+                <span class="c1"># reached an edge</span>
+                <span class="n">edge</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">start_node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">nodes</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                <span class="n">start_node</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+                <span class="n">end_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+                <span class="n">end_node</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">flip</span><span class="p">())</span>
+                <span class="k">continue</span>
+            <span class="n">expansions</span> <span class="o">=</span> <span class="n">Solver2</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">maze</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">expansions</span><span class="p">:</span>
+                <span class="n">paths</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Solver2.expand_path">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.Solver2.expand_path">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">expand_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">maze</span><span class="p">:</span> <span class="n">Maze</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Expands a path, nuking that section of the maze using #.&quot;&quot;&quot;</span>
+        <span class="n">current_pos</span><span class="p">:</span> <span class="n">Position</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+        <span class="n">expansions</span> <span class="o">=</span> <span class="n">current_pos</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+
+        <span class="n">valid_expansions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">expansion</span> <span class="ow">in</span> <span class="n">expansions</span><span class="p">:</span>
+            <span class="n">expansion_tile</span> <span class="o">=</span> <span class="n">maze</span><span class="p">[</span><span class="n">expansion</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">path</span><span class="o">.</span><span class="n">can_add</span><span class="p">(</span><span class="n">expansion</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">expansion_tile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">expansion_tile</span> <span class="o">!=</span> <span class="s2">&quot;#&quot;</span>
+            <span class="p">):</span>
+                <span class="n">valid_expansions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expansion</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">expansion_tile</span> <span class="o">==</span> <span class="s2">&quot;.&quot;</span><span class="p">:</span>
+                    <span class="n">maze</span><span class="p">[</span><span class="n">expansion</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span>
+        <span class="k">return</span> <span class="n">classes</span><span class="o">.</span><span class="n">generate_paths</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">valid_expansions</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Solver2.build_nodes">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.Solver2.build_nodes">[docs]</a>
+    <span class="k">def</span> <span class="nf">build_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build nodes and edges on a copy of the maze.&quot;&quot;&quot;</span>
+        <span class="c1"># make backup of maze</span>
+        <span class="n">maze_copy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_maze</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">nodes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Position</span><span class="p">,</span> <span class="n">Node</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nodes</span><span class="p">(</span><span class="n">maze_copy</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">maze_copy</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculate_edges</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">maze_copy</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="Solver2.solve">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.Solver2.solve">[docs]</a>
+    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Solves the maze.&quot;&quot;&quot;</span>
+        <span class="n">nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_nodes</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">))</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">cpu_count</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">2</span>
+        <span class="n">levels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">cpu_count</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">solve2</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">set</span><span class="p">(),</span> <span class="n">levels</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Executed in: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="solve2">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.solve2">[docs]</a>
+<span class="k">def</span> <span class="nf">solve2</span><span class="p">(</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">],</span>
+    <span class="n">current</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">destination</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">distance</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">seen</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">forks_remaining</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Solves a dfs by creating forking into multiprocessing.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">current</span> <span class="o">==</span> <span class="n">destination</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">distance</span>
+
+    <span class="n">best</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+
+    <span class="c1"># run the code in this thread</span>
+    <span class="k">if</span> <span class="n">forks_remaining</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="n">current</span><span class="p">]</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">[</span><span class="n">current</span><span class="p">]</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+            <span class="n">neighbor</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="n">edge</span><span class="o">.</span><span class="n">node2</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">length</span>
+            <span class="k">if</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="n">solve2</span><span class="p">(</span>
+                <span class="n">nodes</span><span class="p">,</span>
+                <span class="n">neighbor</span><span class="p">,</span>
+                <span class="n">destination</span><span class="p">,</span>
+                <span class="n">distance</span> <span class="o">+</span> <span class="n">weight</span><span class="p">,</span>
+                <span class="n">seen</span><span class="p">,</span>
+                <span class="n">forks_remaining</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># Use multiprocessing.Pool for parallel execution</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">[</span><span class="n">current</span><span class="p">]</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+            <span class="n">neighbor</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="n">edge</span><span class="o">.</span><span class="n">node2</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">length</span>
+            <span class="k">if</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">nodes</span><span class="p">,</span>
+                    <span class="n">neighbor</span><span class="p">,</span>
+                    <span class="n">destination</span><span class="p">,</span>
+                    <span class="n">distance</span> <span class="o">+</span> <span class="n">weight</span><span class="p">,</span>
+                    <span class="n">seen</span><span class="p">,</span>
+                    <span class="n">forks_remaining</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">with</span> <span class="n">Pool</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tasks</span><span class="p">))</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">solve2_helper</span><span class="p">,</span> <span class="n">tasks</span><span class="p">):</span>
+                <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+    <span class="n">seen</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">best</span></div>
+
+
+
+<div class="viewcode-block" id="solve2_helper">
+<a class="viewcode-back" href="../../../day23.lib.html#day23.lib.classes2.solve2_helper">[docs]</a>
+<span class="k">def</span> <span class="nf">solve2_helper</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ThreadPoolExecutor doesnt have starmap so we use a helper.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">solve2</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

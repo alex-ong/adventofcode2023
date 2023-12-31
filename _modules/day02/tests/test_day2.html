@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day02.tests.test_day2 &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day02.tests.test_day2</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day02.tests.test_day2</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;tests for day02.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">day02.day2</span> <span class="kn">import</span> <span class="n">INPUT_SMALL</span><span class="p">,</span> <span class="n">Draw</span><span class="p">,</span> <span class="n">Game</span><span class="p">,</span> <span class="n">game_filter</span><span class="p">,</span> <span class="n">get_games</span><span class="p">,</span> <span class="n">part1</span><span class="p">,</span> <span class="n">part2</span>
+
+
+<div class="viewcode-block" id="get_game1">
+<a class="viewcode-back" href="../../../day02.tests.html#day02.tests.test_day2.get_game1">[docs]</a>
+<span class="k">def</span> <span class="nf">get_game1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Game</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a sample game.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Game</span><span class="p">(</span><span class="s2">&quot;Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_game2">
+<a class="viewcode-back" href="../../../day02.tests.html#day02.tests.test_day2.get_game2">[docs]</a>
+<span class="k">def</span> <span class="nf">get_game2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Game</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns another sample game.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Game</span><span class="p">(</span><span class="s2">&quot;Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_draw">
+<a class="viewcode-back" href="../../../day02.tests.html#day02.tests.test_day2.test_draw">[docs]</a>
+<span class="k">def</span> <span class="nf">test_draw</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test draws.&quot;&quot;&quot;</span>
+    <span class="n">draw1</span><span class="p">:</span> <span class="n">Draw</span> <span class="o">=</span> <span class="n">Draw</span><span class="p">(</span><span class="s2">&quot;3 blue, 4 red&quot;</span><span class="p">)</span>
+    <span class="n">draw2</span><span class="p">:</span> <span class="n">Draw</span> <span class="o">=</span> <span class="n">Draw</span><span class="p">(</span><span class="s2">&quot;4 blue, 3 green&quot;</span><span class="p">)</span>
+    <span class="n">draw3</span><span class="p">:</span> <span class="n">Draw</span> <span class="o">=</span> <span class="n">Draw</span><span class="p">(</span><span class="s2">&quot;4 blue, 3 green, 1 red&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="p">[</span><span class="n">draw1</span><span class="o">.</span><span class="n">red</span><span class="p">,</span> <span class="n">draw1</span><span class="o">.</span><span class="n">green</span><span class="p">,</span> <span class="n">draw1</span><span class="o">.</span><span class="n">blue</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="p">[</span><span class="n">draw2</span><span class="o">.</span><span class="n">red</span><span class="p">,</span> <span class="n">draw2</span><span class="o">.</span><span class="n">green</span><span class="p">,</span> <span class="n">draw2</span><span class="o">.</span><span class="n">blue</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="p">[</span><span class="n">draw3</span><span class="o">.</span><span class="n">red</span><span class="p">,</span> <span class="n">draw3</span><span class="o">.</span><span class="n">green</span><span class="p">,</span> <span class="n">draw3</span><span class="o">.</span><span class="n">blue</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="test_game">
+<a class="viewcode-back" href="../../../day02.tests.html#day02.tests.test_day2.test_game">[docs]</a>
+<span class="k">def</span> <span class="nf">test_game</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test games.&quot;&quot;&quot;</span>
+    <span class="n">game1</span><span class="p">:</span> <span class="n">Game</span> <span class="o">=</span> <span class="n">get_game1</span><span class="p">()</span>
+    <span class="n">game2</span><span class="p">:</span> <span class="n">Game</span> <span class="o">=</span> <span class="n">get_game2</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">game1</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">game1</span><span class="o">.</span><span class="n">red</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">assert</span> <span class="n">game1</span><span class="o">.</span><span class="n">blue</span> <span class="o">==</span> <span class="mi">6</span>
+    <span class="k">assert</span> <span class="n">game1</span><span class="o">.</span><span class="n">green</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="k">assert</span> <span class="n">game2</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">game2</span><span class="o">.</span><span class="n">red</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">game2</span><span class="o">.</span><span class="n">green</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">assert</span> <span class="n">game2</span><span class="o">.</span><span class="n">blue</span> <span class="o">==</span> <span class="mi">4</span>
+
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">game1</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Game 1: 4,2,6&quot;</span>
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">game2</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Game 2: 1,3,4&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="test_part1">
+<a class="viewcode-back" href="../../../day02.tests.html#day02.tests.test_day2.test_part1">[docs]</a>
+<span class="k">def</span> <span class="nf">test_part1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tests get_games, game_filter, part1.&quot;&quot;&quot;</span>
+    <span class="n">games</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Game</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_games</span><span class="p">(</span><span class="n">INPUT_SMALL</span><span class="p">)</span>
+
+    <span class="c1"># test game_filter</span>
+    <span class="n">expected</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">game</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">games</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">game_filter</span><span class="p">(</span><span class="n">game</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="c1"># test part1()</span>
+    <span class="k">assert</span> <span class="n">part1</span><span class="p">(</span><span class="n">games</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span></div>
+
+
+
+<div class="viewcode-block" id="test_part2">
+<a class="viewcode-back" href="../../../day02.tests.html#day02.tests.test_day2.test_part2">[docs]</a>
+<span class="k">def</span> <span class="nf">test_part2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tests power.&quot;&quot;&quot;</span>
+    <span class="n">games</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Game</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_games</span><span class="p">(</span><span class="n">INPUT_SMALL</span><span class="p">)</span>
+
+    <span class="c1"># test game_filter</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="mi">48</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1560</span><span class="p">,</span> <span class="mi">630</span><span class="p">,</span> <span class="mi">36</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">game</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">games</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">game</span><span class="o">.</span><span class="n">power_level</span><span class="p">()</span> <span class="o">==</span> <span class="n">expected</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="c1"># test part1()</span>
+    <span class="k">assert</span> <span class="n">part2</span><span class="p">(</span><span class="n">games</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2286</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

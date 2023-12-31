@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day10.lib package &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="day10.tests package" href="day10.tests.html" />
+    <link rel="prev" title="day10 package" href="day10.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci.html">Continuous Integration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">adventofcode2023</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">day01 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">day02 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">day03 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">day04 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">day05 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">day06 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">day07 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">day08 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">day09 package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="day10.html">day10 package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="day10.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">day10.lib package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="day10.tests.html">day10.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="day10.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day10.html#module-day10.day10">day10.day10 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="day10.html#module-day10">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">day11 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">day12 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">day13 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.html">day14 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">day15 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day16.html">day16 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day17.html">day17 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">day18 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.html">day19 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day20.html">day20 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">day21 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day22.html">day22 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day23.html">day23 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">day24 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">day25 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download_inputs.html">download_inputs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maker.html">maker module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">adventofcode2023</a></li>
+          <li class="breadcrumb-item"><a href="day10.html">day10 package</a></li>
+      <li class="breadcrumb-item active">day10.lib package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/day10.lib.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="day10-lib-package">
+<h1>day10.lib package<a class="headerlink" href="#day10-lib-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-day10.lib.direction">
+<span id="day10-lib-direction-module"></span><h2>day10.lib.direction module<a class="headerlink" href="#module-day10.lib.direction" title="Link to this heading"></a></h2>
+<p>direction Enum.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day10.lib.direction.Direction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day10.lib.direction.</span></span><span class="sig-name descname"><span class="pre">Direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day10/lib/direction.html#Direction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.direction.Direction" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Cardinal (NSEW) direction Enum.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.direction.Direction.EAST">
+<span class="sig-name descname"><span class="pre">EAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#day10.lib.direction.Direction.EAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.direction.Direction.NORTH">
+<span class="sig-name descname"><span class="pre">NORTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#day10.lib.direction.Direction.NORTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.direction.Direction.SOUTH">
+<span class="sig-name descname"><span class="pre">SOUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#day10.lib.direction.Direction.SOUTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.direction.Direction.WEST">
+<span class="sig-name descname"><span class="pre">WEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#day10.lib.direction.Direction.WEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day10.lib.direction.Direction.opposite">
+<span class="sig-name descname"><span class="pre">opposite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day10.lib.direction.Direction" title="day10.lib.direction.Direction"><span class="pre">Direction</span></a></span></span><a class="reference internal" href="_modules/day10/lib/direction.html#Direction.opposite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.direction.Direction.opposite" title="Link to this definition"></a></dt>
+<dd><p>Return opposite direction.</p>
+<p>e.g. <code class="docutils literal notranslate"><span class="pre">E``&lt;-&gt;``W</span></code>
+and <code class="docutils literal notranslate"><span class="pre">N``&lt;-&gt;``S</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>AssertionError</strong> – if direction is invalid</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>opposite direction.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#day10.lib.direction.Direction" title="day10.lib.direction.Direction">Direction</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-day10.lib.pipebounds">
+<span id="day10-lib-pipebounds-module"></span><h2>day10.lib.pipebounds module<a class="headerlink" href="#module-day10.lib.pipebounds" title="Link to this heading"></a></h2>
+<p>PipeBounds class.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day10.lib.pipebounds.PipeBounds">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day10.lib.pipebounds.</span></span><span class="sig-name descname"><span class="pre">PipeBounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day10/lib/pipebounds.html#PipeBounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.pipebounds.PipeBounds" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Whether this tile is a pipe, inside, outside or currently unknown.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipebounds.PipeBounds.INSIDE">
+<span class="sig-name descname"><span class="pre">INSIDE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#day10.lib.pipebounds.PipeBounds.INSIDE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipebounds.PipeBounds.OUTSIDE">
+<span class="sig-name descname"><span class="pre">OUTSIDE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#day10.lib.pipebounds.PipeBounds.OUTSIDE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipebounds.PipeBounds.PIPE">
+<span class="sig-name descname"><span class="pre">PIPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#day10.lib.pipebounds.PipeBounds.PIPE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipebounds.PipeBounds.UNKNOWN">
+<span class="sig-name descname"><span class="pre">UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#day10.lib.pipebounds.PipeBounds.UNKNOWN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-day10.lib.pipes">
+<span id="day10-lib-pipes-module"></span><h2>day10.lib.pipes module<a class="headerlink" href="#module-day10.lib.pipes" title="Link to this heading"></a></h2>
+<p>Pipe class.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day10.lib.pipes.</span></span><span class="sig-name descname"><span class="pre">Pipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">character</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_loop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipe_bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day10.lib.pipebounds.PipeBounds" title="day10.lib.pipebounds.PipeBounds"><span class="pre">PipeBounds</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">PipeBounds.UNKNOWN</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day10/lib/pipes.html#Pipe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.pipes.Pipe" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The location and character representing the pipe.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.PIPE_DIRECTION">
+<span class="sig-name descname"><span class="pre">PIPE_DIRECTION</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day10.lib.direction.Direction" title="day10.lib.direction.Direction"><span class="pre">Direction</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'-':</span> <span class="pre">[Direction.WEST,</span> <span class="pre">Direction.EAST],</span> <span class="pre">'.':</span> <span class="pre">[],</span> <span class="pre">'7':</span> <span class="pre">[Direction.WEST,</span> <span class="pre">Direction.SOUTH],</span> <span class="pre">'F':</span> <span class="pre">[Direction.SOUTH,</span> <span class="pre">Direction.EAST],</span> <span class="pre">'J':</span> <span class="pre">[Direction.NORTH,</span> <span class="pre">Direction.WEST],</span> <span class="pre">'L':</span> <span class="pre">[Direction.NORTH,</span> <span class="pre">Direction.EAST],</span> <span class="pre">'|':</span> <span class="pre">[Direction.NORTH,</span> <span class="pre">Direction.SOUTH]}</span></em><a class="headerlink" href="#day10.lib.pipes.Pipe.PIPE_DIRECTION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.character">
+<span class="sig-name descname"><span class="pre">character</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#day10.lib.pipes.Pipe.character" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.col">
+<span class="sig-name descname"><span class="pre">col</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day10.lib.pipes.Pipe.col" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.font">
+<span class="sig-name descname"><span class="pre">font</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#day10.lib.pipes.Pipe.font" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.is_loop">
+<span class="sig-name descname"><span class="pre">is_loop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#day10.lib.pipes.Pipe.is_loop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.is_start">
+<span class="sig-name descname"><span class="pre">is_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#day10.lib.pipes.Pipe.is_start" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.next_direction">
+<span class="sig-name descname"><span class="pre">next_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prev_direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day10.lib.direction.Direction" title="day10.lib.direction.Direction"><span class="pre">Direction</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day10.lib.direction.Direction" title="day10.lib.direction.Direction"><span class="pre">Direction</span></a></span></span><a class="reference internal" href="_modules/day10/lib/pipes.html#Pipe.next_direction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.pipes.Pipe.next_direction" title="Link to this definition"></a></dt>
+<dd><p>Determine next direction based on where we came from.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.next_position">
+<span class="sig-name descname"><span class="pre">next_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prev_direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day10.lib.direction.Direction" title="day10.lib.direction.Direction"><span class="pre">Direction</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day10.lib.direction.Direction" title="day10.lib.direction.Direction"><span class="pre">Direction</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#day10.lib.position.Position" title="day10.lib.position.Position"><span class="pre">Position</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/day10/lib/pipes.html#Pipe.next_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.pipes.Pipe.next_position" title="Link to this definition"></a></dt>
+<dd><p>Calculate the next position.</p>
+<p>Return where we came from if we move to next tile, and the new position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>prev_direction</strong> (<a class="reference internal" href="#day10.lib.direction.Direction" title="day10.lib.direction.Direction"><em>Direction</em></a><em> | </em><em>None</em>) – Where we came from</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Next direction and position.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[<a class="reference internal" href="#day10.lib.direction.Direction" title="day10.lib.direction.Direction">Direction</a>, <a class="reference internal" href="#day10.lib.position.Position" title="day10.lib.position.Position">Position</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.pipe_bounds">
+<span class="sig-name descname"><span class="pre">pipe_bounds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day10.lib.pipebounds.PipeBounds" title="day10.lib.pipebounds.PipeBounds"><span class="pre">PipeBounds</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#day10.lib.pipes.Pipe.pipe_bounds" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#day10.lib.position.Position" title="day10.lib.position.Position"><span class="pre">Position</span></a></em><a class="headerlink" href="#day10.lib.pipes.Pipe.position" title="Link to this definition"></a></dt>
+<dd><p>Our current position.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.Pipe.row">
+<span class="sig-name descname"><span class="pre">row</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day10.lib.pipes.Pipe.row" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="day10.lib.pipes.PipeMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day10.lib.pipes.</span></span><span class="sig-name descname"><span class="pre">PipeMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day10.lib.pipes.Pipe" title="day10.lib.pipes.Pipe"><span class="pre">Pipe</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day10/lib/pipes.html#PipeMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.pipes.PipeMap" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A 2d array of pipes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="day10.lib.pipes.PipeMap.get_pipe">
+<span class="sig-name descname"><span class="pre">get_pipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day10.lib.position.Position" title="day10.lib.position.Position"><span class="pre">Position</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day10.lib.pipes.Pipe" title="day10.lib.pipes.Pipe"><span class="pre">Pipe</span></a></span></span><a class="reference internal" href="_modules/day10/lib/pipes.html#PipeMap.get_pipe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.pipes.PipeMap.get_pipe" title="Link to this definition"></a></dt>
+<dd><p>Returns a pipe given its position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day10.lib.pipes.PipeMap.get_pipe_safe">
+<span class="sig-name descname"><span class="pre">get_pipe_safe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day10.lib.position.Position" title="day10.lib.position.Position"><span class="pre">Position</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day10.lib.pipes.Pipe" title="day10.lib.pipes.Pipe"><span class="pre">Pipe</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/day10/lib/pipes.html#PipeMap.get_pipe_safe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.pipes.PipeMap.get_pipe_safe" title="Link to this definition"></a></dt>
+<dd><p>Gets a pipe or returns None if position is out of map.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.PipeMap.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day10.lib.pipes.PipeMap.height" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day10.lib.pipes.PipeMap.is_in_map">
+<span class="sig-name descname"><span class="pre">is_in_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day10.lib.position.Position" title="day10.lib.position.Position"><span class="pre">Position</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/day10/lib/pipes.html#PipeMap.is_in_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.pipes.PipeMap.is_in_map" title="Link to this definition"></a></dt>
+<dd><p>Returns whether a position is in the map.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.PipeMap.pipes">
+<span class="sig-name descname"><span class="pre">pipes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#day10.lib.pipes.Pipe" title="day10.lib.pipes.Pipe"><span class="pre">Pipe</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#day10.lib.pipes.PipeMap.pipes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.pipes.PipeMap.width">
+<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day10.lib.pipes.PipeMap.width" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-day10.lib.position">
+<span id="day10-lib-position-module"></span><h2>day10.lib.position module<a class="headerlink" href="#module-day10.lib.position" title="Link to this heading"></a></h2>
+<p>Position class.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="day10.lib.position.Position">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">day10.lib.position.</span></span><span class="sig-name descname"><span class="pre">Position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/day10/lib/position.html#Position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.position.Position" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simple 2d coordinate.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.position.Position.col">
+<span class="sig-name descname"><span class="pre">col</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day10.lib.position.Position.col" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="day10.lib.position.Position.next_position">
+<span class="sig-name descname"><span class="pre">next_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#day10.lib.direction.Direction" title="day10.lib.direction.Direction"><span class="pre">Direction</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#day10.lib.position.Position" title="day10.lib.position.Position"><span class="pre">Position</span></a></span></span><a class="reference internal" href="_modules/day10/lib/position.html#Position.next_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#day10.lib.position.Position.next_position" title="Link to this definition"></a></dt>
+<dd><p>Determine next position based on direction.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="day10.lib.position.Position.row">
+<span class="sig-name descname"><span class="pre">row</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#day10.lib.position.Position.row" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-day10.lib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-day10.lib" title="Link to this heading"></a></h2>
+<p>library modules for day10.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="day10.html" class="btn btn-neutral float-left" title="day10 package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="day10.tests.html" class="btn btn-neutral float-right" title="day10.tests package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

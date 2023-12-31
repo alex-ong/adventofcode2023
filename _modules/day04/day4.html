@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>day04.day4 &mdash; adventofcode2023  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            adventofcode2023
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autodoc.html">Automatic documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ci.html">Continuous Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">adventofcode2023</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">adventofcode2023</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">day04.day4</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for day04.day4</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Day 4 solution.&quot;&quot;&quot;</span>
+
+<span class="n">INPUT</span> <span class="o">=</span> <span class="s2">&quot;day04/input.txt&quot;</span>
+<span class="n">INPUT_SMALL</span> <span class="o">=</span> <span class="s2">&quot;day04/input-small.txt&quot;</span>
+
+
+<div class="viewcode-block" id="split_numbers">
+<a class="viewcode-back" href="../../day04.html#day04.day4.split_numbers">[docs]</a>
+<span class="k">def</span> <span class="nf">split_numbers</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Splits a list of string&#39;ed numbers into a set.</span>
+
+<span class="sd">    E.g: `` 39 40 41 42 `` -&gt; ``set(39,40,41,42)``</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        string (str): a list of string&#39;ed numbers</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        set[int]: a set of integers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">()}</span></div>
+
+
+
+<div class="viewcode-block" id="Card">
+<a class="viewcode-back" href="../../day04.html#day04.day4.Card">[docs]</a>
+<span class="k">class</span> <span class="nc">Card</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;a card with winners and numbers we own.&quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">winners</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">have</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_string</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct a Card from a simple input string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_string (str): ``Card 1: 41 48 | 83 86``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">input_string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">card_id_str</span><span class="p">,</span> <span class="n">numbers_str</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="n">winners_str</span><span class="p">,</span> <span class="n">have_str</span> <span class="o">=</span> <span class="n">numbers_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">card_id_str</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">winners</span> <span class="o">=</span> <span class="n">split_numbers</span><span class="p">(</span><span class="n">winners_str</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">have</span> <span class="o">=</span> <span class="n">split_numbers</span><span class="p">(</span><span class="n">have_str</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Card.get_points">
+<a class="viewcode-back" href="../../day04.html#day04.day4.Card.get_points">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns how many points the card is worth.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: 0 for no match, otherwise 2^(matches-1)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_matches</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">matches</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="n">matches</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">points</span></div>
+
+
+<div class="viewcode-block" id="Card.get_matches">
+<a class="viewcode-back" href="../../day04.html#day04.day4.Card.get_matches">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns how many winners intersect with what we have.&quot;&quot;&quot;</span>
+        <span class="n">intersection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">winners</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">have</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">intersection</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Inventory">
+<a class="viewcode-back" href="../../day04.html#day04.day4.Inventory">[docs]</a>
+<span class="k">class</span> <span class="nc">Inventory</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Total inventory of cards based on Question2 accumulation.&quot;&quot;&quot;</span>
+
+    <span class="c1"># mapping of card to how many more cards it makes</span>
+    <span class="n">memoized</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+    <span class="n">all_cards</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Card</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_cards</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Card</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;An inventory from a list of cards.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            all_cards (list[Card]): list of original cards</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_cards</span> <span class="o">=</span> <span class="n">all_cards</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">memoized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_mappings</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Inventory.calculate_mappings">
+<a class="viewcode-back" href="../../day04.html#day04.day4.Inventory.calculate_mappings">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate_mappings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns map of card_id -&gt; cards owned.&quot;&quot;&quot;</span>
+        <span class="n">mappings</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">reversed_cards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_cards</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">reversed_cards</span><span class="p">:</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="n">card</span><span class="o">.</span><span class="n">get_matches</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">matches</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">mappings</span><span class="p">[</span><span class="n">card</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">mappings</span><span class="p">[</span><span class="n">card</span><span class="o">.</span><span class="n">id</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">matches</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">mappings</span><span class="p">[</span><span class="n">card</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">total</span>
+        <span class="k">return</span> <span class="n">mappings</span></div>
+
+
+<div class="viewcode-block" id="Inventory.total_cards">
+<a class="viewcode-back" href="../../day04.html#day04.day4.Inventory.total_cards">[docs]</a>
+    <span class="k">def</span> <span class="nf">total_cards</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return total cards in inventory.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">memoized</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="grab_data">
+<a class="viewcode-back" href="../../day04.html#day04.day4.grab_data">[docs]</a>
+<span class="k">def</span> <span class="nf">grab_data</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Card</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts file into wellformed cards.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">Card</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="part1">
+<a class="viewcode-back" href="../../day04.html#day04.day4.part1">[docs]</a>
+<span class="k">def</span> <span class="nf">part1</span><span class="p">(</span><span class="n">cards</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Card</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return sum of points for each card in list.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">card</span><span class="o">.</span><span class="n">get_points</span><span class="p">()</span> <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">cards</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="part2">
+<a class="viewcode-back" href="../../day04.html#day04.day4.part2">[docs]</a>
+<span class="k">def</span> <span class="nf">part2</span><span class="p">(</span><span class="n">cards</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Card</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return total number of cards in our inventory.&quot;&quot;&quot;</span>
+    <span class="n">inventory</span><span class="p">:</span> <span class="n">Inventory</span> <span class="o">=</span> <span class="n">Inventory</span><span class="p">(</span><span class="n">cards</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">inventory</span><span class="o">.</span><span class="n">total_cards</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../day04.html#day04.day4.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads input file then runs part1 and part2.&quot;&quot;&quot;</span>
+    <span class="n">cards</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Card</span><span class="p">]</span> <span class="o">=</span> <span class="n">grab_data</span><span class="p">(</span><span class="n">INPUT</span><span class="p">)</span>
+    <span class="c1"># Q1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">part1</span><span class="p">(</span><span class="n">cards</span><span class="p">))</span>
+    <span class="c1"># Q2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">part2</span><span class="p">(</span><span class="n">cards</span><span class="p">))</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alex Ong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
