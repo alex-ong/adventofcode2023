@@ -4,10 +4,11 @@
 
 | Name               |    Stmts |     Miss |   Branch |   BrPart |      Cover |   Missing |
 |------------------- | -------: | -------: | -------: | -------: | ---------: | --------: |
+| day11/day11.py     |      111 |        3 |       52 |        0 |     96.93% |     48-50 |
 | day16/lib/cells.py |       69 |        1 |       32 |        0 |     99.01% |        38 |
-|          **TOTAL** | **4309** |    **1** | **1448** |    **0** | **99.98%** |           |
+|          **TOTAL** | **4332** |    **4** | **1450** |    **0** | **99.90%** |           |
 
-170 files skipped due to complete coverage.
+169 files skipped due to complete coverage.
 
 
 ## Setup coverage badge
